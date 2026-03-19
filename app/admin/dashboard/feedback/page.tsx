@@ -3,15 +3,17 @@ import type { SessionCategory } from "@/lib/constants";
 import { getFeedbackBySession, getFeedbackSummary } from "@/lib/queries";
 import { displaySessionTitle, formatTimestamp } from "@/lib/utils";
 
+type FeedbackSessionSummary = {
+  title: string;
+  final_title?: string | null;
+  placeholder_code?: string | null;
+  category?: string | null;
+};
+
 function resolveTitle(
   value:
-    | { title: string; final_title: string | null; placeholder_code: string | null; category: string }
-    | {
-        title: string;
-        final_title: string | null;
-        placeholder_code: string | null;
-        category: string;
-      }[]
+    | FeedbackSessionSummary
+    | FeedbackSessionSummary[]
     | null
 ) {
   if (!value) {
@@ -22,11 +24,15 @@ function resolveTitle(
     return "Unknown session";
   }
 
+  if (!session.category) {
+    return session.title;
+  }
+
   return displaySessionTitle({
     title: session.title,
     category: session.category as SessionCategory,
-    final_title: session.final_title,
-    placeholder_code: session.placeholder_code
+    final_title: session.final_title ?? null,
+    placeholder_code: session.placeholder_code ?? null
   });
 }
 

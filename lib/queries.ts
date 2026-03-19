@@ -33,7 +33,7 @@ type SessionRow = {
   featured: boolean;
   is_placeholder: boolean;
   session_speakers: Array<{
-    session_role: string | null;
+    session_role?: string | null;
     session_speaker_logistics:
       | {
           confirmation_status: string | null;
@@ -50,7 +50,7 @@ type SessionRow = {
           private_logistics_note: string | null;
         }>
       | null;
-    speakers: Speaker | null;
+    speakers: Speaker | Speaker[] | null;
   }> | null;
 };
 
@@ -58,7 +58,9 @@ function mapSession(row: SessionRow): SessionRecord {
   const speakers: SessionSpeaker[] =
     row.session_speakers
       ?.map((entry) => {
-        if (!entry.speakers) {
+        const speakerRecord = Array.isArray(entry.speakers) ? entry.speakers[0] : entry.speakers;
+
+        if (!speakerRecord) {
           return null;
         }
 
@@ -67,7 +69,7 @@ function mapSession(row: SessionRow): SessionRecord {
           : entry.session_speaker_logistics;
 
         return {
-          ...entry.speakers,
+          ...speakerRecord,
           sessionRole: entry.session_role ?? null,
           confirmationStatus: logistics?.confirmation_status ?? null,
           arrivalTime: logistics?.arrival_time ?? null,
@@ -155,14 +157,13 @@ export const getSessionById = cache(async (id: string, includeUnpublished = fals
       .select(
         "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,status,published,featured,is_placeholder,session_speakers(speakers(id,slug,name,title,organization))"
       )
-      .eq("id", id)
-      .maybeSingle();
+      .eq("id", id);
 
     if (!includeUnpublished) {
       query = query.eq("published", true);
     }
 
-    const { data, error } = await query;
+    const { data, error } = await query.maybeSingle();
     if (error || !data) {
       if (error) {
         console.error(error);
@@ -315,6 +316,16 @@ export const getPublicSpeakers = cache(async () => {
       return [] as SpeakerDirectoryRecord[];
     }
 
+    type PublicSpeakerSession = {
+      id: string;
+      title: string;
+      final_title: string | null;
+      placeholder_code: string | null;
+      category: SessionRecord["category"];
+      date: string;
+      published?: boolean;
+    };
+
     return (data ?? [])
       .map((speaker) => ({
         id: speaker.id,
@@ -324,8 +335,10 @@ export const getPublicSpeakers = cache(async () => {
         organization: speaker.organization,
         sessions:
           (speaker.session_speakers ?? [])
-            .map((entry: { sessions: SessionRecord & { published?: boolean } }) => entry.sessions)
-            .filter((session) => session?.published)
+            .map((entry: { sessions: PublicSpeakerSession[] | PublicSpeakerSession | null }) =>
+              Array.isArray(entry.sessions) ? entry.sessions[0] : entry.sessions
+            )
+            .filter((session): session is PublicSpeakerSession => Boolean(session?.published))
             .map((session) => ({
               id: session.id,
               title: session.title,

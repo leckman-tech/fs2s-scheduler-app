@@ -3,6 +3,26 @@ import type { SessionCategory } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/server";
 import { displaySessionTitle, escapeCsv } from "@/lib/utils";
 
+type FeedbackSessionRow = {
+  title: string;
+  final_title: string | null;
+  placeholder_code: string | null;
+  category: string;
+};
+
+function sessionLabel(session: FeedbackSessionRow | null | undefined) {
+  if (!session) {
+    return "";
+  }
+
+  return displaySessionTitle({
+    title: session.title,
+    final_title: session.final_title,
+    placeholder_code: session.placeholder_code,
+    category: session.category as SessionCategory
+  });
+}
+
 export async function GET(request: Request) {
   try {
     const supabase = await createClient();
@@ -48,22 +68,8 @@ export async function GET(request: Request) {
       ...(data ?? []).map((entry) => [
         entry.id,
         Array.isArray(entry.sessions)
-          ? entry.sessions[0]
-            ? displaySessionTitle({
-                title: entry.sessions[0].title,
-                final_title: entry.sessions[0].final_title,
-                placeholder_code: entry.sessions[0].placeholder_code,
-                category: entry.sessions[0].category as SessionCategory
-              })
-            : ""
-          : entry.sessions
-            ? displaySessionTitle({
-                title: entry.sessions.title,
-                final_title: entry.sessions.final_title,
-                placeholder_code: entry.sessions.placeholder_code,
-                category: entry.sessions.category as SessionCategory
-              })
-            : "",
+          ? sessionLabel((entry.sessions[0] as FeedbackSessionRow | undefined) ?? null)
+          : sessionLabel((entry.sessions as FeedbackSessionRow | null | undefined) ?? null),
         entry.rating,
         entry.most_useful,
         entry.improvements,
