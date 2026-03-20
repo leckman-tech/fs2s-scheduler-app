@@ -12,6 +12,19 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body>
         <div className="page-shell">
+          <div className="spring-canvas" aria-hidden="true">
+            <div className="spring-canvas__capitol" />
+            <span className="petal petal--1" />
+            <span className="petal petal--2" />
+            <span className="petal petal--3" />
+            <span className="petal petal--4" />
+            <span className="petal petal--5" />
+            <span className="petal petal--6" />
+            <span className="petal petal--7" />
+            <span className="petal petal--8" />
+            <span className="petal petal--9" />
+            <span className="petal petal--10" />
+          </div>
           <header className="site-header">
             <div className="site-header__inner">
               <div>
