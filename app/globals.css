@@ -28,6 +28,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  position: relative;
   color: var(--ink);
   background:
     linear-gradient(180deg, rgba(193, 18, 31, 0.07), transparent 14rem),
@@ -41,6 +42,63 @@ body {
   background-repeat: no-repeat;
   background-attachment: scroll, scroll, scroll, scroll, fixed, scroll;
   font-family: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0.7)),
+    url("https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1800&q=80");
+  background-size: cover;
+  background-position: center top;
+  opacity: 0.22;
+  filter: blur(2px) saturate(0.92);
+  transform: scale(1.06);
+  animation: blossom-pan 42s ease-in-out infinite alternate;
+}
+
+body::after {
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255, 194, 211, 0.18) 0 0.4rem, transparent 0.45rem),
+    radial-gradient(circle at 74% 18%, rgba(255, 210, 222, 0.14) 0 0.55rem, transparent 0.6rem),
+    radial-gradient(circle at 64% 62%, rgba(255, 224, 232, 0.13) 0 0.48rem, transparent 0.52rem),
+    radial-gradient(circle at 28% 74%, rgba(255, 205, 219, 0.16) 0 0.42rem, transparent 0.48rem),
+    radial-gradient(circle at 88% 78%, rgba(255, 214, 226, 0.14) 0 0.5rem, transparent 0.58rem);
+  background-repeat: no-repeat;
+  opacity: 0.45;
+  animation: blossom-drift 26s linear infinite;
+}
+
+@keyframes blossom-pan {
+  0% {
+    transform: scale(1.06) translate3d(-1.5%, -1%, 0);
+  }
+  50% {
+    transform: scale(1.09) translate3d(0.75%, 0.5%, 0);
+  }
+  100% {
+    transform: scale(1.07) translate3d(1.8%, 1.2%, 0);
+  }
+}
+
+@keyframes blossom-drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-1.5%, 1.2%, 0);
+  }
+  100% {
+    transform: translate3d(1.2%, -1%, 0);
+  }
 }
 
 a {
