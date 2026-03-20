@@ -256,6 +256,15 @@ select {
   line-height: 1.6;
 }
 
+.hero-kicker {
+  margin-top: 0.85rem;
+  max-width: 42rem;
+  color: #ffd1d6;
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .hero-meta {
   display: flex;
   flex-wrap: wrap;
@@ -340,6 +349,71 @@ select {
   margin-bottom: 1.25rem;
 }
 
+.context-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.context-grid--history {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.story-panel {
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+}
+
+.story-panel h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.story-panel p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.68;
+}
+
+.story-panel--accent {
+  background:
+    linear-gradient(180deg, rgba(193, 18, 31, 0.04), rgba(255, 255, 255, 0.98));
+}
+
+.story-list,
+.story-stat-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.story-stat-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.story-stat {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.9rem;
+  border-radius: 18px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.story-stat strong {
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.story-stat span {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
 .experience-card {
   position: relative;
   min-height: 290px;
@@ -376,6 +450,18 @@ select {
 
 .experience-card--agenda::before {
   background-image: url("https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1400&q=80");
+}
+
+.experience-card--history-2024::before {
+  background-image: url("https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=1400&q=80");
+}
+
+.experience-card--history-2025::before {
+  background-image: url("https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1400&q=80");
+}
+
+.experience-card--history-foundation::before {
+  background-image: url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1400&q=80");
 }
 
 .experience-card__copy {
@@ -946,12 +1032,15 @@ th {
   .hero-card__grid,
   .schedule-layout,
   .detail-grid,
-  .admin-shell {
+  .admin-shell,
+  .context-grid,
+  .context-grid--history {
     grid-template-columns: 1fr;
   }
 
   .hero-metrics,
-  .experience-band {
+  .experience-band,
+  .story-stat-grid {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -1006,7 +1095,8 @@ th {
 
   .hero-card__visual,
   .hero-metrics,
-  .experience-band {
+  .experience-band,
+  .story-stat-grid {
     grid-template-columns: 1fr;
   }
 
