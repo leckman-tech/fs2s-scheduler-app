@@ -54,15 +54,15 @@ body {
   }
 }
 
-@keyframes blossom-drift {
+@keyframes bloom-sway {
   0% {
-    transform: translate3d(0, -1%, 0) rotate(0deg);
+    transform: translate3d(0, 0, 0) scale(1.04) rotate(0deg);
   }
   50% {
-    transform: translate3d(-2.2%, 1.8%, 0) rotate(2deg);
+    transform: translate3d(1.6%, 1%, 0) scale(1.08) rotate(1.25deg);
   }
   100% {
-    transform: translate3d(2%, 3%, 0) rotate(-2deg);
+    transform: translate3d(-1.6%, 2%, 0) scale(1.06) rotate(-1deg);
   }
 }
 
@@ -90,7 +90,9 @@ select {
 }
 
 .spring-canvas,
-.spring-canvas__capitol {
+.spring-canvas__capitol,
+.spring-canvas__bloom,
+.spring-canvas__mist {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -99,6 +101,10 @@ select {
 .spring-canvas {
   z-index: 0;
   overflow: clip;
+  background:
+    linear-gradient(180deg, rgba(255, 245, 248, 0.18), rgba(255, 255, 255, 0.58)),
+    radial-gradient(circle at 18% 8%, rgba(255, 198, 214, 0.34), transparent 26rem),
+    radial-gradient(circle at 82% 12%, rgba(255, 214, 225, 0.28), transparent 24rem);
 }
 
 .spring-canvas__capitol {
@@ -115,64 +121,108 @@ select {
   animation: blossom-pan 28s ease-in-out infinite alternate;
 }
 
+.spring-canvas__bloom {
+  inset: -2% auto auto;
+  width: min(42vw, 34rem);
+  height: min(42vw, 34rem);
+  z-index: 1;
+  opacity: 0.78;
+  mix-blend-mode: screen;
+  filter: saturate(1.14) brightness(1.08) blur(0.1px);
+  background-size: cover;
+  background-position: center;
+  animation: bloom-sway 22s ease-in-out infinite alternate;
+}
+
+.spring-canvas__bloom::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(255, 243, 247, 0.42), transparent 44%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 42%);
+}
+
+.spring-canvas__bloom--left {
+  left: -4rem;
+  background-image:
+    linear-gradient(135deg, rgba(255, 235, 240, 0.22), rgba(255, 255, 255, 0)),
+    url("https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=80");
+  mask-image: linear-gradient(135deg, black 0%, black 65%, transparent 100%);
+  -webkit-mask-image: linear-gradient(135deg, black 0%, black 65%, transparent 100%);
+  transform-origin: top left;
+}
+
+.spring-canvas__bloom--right {
+  top: -1rem;
+  right: -3.5rem;
+  width: min(38vw, 30rem);
+  height: min(38vw, 30rem);
+  background-image:
+    linear-gradient(225deg, rgba(255, 239, 244, 0.18), rgba(255, 255, 255, 0)),
+    url("https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1200&q=80");
+  mask-image: linear-gradient(225deg, black 0%, black 62%, transparent 100%);
+  -webkit-mask-image: linear-gradient(225deg, black 0%, black 62%, transparent 100%);
+  transform-origin: top right;
+  animation-duration: 25s;
+}
+
+.spring-canvas__mist {
+  z-index: 1;
+  background:
+    radial-gradient(circle at 24% 20%, rgba(255, 226, 236, 0.22), transparent 18rem),
+    radial-gradient(circle at 78% 14%, rgba(255, 234, 241, 0.18), transparent 18rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+}
+
 .petal {
   position: fixed;
-  z-index: 0;
-  width: 56px;
-  height: 36px;
-  border-radius: 68% 32% 64% 36% / 58% 42% 60% 40%;
-  background:
-    radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.86) 0 10%, transparent 11%),
-    linear-gradient(135deg, rgba(255, 173, 196, 0.96), rgba(255, 224, 236, 0.84));
-  box-shadow:
-    inset -10px -10px 18px rgba(255, 255, 255, 0.26),
-    0 10px 22px rgba(193, 18, 31, 0.12);
-  opacity: 0.78;
+  z-index: 2;
+  width: 42px;
+  height: 52px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 100'%3E%3Cdefs%3E%3CradialGradient id='p' cx='38%25' cy='28%25' r='72%25'%3E%3Cstop offset='0%25' stop-color='%23fff8fb'/%3E%3Cstop offset='45%25' stop-color='%23ffe1ea'/%3E%3Cstop offset='100%25' stop-color='%23f2a7bc'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M40 5C57 20 71 43 71 60c0 22-13 35-31 35S9 82 9 60C9 43 23 20 40 5Z' fill='url(%23p)'/%3E%3Cpath d='M40 15c9 11 16 25 16 39 0 15-7 24-16 24s-16-9-16-24c0-14 7-28 16-39Z' fill='rgba(255,255,255,0.22)'/%3E%3Cpath d='M39 27c2 8 3 29 1 45' stroke='%23d97e99' stroke-opacity='.34' stroke-width='2.3' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 10px 18px rgba(193, 18, 31, 0.12));
+  opacity: 0.84;
   animation: petal-fall 14s linear infinite;
 }
 
-.petal::after {
-  content: "";
-  position: absolute;
-  inset: 46% 10% 16% 42%;
-  border-radius: 999px;
-  background: rgba(193, 18, 31, 0.16);
-  transform: rotate(24deg);
-}
-
-.petal--1 { top: -8%; left: 6%; animation-delay: -2s; animation-duration: 13s; }
-.petal--2 { top: -12%; left: 16%; animation-delay: -6s; animation-duration: 15s; width: 48px; height: 30px; }
-.petal--3 { top: -10%; left: 28%; animation-delay: -1s; animation-duration: 14s; width: 52px; height: 32px; }
-.petal--4 { top: -14%; left: 42%; animation-delay: -8s; animation-duration: 17s; width: 62px; height: 38px; }
-.petal--5 { top: -7%; left: 56%; animation-delay: -4s; animation-duration: 14s; width: 44px; height: 28px; }
-.petal--6 { top: -11%; left: 68%; animation-delay: -10s; animation-duration: 18s; width: 50px; height: 31px; }
-.petal--7 { top: -8%; left: 80%; animation-delay: -5s; animation-duration: 15s; width: 60px; height: 37px; }
-.petal--8 { top: -16%; left: 12%; animation-delay: -12s; animation-duration: 19s; width: 40px; height: 26px; }
-.petal--9 { top: -10%; left: 50%; animation-delay: -3s; animation-duration: 16s; width: 54px; height: 34px; }
-.petal--10 { top: -9%; left: 90%; animation-delay: -9s; animation-duration: 15s; width: 46px; height: 29px; }
+.petal--1 { top: -10%; left: 7%; animation-delay: -2s; animation-duration: 13s; }
+.petal--2 { top: -15%; left: 16%; animation-delay: -7s; animation-duration: 16s; width: 36px; height: 44px; }
+.petal--3 { top: -9%; left: 28%; animation-delay: -1s; animation-duration: 15s; width: 46px; height: 56px; }
+.petal--4 { top: -13%; left: 41%; animation-delay: -8s; animation-duration: 18s; width: 52px; height: 62px; }
+.petal--5 { top: -8%; left: 57%; animation-delay: -4s; animation-duration: 14s; width: 34px; height: 40px; }
+.petal--6 { top: -12%; left: 69%; animation-delay: -10s; animation-duration: 19s; width: 40px; height: 48px; }
+.petal--7 { top: -9%; left: 81%; animation-delay: -5s; animation-duration: 15s; width: 50px; height: 60px; }
+.petal--8 { top: -14%; left: 11%; animation-delay: -12s; animation-duration: 20s; width: 30px; height: 36px; }
+.petal--9 { top: -10%; left: 49%; animation-delay: -3s; animation-duration: 17s; width: 44px; height: 54px; }
+.petal--10 { top: -11%; left: 89%; animation-delay: -9s; animation-duration: 16s; width: 38px; height: 46px; }
 
 @keyframes petal-fall {
   0% {
-    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    transform: translate3d(0, -12vh, 0) rotate(-10deg) scale(0.94);
     opacity: 0;
   }
   12% {
-    opacity: 0.82;
+    opacity: 0.84;
   }
   35% {
-    transform: translate3d(4vw, 28vh, 0) rotate(62deg);
+    transform: translate3d(5vw, 28vh, 0) rotate(38deg) scale(1.02);
   }
   68% {
-    transform: translate3d(-6vw, 62vh, 0) rotate(148deg);
+    transform: translate3d(-8vw, 62vh, 0) rotate(112deg) scale(0.98);
   }
   100% {
-    transform: translate3d(9vw, 110vh, 0) rotate(232deg);
+    transform: translate3d(10vw, 112vh, 0) rotate(198deg) scale(0.9);
     opacity: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .spring-canvas__capitol,
+  .spring-canvas__bloom,
   .petal {
     animation: none;
   }
