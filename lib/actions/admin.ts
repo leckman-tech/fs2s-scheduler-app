@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import {
   CONFIRMATION_STATUSES,
   PARTICIPANT_ROLES,
+  SESSION_RESOURCE_BUCKET,
   SESSION_CATEGORIES,
   SESSION_STATUSES
 } from "@/lib/constants";
@@ -17,6 +18,14 @@ function normalizeDateTimeInput(value: string) {
     return value;
   }
   return `${value}:00-04:00`;
+}
+
+function sanitizeFileName(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9.\-_]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function parseSpeakers(rawValue: string) {
@@ -184,6 +193,20 @@ export async function loginPortal(formData: FormData) {
   redirect("/portal");
 }
 
+export async function loginAttendee(formData: FormData) {
+  const supabase = await createClient();
+  const email = String(formData.get("email") ?? "");
+  const password = String(formData.get("password") ?? "");
+
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+  if (error) {
+    redirect(`/attendee/login?error=${encodeURIComponent(error.message)}`);
+  }
+
+  redirect("/attendee");
+}
+
 export async function logoutAdmin() {
   const supabase = await createClient();
   await supabase.auth.signOut();
@@ -194,6 +217,12 @@ export async function logoutPortal() {
   const supabase = await createClient();
   await supabase.auth.signOut();
   redirect("/portal/login");
+}
+
+export async function logoutAttendee() {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+  redirect("/attendee/login");
 }
 
 export async function saveSession(formData: FormData) {
@@ -375,4 +404,129 @@ export async function deleteAnnouncement(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin/dashboard/announcements");
+}
+
+export async function uploadPortalDocument(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+
+  const sessionId = String(formData.get("session_id") ?? "").trim();
+  const audience = String(formData.get("audience") ?? "attendee").trim();
+  const title = String(formData.get("title") ?? "").trim();
+  const description = String(formData.get("description") ?? "").trim();
+  const published = formData.get("published") === "on";
+  const file = formData.get("file");
+
+  if (!title || !(file instanceof File) || file.size === 0) {
+    redirect("/admin/dashboard/resources?error=Title%20and%20file%20are%20required");
+  }
+
+  const fileName = sanitizeFileName(file.name || `${title}.pdf`);
+  const storagePath = `${sessionId || "general"}/${Date.now()}-${fileName}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from(SESSION_RESOURCE_BUCKET)
+    .upload(storagePath, file, {
+      upsert: false,
+      contentType: file.type || undefined
+    });
+
+  if (uploadError) {
+    redirect(`/admin/dashboard/resources?error=${encodeURIComponent(uploadError.message)}`);
+  }
+
+  const { error: insertError } = await supabase.from("portal_documents").insert({
+    session_id: sessionId || null,
+    audience,
+    title,
+    description: description || null,
+    file_name: file.name || fileName,
+    file_path: storagePath,
+    mime_type: file.type || null,
+    published
+  });
+
+  if (insertError) {
+    await supabase.storage.from(SESSION_RESOURCE_BUCKET).remove([storagePath]);
+    redirect(`/admin/dashboard/resources?error=${encodeURIComponent(insertError.message)}`);
+  }
+
+  revalidatePath("/attendee");
+  revalidatePath("/portal");
+  revalidatePath("/admin/dashboard/resources");
+  redirect("/admin/dashboard/resources");
+}
+
+export async function togglePortalDocumentPublish(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+
+  const id = String(formData.get("id") ?? "").trim();
+  const published = String(formData.get("published") ?? "") === "true";
+
+  await supabase.from("portal_documents").update({ published: !published }).eq("id", id);
+
+  revalidatePath("/attendee");
+  revalidatePath("/portal");
+  revalidatePath("/admin/dashboard/resources");
+}
+
+export async function deletePortalDocument(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+
+  const id = String(formData.get("id") ?? "").trim();
+  const filePath = String(formData.get("file_path") ?? "").trim();
+
+  await supabase.from("portal_documents").delete().eq("id", id);
+
+  if (filePath) {
+    await supabase.storage.from(SESSION_RESOURCE_BUCKET).remove([filePath]);
+  }
+
+  revalidatePath("/attendee");
+  revalidatePath("/portal");
+  revalidatePath("/admin/dashboard/resources");
+}
+
+export async function postSpeakerPortalMessage(formData: FormData) {
+  const supabase = await createClient();
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/portal/login");
+  }
+
+  const body = String(formData.get("body") ?? "").trim();
+
+  if (!body) {
+    redirect("/portal?error=Message%20cannot%20be%20empty");
+  }
+
+  const { error } = await supabase.from("portal_messages").insert({
+    audience: "speaker",
+    author_id: user.id,
+    body,
+    published: true
+  });
+
+  if (error) {
+    redirect(`/portal?error=${encodeURIComponent(error.message)}`);
+  }
+
+  revalidatePath("/portal");
+  redirect("/portal");
+}
+
+export async function deleteSpeakerPortalMessage(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const id = String(formData.get("id") ?? "").trim();
+
+  await supabase.from("portal_messages").delete().eq("id", id);
+
+  revalidatePath("/portal");
+  revalidatePath("/admin/dashboard/resources");
 }

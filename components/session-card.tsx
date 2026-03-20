@@ -4,14 +4,21 @@ import type { SessionRecord } from "@/lib/types";
 import {
   displaySessionTitle,
   formatTimeRange,
+  isPublicSessionInteractive,
+  isSecondarySessionCategory,
   labelForCategory,
   labelForStatus,
   statusClassName
 } from "@/lib/utils";
 
 export function SessionCard({ session }: { session: SessionRecord }) {
+  const isInteractive = isPublicSessionInteractive(session.category);
+  const isSecondary = isSecondarySessionCategory(session.category);
+
   return (
-    <article className={`card session-card session-card--${session.category}`}>
+    <article
+      className={`card session-card session-card--${session.category}${isSecondary ? " session-card--secondary" : ""}`}
+    >
       <div className="session-card__top">
         <span className="chip">{labelForCategory(session.category)}</span>
         <span className={statusClassName(session.status)}>{labelForStatus(session.status)}</span>
@@ -44,12 +51,18 @@ export function SessionCard({ session }: { session: SessionRecord }) {
         )}
       </div>
 
-      <div className="admin-actions">
-        <Link href={`/session/${session.id}`} className="button button-link">
-          View details
-        </Link>
-        <FavoriteButton sessionId={session.id} />
-      </div>
+      {isInteractive ? (
+        <div className="admin-actions">
+          <Link href={`/session/${session.id}`} className="button button-link">
+            View details
+          </Link>
+          <FavoriteButton sessionId={session.id} />
+        </div>
+      ) : (
+        <div className="session-card__note">
+          Visible for planning, but no detail page is needed for this schedule block.
+        </div>
+      )}
     </article>
   );
 }

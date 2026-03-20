@@ -1,12 +1,14 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
-import { USER_ROLES } from "@/lib/constants";
+import { SESSION_RESOURCE_BUCKET, USER_ROLES } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/server";
 import { displaySessionTitle } from "@/lib/utils";
 import type {
   AnnouncementRecord,
   FeedbackSummaryRecord,
   SessionRecord,
+  PortalDocumentRecord,
+  PortalMessageRecord,
   SpeakerDirectoryRecord,
   SessionSpeaker,
   Speaker
@@ -52,6 +54,56 @@ type SessionRow = {
       | null;
     speakers: Speaker | Speaker[] | null;
   }> | null;
+};
+
+type PortalDocumentRow = {
+  id: string;
+  session_id: string | null;
+  audience: "attendee" | "speaker" | "both";
+  title: string;
+  description: string | null;
+  file_name: string;
+  file_path: string;
+  mime_type: string | null;
+  published: boolean;
+  created_at: string;
+  sessions:
+    | {
+        id: string;
+        title: string;
+        final_title: string | null;
+        placeholder_code: string | null;
+        category: SessionRecord["category"];
+        date: string;
+      }
+    | Array<{
+        id: string;
+        title: string;
+        final_title: string | null;
+        placeholder_code: string | null;
+        category: SessionRecord["category"];
+        date: string;
+      }>
+    | null;
+};
+
+type PortalMessageRow = {
+  id: string;
+  audience: "attendee" | "speaker" | "both";
+  author_id: string;
+  body: string;
+  published: boolean;
+  created_at: string;
+  profiles:
+    | {
+        full_name: string | null;
+        role: string | null;
+      }
+    | Array<{
+        full_name: string | null;
+        role: string | null;
+      }>
+    | null;
 };
 
 function mapSession(row: SessionRow): SessionRecord {
@@ -101,6 +153,39 @@ function mapSession(row: SessionRow): SessionRecord {
     featured: row.featured,
     is_placeholder: row.is_placeholder,
     speakers
+  };
+}
+
+function mapPortalDocument(row: PortalDocumentRow): PortalDocumentRecord {
+  const session = Array.isArray(row.sessions) ? row.sessions[0] : row.sessions;
+
+  return {
+    id: row.id,
+    session_id: row.session_id,
+    audience: row.audience,
+    title: row.title,
+    description: row.description,
+    file_name: row.file_name,
+    file_path: row.file_path,
+    mime_type: row.mime_type,
+    published: row.published,
+    created_at: row.created_at,
+    session
+  };
+}
+
+function mapPortalMessage(row: PortalMessageRow): PortalMessageRecord {
+  const profile = Array.isArray(row.profiles) ? row.profiles[0] : row.profiles;
+
+  return {
+    id: row.id,
+    audience: row.audience,
+    author_id: row.author_id,
+    body: row.body,
+    published: row.published,
+    created_at: row.created_at,
+    author_name: profile?.full_name ?? null,
+    author_role: profile?.role ?? null
   };
 }
 
@@ -296,6 +381,29 @@ export async function isCurrentUserAdmin() {
   }
 }
 
+export const requireAttendeePortalUser = cache(async () => {
+  const supabase = await createClient();
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/attendee/login");
+  }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role,full_name")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (!profile || !USER_ROLES.includes(profile.role as (typeof USER_ROLES)[number])) {
+    redirect("/attendee/login?error=No%20attendee%20portal%20access%20found");
+  }
+
+  return { user, profile };
+});
+
 export const getWorkshopSessions = cache(async () => {
   const sessions = await getAdminSessions();
   return sessions.filter((session) => session.category === "workshop");
@@ -355,6 +463,176 @@ export const getPublicSpeakers = cache(async () => {
   }
 });
 
+export const getAdminPortalDocuments = cache(async () => {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("portal_documents")
+      .select(
+        "id,session_id,audience,title,description,file_name,file_path,mime_type,published,created_at,sessions(id,title,final_title,placeholder_code,category,date)"
+      )
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return [] as PortalDocumentRecord[];
+    }
+
+    return (data as PortalDocumentRow[]).map(mapPortalDocument);
+  } catch (error) {
+    console.error(error);
+    return [] as PortalDocumentRecord[];
+  }
+});
+
+export const getAttendeePortalResources = cache(async () => {
+  await requireAttendeePortalUser();
+
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("portal_documents")
+      .select(
+        "id,session_id,audience,title,description,file_name,file_path,mime_type,published,created_at,sessions(id,title,final_title,placeholder_code,category,date)"
+      )
+      .eq("published", true)
+      .in("audience", ["attendee", "both"])
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return [] as PortalDocumentRecord[];
+    }
+
+    const resources = (data as PortalDocumentRow[]).map(mapPortalDocument);
+
+    if (!resources.length) {
+      return [];
+    }
+
+    const { data: signedData, error: signedError } = await supabase.storage
+      .from(SESSION_RESOURCE_BUCKET)
+      .createSignedUrls(
+        resources.map((resource) => resource.file_path),
+        60 * 60
+      );
+
+    if (signedError) {
+      console.error(signedError);
+      return resources;
+    }
+
+    return resources.map((resource, index) => ({
+      ...resource,
+      signed_url: signedData?.[index]?.signedUrl ?? null
+    }));
+  } catch (error) {
+    console.error(error);
+    return [] as PortalDocumentRecord[];
+  }
+});
+
+export const getSpeakerPortalDocuments = cache(async () => {
+  await requirePrivateScheduleUser();
+
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("portal_documents")
+      .select(
+        "id,session_id,audience,title,description,file_name,file_path,mime_type,published,created_at,sessions(id,title,final_title,placeholder_code,category,date)"
+      )
+      .eq("published", true)
+      .in("audience", ["speaker", "both"])
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return [] as PortalDocumentRecord[];
+    }
+
+    const documents = (data as PortalDocumentRow[]).map(mapPortalDocument);
+
+    if (!documents.length) {
+      return [];
+    }
+
+    const { data: signedData, error: signedError } = await supabase.storage
+      .from(SESSION_RESOURCE_BUCKET)
+      .createSignedUrls(
+        documents.map((document) => document.file_path),
+        60 * 60
+      );
+
+    if (signedError) {
+      console.error(signedError);
+      return documents;
+    }
+
+    return documents.map((document, index) => ({
+      ...document,
+      signed_url: signedData?.[index]?.signedUrl ?? null
+    }));
+  } catch (error) {
+    console.error(error);
+    return [] as PortalDocumentRecord[];
+  }
+});
+
+export const getSpeakerPortalMessages = cache(async () => {
+  await requirePrivateScheduleUser();
+
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("portal_messages")
+      .select("id,audience,author_id,body,published,created_at,profiles(full_name,role)")
+      .eq("published", true)
+      .eq("audience", "speaker")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return [] as PortalMessageRecord[];
+    }
+
+    return (data as PortalMessageRow[]).map(mapPortalMessage);
+  } catch (error) {
+    console.error(error);
+    return [] as PortalMessageRecord[];
+  }
+});
+
+export const getAdminPortalMessages = cache(async () => {
+  await requireAdmin();
+
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("portal_messages")
+      .select("id,audience,author_id,body,published,created_at,profiles(full_name,role)")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return [] as PortalMessageRecord[];
+    }
+
+    return (data as PortalMessageRow[]).map(mapPortalMessage);
+  } catch (error) {
+    console.error(error);
+    return [] as PortalMessageRecord[];
+  }
+});
+
+export const getResourceEligibleSessions = cache(async () => {
+  const sessions = await getAdminSessions();
+  return sessions.filter((session) =>
+    ["workshop", "panel", "keynote", "fireside_chat", "scholar_session", "special_event", "opening_session", "closing_session"]
+      .includes(session.category)
+  );
+});
+
 export const requirePrivateScheduleUser = cache(async () => {
   const supabase = await createClient();
   const {
@@ -376,7 +654,7 @@ export const requirePrivateScheduleUser = cache(async () => {
   }
 
   if (profile.role === "attendee") {
-    redirect("/portal/login?error=Your%20account%20does%20not%20include%20speaker%20or%20panelist%20access");
+    redirect("/portal/login?error=Your%20account%20does%20not%20include%20speaker%20or%20presenter%20access");
   }
 
   return { user, profile };

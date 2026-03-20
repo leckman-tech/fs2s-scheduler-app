@@ -71,3 +71,38 @@ export type SpeakerDirectoryRecord = {
     date: string;
   }>;
 };
+
+export type PortalAudience = "attendee" | "speaker" | "both";
+
+export type PortalDocumentRecord = {
+  id: string;
+  session_id: string | null;
+  audience: PortalAudience;
+  title: string;
+  description: string | null;
+  file_name: string;
+  file_path: string;
+  mime_type: string | null;
+  published: boolean;
+  created_at: string;
+  signed_url?: string | null;
+  session: {
+    id: string;
+    title: string;
+    final_title: string | null;
+    placeholder_code: string | null;
+    category: SessionCategory;
+    date: string;
+  } | null;
+};
+
+export type PortalMessageRecord = {
+  id: string;
+  audience: PortalAudience;
+  author_id: string;
+  body: string;
+  published: boolean;
+  created_at: string;
+  author_name: string | null;
+  author_role: string | null;
+};

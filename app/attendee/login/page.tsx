@@ -1,6 +1,6 @@
-import { loginPortal } from "@/lib/actions/admin";
+import { loginAttendee } from "@/lib/actions/admin";
 
-export default async function PortalLoginPage({
+export default async function AttendeeLoginPage({
   searchParams
 }: {
   searchParams: Promise<{ error?: string }>;
@@ -10,14 +10,14 @@ export default async function PortalLoginPage({
   return (
     <div className="container" style={{ maxWidth: "640px" }}>
       <section className="hero-card">
-        <h1>Speaker/Presenter Portal</h1>
+        <h1>Attendee Portal</h1>
         <p>
-          Sign in to view only your assigned sessions, arrival details, AV notes, and staff
-          contacts. Public attendees never see this information.
+          Sign in to access workshop handouts, keynote materials, panel resources, and other
+          attendee documents the conference team uploads.
         </p>
       </section>
 
-      <form action={loginPortal} className="panel form-grid" style={{ marginTop: "1rem" }}>
+      <form action={loginAttendee} className="panel form-grid" style={{ marginTop: "1rem" }}>
         <div className="field">
           <label htmlFor="email">Email</label>
           <input id="email" name="email" type="email" required />

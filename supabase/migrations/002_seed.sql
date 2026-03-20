@@ -4,11 +4,9 @@ values
   ('philip-copeland-dme', 'Philip Copeland', 'Director of Strategic Initiatives', 'DME'),
   ('liz-ryan-office-of-juvenile-justice-and-delinquency-prevention', 'Liz Ryan', 'Former Administrator', 'Office of Juvenile Justice and Delinquency Prevention'),
   ('michael-umpierre-georgetown-university', 'Michael Umpierre', 'Director, Center for Youth Justice at Georgetown University', 'Georgetown University'),
-  ('senator-van-hollen-us-senate', 'Senator Van Hollen', 'United States Senator', 'U.S. Senate'),
   ('valerie-slater-rise-for-youth', 'Valerie Slater', 'Executive Director', 'RISE for Youth'),
   ('youth-representative-maya-schools-secure', 'Youth Representative', 'Youth Representative', 'Maya Schools Secure'),
-  ('youth-representative-rise-for-youth', 'Youth Representative', 'Youth Representative', 'RISE for Youth'),
-  ('rep-jayapal-us-house-of-representatives', 'Rep. Jayapal', 'Member of Congress', 'U.S. House of Representatives')
+  ('youth-representative-rise-for-youth', 'Youth Representative', 'Youth Representative', 'RISE for Youth')
 on conflict (slug) do update
 set
   name = excluded.name,
@@ -156,20 +154,6 @@ on conflict do nothing;
 insert into public.session_speakers (session_id, speaker_id, session_role)
 select s.id, p.id, 'panelist'
 from public.sessions s
-join public.speakers p on p.slug = 'senator-van-hollen-us-senate'
-where s.slug = 'panel-1-building-power-across-systems'
-on conflict do nothing;
-
-insert into public.session_speaker_logistics (session_id, speaker_id, confirmation_status, arrival_time, av_needs, staff_contact, private_logistics_note)
-select s.id, p.id, 'pending', '2026-04-02T10:10:00-04:00', 'Podium microphone', 'Jordan Reed - jordan@fs2s.org', 'Office is reviewing invitation. Do not publish until confirmed.'
-from public.sessions s
-join public.speakers p on p.slug = 'senator-van-hollen-us-senate'
-where s.slug = 'panel-1-building-power-across-systems'
-on conflict do nothing;
-
-insert into public.session_speakers (session_id, speaker_id, session_role)
-select s.id, p.id, 'panelist'
-from public.sessions s
 join public.speakers p on p.slug = 'valerie-slater-rise-for-youth'
 where s.slug = 'panel-2-voices-of-experience-breaking-silos-for-youth-justice'
 on conflict do nothing;
@@ -209,22 +193,8 @@ join public.speakers p on p.slug = 'youth-representative-rise-for-youth'
 where s.slug = 'panel-2-voices-of-experience-breaking-silos-for-youth-justice'
 on conflict do nothing;
 
-insert into public.session_speakers (session_id, speaker_id, session_role)
-select s.id, p.id, 'panelist'
-from public.sessions s
-join public.speakers p on p.slug = 'rep-jayapal-us-house-of-representatives'
-where s.slug = 'panel-2-voices-of-experience-breaking-silos-for-youth-justice'
-on conflict do nothing;
-
-insert into public.session_speaker_logistics (session_id, speaker_id, confirmation_status, arrival_time, av_needs, staff_contact, private_logistics_note)
-select s.id, p.id, 'unconfirmed', '2026-04-03T10:10:00-04:00', 'Podium microphone', 'Maya Events Desk - events@mayaschools.org', 'Congressional scheduling team reviewing request.'
-from public.sessions s
-join public.speakers p on p.slug = 'rep-jayapal-us-house-of-representatives'
-where s.slug = 'panel-2-voices-of-experience-breaking-silos-for-youth-justice'
-on conflict do nothing;
-
 insert into public.announcements (title, body, priority, published)
 values
-  ('Welcome to FS2S 2026', 'Welcome to From Silos to Solutions 2026. Explore the draft schedule and save sessions to your agenda.', 'normal', true),
+  ('Welcome to FS2S 2026', 'Welcome to From Silos to Solutions 2026. Explore the schedule and save sessions to your agenda.', 'normal', true),
   ('Check the app for live room updates', 'Any room changes, speaker updates, or day-of logistics will appear here first.', 'urgent', true),
   ('Please complete session feedback before leaving each session', 'Your feedback helps the convening team improve each experience in real time.', 'normal', true);

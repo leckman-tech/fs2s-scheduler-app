@@ -46,6 +46,18 @@ export const CATEGORY_LABELS: Record<SessionCategory, string> = {
   reception: "Reception"
 };
 
+export const SECONDARY_PUBLIC_CATEGORIES: SessionCategory[] = [
+  "breakfast",
+  "break",
+  "lunch",
+  "transition",
+  "staff_event"
+];
+
+export const PRIMARY_PUBLIC_FILTER_CATEGORIES: SessionCategory[] = SESSION_CATEGORIES.filter(
+  (category) => !SECONDARY_PUBLIC_CATEGORIES.includes(category)
+);
+
 export const PARTICIPANT_ROLES = [
   "speaker",
   "panelist",
@@ -78,3 +90,5 @@ export const STATUS_LABELS: Record<SessionStatus, string> = {
   cancelled: "Cancelled",
   completed: "Completed"
 };
+
+export const SESSION_RESOURCE_BUCKET = "session-resources";

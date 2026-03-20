@@ -19,7 +19,7 @@ export default async function HomePage() {
             <p className="eyebrow">Power Through Partnerships</p>
             <h1>Washington energy. Clear decisions. A schedule that pulls you in.</h1>
             <p>
-              Explore the draft schedule for From Silos to Solutions 2026, save the sessions you
+              Explore the schedule for From Silos to Solutions 2026, save the sessions you
               care about, and keep pace with live updates through a mobile-first experience that
               feels more like an event destination than a spreadsheet.
             </p>
@@ -45,16 +45,16 @@ export default async function HomePage() {
 
         <div className="hero-metrics">
           <article className="hero-metric">
-            <strong>{sessions.length}</strong>
-            <span>draft sessions</span>
+            <strong>{workshopCount}</strong>
+            <span>workshops</span>
           </article>
           <article className="hero-metric">
             <strong>{featuredCount}</strong>
             <span>featured moments</span>
           </article>
           <article className="hero-metric">
-            <strong>{workshopCount}</strong>
-            <span>workshop slots</span>
+            <strong>{days.length}</strong>
+            <span>days live</span>
           </article>
           <article className="hero-metric">
             <strong>{announcements.length}</strong>

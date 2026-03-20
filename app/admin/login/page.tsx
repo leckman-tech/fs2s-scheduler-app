@@ -10,7 +10,7 @@ export default async function AdminLoginPage({
   return (
     <div className="container" style={{ maxWidth: "640px" }}>
       <section className="hero-card">
-        <h1>Admin login</h1>
+        <h1>Admin Portal</h1>
         <p>
           Sign in with a Supabase email and password account that has an admin role in the
           `profiles` table.

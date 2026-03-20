@@ -2,7 +2,11 @@
 
 import { useMemo, useState } from "react";
 import { SessionCard } from "@/components/session-card";
-import { CATEGORY_LABELS, type SessionCategory } from "@/lib/constants";
+import {
+  CATEGORY_LABELS,
+  PRIMARY_PUBLIC_FILTER_CATEGORIES,
+  type SessionCategory
+} from "@/lib/constants";
 import type { SessionRecord } from "@/lib/types";
 import { formatDateLabel, groupByDate } from "@/lib/utils";
 import { useFavorites } from "@/lib/use-favorites";
@@ -78,17 +82,20 @@ export function ScheduleExplorer({ sessions, days }: Props) {
           </div>
 
           <div className="field">
-            <label>Session type</label>
+            <label>Featured programming</label>
+            <p className="field-hint">
+              Meals, breaks, transitions, and registration stay visible automatically.
+            </p>
             <div className="filter-group">
-              {Object.entries(CATEGORY_LABELS).map(([category, label]) => (
+              {PRIMARY_PUBLIC_FILTER_CATEGORIES.map((category) => (
                 <button
                   key={category}
                   type="button"
                   className="chip"
-                  data-active={activeCategories.includes(category as SessionCategory)}
-                  onClick={() => toggleCategory(category as SessionCategory)}
+                  data-active={activeCategories.includes(category)}
+                  onClick={() => toggleCategory(category)}
                 >
-                  {label}
+                  {CATEGORY_LABELS[category]}
                 </button>
               ))}
             </div>

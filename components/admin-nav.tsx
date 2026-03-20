@@ -5,7 +5,7 @@ export function AdminNav() {
   return (
     <aside className="panel">
       <div className="section-heading">
-        <h2>Admin</h2>
+        <h2>Admin Portal</h2>
       </div>
       <nav className="admin-nav" aria-label="Admin navigation">
         <Link href="/admin/dashboard" className="button-secondary button-link">
@@ -19,6 +19,9 @@ export function AdminNav() {
         </Link>
         <Link href="/admin/dashboard/announcements" className="button-secondary button-link">
           Announcements
+        </Link>
+        <Link href="/admin/dashboard/resources" className="button-secondary button-link">
+          Portal docs
         </Link>
         <Link href="/admin/dashboard/feedback" className="button-secondary button-link">
           Feedback

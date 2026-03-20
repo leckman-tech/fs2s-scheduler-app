@@ -1,4 +1,10 @@
-import { CATEGORY_LABELS, STATUS_LABELS, type SessionCategory, type SessionStatus } from "@/lib/constants";
+import {
+  CATEGORY_LABELS,
+  SECONDARY_PUBLIC_CATEGORIES,
+  STATUS_LABELS,
+  type SessionCategory,
+  type SessionStatus
+} from "@/lib/constants";
 import type { SessionRecord } from "@/lib/types";
 
 export function formatDateLabel(dateString: string) {
@@ -39,6 +45,14 @@ export function labelForCategory(category: SessionCategory) {
 
 export function labelForStatus(status: SessionStatus) {
   return STATUS_LABELS[status];
+}
+
+export function isSecondarySessionCategory(category: SessionCategory) {
+  return SECONDARY_PUBLIC_CATEGORIES.includes(category);
+}
+
+export function isPublicSessionInteractive(category: SessionCategory) {
+  return !isSecondarySessionCategory(category);
 }
 
 export function statusClassName(status: SessionStatus) {

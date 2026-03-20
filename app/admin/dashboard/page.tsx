@@ -16,13 +16,16 @@ export default async function AdminDashboardPage() {
         <h1>Operations dashboard</h1>
         <p>
           Welcome back{profile.full_name ? `, ${profile.full_name}` : ""}. Manage sessions,
-          publishing, announcements, and attendee feedback from one place.
+          publishing, announcements, portal documents, and attendee feedback from one place.
         </p>
         <div className="hero-meta">
           <span className="hero-pill">{sessions.length} total sessions</span>
           <span className="hero-pill">{announcements.length} announcements</span>
           <Link href="/admin/dashboard/workshops" className="button-secondary button-link">
             Manage workshops
+          </Link>
+          <Link href="/admin/dashboard/resources" className="button-secondary button-link">
+            Portal documents
           </Link>
         </div>
       </section>
