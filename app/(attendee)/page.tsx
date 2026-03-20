@@ -46,9 +46,10 @@ export default async function HomePage() {
               Young Adults
             </p>
             <p>
-              Join educators, youth-serving organizations, policymakers, advocates, and community
-              leaders for three days of conversation, strategy, and partnership focused on young
-              people who too often have to navigate disconnected systems on their own.
+              Join a national gathering led by the See Forever Foundation and Maya Angelou Schools,
+              where educators, youth-serving organizations, policymakers, advocates, and community
+              leaders come together to strengthen support for opportunity and justice-involved youth
+              and young adults.
             </p>
             <div className="hero-meta">
               <span className="hero-pill">April 1-3, 2026</span>
@@ -102,11 +103,12 @@ export default async function HomePage() {
       <section className="context-grid" id="story">
         <article className="panel story-panel">
           <p className="eyebrow">Why FS2S Exists</p>
-          <h2>A convening built to move partners from parallel effort to shared action</h2>
+          <h2>A national convening built to move partners from parallel effort to shared action</h2>
           <p>
             Opportunity and justice-involved youth and young adults are often served by systems
             that do not communicate clearly with one another. From Silos to Solutions creates space
-            for those systems to listen, learn, and align around more coordinated support.
+            for those systems to listen, learn, and align around more coordinated support, guided
+            by leaders who have spent decades building real pathways for scholars across Washington.
           </p>
           <div className="story-list">
             <div className="session-info-pill">
@@ -118,6 +120,10 @@ export default async function HomePage() {
               <span>Educators, policymakers, providers, advocates, and community leaders</span>
             </div>
             <div className="session-info-pill">
+              <strong>Why it matters</strong>
+              <span>Sharing proven models, lessons, and partnerships with leaders across the country</span>
+            </div>
+            <div className="session-info-pill">
               <strong>What it centers</strong>
               <span>Opportunity and justice-involved youth and young adults</span>
             </div>
@@ -126,12 +132,13 @@ export default async function HomePage() {
 
         <article className="panel story-panel story-panel--accent">
           <p className="eyebrow">See Forever Foundation</p>
-          <h2>Hosted by See Forever Foundation and Maya Angelou Schools</h2>
+          <h2>Hosted by a leading voice in education, advocacy, and scholar opportunity</h2>
           <p>
             The See Forever Foundation and Maya Angelou Schools support young people through
             restorative, relevant education, personalized academic support, well-being, and
-            preparation for life after Maya. FS2S grows directly out of that daily work and the
-            partnerships it requires.
+            preparation for life after Maya. FS2S grows directly out of that daily work, the many
+            campuses and pathways developed for scholars, and a commitment to sharing that
+            knowledge nationally.
           </p>
           <div className="story-stat-grid">
             <article className="story-stat">
@@ -147,6 +154,28 @@ export default async function HomePage() {
               <span>live notice channels built into the attendee experience</span>
             </article>
           </div>
+        </article>
+      </section>
+
+      <section className="context-grid context-grid--history">
+        <article className="panel story-panel">
+          <p className="eyebrow">Leadership</p>
+          <h2>Led by Dr. Clarisse Mendoza-Davis</h2>
+          <p>
+            Under the leadership of Dr. Clarisse Mendoza-Davis, the organization has built campuses,
+            scholar supports, and pathways that reflect deep expertise in serving opportunity and
+            justice-involved youth and young adults. FS2S is an extension of that leadership.
+          </p>
+        </article>
+
+        <article className="panel story-panel">
+          <p className="eyebrow">Convening Leadership</p>
+          <h2>Convening Director and Administrator Levi W. Eckman, J.D.</h2>
+          <p>
+            The convening is directed and administered by Levi W. Eckman, J.D., helping shape a
+            gathering that is both mission-driven and operationally strong, with the goal of
+            sharing strategy, knowledge, and practical models with partners nationwide.
+          </p>
         </article>
       </section>
 
@@ -170,7 +199,7 @@ export default async function HomePage() {
             The 2024 convening brought together leaders from education, mental health, public
             defense, health care, community advocacy, youth services, the private sector, and
             student leadership. That breadth matters because no single institution can do this work
-            alone.
+            alone, and because cross-sector leadership is essential to lasting change.
           </p>
         </article>
 
@@ -179,8 +208,9 @@ export default async function HomePage() {
           <h2>The 2026 convening continues that work with a sharper focus on partnership</h2>
           <p>
             This year’s gathering builds on the relationships, lessons, and shared commitments that
-            have already emerged through FS2S. The goal is not simply to gather again, but to move
-            the work forward together.
+            have already emerged through FS2S. The goal is not simply to gather again, but to share
+            what has been built, strengthen national partnerships, and move the work forward
+            together.
           </p>
         </article>
       </section>
