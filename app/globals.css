@@ -150,7 +150,6 @@ select {
 .petal--8 { top: -16%; left: 12%; animation-delay: -12s; animation-duration: 19s; width: 40px; height: 26px; }
 .petal--9 { top: -10%; left: 50%; animation-delay: -3s; animation-duration: 16s; width: 54px; height: 34px; }
 .petal--10 { top: -9%; left: 90%; animation-delay: -9s; animation-duration: 15s; width: 46px; height: 29px; }
-}
 
 @keyframes petal-fall {
   0% {
