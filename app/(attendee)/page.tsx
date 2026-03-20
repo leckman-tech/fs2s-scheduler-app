@@ -13,21 +13,21 @@ export default async function HomePage() {
   const historyMoments = [
     {
       eyebrow: "2024 Inaugural Convening",
-      title: "The first FS2S gathering brought cross-sector leaders into one room",
+      title: "The inaugural convening opened a shared space for coordination across systems",
       description:
-        "The inaugural 2024 convening gathered roughly 125 educators, clinicians, policymakers, defenders, providers, advocates, and students in Washington, D.C. to coordinate supports for opportunity and justice-involved youth and young adults.",
+        "In 2024, From Silos to Solutions brought together educators, clinicians, policymakers, public defenders, providers, advocates, and students in Washington, D.C. around a shared challenge: how to better coordinate support for opportunity and justice-involved youth and young adults.",
       className: "experience-card--history-2024"
     },
     {
-      eyebrow: "An Annual Convening Arc",
-      title: "Each year builds deeper coordination, stronger partnerships, and clearer action",
+      eyebrow: "A Growing Convening",
+      title: "Each convening deepens relationships, sharpens practice, and builds momentum",
       description:
-        "FS2S has continued to grow as a multi-day convening model that blends keynote conversations, breakout learning, campus-based programming, resource sharing, and coalition-building across sectors.",
+        "FS2S continues to grow as a multi-day gathering that blends keynote conversations, breakout learning, student-centered programming, and relationship-building across sectors.",
       className: "experience-card--history-2025"
     },
     {
       eyebrow: "See Forever Foundation",
-      title: "The convening is grounded in year-round work with young people across D.C.",
+      title: "The convening is rooted in year-round work with young people across Washington",
       description:
         "Hosted by the See Forever Foundation and Maya Angelou Schools, FS2S reflects more than 25 years of restorative, relevant education and youth development for opportunity and justice-involved youth.",
       className: "experience-card--history-foundation"
@@ -46,9 +46,9 @@ export default async function HomePage() {
               Young Adults
             </p>
             <p>
-              From Silos to Solutions is designed to bring educators, youth-serving organizations,
-              policymakers, advocates, and community leaders into closer alignment around young
-              people who are too often forced to navigate disconnected systems on their own.
+              Join educators, youth-serving organizations, policymakers, advocates, and community
+              leaders for three days of conversation, strategy, and partnership focused on young
+              people who too often have to navigate disconnected systems on their own.
             </p>
             <div className="hero-meta">
               <span className="hero-pill">April 1-3, 2026</span>
@@ -76,8 +76,8 @@ export default async function HomePage() {
             <span>years of Maya &amp; See Forever work</span>
           </article>
           <article className="hero-metric">
-            <strong>125+</strong>
-            <span>participants at the 2024 launch</span>
+            <strong>2024</strong>
+            <span>year the inaugural convening launched</span>
           </article>
           <article className="hero-metric">
             <strong>5</strong>
@@ -102,12 +102,11 @@ export default async function HomePage() {
       <section className="context-grid" id="story">
         <article className="panel story-panel">
           <p className="eyebrow">Why FS2S Exists</p>
-          <h2>Breaking down silos is the point, not just the title</h2>
+          <h2>A convening built to move partners from parallel effort to shared action</h2>
           <p>
-            FS2S exists because opportunity and justice-involved youth and young adults are often
-            served by systems that do not communicate clearly with one another. The convening is a
-            place to coordinate supports, surface what is working, and build relationships strong
-            enough to move from isolated effort to shared action.
+            Opportunity and justice-involved youth and young adults are often served by systems
+            that do not communicate clearly with one another. From Silos to Solutions creates space
+            for those systems to listen, learn, and align around more coordinated support.
           </p>
           <div className="story-list">
             <div className="session-info-pill">
@@ -127,11 +126,12 @@ export default async function HomePage() {
 
         <article className="panel story-panel story-panel--accent">
           <p className="eyebrow">See Forever Foundation</p>
-          <h2>This convening grows out of year-round work, not a once-a-year event calendar</h2>
+          <h2>Hosted by See Forever Foundation and Maya Angelou Schools</h2>
           <p>
             The See Forever Foundation and Maya Angelou Schools support young people through
             restorative, relevant education, personalized academic support, well-being, and
-            preparation for life after Maya. That daily work is what gives FS2S its point of view.
+            preparation for life after Maya. FS2S grows directly out of that daily work and the
+            partnerships it requires.
           </p>
           <div className="story-stat-grid">
             <article className="story-stat">
@@ -165,22 +165,22 @@ export default async function HomePage() {
       <section className="context-grid context-grid--history">
         <article className="panel story-panel">
           <p className="eyebrow">2024 Convening Snapshot</p>
-          <h2>The inaugural gathering set the tone for what FS2S is becoming</h2>
+          <h2>The inaugural convening set the tone for what this gathering can become</h2>
           <p>
-            The first convening in 2024 brought together practitioners from education, mental
-            health, public defense, health care, community advocacy, youth services, the private
-            sector, and student leadership. That breadth matters because no single institution can
-            coordinate this work alone.
+            The 2024 convening brought together leaders from education, mental health, public
+            defense, health care, community advocacy, youth services, the private sector, and
+            student leadership. That breadth matters because no single institution can do this work
+            alone.
           </p>
         </article>
 
         <article className="panel story-panel">
           <p className="eyebrow">What 2026 Builds On</p>
-          <h2>This year’s schedule should feel connected to a larger movement</h2>
+          <h2>The 2026 convening continues that work with a sharper focus on partnership</h2>
           <p>
-            The 2026 convening can carry more of that history on the homepage: not just a place and
-            a schedule, but a clearer story about why people gather, what has been built already,
-            and how See Forever’s work continues long after the last session ends.
+            This year’s gathering builds on the relationships, lessons, and shared commitments that
+            have already emerged through FS2S. The goal is not simply to gather again, but to move
+            the work forward together.
           </p>
         </article>
       </section>
@@ -189,31 +189,30 @@ export default async function HomePage() {
         <article className="experience-card experience-card--city">
           <div className="experience-card__copy">
             <p className="eyebrow">Washington Context</p>
-            <h2>Grounded in the city where policy, practice, and advocacy collide</h2>
+            <h2>Hosted in a city where policy, practice, and advocacy meet in real time</h2>
             <p>
-              Washington, D.C. is more than a backdrop. It is part of the convening story and part
-              of why partnership work here carries national significance.
+              Washington, D.C. gives this convening urgency and reach, bringing local experience
+              into conversation with broader policy and systems change.
             </p>
           </div>
         </article>
         <article className="experience-card experience-card--scholars">
           <div className="experience-card__copy">
             <p className="eyebrow">Scholar-Centered</p>
-            <h2>Scholar sessions and lived experience should stay central in the narrative</h2>
+            <h2>Young people and lived experience remain at the center of the conversation</h2>
             <p>
-              The public experience should make clear that this convening is ultimately about young
-              people, their pathways, and the adults and systems around them doing better work
-              together.
+              Scholar sessions and lived experience keep the convening grounded in the realities,
+              strengths, and aspirations of the young people this work is meant to serve.
             </p>
           </div>
         </article>
         <article className="experience-card experience-card--agenda">
           <div className="experience-card__copy">
             <p className="eyebrow">Useful on the Move</p>
-            <h2>Still a schedule tool, just one with more substance and identity</h2>
+            <h2>Designed to help you move through the convening with clarity</h2>
             <p>
-              Attendees still need quick filters, favorites, updates, and room changes, but they
-              should also feel the larger purpose of the event when they land here.
+              Use the schedule to find sessions, save key moments, and check updates quickly
+              throughout the day without losing sight of the larger purpose of the gathering.
             </p>
           </div>
         </article>
