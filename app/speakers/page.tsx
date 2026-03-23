@@ -7,7 +7,7 @@ import { displaySessionTitle, formatDateLabel, labelForCategory } from "@/lib/ut
 export const metadata: Metadata = buildMetadata({
   title: "Speakers and Panelists",
   description:
-    "Browse the public speaker and panelist directory for From Silos to Solutions 2026, including keynote, panel, workshop, and featured convening voices.",
+    "Browse the public speaker and panelist directory for From Silos to Solutions 2026.",
   path: "/speakers"
 });
 
@@ -22,8 +22,8 @@ export default async function SpeakersPage() {
             <p className="eyebrow">Featured voices</p>
             <h1>Speakers &amp; panelists</h1>
             <p>
-              Browse the public speaker and panelist directory for From Silos to Solutions 2026 and
-              see who is connected to the convening program.
+              Browse the public directory of speakers and panelists connected to the 2026
+              convening program.
             </p>
             <div className="hero-meta">
               <span className="hero-pill">{speakers.length} speaker profiles</span>

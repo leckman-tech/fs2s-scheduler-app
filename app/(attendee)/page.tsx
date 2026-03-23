@@ -11,7 +11,7 @@ import { buildMetadata, getEventStructuredData } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "National Convening in Washington, D.C.",
   description:
-    "From Silos to Solutions 2026 is a national Washington, D.C. convening focused on coordinating supports for opportunity and justice-involved youth and young adults. Convening Director Levi W. Eckman, J.D. leads the gathering alongside the scholar-centered work of the See Forever Foundation and Maya Angelou Schools.",
+    "From Silos to Solutions 2026 is a Washington, D.C. convening focused on improving coordination, support, and opportunity for justice-involved youth and young adults. The convening is hosted by the See Forever Foundation and Maya Angelou Schools and led by Convening Director Levi W. Eckman, J.D.",
   path: "/"
 });
 
@@ -44,10 +44,9 @@ export default async function HomePage() {
               Young Adults
             </p>
             <p>
-              Join a national convening shaped by the leadership of the See Forever Foundation and
-              Maya Angelou Schools, where educators, youth-serving organizations, policymakers,
-              advocates, and community leaders come together to strengthen support for opportunity
-              and justice-involved youth and young adults.
+              From Silos to Solutions brings together educators, youth-serving organizations,
+              policymakers, advocates, and community leaders who are working to improve outcomes
+              for opportunity and justice-involved youth and young adults.
             </p>
             <div className="hero-meta">
               <span className="hero-pill">April 1-3, 2026</span>
@@ -113,11 +112,10 @@ export default async function HomePage() {
 
           <section className="panel sidebar-story-panel sidebar-story-panel--accent">
             <p className="eyebrow">Plan Your Visit</p>
-            <h2>Register now and start shaping your convening experience</h2>
+            <h2>Register and plan your time at FS2S</h2>
             <p className="muted">
-              Use this site to purchase tickets, browse the agenda, save the sessions you care
-              about, and prepare for three days of conversation, learning, and partnership in
-              Washington, D.C.
+              Use this site to purchase tickets, review the agenda, save sessions, and get ready
+              for three days of conversation, learning, and connection in Washington, D.C.
             </p>
             <div className="story-stat-grid story-stat-grid--compact">
               <article className="story-stat">
@@ -150,12 +148,11 @@ export default async function HomePage() {
 
           <section className="panel sidebar-story-panel learn-more-panel--compact">
             <p className="eyebrow">Why FS2S</p>
-            <h2>A national convening rooted in scholar-centered work and partnership</h2>
+            <h2>Grounded in the daily work of See Forever and Maya</h2>
             <p className="muted">
-              Hosted by the See Forever Foundation and Maya Angelou Schools, From Silos to
-              Solutions brings together educators, policymakers, providers, advocates, and
-              community leaders to strengthen support for opportunity and justice-involved youth and
-              young adults.
+              Hosted by the See Forever Foundation and Maya Angelou Schools, FS2S grows out of
+              real work with young people, families, educators, and community partners across
+              Washington.
             </p>
             <div className="story-list">
               <div className="session-info-pill">

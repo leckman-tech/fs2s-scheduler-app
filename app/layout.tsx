@@ -30,7 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <div>
                 <p className="eyebrow">From Silos to Solutions 2026 Convening</p>
                 <Link href="/" className="site-title">
-                  Conference Landing Page
+                  From Silos to Solutions 2026
                 </Link>
               </div>
               <nav className="site-nav" aria-label="Primary navigation">

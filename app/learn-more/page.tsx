@@ -7,30 +7,30 @@ import { buildMetadata, getLeadershipStructuredData } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "Mission, Leadership, and Convening History",
   description:
-    "Learn about the mission behind From Silos to Solutions 2026, the work of the See Forever Foundation, foundation leadership under Dr. Clarisse Mendoza-Davis, and Convening Director Levi W. Eckman, J.D.",
+    "Learn more about the work behind From Silos to Solutions 2026, the leadership of the See Forever Foundation, and the people guiding this year's convening.",
   path: "/learn-more"
 });
 
 const storyShowcases = [
   {
     eyebrow: "Inside the Convening",
-    title: "Cross-sector dialogue designed for candor and practical strategy",
+    title: "A space for honest conversation and practical problem-solving",
     description:
-      "FS2S creates space for educators, advocates, policymakers, providers, and community leaders to learn from one another and build stronger coordination across systems.",
+      "FS2S brings educators, advocates, policymakers, providers, and community leaders into the same room to share what is working, where gaps remain, and what stronger coordination can look like.",
     imageClass: "showcase-card__image--city"
   },
   {
     eyebrow: "Voices in the Room",
-    title: "Lived experience and practitioner insight remain close to the work",
+    title: "Lived experience, practice, and policy stay in the same conversation",
     description:
-      "The convening is strongest when participants can speak honestly about what young people need, what systems miss, and what partnership looks like in practice.",
+      "The convening works best when young people, practitioners, and system leaders can speak plainly about what support looks like in real life and where systems still fall short.",
     imageClass: "showcase-card__image--voices"
   },
   {
     eyebrow: "Collaboration in Motion",
-    title: "Workshops and discussions are built for shared problem-solving",
+    title: "Sessions are built for exchange, not just presentation",
     description:
-      "Sessions are only part of the value. The conversation between people, sectors, and communities is part of what moves the convening forward.",
+      "The schedule matters, but so do the conversations that happen around it. FS2S is designed to help people leave with stronger relationships, clearer ideas, and practical next steps.",
     imageClass: "showcase-card__image--motion"
   }
 ];
@@ -48,15 +48,15 @@ export default function LearnMorePage() {
         <div className="hero-card__grid">
           <div className="hero-card__content">
             <p className="eyebrow">Learn More</p>
-            <h1>The story behind From Silos to Solutions</h1>
+            <h1>About the convening</h1>
             <p className="hero-kicker">
-              Power Through Partnerships is grounded in long-term work, cross-sector leadership,
-              and a commitment to sharing what supports scholars best.
+              Power Through Partnerships grows out of the daily work of supporting young people,
+              strengthening schools, and building real partnerships across systems.
             </p>
             <p>
-              FS2S is more than a conference program. It is a convening built out of real
-              institutional experience, designed to help national partners learn from one another
-              and strengthen support for opportunity and justice-involved youth and young adults.
+              From Silos to Solutions is a place to share practice, build stronger relationships,
+              and learn from people who are doing this work every day with young people and
+              communities.
             </p>
             <div className="hero-actions">
               <Link href="/" className="button button-link">
@@ -82,12 +82,12 @@ export default function LearnMorePage() {
       <section className="context-grid">
         <article className="panel story-panel">
           <p className="eyebrow">Why FS2S Exists</p>
-          <h2>A national convening built to move partners from parallel effort to shared action</h2>
+          <h2>Built to help partners move from separate efforts to shared work</h2>
           <p>
             Opportunity and justice-involved youth and young adults are often served by systems
-            that do not communicate clearly with one another. From Silos to Solutions creates space
-            for those systems to listen, learn, and align around more coordinated support, guided
-            by leaders who have spent decades building real pathways for scholars across Washington.
+            that do not communicate clearly with one another. From Silos to Solutions makes room
+            for those systems to listen, learn, and coordinate more effectively around the needs of
+            young people.
           </p>
           <div className="story-list">
             <div className="session-info-pill">
@@ -107,13 +107,12 @@ export default function LearnMorePage() {
 
         <article className="panel story-panel story-panel--accent">
           <p className="eyebrow">See Forever Foundation</p>
-          <h2>Hosted by a leading voice in education, advocacy, and scholar opportunity</h2>
+          <h2>Grounded in the work of See Forever and Maya Angelou Schools</h2>
           <p>
             The See Forever Foundation and Maya Angelou Schools support young people through
             restorative, relevant education, personalized academic support, well-being, and
-            preparation for life after Maya. FS2S grows directly out of that daily work, the many
-            campuses and pathways developed for scholars, and a commitment to sharing that
-            knowledge nationally.
+            preparation for life after Maya. FS2S grows directly out of that daily work and out of
+            a commitment to share what has been learned with partners across the country.
           </p>
         </article>
       </section>
@@ -123,7 +122,7 @@ export default function LearnMorePage() {
           <div className="feature-story__image feature-story__image--inaugural" aria-hidden="true" />
           <div className="feature-story__content">
             <p className="eyebrow">2024 Inaugural Convening</p>
-            <h2>The first gathering proved there is real demand for serious cross-sector coordination</h2>
+            <h2>The first gathering showed how much people want a serious cross-sector space for this work</h2>
             <p>
               In 2024, FS2S brought together leaders from education, mental health, public
               defense, health care, youth services, community advocacy, the private sector, and
@@ -152,8 +151,8 @@ export default function LearnMorePage() {
             <h2>Convening Director Levi W. Eckman, J.D.</h2>
             <p>
               Levi W. Eckman, J.D. serves as Convening Director and Administrator for From Silos
-              to Solutions 2026, helping guide a convening that is mission-driven, strategically
-              grounded, and designed to share practical lessons with partners across the country.
+              to Solutions 2026, helping guide a convening that is focused, practical, and built
+              to share useful lessons with partners across the country.
             </p>
             <p>
               His broader advocacy includes service on the OST Commission and contributions to
@@ -184,8 +183,8 @@ export default function LearnMorePage() {
             </p>
             <p>
               From Silos to Solutions grows directly out of that institutional work, carrying
-              forward a leadership approach rooted in scholar success, family partnership, and
-              meaningful accountability to the communities the schools and foundation serve.
+              forward an approach rooted in scholar success, family partnership, and accountability
+              to the communities the schools and foundation serve.
             </p>
           </div>
         </article>
@@ -206,11 +205,11 @@ export default function LearnMorePage() {
 
       <section className="panel callout-panel">
         <p className="eyebrow">Join the Convening</p>
-        <h2>Bring this history into the room with you in April</h2>
+        <h2>Join us in Washington this April</h2>
         <p className="muted">
-          The 2026 convening builds on what FS2S has already started: stronger relationships,
-          sharper practice, and a wider national network committed to coordinated support for
-          opportunity and justice-involved youth and young adults.
+          The 2026 convening builds on the relationships and lessons already underway and creates
+          more room for honest conversation, practical learning, and stronger partnership across
+          systems.
         </p>
         <div className="hero-actions">
           <Link href="/" className="button-secondary button-link">
