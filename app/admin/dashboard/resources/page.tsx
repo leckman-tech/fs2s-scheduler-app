@@ -66,7 +66,7 @@ export default async function AdminResourcesPage({
         <div className="section-heading">
           <h2>Upload document</h2>
         </div>
-        <form action={uploadPortalDocument} className="form-grid">
+        <form action={uploadPortalDocument} className="form-grid" encType="multipart/form-data">
           <div className="form-grid form-grid--two">
             <div className="field">
               <label htmlFor="session_id">Attach to session</label>
@@ -100,6 +100,10 @@ export default async function AdminResourcesPage({
           <div className="field">
             <label htmlFor="file">File</label>
             <input id="file" name="file" type="file" required />
+            <p className="field-hint" style={{ marginTop: "0.45rem" }}>
+              Upload PDFs, slides, handouts, or other conference resources. Files up to 50 MB are
+              supported.
+            </p>
           </div>
           <label className="field" style={{ gridAutoFlow: "column", justifyContent: "start", alignItems: "center" }}>
             <input type="checkbox" name="published" defaultChecked />
