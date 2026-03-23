@@ -158,60 +158,61 @@ export default async function HomePage() {
         </article>
       </section>
 
-      <section className="experience-band">
-        <article className="experience-card experience-card--city">
-          <div className="experience-card__copy">
-            <p className="eyebrow">Inside the Convening</p>
-            <h2>The room is built for honest discussion, practical strategy, and real connection</h2>
-            <p>
-              FS2S is designed to bring different sectors into the same room with enough structure
-              to learn from one another and enough openness to build real partnership.
-            </p>
-          </div>
-        </article>
-        <article className="experience-card experience-card--scholars">
-          <div className="experience-card__copy">
-            <p className="eyebrow">Voices in the Room</p>
-            <h2>Lived experience, practitioner wisdom, and community leadership stay close to the work</h2>
-            <p>
-              The convening is strongest when people can speak frankly about what young people need,
-              what systems miss, and what partnership looks like in practice.
-            </p>
-          </div>
-        </article>
-        <article className="experience-card experience-card--agenda">
-          <div className="experience-card__copy">
-            <p className="eyebrow">Collaboration in Motion</p>
-            <h2>Sessions are only part of the value; the exchange between people is part of the point</h2>
-            <p>
-              Use the schedule to move with confidence, then let the conversations, workshops, and
-              shared problem-solving carry the convening forward.
-            </p>
-          </div>
-        </article>
-      </section>
-
-      <section className="panel learn-more-panel">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Learn More</p>
-            <h2>The full story of FS2S, See Forever, and the convening leadership</h2>
-          </div>
-        </div>
-        <p className="muted">
-          If you want the deeper context behind the convening, visit the Learn More page for the
-          history of FS2S, highlights from past convenings, and more about the organizational work
-          that powers this gathering.
-        </p>
-        <div className="hero-actions">
-          <Link href="/learn-more" className="button button-link">
-            Go to Learn More
-          </Link>
-        </div>
-      </section>
-
       <div className="schedule-layout" id="schedule">
-        <AnnouncementsBanner announcements={announcements} />
+        <aside className="schedule-sidebar stack">
+          <AnnouncementsBanner announcements={announcements} />
+
+          <section className="experience-rail">
+            <article className="experience-card experience-card--city">
+              <div className="experience-card__copy">
+                <p className="eyebrow">Inside the Convening</p>
+                <h2>The room is built for honest discussion, practical strategy, and real connection</h2>
+                <p>
+                  FS2S is designed to bring different sectors into the same room with enough structure
+                  to learn from one another and enough openness to build real partnership.
+                </p>
+              </div>
+            </article>
+            <article className="experience-card experience-card--scholars">
+              <div className="experience-card__copy">
+                <p className="eyebrow">Voices in the Room</p>
+                <h2>Lived experience, practitioner wisdom, and community leadership stay close to the work</h2>
+                <p>
+                  The convening is strongest when people can speak frankly about what young people
+                  need, what systems miss, and what partnership looks like in practice.
+                </p>
+              </div>
+            </article>
+            <article className="experience-card experience-card--agenda">
+              <div className="experience-card__copy">
+                <p className="eyebrow">Collaboration in Motion</p>
+                <h2>Sessions are only part of the value; the exchange between people is part of the point</h2>
+                <p>
+                  Use the schedule to move with confidence, then let the conversations, workshops,
+                  and shared problem-solving carry the convening forward.
+                </p>
+              </div>
+            </article>
+          </section>
+
+          <section className="panel learn-more-panel learn-more-panel--compact">
+            <div className="section-heading">
+              <div>
+                <p className="eyebrow">Learn More</p>
+                <h2>The full story of FS2S, See Forever, and the convening leadership</h2>
+              </div>
+            </div>
+            <p className="muted">
+              Visit the Learn More page for the history of FS2S, highlights from past convenings,
+              and more about the organizational work behind this gathering.
+            </p>
+            <div className="hero-actions">
+              <Link href="/learn-more" className="button button-link">
+                Go to Learn More
+              </Link>
+            </div>
+          </section>
+        </aside>
         <ScheduleExplorer sessions={sessions} days={days} />
       </div>
     </div>
