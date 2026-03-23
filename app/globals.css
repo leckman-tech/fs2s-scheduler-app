@@ -823,20 +823,17 @@ select {
 }
 
 .feature-story__portrait-image {
-  object-fit: cover;
-  object-position: center 18%;
-  transform: scale(0.9);
-  transform-origin: center top;
+  object-fit: contain;
+  object-position: center center;
+  padding: 1rem;
 }
 
 .feature-story__portrait-image--levi {
-  object-position: center 18%;
-  transform: scale(0.9);
+  object-position: center 20%;
 }
 
 .feature-story__portrait-image--clarisse {
-  object-position: center 14%;
-  transform: scale(0.92);
+  object-position: center 18%;
 }
 
 .callout-panel {
