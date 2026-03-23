@@ -117,6 +117,38 @@ export default function LearnMorePage() {
         </article>
       </section>
 
+      <section className="feature-story feature-story--reverse">
+        <div className="feature-story__video-frame">
+          <video
+            className="feature-story__video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/fs2s/fs2s-room-wide.jpg"
+            aria-label="Short video from the From Silos to Solutions convening"
+          >
+            <source src="/fs2s/silos.mov" type="video/quicktime" />
+            Your browser does not support embedded video.
+          </video>
+        </div>
+        <div className="feature-story__content">
+          <p className="eyebrow">Watch the Convening</p>
+          <h2>See the room, the exchange, and the energy behind FS2S</h2>
+          <p>
+            This short video offers a closer look at the atmosphere of From Silos to Solutions:
+            people learning together, building relationships, and sharing ideas that can shape
+            stronger support for young people.
+          </p>
+          <div className="hero-actions">
+            <a href="/fs2s/silos.mov" className="button-secondary button-link" target="_blank" rel="noreferrer">
+              Open video
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section className="feature-story-grid">
         <article className="feature-story">
           <div className="feature-story__image feature-story__image--inaugural" aria-hidden="true" />
