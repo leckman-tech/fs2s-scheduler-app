@@ -22,6 +22,7 @@
   --photo-audience-question: url("/fs2s/fs2s-audience-question.jpg");
   --photo-keynote-speaker: url("/fs2s/fs2s-keynote-speaker.jpg");
   --photo-listening-attendee: url("/fs2s/fs2s-listening-attendee.jpg");
+  --photo-levi-face: url("/fs2s/levi-face.png");
   --photo-engaged-attendee: url("/fs2s/fs2s-engaged-attendee.jpg");
   --photo-partnership-activity: url("/fs2s/fs2s-partnership-activity.jpg");
   --photo-table-conversation: url("/fs2s/fs2s-table-conversation.jpg");
@@ -767,6 +768,10 @@ select {
   order: 2;
 }
 
+.feature-story--reverse .feature-story__portrait {
+  order: 2;
+}
+
 .feature-story--reverse .feature-story__content {
   order: 1;
 }
@@ -781,10 +786,6 @@ select {
 
 .feature-story__image--inaugural {
   background-image: var(--photo-speaker-podium);
-}
-
-.feature-story__image--leadership {
-  background-image: var(--photo-listening-attendee);
 }
 
 .feature-story__image--foundation {
@@ -809,6 +810,20 @@ select {
   margin: 0;
   color: var(--muted);
   line-height: 1.7;
+}
+
+.feature-story__portrait {
+  position: relative;
+  min-height: 300px;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 1px rgba(17, 17, 17, 0.06);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.feature-story__portrait-image {
+  object-fit: cover;
+  object-position: center top;
 }
 
 .callout-panel {
@@ -1580,6 +1595,7 @@ th {
   }
 
   .feature-story--reverse .feature-story__image,
+  .feature-story--reverse .feature-story__portrait,
   .feature-story--reverse .feature-story__content {
     order: initial;
   }
@@ -1663,5 +1679,9 @@ th {
 
   .feature-story__image {
     min-height: 220px;
+  }
+
+  .feature-story__portrait {
+    min-height: 260px;
   }
 }

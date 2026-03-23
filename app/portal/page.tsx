@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { LogoutButton } from "@/components/logout-button";
 import { deleteSpeakerPortalMessage, postSpeakerPortalMessage } from "@/lib/actions/admin";
 import {
@@ -6,6 +7,7 @@ import {
   getSpeakerPortalMessages,
   requirePrivateScheduleUser
 } from "@/lib/queries";
+import { buildMetadata } from "@/lib/seo";
 import {
   displaySessionTitle,
   formatDateLabel,
@@ -13,6 +15,13 @@ import {
   formatTimestamp,
   labelForCategory
 } from "@/lib/utils";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Speaker and Presenter Portal",
+  description: "Private speaker and presenter logistics portal for FS2S 2026.",
+  path: "/portal",
+  noIndex: true
+});
 
 export default async function PortalPage({
   searchParams

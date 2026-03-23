@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { EVENTBRITE_URL } from "@/lib/constants";
 import { buildMetadata, getLeadershipStructuredData } from "@/lib/seo";
@@ -137,7 +138,15 @@ export default function LearnMorePage() {
         </article>
 
         <article className="feature-story feature-story--reverse">
-          <div className="feature-story__image feature-story__image--leadership" aria-hidden="true" />
+          <div className="feature-story__portrait">
+            <Image
+              src="/fs2s/levi-face.png"
+              alt="Levi W. Eckman, J.D., Convening Director"
+              fill
+              sizes="(max-width: 860px) 100vw, 420px"
+              className="feature-story__portrait-image"
+            />
+          </div>
           <div className="feature-story__content">
             <p className="eyebrow">Convening Leadership</p>
             <h2>Convening Director Levi W. Eckman, J.D.</h2>
