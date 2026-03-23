@@ -1,10 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EVENTBRITE_URL, TICKET_PROMO_CODE } from "@/lib/constants";
 
 export function TicketPromoModal() {
   const [isOpen, setIsOpen] = useState(true);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
 
   const dismiss = () => {
     setIsOpen(false);
@@ -15,7 +30,13 @@ export function TicketPromoModal() {
   }
 
   return (
-    <div className="promo-modal" role="dialog" aria-modal="true" aria-labelledby="ticket-promo-title">
+    <div
+      className="promo-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ticket-promo-title"
+      aria-describedby="ticket-promo-description"
+    >
       <div className="promo-modal__scrim" onClick={dismiss} />
       <div className="promo-modal__card">
         <button
@@ -28,7 +49,7 @@ export function TicketPromoModal() {
         </button>
         <p className="eyebrow">Registration Open</p>
         <h2 id="ticket-promo-title">Buy your tickets today</h2>
-        <p>
+        <p id="ticket-promo-description">
           Join us for From Silos to Solutions 2026 and use code{" "}
           <strong>{TICKET_PROMO_CODE}</strong> for 75% off the first 50 registrations.
         </p>

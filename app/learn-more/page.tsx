@@ -1,26 +1,50 @@
 import Link from "next/link";
 
+const storyShowcases = [
+  {
+    eyebrow: "Inside the Convening",
+    title: "Cross-sector dialogue designed for candor and practical strategy",
+    description:
+      "FS2S creates space for educators, advocates, policymakers, providers, and community leaders to learn from one another and build stronger coordination across systems.",
+    imageClass: "showcase-card__image--city"
+  },
+  {
+    eyebrow: "Voices in the Room",
+    title: "Lived experience and practitioner insight remain close to the work",
+    description:
+      "The convening is strongest when participants can speak honestly about what young people need, what systems miss, and what partnership looks like in practice.",
+    imageClass: "showcase-card__image--voices"
+  },
+  {
+    eyebrow: "Collaboration in Motion",
+    title: "Workshops and discussions are built for shared problem-solving",
+    description:
+      "Sessions are only part of the value. The conversation between people, sectors, and communities is part of what moves the convening forward.",
+    imageClass: "showcase-card__image--motion"
+  }
+];
+
 const historyMoments = [
   {
     eyebrow: "2024 Inaugural Convening",
-    title: "The inaugural convening opened a shared space for coordination across systems",
+    title: "The first convening set a clear standard for cross-sector partnership",
     description:
-      "In 2024, From Silos to Solutions brought together educators, clinicians, policymakers, public defenders, providers, advocates, and students in Washington, D.C. around a shared challenge: how to better coordinate support for opportunity and justice-involved youth and young adults.",
-    className: "experience-card--history-2024"
+      "The 2024 gathering brought together leaders from education, mental health, public defense, health care, community advocacy, youth services, the private sector, and student leadership in Washington, D.C.",
+    imageClass: "showcase-card__image--history-2024"
   },
   {
     eyebrow: "A Growing Convening",
     title: "Each convening deepens relationships, sharpens practice, and builds momentum",
     description:
       "FS2S continues to grow as a multi-day gathering that blends keynote conversations, breakout learning, student-centered programming, and relationship-building across sectors.",
-    className: "experience-card--history-2025"
+    imageClass: "showcase-card__image--history-2025"
   },
   {
     eyebrow: "See Forever Foundation",
     title: "The convening is rooted in year-round work with young people across Washington",
     description:
       "Hosted by the See Forever Foundation and Maya Angelou Schools, FS2S reflects more than 25 years of restorative, relevant education and youth development for opportunity and justice-involved youth.",
-    className: "experience-card--history-foundation"
+    imageClass: "showcase-card__image--history-foundation"
   }
 ];
 
@@ -124,44 +148,25 @@ export default function LearnMorePage() {
         </article>
       </section>
 
-      <section className="experience-band">
-        <article className="experience-card experience-card--city">
-          <div className="experience-card__copy">
-            <p className="eyebrow">Inside the Convening</p>
-            <h2>The room is built for honest discussion, practical strategy, and real connection</h2>
-            <p>
-              FS2S is designed to bring different sectors into the same room with enough structure
-              to learn from one another and enough openness to build real partnership.
-            </p>
-          </div>
-        </article>
-        <article className="experience-card experience-card--scholars">
-          <div className="experience-card__copy">
-            <p className="eyebrow">Voices in the Room</p>
-            <h2>Lived experience, practitioner wisdom, and community leadership stay close to the work</h2>
-            <p>
-              The convening is strongest when people can speak frankly about what young people
-              need, what systems miss, and what partnership looks like in practice.
-            </p>
-          </div>
-        </article>
-        <article className="experience-card experience-card--agenda">
-          <div className="experience-card__copy">
-            <p className="eyebrow">Collaboration in Motion</p>
-            <h2>Sessions are only part of the value; the exchange between people is part of the point</h2>
-            <p>
-              Use the schedule to move with confidence, then let the conversations, workshops, and
-              shared problem-solving carry the convening forward.
-            </p>
-          </div>
-        </article>
+      <section className="showcase-grid">
+        {storyShowcases.map((item) => (
+          <article key={item.title} className="showcase-card">
+            <div className={`showcase-card__image ${item.imageClass}`} aria-hidden="true" />
+            <div className="showcase-card__body">
+              <p className="showcase-card__eyebrow">{item.eyebrow}</p>
+              <h2>{item.title}</h2>
+              <p>{item.description}</p>
+            </div>
+          </article>
+        ))}
       </section>
 
-      <section className="experience-band">
+      <section className="showcase-grid">
         {historyMoments.map((moment) => (
-          <article key={moment.title} className={`experience-card ${moment.className}`}>
-            <div className="experience-card__copy">
-              <p className="eyebrow">{moment.eyebrow}</p>
+          <article key={moment.title} className="showcase-card">
+            <div className={`showcase-card__image ${moment.imageClass}`} aria-hidden="true" />
+            <div className="showcase-card__body">
+              <p className="showcase-card__eyebrow">{moment.eyebrow}</p>
               <h2>{moment.title}</h2>
               <p>{moment.description}</p>
             </div>

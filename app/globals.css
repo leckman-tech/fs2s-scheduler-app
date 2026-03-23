@@ -66,6 +66,15 @@ a {
   text-decoration: none;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(193, 18, 31, 0.32);
+  outline-offset: 3px;
+}
+
 button,
 input,
 textarea,
@@ -485,6 +494,78 @@ select {
   display: grid;
   gap: 1.35rem;
   margin-top: 0.25rem;
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.showcase-card {
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--shadow);
+}
+
+.showcase-card__image {
+  min-height: 220px;
+  background-size: cover;
+  background-position: center;
+}
+
+.showcase-card__image--city {
+  background-image: var(--photo-room-wide);
+}
+
+.showcase-card__image--voices {
+  background-image: var(--photo-table-conversation);
+}
+
+.showcase-card__image--motion {
+  background-image: var(--photo-partnership-activity);
+}
+
+.showcase-card__image--history-2024 {
+  background-image: var(--photo-speaker-podium);
+}
+
+.showcase-card__image--history-2025 {
+  background-image: var(--photo-audience-question);
+}
+
+.showcase-card__image--history-foundation {
+  background-image: var(--photo-listening-attendee);
+}
+
+.showcase-card__body {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.15rem 1.2rem 1.25rem;
+}
+
+.showcase-card__eyebrow {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.showcase-card__body h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.showcase-card__body p:last-child {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.62;
 }
 
 .context-grid {
@@ -1263,6 +1344,7 @@ th {
 
   .hero-metrics,
   .experience-band,
+  .showcase-grid,
   .story-stat-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -1323,8 +1405,13 @@ th {
   .hero-card__visual,
   .hero-metrics,
   .experience-band,
+  .showcase-grid,
   .story-stat-grid {
     grid-template-columns: 1fr;
+  }
+
+  .showcase-card__image {
+    min-height: 200px;
   }
 
   .hero-photo--dc {
