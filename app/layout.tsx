@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BottomLiveUpdatesBar } from "@/components/bottom-live-updates-bar";
 import { EVENTBRITE_URL } from "@/lib/constants";
 import { siteMetadata } from "@/lib/seo";
 import "./globals.css";
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <Link href="/admin/login">Admin Portal</Link>
             </div>
           </footer>
+          <BottomLiveUpdatesBar />
         </div>
       </body>
     </html>
