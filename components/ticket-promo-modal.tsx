@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { EVENTBRITE_URL, TICKET_PROMO_CODE } from "@/lib/constants";
+import { EVENTBRITE_URL } from "@/lib/constants";
 
-export function TicketPromoModal() {
+export function HomeVideoModal() {
   const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
@@ -34,36 +34,51 @@ export function TicketPromoModal() {
       className="promo-modal"
       role="dialog"
       aria-modal="true"
-      aria-labelledby="ticket-promo-title"
-      aria-describedby="ticket-promo-description"
+      aria-labelledby="home-video-title"
+      aria-describedby="home-video-description"
     >
       <div className="promo-modal__scrim" onClick={dismiss} />
-      <div className="promo-modal__card">
+      <div className="promo-modal__card promo-modal__card--video">
         <button
           type="button"
           className="promo-modal__close"
           onClick={dismiss}
-          aria-label="Close ticket offer"
+          aria-label="Close convening video"
         >
           x
         </button>
-        <p className="eyebrow">Registration Open</p>
-        <h2 id="ticket-promo-title">Register for FS2S 2026</h2>
-        <p id="ticket-promo-description">
-          Use code <strong>{TICKET_PROMO_CODE}</strong> for 75% off the first 50 registrations.
+        <p className="eyebrow">Welcome to FS2S 2026</p>
+        <h2 id="home-video-title">See the convening in motion</h2>
+        <p id="home-video-description">
+          A quick look at the exchange, energy, and shared purpose behind From Silos to Solutions.
         </p>
+        <div className="promo-modal__video-frame">
+          <video
+            className="promo-modal__video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            controls
+            preload="metadata"
+            poster="/fs2s/fs2s-room-wide.jpg"
+          >
+            <source src="/fs2s/silos.mov" type="video/quicktime" />
+            Your browser does not support embedded video.
+          </video>
+        </div>
         <div className="promo-modal__actions">
+          <button type="button" className="button-tertiary" onClick={dismiss}>
+            Explore schedule
+          </button>
           <a
             href={EVENTBRITE_URL}
             className="button button-link"
             target="_blank"
             rel="noreferrer"
           >
-            Get tickets
+            Purchase tickets
           </a>
-          <button type="button" className="button-secondary" onClick={dismiss}>
-            Maybe later
-          </button>
         </div>
       </div>
     </div>

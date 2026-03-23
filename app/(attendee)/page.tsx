@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AnnouncementsBanner } from "@/components/announcements-banner";
+import { HomeVideoModal } from "@/components/ticket-promo-modal";
 import { LiveUpdatesTicker } from "@/components/live-updates-ticker";
 import { ScheduleExplorer } from "@/components/schedule-explorer";
-import { TicketPromoModal } from "@/components/ticket-promo-modal";
 import { EVENTBRITE_URL, TICKET_PROMO_CODE } from "@/lib/constants";
 import { getConferenceDays, getPublicAnnouncements, getPublicSessions } from "@/lib/queries";
 import { buildMetadata, getEventStructuredData } from "@/lib/seo";
@@ -31,7 +31,7 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <TicketPromoModal />
+      <HomeVideoModal />
       <LiveUpdatesTicker announcements={announcements} />
 
       <section className="hero-card">

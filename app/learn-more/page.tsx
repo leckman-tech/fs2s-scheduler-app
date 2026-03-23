@@ -118,31 +118,21 @@ export default function LearnMorePage() {
       </section>
 
       <section className="feature-story feature-story--reverse">
-        <div className="feature-story__video-frame">
-          <video
-            className="feature-story__video"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster="/fs2s/fs2s-room-wide.jpg"
-            aria-label="Short video from the From Silos to Solutions convening"
-          >
-            <source src="/fs2s/silos.mov" type="video/quicktime" />
-            Your browser does not support embedded video.
-          </video>
-        </div>
+        <div className="feature-story__image feature-story__image--video" aria-hidden="true" />
         <div className="feature-story__content">
           <p className="eyebrow">Watch the Convening</p>
-          <h2>See the room, the exchange, and the energy behind FS2S</h2>
+          <h2>See the room, the exchange, and the shared purpose behind FS2S</h2>
           <p>
-            This short video offers a closer look at the atmosphere of From Silos to Solutions:
-            people learning together, building relationships, and sharing ideas that can shape
-            stronger support for young people.
+            The landing page now opens with a short convening video. If you would rather watch it
+            in a separate window, you can open it directly here.
           </p>
           <div className="hero-actions">
-            <a href="/fs2s/silos.mov" className="button-secondary button-link" target="_blank" rel="noreferrer">
+            <a
+              href="/fs2s/silos.mov"
+              className="button-secondary button-link"
+              target="_blank"
+              rel="noreferrer"
+            >
               Open video
             </a>
           </div>
