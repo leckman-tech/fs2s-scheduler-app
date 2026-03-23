@@ -1,3 +1,14 @@
+update public.portal_documents
+set session_id = null
+where session_id in (
+  select id
+  from public.sessions
+  where date between '2026-04-01' and '2026-04-03'
+);
+
+delete from public.sessions
+where date between '2026-04-01' and '2026-04-03';
+
 insert into public.speakers (slug, name, organization) values
   ('dr-bettina-love', 'Dr. Bettina Love', null),
   ('shandell-richards', 'Shandell Richards', 'Horton''s Kids'),
@@ -63,25 +74,7 @@ insert into public.sessions (session_code, placeholder_code, final_title, title,
   ('d3s7', null, null, 'Transition & Movement to Campus Spaces', 'transition-movement-to-campus-spaces', 'transition', '2026-04-03', '2026-04-03T12:20:00-04:00', '2026-04-03T12:30:00-04:00', 'Maya Angelou Learning Campus, P.A.C., Cafeteria, & Gymnasium', 'Campus Transition', 'Transition period between programming blocks.', 'Transition period between programming blocks.', null, 'scheduled', true, false, false),
   ('d3s8', null, null, 'Community Lunch & Campus Experience', 'community-lunch-campus-experience', 'lunch', '2026-04-03', '2026-04-03T12:30:00-04:00', '2026-04-03T14:00:00-04:00', 'Maya Angelou Learning Campus, P.A.C., Cafeteria, & Gymnasium', 'Cafeteria (Lunch) & Gymnasium (Student Exhibits, Partner Engagement, Tours)', 'Shared lunch, campus engagement, and time with student exhibits, partner engagement, and tours.', 'Shared lunch, campus engagement, and time with student exhibits, partner engagement, and tours.', null, 'scheduled', true, false, false),
   ('d3s9', null, null, 'Dr. Maya Angelou Birthday Celebration with Scholars & Attendees', 'dr-maya-angelou-birthday-celebration-with-scholars-attendees', 'scholar_session', '2026-04-03', '2026-04-03T14:00:00-04:00', '2026-04-03T15:30:00-04:00', 'Maya Angelou Learning Campus, P.A.C., Cafeteria, & Gymnasium', 'Performing Arts Center', 'Celebration with scholars and attendees honoring Dr. Maya Angelou and the scholar-centered spirit of the convening.', 'Celebration with scholars and attendees honoring Dr. Maya Angelou and the scholar-centered spirit of the convening.', null, 'scheduled', true, true, false),
-  ('d3s10', null, null, 'From Silos to Solutions: A Happy Hour', 'from-silos-to-solutions-a-happy-hour', 'reception', '2026-04-03', '2026-04-03T16:30:00-04:00', '2026-04-03T19:30:00-04:00', 'Maya Angelou Learning Campus, P.A.C., Cafeteria, & Gymnasium', 'Performing Arts Center', 'Closing happy hour and networking event for attendees, partners, and guests.', 'Closing happy hour and networking event for attendees, partners, and guests.', null, 'scheduled', true, true, false)
-on conflict (slug) do update set
-  session_code = excluded.session_code,
-  placeholder_code = excluded.placeholder_code,
-  final_title = excluded.final_title,
-  title = excluded.title,
-  category = excluded.category,
-  date = excluded.date,
-  starts_at = excluded.starts_at,
-  ends_at = excluded.ends_at,
-  venue = excluded.venue,
-  room = excluded.room,
-  short_description = excluded.short_description,
-  description = excluded.description,
-  live_updates = excluded.live_updates,
-  status = excluded.status,
-  published = excluded.published,
-  featured = excluded.featured,
-  is_placeholder = excluded.is_placeholder;
+  ('d3s10', null, null, 'From Silos to Solutions: A Happy Hour', 'from-silos-to-solutions-a-happy-hour', 'reception', '2026-04-03', '2026-04-03T16:30:00-04:00', '2026-04-03T19:30:00-04:00', 'Maya Angelou Learning Campus, P.A.C., Cafeteria, & Gymnasium', 'Performing Arts Center', 'Closing happy hour and networking event for attendees, partners, and guests.', 'Closing happy hour and networking event for attendees, partners, and guests.', null, 'scheduled', true, true, false);
 
 insert into public.session_speakers (session_id, speaker_id, session_role) values
   ((select id from public.sessions where slug = 'opening-keynote-dr-bettina-love'), (select id from public.speakers where slug = 'dr-bettina-love'), 'speaker'),
@@ -111,8 +104,6 @@ insert into public.session_speakers (session_id, speaker_id, session_role) value
   ((select id from public.sessions where slug = 'fireside-chat-sustainable-leadership-and-the-structure-of-the-sff-mas-charter-and-nonprofit-model'), (select id from public.speakers where slug = 'guest-surprises'), 'speaker')
 on conflict do nothing;
 
-insert into public.announcements (title, body, priority, published)
-values
-  ('Welcome to FS2S 2026', 'Welcome to From Silos to Solutions 2026. Explore the schedule, review the latest updates, and use the portal for shared conference documents.', 'normal', true),
-  ('Check the app for live room updates', 'Any room changes, speaker updates, or day-of logistics will appear here first.', 'urgent', true),
-  ('Please complete session feedback before leaving each session', 'Your feedback helps the convening team improve each experience in real time.', 'normal', true);
+update public.announcements
+set body = 'Welcome to From Silos to Solutions 2026. Explore the schedule, review the latest updates, and use the portal for shared conference documents.'
+where title = 'Welcome to FS2S 2026';
