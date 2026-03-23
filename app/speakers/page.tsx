@@ -11,10 +11,10 @@ export default async function SpeakersPage() {
         <div className="hero-card__grid">
           <div className="hero-card__content">
             <p className="eyebrow">Featured voices</p>
-            <h1>Speaker directory</h1>
+            <h1>Speakers &amp; panelists</h1>
             <p>
-              Browse speakers and panelists connected to the public conference schedule. Private
-              logistics and confirmation notes stay out of this view.
+              Browse the public speaker and panelist directory for From Silos to Solutions 2026 and
+              see who is connected to the convening program.
             </p>
             <div className="hero-meta">
               <span className="hero-pill">{speakers.length} speaker profiles</span>

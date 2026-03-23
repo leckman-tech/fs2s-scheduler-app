@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { EVENTBRITE_URL } from "@/lib/constants";
 
 const storyShowcases = [
   {
@@ -21,30 +22,6 @@ const storyShowcases = [
     description:
       "Sessions are only part of the value. The conversation between people, sectors, and communities is part of what moves the convening forward.",
     imageClass: "showcase-card__image--motion"
-  }
-];
-
-const historyMoments = [
-  {
-    eyebrow: "2024 Inaugural Convening",
-    title: "The first convening set a clear standard for cross-sector partnership",
-    description:
-      "The 2024 gathering brought together leaders from education, mental health, public defense, health care, community advocacy, youth services, the private sector, and student leadership in Washington, D.C.",
-    imageClass: "showcase-card__image--history-2024"
-  },
-  {
-    eyebrow: "A Growing Convening",
-    title: "Each convening deepens relationships, sharpens practice, and builds momentum",
-    description:
-      "FS2S continues to grow as a multi-day gathering that blends keynote conversations, breakout learning, student-centered programming, and relationship-building across sectors.",
-    imageClass: "showcase-card__image--history-2025"
-  },
-  {
-    eyebrow: "See Forever Foundation",
-    title: "The convening is rooted in year-round work with young people across Washington",
-    description:
-      "Hosted by the See Forever Foundation and Maya Angelou Schools, FS2S reflects more than 25 years of restorative, relevant education and youth development for opportunity and justice-involved youth.",
-    imageClass: "showcase-card__image--history-foundation"
   }
 ];
 
@@ -125,30 +102,63 @@ export default function LearnMorePage() {
         </article>
       </section>
 
-      <section className="context-grid context-grid--history">
-        <article className="panel story-panel">
-          <p className="eyebrow">Leadership</p>
-          <h2>Led by Dr. Clarisse Mendoza-Davis</h2>
-          <p>
-            Under the leadership of Dr. Clarisse Mendoza-Davis, the organization has built
-            campuses, scholar supports, and pathways that reflect deep expertise in serving
-            opportunity and justice-involved youth and young adults. FS2S is an extension of that
-            leadership.
-          </p>
+      <section className="feature-story-grid">
+        <article className="feature-story">
+          <div className="feature-story__image feature-story__image--inaugural" aria-hidden="true" />
+          <div className="feature-story__content">
+            <p className="eyebrow">2024 Inaugural Convening</p>
+            <h2>The first gathering proved there is real demand for serious cross-sector coordination</h2>
+            <p>
+              In 2024, FS2S brought together leaders from education, mental health, public
+              defense, health care, youth services, community advocacy, the private sector, and
+              student leadership in Washington, D.C.
+            </p>
+            <p>
+              That breadth matters because no single institution can meet the needs of opportunity
+              and justice-involved youth and young adults alone. The convening exists to help those
+              systems listen, align, and act with greater coherence.
+            </p>
+          </div>
         </article>
 
-        <article className="panel story-panel">
-          <p className="eyebrow">Convening Leadership</p>
-          <h2>Convening Director and Administrator Levi W. Eckman, J.D.</h2>
-          <p>
-            The convening is directed and administered by Levi W. Eckman, J.D., helping shape a
-            gathering that is both mission-driven and operationally strong, with the goal of
-            sharing strategy, knowledge, and practical models with partners nationwide.
-          </p>
+        <article className="feature-story feature-story--reverse">
+          <div className="feature-story__image feature-story__image--leadership" aria-hidden="true" />
+          <div className="feature-story__content">
+            <p className="eyebrow">Leadership</p>
+            <h2>Led by Dr. Clarisse Mendoza-Davis and convened by Levi W. Eckman, J.D.</h2>
+            <p>
+              Dr. Clarisse Mendoza-Davis leads an organization that has developed campuses,
+              pathways, and scholar supports grounded in restorative, relevant education for young
+              people across Washington.
+            </p>
+            <p>
+              Levi W. Eckman, J.D. serves as Convening Director and Administrator, helping shape an
+              experience that is mission-driven, practical, and built to share what works with
+              partners nationwide.
+            </p>
+          </div>
+        </article>
+
+        <article className="feature-story">
+          <div className="feature-story__image feature-story__image--foundation" aria-hidden="true" />
+          <div className="feature-story__content">
+            <p className="eyebrow">See Forever Foundation</p>
+            <h2>The convening is rooted in year-round work, not a single annual event</h2>
+            <p>
+              FS2S grows directly out of the daily work of the See Forever Foundation and Maya
+              Angelou Schools: scholar-centered education, well-being, postsecondary support, and
+              preparation for life beyond school.
+            </p>
+            <p>
+              The convening exists to share that knowledge, strengthen national partnerships, and
+              make sure the conversation stays connected to young people, families, and real
+              institutional practice.
+            </p>
+          </div>
         </article>
       </section>
 
-      <section className="showcase-grid">
+      <section className="showcase-grid showcase-grid--supporting">
         {storyShowcases.map((item) => (
           <article key={item.title} className="showcase-card">
             <div className={`showcase-card__image ${item.imageClass}`} aria-hidden="true" />
@@ -161,41 +171,22 @@ export default function LearnMorePage() {
         ))}
       </section>
 
-      <section className="showcase-grid">
-        {historyMoments.map((moment) => (
-          <article key={moment.title} className="showcase-card">
-            <div className={`showcase-card__image ${moment.imageClass}`} aria-hidden="true" />
-            <div className="showcase-card__body">
-              <p className="showcase-card__eyebrow">{moment.eyebrow}</p>
-              <h2>{moment.title}</h2>
-              <p>{moment.description}</p>
-            </div>
-          </article>
-        ))}
-      </section>
-
-      <section className="context-grid context-grid--history">
-        <article className="panel story-panel">
-          <p className="eyebrow">2024 Convening Snapshot</p>
-          <h2>The inaugural convening set the tone for what this gathering can become</h2>
-          <p>
-            The 2024 convening brought together leaders from education, mental health, public
-            defense, health care, community advocacy, youth services, the private sector, and
-            student leadership. That breadth matters because no single institution can do this work
-            alone, and because cross-sector leadership is essential to lasting change.
-          </p>
-        </article>
-
-        <article className="panel story-panel">
-          <p className="eyebrow">What 2026 Builds On</p>
-          <h2>The 2026 convening continues that work with a sharper focus on partnership</h2>
-          <p>
-            This year’s gathering builds on the relationships, lessons, and shared commitments that
-            have already emerged through FS2S. The goal is not simply to gather again, but to share
-            what has been built, strengthen national partnerships, and move the work forward
-            together.
-          </p>
-        </article>
+      <section className="panel callout-panel">
+        <p className="eyebrow">Join the Convening</p>
+        <h2>Bring this history into the room with you in April</h2>
+        <p className="muted">
+          The 2026 convening builds on what FS2S has already started: stronger relationships,
+          sharper practice, and a wider national network committed to coordinated support for
+          opportunity and justice-involved youth and young adults.
+        </p>
+        <div className="hero-actions">
+          <Link href="/" className="button-secondary button-link">
+            Return to the schedule
+          </Link>
+          <a href={EVENTBRITE_URL} className="button button-link" target="_blank" rel="noreferrer">
+            Purchase tickets
+          </a>
+        </div>
       </section>
     </div>
   );

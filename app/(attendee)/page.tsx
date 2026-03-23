@@ -91,91 +91,73 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="context-grid context-grid--home-intro">
-        <article className="panel story-panel">
-          <p className="eyebrow">National Convening</p>
-          <h2>Built for leaders working across systems, sectors, and communities</h2>
-          <p>
-            From Silos to Solutions brings together educators, policymakers, youth-serving
-            organizations, advocates, and community leaders around one shared question: how do we
-            coordinate stronger support for opportunity and justice-involved youth and young adults?
-          </p>
-          <div className="story-list">
-            <div className="session-info-pill">
-              <strong>Theme</strong>
-              <span>Power Through Partnerships</span>
-            </div>
-            <div className="session-info-pill">
-              <strong>Who gathers</strong>
-              <span>Educators, policymakers, providers, advocates, and community leaders</span>
-            </div>
-            <div className="session-info-pill">
-              <strong>Why it matters</strong>
-              <span>Sharing models, lessons, and partnerships that can strengthen work nationwide</span>
-            </div>
-            <div className="session-info-pill">
-              <strong>Hosted by</strong>
-              <span>See Forever Foundation and Maya Angelou Schools</span>
-            </div>
-          </div>
-        </article>
-
-        <article className="panel story-panel story-panel--accent">
-          <p className="eyebrow">Plan Your Visit</p>
-          <h2>Register now and start planning your convening experience</h2>
-          <p>
-            Use this site to register, browse the schedule, review speakers, and prepare for three
-            days of conversation, learning, and partnership in Washington, D.C. Use code{" "}
-            <strong>{TICKET_PROMO_CODE}</strong> for 75% off the first 50 registrations.
-          </p>
-          <div className="story-stat-grid">
-            <article className="story-stat">
-              <strong>{days.length}</strong>
-              <span>days of programming across the convening</span>
-            </article>
-            <article className="story-stat">
-              <strong>{workshopCount}</strong>
-              <span>workshop sessions in the current program</span>
-            </article>
-            <article className="story-stat">
-              <strong>{featuredCount}</strong>
-              <span>featured sessions across keynote, panel, scholar, and evening events</span>
-            </article>
-          </div>
-          <div className="hero-actions">
-            <a
-              href={EVENTBRITE_URL}
-              className="button button-link"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Purchase tickets
-            </a>
-            <Link href="/learn-more" className="button-secondary button-link">
-              Learn more
-            </Link>
-          </div>
-        </article>
-      </section>
-
       <div className="schedule-layout" id="schedule">
         <aside className="schedule-sidebar stack">
           <AnnouncementsBanner announcements={announcements} />
 
-          <section className="panel learn-more-panel learn-more-panel--compact">
-            <div className="section-heading">
-              <div>
-                <p className="eyebrow">Learn More</p>
-                <h2>The full story of FS2S, See Forever, and the convening leadership</h2>
+          <section className="panel sidebar-story-panel sidebar-story-panel--accent">
+            <p className="eyebrow">Plan Your Visit</p>
+            <h2>Register now and start shaping your convening experience</h2>
+            <p className="muted">
+              Use this site to purchase tickets, browse the agenda, save the sessions you care
+              about, and prepare for three days of conversation, learning, and partnership in
+              Washington, D.C.
+            </p>
+            <div className="story-stat-grid story-stat-grid--compact">
+              <article className="story-stat">
+                <strong>{days.length}</strong>
+                <span>days of live programming</span>
+              </article>
+              <article className="story-stat">
+                <strong>{workshopCount}</strong>
+                <span>workshop sessions in the current draft program</span>
+              </article>
+              <article className="story-stat">
+                <strong>{featuredCount}</strong>
+                <span>featured sessions across keynote, panel, scholar, and evening events</span>
+              </article>
+            </div>
+            <div className="hero-actions">
+              <a
+                href={EVENTBRITE_URL}
+                className="button button-link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Purchase tickets
+              </a>
+              <Link href="/attendee/login" className="button-secondary button-link">
+                Attendee portal
+              </Link>
+            </div>
+          </section>
+
+          <section className="panel sidebar-story-panel learn-more-panel--compact">
+            <p className="eyebrow">Why FS2S</p>
+            <h2>A national convening rooted in scholar-centered work and partnership</h2>
+            <p className="muted">
+              Hosted by the See Forever Foundation and Maya Angelou Schools, From Silos to
+              Solutions brings together educators, policymakers, providers, advocates, and
+              community leaders to strengthen support for opportunity and justice-involved youth and
+              young adults.
+            </p>
+            <div className="story-list">
+              <div className="session-info-pill">
+                <strong>Theme</strong>
+                <span>Power Through Partnerships</span>
+              </div>
+              <div className="session-info-pill">
+                <strong>Leadership</strong>
+                <span>Led by Dr. Clarisse Mendoza-Davis</span>
+              </div>
+              <div className="session-info-pill">
+                <strong>Learn more</strong>
+                <span>History, leadership, and the work behind the convening</span>
               </div>
             </div>
-            <p className="muted">
-              Visit the Learn More page for the history of FS2S, highlights from past convenings,
-              and more about the organizational work behind this gathering.
-            </p>
             <div className="hero-actions">
               <Link href="/learn-more" className="button button-link">
-                Go to Learn More
+                Visit Learn More
               </Link>
             </div>
           </section>

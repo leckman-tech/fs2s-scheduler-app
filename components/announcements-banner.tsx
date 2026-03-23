@@ -8,7 +8,7 @@ export function AnnouncementsBanner({ announcements }: { announcements: Announce
     <section className="panel sticky-panel announcements-panel">
       <div className="section-heading">
         <div>
-          <p className="eyebrow">Operations feed</p>
+          <p className="eyebrow">Live Updates</p>
           <h2>Announcements</h2>
         </div>
         <span className="hero-pill">{urgentCount ? `${urgentCount} urgent` : "Live updates"}</span>
