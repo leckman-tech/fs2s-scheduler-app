@@ -44,8 +44,8 @@ export default async function AttendeeLoginPage({
           Sign in
         </button>
         <p className="muted" style={{ margin: 0 }}>
-          This shared login opens the attendee document library. It does not create individual
-          accounts or store saved schedules.
+          Use the attendee portal credentials any time you need the latest workshop, keynote, or
+          panel files that have been posted for all attendees.
         </p>
       </form>
     </div>

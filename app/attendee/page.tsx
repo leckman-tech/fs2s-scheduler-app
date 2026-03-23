@@ -56,8 +56,8 @@ export default async function AttendeePortalPage() {
             <span>This portal uses conference-wide credentials, so it works as a common document library.</span>
           </article>
           <article className="story-stat">
-            <strong>No saved schedule</strong>
-            <span>Sessions stay public on the main schedule, but this shared portal does not save schedules for individual users.</span>
+            <strong>Posted for all attendees</strong>
+            <span>This shared portal keeps conference files in one place, so attendees can return to the same library throughout the convening.</span>
           </article>
         </div>
       </section>
