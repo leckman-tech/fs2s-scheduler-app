@@ -144,7 +144,7 @@ export default function LearnMorePage() {
               alt="Levi W. Eckman, J.D., Convening Director"
               fill
               sizes="(max-width: 860px) 100vw, 420px"
-              className="feature-story__portrait-image"
+              className="feature-story__portrait-image feature-story__portrait-image--levi"
             />
           </div>
           <div className="feature-story__content">
@@ -164,19 +164,27 @@ export default function LearnMorePage() {
         </article>
 
         <article className="feature-story">
-          <div className="feature-story__image feature-story__image--foundation" aria-hidden="true" />
+          <div className="feature-story__portrait">
+            <Image
+              src="/fs2s/clarisse-mendoza-davis.jpg"
+              alt="Dr. Clarisse Mendoza-Davis"
+              fill
+              sizes="(max-width: 860px) 100vw, 420px"
+              className="feature-story__portrait-image feature-story__portrait-image--clarisse"
+            />
+          </div>
           <div className="feature-story__content">
-            <p className="eyebrow">See Forever Foundation</p>
-            <h2>The convening is rooted in year-round work, not a single annual event</h2>
+            <p className="eyebrow">Foundation Leadership</p>
+            <h2>Dr. Clarisse Mendoza-Davis leads the broader work that grounds the convening</h2>
             <p>
-              FS2S grows directly out of the daily work of the See Forever Foundation and Maya
-              Angelou Schools: scholar-centered education, well-being, postsecondary support, and
-              preparation for life beyond school.
+              Under Dr. Clarisse Mendoza-Davis's leadership, the See Forever Foundation and Maya
+              Angelou Schools continue to build scholar-centered education, well-being,
+              postsecondary support, and opportunity for young people across Washington.
             </p>
             <p>
-              The convening exists to share that knowledge, strengthen national partnerships, and
-              make sure the conversation stays connected to young people, families, and real
-              institutional practice.
+              From Silos to Solutions grows directly out of that institutional work and shares it
+              with national partners so the convening stays connected to families, scholars, and
+              real practice rather than abstract conversation alone.
             </p>
           </div>
         </article>
