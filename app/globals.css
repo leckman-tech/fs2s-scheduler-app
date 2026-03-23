@@ -705,6 +705,11 @@ select {
   gap: 0.9rem;
 }
 
+.sidebar-story-panel--accent {
+  background:
+    linear-gradient(180deg, rgba(193, 18, 31, 0.04), rgba(255, 255, 255, 0.98));
+}
+
 .sidebar-story-panel h2 {
   margin: 0;
   font-size: 1.38rem;
@@ -1584,6 +1589,16 @@ th {
     flex-direction: column;
   }
 
+  .live-ticker {
+    top: 7.4rem;
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .live-ticker__link {
+    justify-self: start;
+  }
+
   .site-nav {
     width: 100%;
     justify-content: flex-start;
@@ -1602,6 +1617,11 @@ th {
 @media (max-width: 640px) {
   .container {
     width: min(100% - 1rem, 1100px);
+  }
+
+  .live-ticker {
+    top: 8.65rem;
+    padding: 0.75rem 0.8rem;
   }
 
   .hero-card,
