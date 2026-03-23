@@ -60,10 +60,10 @@ export default async function HomePage() {
 
           <div className="hero-card__visual">
             <div className="hero-photo hero-photo--dc">
-              <span className="hero-photo__label">Washington, D.C.</span>
+              <span className="hero-photo__label">Opening voice</span>
             </div>
             <div className="hero-photo hero-photo--conference">
-              <span className="hero-photo__label">Convening atmosphere</span>
+              <span className="hero-photo__label">In the room</span>
             </div>
             <div className="hero-photo hero-photo--community">
               <span className="hero-photo__label">Partnership in action</span>
@@ -218,31 +218,31 @@ export default async function HomePage() {
       <section className="experience-band">
         <article className="experience-card experience-card--city">
           <div className="experience-card__copy">
-            <p className="eyebrow">Washington Context</p>
-            <h2>Hosted in a city where policy, practice, and advocacy meet in real time</h2>
+            <p className="eyebrow">Inside the Convening</p>
+            <h2>The room is built for honest discussion, practical strategy, and real connection</h2>
             <p>
-              Washington, D.C. gives this convening urgency and reach, bringing local experience
-              into conversation with broader policy and systems change.
+              FS2S is designed to bring different sectors into the same room with enough structure
+              to learn from one another and enough openness to build real partnership.
             </p>
           </div>
         </article>
         <article className="experience-card experience-card--scholars">
           <div className="experience-card__copy">
-            <p className="eyebrow">Scholar-Centered</p>
-            <h2>Young people and lived experience remain at the center of the conversation</h2>
+            <p className="eyebrow">Voices in the Room</p>
+            <h2>Lived experience, practitioner wisdom, and community leadership stay close to the work</h2>
             <p>
-              Scholar sessions and lived experience keep the convening grounded in the realities,
-              strengths, and aspirations of the young people this work is meant to serve.
+              The convening is strongest when people can speak frankly about what young people need,
+              what systems miss, and what partnership looks like in practice.
             </p>
           </div>
         </article>
         <article className="experience-card experience-card--agenda">
           <div className="experience-card__copy">
-            <p className="eyebrow">Useful on the Move</p>
-            <h2>Designed to help you move through the convening with clarity</h2>
+            <p className="eyebrow">Collaboration in Motion</p>
+            <h2>Sessions are only part of the value; the exchange between people is part of the point</h2>
             <p>
-              Use the schedule to find sessions, save key moments, and check updates quickly
-              throughout the day without losing sight of the larger purpose of the gathering.
+              Use the schedule to move with confidence, then let the conversations, workshops, and
+              shared problem-solving carry the convening forward.
             </p>
           </div>
         </article>

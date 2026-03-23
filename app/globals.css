@@ -15,6 +15,14 @@
   --radius-lg: 22px;
   --radius-md: 16px;
   --radius-sm: 10px;
+  --photo-room-wide: url("/fs2s/fs2s-room-wide.jpg");
+  --photo-speaker-podium: url("/fs2s/fs2s-speaker-podium.jpg");
+  --photo-audience-question: url("/fs2s/fs2s-audience-question.jpg");
+  --photo-keynote-speaker: url("/fs2s/fs2s-keynote-speaker.jpg");
+  --photo-listening-attendee: url("/fs2s/fs2s-listening-attendee.jpg");
+  --photo-engaged-attendee: url("/fs2s/fs2s-engaged-attendee.jpg");
+  --photo-partnership-activity: url("/fs2s/fs2s-partnership-activity.jpg");
+  --photo-table-conversation: url("/fs2s/fs2s-table-conversation.jpg");
 }
 
 * {
@@ -110,13 +118,13 @@ select {
 .spring-canvas__capitol {
   z-index: 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.42)),
-    linear-gradient(135deg, rgba(255, 212, 223, 0.28), rgba(255, 255, 255, 0.08)),
-    url("https://images.unsplash.com/photo-1501466044931-62695aada8e9?auto=format&fit=crop&w=1800&q=80");
+    linear-gradient(180deg, rgba(255, 245, 247, 0.38), rgba(255, 255, 255, 0.68)),
+    linear-gradient(135deg, rgba(255, 209, 222, 0.24), rgba(255, 255, 255, 0.06)),
+    var(--photo-room-wide);
   background-size: cover;
-  background-position: center top;
-  opacity: 0.64;
-  filter: saturate(1.06);
+  background-position: center;
+  opacity: 0.2;
+  filter: saturate(0.92) blur(2px);
   transform: scale(1.1);
   animation: blossom-pan 28s ease-in-out infinite alternate;
 }
@@ -145,9 +153,12 @@ select {
 
 .spring-canvas__bloom--left {
   left: -4rem;
-  background-image:
-    linear-gradient(135deg, rgba(255, 235, 240, 0.22), rgba(255, 255, 255, 0)),
-    url("https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=80");
+  background:
+    radial-gradient(circle at 42% 38%, rgba(255, 214, 230, 0.86) 0 12%, transparent 13%),
+    radial-gradient(circle at 58% 30%, rgba(255, 231, 239, 0.82) 0 10%, transparent 11%),
+    radial-gradient(circle at 34% 57%, rgba(255, 220, 232, 0.76) 0 11%, transparent 12%),
+    radial-gradient(circle at 64% 60%, rgba(255, 235, 242, 0.68) 0 9%, transparent 10%),
+    radial-gradient(circle at 28% 26%, rgba(255, 255, 255, 0.56) 0 6%, transparent 7%);
   mask-image: linear-gradient(135deg, black 0%, black 65%, transparent 100%);
   -webkit-mask-image: linear-gradient(135deg, black 0%, black 65%, transparent 100%);
   transform-origin: top left;
@@ -158,9 +169,12 @@ select {
   right: -3.5rem;
   width: min(38vw, 30rem);
   height: min(38vw, 30rem);
-  background-image:
-    linear-gradient(225deg, rgba(255, 239, 244, 0.18), rgba(255, 255, 255, 0)),
-    url("https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1200&q=80");
+  background:
+    radial-gradient(circle at 48% 34%, rgba(255, 214, 230, 0.82) 0 11%, transparent 12%),
+    radial-gradient(circle at 64% 24%, rgba(255, 234, 242, 0.78) 0 10%, transparent 11%),
+    radial-gradient(circle at 42% 56%, rgba(255, 224, 236, 0.74) 0 10%, transparent 11%),
+    radial-gradient(circle at 70% 62%, rgba(255, 241, 246, 0.62) 0 8%, transparent 9%),
+    radial-gradient(circle at 28% 42%, rgba(255, 255, 255, 0.54) 0 6%, transparent 7%);
   mask-image: linear-gradient(225deg, black 0%, black 62%, transparent 100%);
   -webkit-mask-image: linear-gradient(225deg, black 0%, black 62%, transparent 100%);
   transform-origin: top right;
@@ -383,19 +397,19 @@ select {
   grid-row: 1 / span 2;
   background-image:
     linear-gradient(180deg, rgba(17, 17, 17, 0.08), rgba(17, 17, 17, 0.3)),
-    url("https://images.unsplash.com/photo-1501466044931-62695aada8e9?auto=format&fit=crop&w=1200&q=80");
+    var(--photo-speaker-podium);
 }
 
 .hero-photo--conference {
   background-image:
     linear-gradient(180deg, rgba(17, 17, 17, 0.08), rgba(17, 17, 17, 0.38)),
-    url("https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80");
+    var(--photo-room-wide);
 }
 
 .hero-photo--community {
   background-image:
     linear-gradient(180deg, rgba(193, 18, 31, 0.06), rgba(17, 17, 17, 0.42)),
-    url("https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80");
+    var(--photo-partnership-activity);
 }
 
 .hero-photo__label {
@@ -610,27 +624,27 @@ select {
 }
 
 .experience-card--city::before {
-  background-image: url("https://images.unsplash.com/photo-1501466044931-62695aada8e9?auto=format&fit=crop&w=1400&q=80");
+  background-image: var(--photo-room-wide);
 }
 
 .experience-card--scholars::before {
-  background-image: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80");
+  background-image: var(--photo-table-conversation);
 }
 
 .experience-card--agenda::before {
-  background-image: url("https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1400&q=80");
+  background-image: var(--photo-partnership-activity);
 }
 
 .experience-card--history-2024::before {
-  background-image: url("https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=1400&q=80");
+  background-image: var(--photo-speaker-podium);
 }
 
 .experience-card--history-2025::before {
-  background-image: url("https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1400&q=80");
+  background-image: var(--photo-audience-question);
 }
 
 .experience-card--history-foundation::before {
-  background-image: url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1400&q=80");
+  background-image: var(--photo-listening-attendee);
 }
 
 .experience-card__copy {
@@ -1018,7 +1032,7 @@ select {
   inset: 0;
   background:
     linear-gradient(180deg, rgba(17, 17, 17, 0.05), rgba(17, 17, 17, 0.78)),
-    url("https://images.unsplash.com/photo-1501466044931-62695aada8e9?auto=format&fit=crop&w=1400&q=80");
+    var(--photo-room-wide);
   background-size: cover;
   background-position: center;
   opacity: 0.3;
@@ -1032,7 +1046,7 @@ select {
 .detail-header--panel::after {
   background:
     linear-gradient(180deg, rgba(17, 17, 17, 0.1), rgba(17, 17, 17, 0.82)),
-    url("https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1400&q=80");
+    var(--photo-audience-question);
   background-size: cover;
   background-position: center;
   opacity: 0.32;
@@ -1042,7 +1056,7 @@ select {
 .detail-header--workshop::after {
   background:
     linear-gradient(180deg, rgba(17, 17, 17, 0.08), rgba(17, 17, 17, 0.82)),
-    url("https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80");
+    var(--photo-partnership-activity);
   background-size: cover;
   background-position: center;
   opacity: 0.28;
@@ -1054,7 +1068,7 @@ select {
 .detail-header--fireside_chat::after {
   background:
     linear-gradient(180deg, rgba(17, 17, 17, 0.12), rgba(17, 17, 17, 0.82)),
-    url("https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1400&q=80");
+    var(--photo-keynote-speaker);
   background-size: cover;
   background-position: center;
   opacity: 0.28;

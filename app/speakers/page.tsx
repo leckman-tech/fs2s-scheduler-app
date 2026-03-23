@@ -26,10 +26,10 @@ export default async function SpeakersPage() {
               <span className="hero-photo__label">Featured sessions</span>
             </div>
             <div className="hero-photo hero-photo--community">
-              <span className="hero-photo__label">Community leadership</span>
+              <span className="hero-photo__label">Collaboration in motion</span>
             </div>
             <div className="hero-photo hero-photo--dc">
-              <span className="hero-photo__label">D.C. convening</span>
+              <span className="hero-photo__label">Convening voices</span>
             </div>
           </div>
         </div>
