@@ -1,28 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { EVENTBRITE_URL, TICKET_PROMO_CODE } from "@/lib/constants";
 
-const STORAGE_KEY = "fs2s-ticket-promo-dismissed";
-
 export function TicketPromoModal() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const dismissed = window.localStorage.getItem(STORAGE_KEY);
-    if (!dismissed) {
-      setIsOpen(true);
-    }
-  }, []);
+  const [isOpen, setIsOpen] = useState(true);
 
   const dismiss = () => {
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(STORAGE_KEY, "true");
-    }
     setIsOpen(false);
   };
 
