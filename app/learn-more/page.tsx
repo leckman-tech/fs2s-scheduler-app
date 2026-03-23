@@ -124,17 +124,17 @@ export default function LearnMorePage() {
         <article className="feature-story feature-story--reverse">
           <div className="feature-story__image feature-story__image--leadership" aria-hidden="true" />
           <div className="feature-story__content">
-            <p className="eyebrow">Leadership</p>
-            <h2>Led by Dr. Clarisse Mendoza-Davis and convened by Levi W. Eckman, J.D.</h2>
-            <p>
-              Dr. Clarisse Mendoza-Davis leads an organization that has developed campuses,
-              pathways, and scholar supports grounded in restorative, relevant education for young
-              people across Washington.
-            </p>
+            <p className="eyebrow">Convening Leadership</p>
+            <h2>Convening Director Levi W. Eckman, J.D.</h2>
             <p>
               Levi W. Eckman, J.D. serves as Convening Director and Administrator, helping shape an
               experience that is mission-driven, practical, and built to share what works with
               partners nationwide.
+            </p>
+            <p>
+              Dr. Clarisse Mendoza-Davis leads the See Forever Foundation and the broader
+              institutional work that grounds this convening in scholar-centered education,
+              advocacy, and opportunity for young people across Washington.
             </p>
           </div>
         </article>

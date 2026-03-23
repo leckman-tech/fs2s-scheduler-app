@@ -150,7 +150,7 @@ export default async function HomePage() {
               </div>
               <div className="session-info-pill">
                 <strong>Leadership</strong>
-                <span>Led by Dr. Clarisse Mendoza-Davis</span>
+                <span>Convening Director Levi W. Eckman, J.D.</span>
               </div>
               <div className="session-info-pill">
                 <strong>Learn more</strong>
