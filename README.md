@@ -7,7 +7,7 @@ A mobile-first conference schedule web app built with Next.js, TypeScript, and S
 - Attendee schedule homepage grouped by day
 - Category filters across the convening schedule, including keynote, panel, workshop, scholar session, reception, meals, and more
 - Session detail pages with room, speakers, descriptions, and live updates
-- Personal agenda favorites stored in browser local storage
+- Shared attendee and speaker document portals backed by Supabase auth and storage
 - Session feedback form with rating, useful takeaways, improvement notes, and future-interest question
 - Prominent announcements panel for urgent notices and room changes
 - Public speaker directory page
@@ -152,7 +152,7 @@ Name | Title | Organization | Role | Confirmation | Arrival YYYY-MM-DDTHH:MM | A
 
 ## Suggested next steps
 
-1. Add attendee accounts if you want cloud-synced personal agendas across devices.
+1. Add or rotate attendee portal credentials if you want to manage shared access to attendee documents over time.
 2. Move feedback submission behind authenticated attendees if you need attribution or spam control.
 3. Add richer admin analytics such as attendance tracking, session capacity, and announcement scheduling.
 4. Connect file or image uploads for speaker headshots and sponsor assets.

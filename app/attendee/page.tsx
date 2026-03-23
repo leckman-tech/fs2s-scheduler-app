@@ -6,7 +6,7 @@ import { displaySessionTitle, formatDateLabel, formatTimestamp, labelForCategory
 
 export const metadata: Metadata = buildMetadata({
   title: "Attendee Portal",
-  description: "Private attendee resource library for FS2S 2026.",
+  description: "Shared attendee document library for FS2S 2026 workshop, keynote, and panel materials.",
   path: "/attendee",
   noIndex: true
 });
@@ -32,12 +32,33 @@ export default async function AttendeePortalPage() {
         <h1>Attendee Portal</h1>
         <p>
           {profile.full_name ? `${profile.full_name}, ` : ""}
-          this is your private library for workshop documents, keynote resources, panel materials,
-          and year-round conference files.
+          this shared portal gives attendees one place to open workshop documents, keynote
+          resources, panel materials, and general conference files.
         </p>
         <div className="hero-meta">
           <span className="hero-pill">{resources.length} available document{resources.length === 1 ? "" : "s"}</span>
+          <span className="hero-pill">Shared library access</span>
           <LogoutButton destination="attendee" />
+        </div>
+      </section>
+
+      <section className="panel detail-side-panel">
+        <div className="section-heading">
+          <h2>What this portal is for</h2>
+        </div>
+        <div className="story-stat-grid">
+          <article className="story-stat">
+            <strong>Session files</strong>
+            <span>Open workshop handouts, keynote materials, panel resources, and related documents.</span>
+          </article>
+          <article className="story-stat">
+            <strong>Shared access</strong>
+            <span>This portal uses conference-wide credentials, so it works as a common document library.</span>
+          </article>
+          <article className="story-stat">
+            <strong>No saved schedule</strong>
+            <span>Sessions stay public on the main schedule, but this shared portal does not save schedules for individual users.</span>
+          </article>
         </div>
       </section>
 
@@ -52,7 +73,7 @@ export default async function AttendeePortalPage() {
                   <p className="muted" style={{ margin: "0.35rem 0 0" }}>
                     {session
                       ? `${labelForCategory(session.category)} · ${formatDateLabel(session.date)}`
-                      : "Documents shared across the convening"}
+                      : "Documents shared across the full convening"}
                   </p>
                 </div>
               </div>
@@ -79,8 +100,8 @@ export default async function AttendeePortalPage() {
         })
       ) : (
         <div className="empty-state">
-          No attendee documents have been uploaded yet. Once your team adds workshop and keynote
-          resources, they will appear here.
+          No attendee documents have been uploaded yet. Once the conference team adds workshop,
+          keynote, or panel resources, they will appear here.
         </div>
       )}
     </div>

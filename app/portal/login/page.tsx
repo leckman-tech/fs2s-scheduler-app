@@ -4,7 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "Speaker and Presenter Portal Login",
-  description: "Private speaker and presenter login for FS2S 2026 logistics and shared documents.",
+  description: "Private speaker and presenter login for FS2S 2026 logistics, assigned sessions, and document access.",
   path: "/portal/login",
   noIndex: true
 });
@@ -21,9 +21,14 @@ export default async function PortalLoginPage({
       <section className="hero-card">
         <h1>Speaker/Presenter Portal</h1>
         <p>
-          Sign in to view only your assigned sessions, arrival details, AV notes, and staff
-          contacts. Public attendees never see this information.
+          Sign in to review your assigned sessions, arrival details, AV notes, staff contacts,
+          shared speaker documents, and speaker/presenter board updates. Public attendees never
+          see this information.
         </p>
+        <div className="hero-meta">
+          <span className="hero-pill">Assigned session logistics</span>
+          <span className="hero-pill">Private document access</span>
+        </div>
       </section>
 
       <form action={loginPortal} className="panel form-grid" style={{ marginTop: "1rem" }}>

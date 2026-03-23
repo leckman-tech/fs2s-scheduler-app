@@ -31,14 +31,34 @@ export default async function AdminResourcesPage({
   return (
     <div className="stack">
       <section className="hero-card">
-        <h1>Admin Portal</h1>
+        <h1>Portal documents and messaging</h1>
         <p>
-          Upload attendee handouts, speaker/presenter files, and keep the private speaker board
-          tidy from one place.
+          Manage the shared attendee document library, the private speaker/presenter library, and
+          the speaker board from one place.
         </p>
         <div className="hero-meta">
           <span className="hero-pill">{documents.length} portal documents</span>
           <span className="hero-pill">{messages.length} speaker board posts</span>
+        </div>
+      </section>
+
+      <section className="panel detail-side-panel">
+        <div className="section-heading">
+          <h2>Portal access at a glance</h2>
+        </div>
+        <div className="story-stat-grid">
+          <article className="story-stat">
+            <strong>Attendee Portal</strong>
+            <span>Shared document access for workshop, keynote, panel, and general conference files.</span>
+          </article>
+          <article className="story-stat">
+            <strong>Speaker/Presenter Portal</strong>
+            <span>Assigned-session logistics, speaker materials, and private coordination updates.</span>
+          </article>
+          <article className="story-stat">
+            <strong>Admin controls</strong>
+            <span>Upload, publish, unpublish, and remove files or board posts across both portals.</span>
+          </article>
         </div>
       </section>
 
@@ -98,6 +118,10 @@ export default async function AdminResourcesPage({
         <div className="section-heading">
           <h2>Portal documents</h2>
         </div>
+        <p className="muted" style={{ marginTop: 0 }}>
+          Use the audience label below to confirm whether a file appears in the shared attendee
+          library, the private speaker/presenter library, or both.
+        </p>
         <div className="resource-list">
           {documents.length ? (
             documents.map((document) => (

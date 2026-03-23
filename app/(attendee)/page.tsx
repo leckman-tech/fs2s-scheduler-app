@@ -114,8 +114,8 @@ export default async function HomePage() {
             <p className="eyebrow">Plan Your Visit</p>
             <h2>Register and plan your time at FS2S</h2>
             <p className="muted">
-              Use this site to purchase tickets, review the agenda, save sessions, and get ready
-              for three days of conversation, learning, and connection in Washington, D.C.
+              Use this site to purchase tickets, review the agenda, and get ready for three days
+              of conversation, learning, and connection in Washington, D.C.
             </p>
             <div className="story-stat-grid story-stat-grid--compact">
               <article className="story-stat">
@@ -141,7 +141,7 @@ export default async function HomePage() {
                 Purchase tickets
               </a>
               <Link href="/attendee/login" className="button-secondary button-link">
-                Attendee portal
+                Attendee documents
               </Link>
             </div>
           </section>

@@ -4,7 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "Attendee Portal Login",
-  description: "Private attendee login for FS2S 2026 documents and conference resources.",
+  description: "Shared attendee login for FS2S 2026 workshop, keynote, and panel documents.",
   path: "/attendee/login",
   noIndex: true
 });
@@ -21,9 +21,13 @@ export default async function AttendeeLoginPage({
       <section className="hero-card">
         <h1>Attendee Portal</h1>
         <p>
-          Sign in to access workshop handouts, keynote materials, panel resources, and other
-          attendee documents the conference team uploads.
+          Sign in to open the shared attendee document library for workshop handouts, keynote
+          materials, panel resources, and other files the conference team uploads.
         </p>
+        <div className="hero-meta">
+          <span className="hero-pill">Shared access</span>
+          <span className="hero-pill">Documents only</span>
+        </div>
       </section>
 
       <form action={loginAttendee} className="panel form-grid" style={{ marginTop: "1rem" }}>
@@ -39,6 +43,10 @@ export default async function AttendeeLoginPage({
         <button type="submit" className="button">
           Sign in
         </button>
+        <p className="muted" style={{ margin: 0 }}>
+          This shared login opens the attendee document library. It does not create individual
+          accounts or store saved schedules.
+        </p>
       </form>
     </div>
   );

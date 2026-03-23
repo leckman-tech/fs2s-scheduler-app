@@ -9,7 +9,6 @@ import {
 } from "@/lib/constants";
 import type { SessionRecord } from "@/lib/types";
 import { formatDateLabel, groupByDate } from "@/lib/utils";
-import { useFavorites } from "@/lib/use-favorites";
 
 type Props = {
   sessions: SessionRecord[];
@@ -19,18 +18,15 @@ type Props = {
 export function ScheduleExplorer({ sessions, days }: Props) {
   const [activeDay, setActiveDay] = useState<string>("all");
   const [activeCategories, setActiveCategories] = useState<SessionCategory[]>([]);
-  const [savedOnly, setSavedOnly] = useState(false);
-  const { favoriteSet } = useFavorites();
 
   const filteredSessions = useMemo(() => {
     return sessions.filter((session) => {
       const dayMatch = activeDay === "all" || session.date === activeDay;
       const categoryMatch =
         activeCategories.length === 0 || activeCategories.includes(session.category);
-      const favoriteMatch = !savedOnly || favoriteSet.has(session.id);
-      return dayMatch && categoryMatch && favoriteMatch;
+      return dayMatch && categoryMatch;
     });
-  }, [activeCategories, activeDay, favoriteSet, savedOnly, sessions]);
+  }, [activeCategories, activeDay, sessions]);
 
   const groupedSessions = groupByDate(filteredSessions);
 
@@ -98,28 +94,6 @@ export function ScheduleExplorer({ sessions, days }: Props) {
                   {CATEGORY_LABELS[category]}
                 </button>
               ))}
-            </div>
-          </div>
-
-          <div className="field">
-            <label>Personal agenda</label>
-            <div className="filter-group">
-              <button
-                type="button"
-                className="chip"
-                data-active={!savedOnly}
-                onClick={() => setSavedOnly(false)}
-              >
-                Show all
-              </button>
-              <button
-                type="button"
-                className="chip"
-                data-active={savedOnly}
-                onClick={() => setSavedOnly(true)}
-              >
-                Saved only
-              </button>
             </div>
           </div>
         </div>

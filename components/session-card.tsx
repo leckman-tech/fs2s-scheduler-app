@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { FavoriteButton } from "@/components/favorite-button";
 import type { SessionRecord } from "@/lib/types";
 import {
   displaySessionTitle,
@@ -56,7 +55,6 @@ export function SessionCard({ session }: { session: SessionRecord }) {
           <Link href={`/session/${session.id}`} className="button button-link">
             View details
           </Link>
-          <FavoriteButton sessionId={session.id} />
         </div>
       ) : (
         <div className="session-card__note">

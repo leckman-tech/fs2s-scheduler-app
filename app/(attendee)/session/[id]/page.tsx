@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { FavoriteButton } from "@/components/favorite-button";
 import { FeedbackForm } from "@/components/feedback-form";
 import { getSessionById } from "@/lib/queries";
 import { getSessionMetadata, getSessionStructuredData } from "@/lib/seo";
@@ -68,9 +67,6 @@ export default async function SessionDetailPage({
             <span className="hero-pill">{formatTimeRange(session.starts_at, session.ends_at)}</span>
             <span className="hero-pill">{session.venue}</span>
             <span className="hero-pill">{session.room}</span>
-          </div>
-          <div className="admin-actions">
-            <FavoriteButton sessionId={session.id} />
           </div>
         </section>
 

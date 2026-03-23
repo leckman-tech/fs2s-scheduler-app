@@ -195,6 +195,6 @@ on conflict do nothing;
 
 insert into public.announcements (title, body, priority, published)
 values
-  ('Welcome to FS2S 2026', 'Welcome to From Silos to Solutions 2026. Explore the schedule and save sessions to your agenda.', 'normal', true),
+  ('Welcome to FS2S 2026', 'Welcome to From Silos to Solutions 2026. Explore the schedule, review the latest updates, and use the portal for shared conference documents.', 'normal', true),
   ('Check the app for live room updates', 'Any room changes, speaker updates, or day-of logistics will appear here first.', 'urgent', true),
   ('Please complete session feedback before leaving each session', 'Your feedback helps the convening team improve each experience in real time.', 'normal', true);

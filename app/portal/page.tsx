@@ -18,7 +18,7 @@ import {
 
 export const metadata: Metadata = buildMetadata({
   title: "Speaker and Presenter Portal",
-  description: "Private speaker and presenter logistics portal for FS2S 2026.",
+  description: "Private speaker and presenter portal for FS2S 2026 logistics, assigned sessions, and speaker documents.",
   path: "/portal",
   noIndex: true
 });
@@ -39,16 +39,36 @@ export default async function PortalPage({
   return (
     <div className="container stack">
       <section className="hero-card">
-        <h1>My schedule and logistics</h1>
+        <h1>Speaker/Presenter Portal</h1>
         <p>
           {profile.full_name ? `${profile.full_name}, ` : ""}
-          this private view shows your assigned sessions, logistics notes, shared documents, and
-          the speaker/presenter board.
+          this private view gives you your assigned-session logistics, speaker/presenter document
+          library, and board updates in one place.
         </p>
         <div className="hero-meta">
           <span className="hero-pill">{sessions.length} assigned session{sessions.length === 1 ? "" : "s"}</span>
-          <span className="hero-pill">{documents.length} shared document{documents.length === 1 ? "" : "s"}</span>
+          <span className="hero-pill">{documents.length} speaker document{documents.length === 1 ? "" : "s"}</span>
           <LogoutButton destination="portal" />
+        </div>
+      </section>
+
+      <section className="panel detail-side-panel">
+        <div className="section-heading">
+          <h2>What is in this portal</h2>
+        </div>
+        <div className="story-stat-grid">
+          <article className="story-stat">
+            <strong>Assigned sessions</strong>
+            <span>See only the sessions linked to your speaker or presenter account.</span>
+          </article>
+          <article className="story-stat">
+            <strong>Private documents</strong>
+            <span>Open general speaker files and session-specific materials uploaded by the conference team.</span>
+          </article>
+          <article className="story-stat">
+            <strong>Logistics board</strong>
+            <span>Check reminders, coordination notes, and speaker/presenter updates in one thread.</span>
+          </article>
         </div>
       </section>
 
@@ -57,8 +77,8 @@ export default async function PortalPage({
           <h2>Speaker/Presenter Library</h2>
         </div>
         <p className="muted">
-          Year-round documents for speakers and presenters live here, plus any session-specific
-          materials your team uploads later.
+          This document library holds year-round speaker/presenter files, logistics materials, and
+          any session-specific resources the conference team uploads for your use.
         </p>
         {documents.length ? (
           <div className="resource-list">
@@ -142,7 +162,8 @@ export default async function PortalPage({
           <h2>Speaker/Presenter Board</h2>
         </div>
         <p className="muted">
-          Quick coordination notes, reminders, and updates for the speaker/presenter community.
+          Use this board for quick coordination notes, reminders, and updates for the speaker and
+          presenter community.
         </p>
         <form action={postSpeakerPortalMessage} className="form-grid" style={{ marginTop: "1rem" }}>
           <div className="field">

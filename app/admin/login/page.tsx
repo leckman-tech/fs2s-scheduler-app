@@ -21,8 +21,8 @@ export default async function AdminLoginPage({
       <section className="hero-card">
         <h1>Admin Portal</h1>
         <p>
-          Sign in with a Supabase email and password account that has an admin role in the
-          `profiles` table.
+          Sign in to manage public schedule content, announcements, attendee and speaker document
+          libraries, and private speaker/presenter board activity.
         </p>
       </section>
 
