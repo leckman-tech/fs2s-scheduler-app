@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { AnnouncementsBanner } from "@/components/announcements-banner";
 import { ScheduleExplorer } from "@/components/schedule-explorer";
+import { TicketPromoModal } from "@/components/ticket-promo-modal";
+import { EVENTBRITE_URL, TICKET_PROMO_CODE } from "@/lib/constants";
 import { getConferenceDays, getPublicAnnouncements, getPublicSessions } from "@/lib/queries";
 
 export default async function HomePage() {
@@ -14,6 +16,8 @@ export default async function HomePage() {
 
   return (
     <div className="container">
+      <TicketPromoModal />
+
       <section className="hero-card">
         <div className="hero-card__grid">
           <div className="hero-card__content">
@@ -33,6 +37,7 @@ export default async function HomePage() {
               <span className="hero-pill">April 1-3, 2026</span>
               <span className="hero-pill">Washington, D.C.</span>
               <span className="hero-pill">See Forever Foundation</span>
+              <span className="hero-pill">Use code {TICKET_PROMO_CODE}</span>
             </div>
           </div>
 
@@ -69,6 +74,14 @@ export default async function HomePage() {
         </div>
 
         <div className="hero-actions">
+          <a
+            href={EVENTBRITE_URL}
+            className="button button-link"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Purchase tickets
+          </a>
           <a href="#schedule" className="button button-link">
             Explore schedule
           </a>

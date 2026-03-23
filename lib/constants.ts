@@ -92,3 +92,8 @@ export const STATUS_LABELS: Record<SessionStatus, string> = {
 };
 
 export const SESSION_RESOURCE_BUCKET = "session-resources";
+
+export const EVENTBRITE_URL =
+  "https://www.eventbrite.com/e/from-silos-to-solutions-2026-tickets-1317628495299?utm-campaign=social&utm-content=attendeeshare&utm-medium=discovery&utm-term=listing&utm-source=cp&aff=ebdsshcopyurl";
+
+export const TICKET_PROMO_CODE = "DCCIVIC";

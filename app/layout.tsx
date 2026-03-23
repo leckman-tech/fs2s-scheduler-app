@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { EVENTBRITE_URL } from "@/lib/constants";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -40,6 +41,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <Link href="/speakers">Speakers</Link>
                 <Link href="/attendee/login">Attendee Portal</Link>
                 <Link href="/portal/login">Speaker/Presenter Portal</Link>
+                <a
+                  href={EVENTBRITE_URL}
+                  className="site-nav__cta"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Purchase Tickets
+                </a>
               </nav>
             </div>
           </header>
