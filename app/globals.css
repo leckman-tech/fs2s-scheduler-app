@@ -1338,7 +1338,7 @@ select {
   z-index: 45;
   display: grid;
   place-items: center;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .promo-modal__scrim {
@@ -1361,8 +1361,10 @@ select {
 }
 
 .promo-modal__card--video {
-  width: min(100%, 29rem);
-  padding: 1rem;
+  width: min(100%, 24rem);
+  max-height: calc(100vh - 4rem);
+  padding: 1rem 1rem 1.1rem;
+  overflow: auto;
 }
 
 .promo-modal__card h2 {
@@ -1370,6 +1372,12 @@ select {
   font-size: clamp(1.6rem, 3vw, 2.15rem);
   line-height: 1;
   letter-spacing: -0.04em;
+}
+
+.promo-modal__card--video .eyebrow,
+.promo-modal__card--video h2,
+.promo-modal__card--video p {
+  text-align: center;
 }
 
 .promo-modal__card p {
@@ -1392,7 +1400,9 @@ select {
   border-radius: 20px;
   border: 1px solid rgba(17, 17, 17, 0.08);
   background: #111111;
+  width: min(100%, 19rem);
   aspect-ratio: 9 / 16;
+  margin-inline: auto;
 }
 
 .promo-modal__video {
@@ -1421,6 +1431,10 @@ select {
 .promo-modal__sound:hover,
 .promo-modal__sound:focus-visible {
   background: #ffffff;
+}
+
+.promo-modal__card--video .promo-modal__actions {
+  justify-content: center;
 }
 
 .promo-modal__close {
@@ -1712,18 +1726,19 @@ th {
   }
 
   .promo-modal__card--video {
-    width: min(100%, 26rem);
+    width: min(100%, 22.5rem);
   }
 }
 
 @media (max-width: 640px) {
   .promo-modal__card--video {
-    width: min(100%, 23.5rem);
+    width: min(100%, 21rem);
     padding: 0.9rem;
   }
 
   .promo-modal__video-frame {
-    aspect-ratio: 4 / 5;
+    width: min(100%, 16.5rem);
+    aspect-ratio: 9 / 15;
   }
 }
 
