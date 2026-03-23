@@ -14,8 +14,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <div className="page-shell">
           <div className="spring-canvas" aria-hidden="true">
             <div className="spring-canvas__capitol" />
-            <div className="spring-canvas__bloom spring-canvas__bloom--left" />
-            <div className="spring-canvas__bloom spring-canvas__bloom--right" />
             <div className="spring-canvas__mist" />
             <span className="petal petal--1" />
             <span className="petal petal--2" />
@@ -38,6 +36,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               </div>
               <nav className="site-nav" aria-label="Primary navigation">
                 <Link href="/">Schedule</Link>
+                <Link href="/learn-more">Learn More</Link>
                 <Link href="/speakers">Speakers</Link>
                 <Link href="/attendee/login">Attendee Portal</Link>
                 <Link href="/portal/login">Speaker/Presenter Portal</Link>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AnnouncementsBanner } from "@/components/announcements-banner";
 import { ScheduleExplorer } from "@/components/schedule-explorer";
 import { getConferenceDays, getPublicAnnouncements, getPublicSessions } from "@/lib/queries";
@@ -10,29 +11,6 @@ export default async function HomePage() {
   ]);
   const featuredCount = sessions.filter((session) => session.featured).length;
   const workshopCount = sessions.filter((session) => session.category === "workshop").length;
-  const historyMoments = [
-    {
-      eyebrow: "2024 Inaugural Convening",
-      title: "The inaugural convening opened a shared space for coordination across systems",
-      description:
-        "In 2024, From Silos to Solutions brought together educators, clinicians, policymakers, public defenders, providers, advocates, and students in Washington, D.C. around a shared challenge: how to better coordinate support for opportunity and justice-involved youth and young adults.",
-      className: "experience-card--history-2024"
-    },
-    {
-      eyebrow: "A Growing Convening",
-      title: "Each convening deepens relationships, sharpens practice, and builds momentum",
-      description:
-        "FS2S continues to grow as a multi-day gathering that blends keynote conversations, breakout learning, student-centered programming, and relationship-building across sectors.",
-      className: "experience-card--history-2025"
-    },
-    {
-      eyebrow: "See Forever Foundation",
-      title: "The convening is rooted in year-round work with young people across Washington",
-      description:
-        "Hosted by the See Forever Foundation and Maya Angelou Schools, FS2S reflects more than 25 years of restorative, relevant education and youth development for opportunity and justice-involved youth.",
-      className: "experience-card--history-foundation"
-    }
-  ];
 
   return (
     <div className="container">
@@ -94,21 +72,20 @@ export default async function HomePage() {
           <a href="#schedule" className="button button-link">
             Explore schedule
           </a>
-          <a href="#story" className="button-secondary button-link">
-            Learn the story
-          </a>
+          <Link href="/learn-more" className="button-secondary button-link">
+            Learn more
+          </Link>
         </div>
       </section>
 
-      <section className="context-grid" id="story">
+      <section className="context-grid context-grid--home-intro">
         <article className="panel story-panel">
-          <p className="eyebrow">Why FS2S Exists</p>
-          <h2>A national convening built to move partners from parallel effort to shared action</h2>
+          <p className="eyebrow">National Convening</p>
+          <h2>Built for leaders working across systems, sectors, and communities</h2>
           <p>
-            Opportunity and justice-involved youth and young adults are often served by systems
-            that do not communicate clearly with one another. From Silos to Solutions creates space
-            for those systems to listen, learn, and align around more coordinated support, guided
-            by leaders who have spent decades building real pathways for scholars across Washington.
+            From Silos to Solutions brings together educators, policymakers, youth-serving
+            organizations, advocates, and community leaders around one shared question: how do we
+            coordinate stronger support for opportunity and justice-involved youth and young adults?
           </p>
           <div className="story-list">
             <div className="session-info-pill">
@@ -121,97 +98,42 @@ export default async function HomePage() {
             </div>
             <div className="session-info-pill">
               <strong>Why it matters</strong>
-              <span>Sharing proven models, lessons, and partnerships with leaders across the country</span>
+              <span>Sharing models, lessons, and partnerships that can strengthen work nationwide</span>
             </div>
             <div className="session-info-pill">
-              <strong>What it centers</strong>
-              <span>Opportunity and justice-involved youth and young adults</span>
+              <strong>Hosted by</strong>
+              <span>See Forever Foundation and Maya Angelou Schools</span>
             </div>
           </div>
         </article>
 
         <article className="panel story-panel story-panel--accent">
-          <p className="eyebrow">See Forever Foundation</p>
-          <h2>Hosted by a leading voice in education, advocacy, and scholar opportunity</h2>
+          <p className="eyebrow">At a Glance</p>
+          <h2>A clearer landing page, with the full story one click away</h2>
           <p>
-            The See Forever Foundation and Maya Angelou Schools support young people through
-            restorative, relevant education, personalized academic support, well-being, and
-            preparation for life after Maya. FS2S grows directly out of that daily work, the many
-            campuses and pathways developed for scholars, and a commitment to sharing that
-            knowledge nationally.
+            Start here for the live schedule, announcements, speakers, and logistics. When you want
+            the history of FS2S, the work of See Forever Foundation, and more about the leadership
+            behind the convening, head to the Learn More page.
           </p>
           <div className="story-stat-grid">
             <article className="story-stat">
               <strong>{workshopCount}</strong>
-              <span>workshop slots in the current convening</span>
+              <span>workshop slots across the convening</span>
             </article>
             <article className="story-stat">
               <strong>{featuredCount}</strong>
-              <span>featured moments across keynote, panel, scholar, and evening events</span>
+              <span>featured sessions across keynote, panel, scholar, and evening events</span>
             </article>
             <article className="story-stat">
               <strong>{announcements.length}</strong>
-              <span>live notice channels built into the attendee experience</span>
+              <span>announcement channels ready for live updates</span>
             </article>
           </div>
-        </article>
-      </section>
-
-      <section className="context-grid context-grid--history">
-        <article className="panel story-panel">
-          <p className="eyebrow">Leadership</p>
-          <h2>Led by Dr. Clarisse Mendoza-Davis</h2>
-          <p>
-            Under the leadership of Dr. Clarisse Mendoza-Davis, the organization has built campuses,
-            scholar supports, and pathways that reflect deep expertise in serving opportunity and
-            justice-involved youth and young adults. FS2S is an extension of that leadership.
-          </p>
-        </article>
-
-        <article className="panel story-panel">
-          <p className="eyebrow">Convening Leadership</p>
-          <h2>Convening Director and Administrator Levi W. Eckman, J.D.</h2>
-          <p>
-            The convening is directed and administered by Levi W. Eckman, J.D., helping shape a
-            gathering that is both mission-driven and operationally strong, with the goal of
-            sharing strategy, knowledge, and practical models with partners nationwide.
-          </p>
-        </article>
-      </section>
-
-      <section className="experience-band">
-        {historyMoments.map((moment) => (
-          <article key={moment.title} className={`experience-card ${moment.className}`}>
-            <div className="experience-card__copy">
-              <p className="eyebrow">{moment.eyebrow}</p>
-              <h2>{moment.title}</h2>
-              <p>{moment.description}</p>
-            </div>
-          </article>
-        ))}
-      </section>
-
-      <section className="context-grid context-grid--history">
-        <article className="panel story-panel">
-          <p className="eyebrow">2024 Convening Snapshot</p>
-          <h2>The inaugural convening set the tone for what this gathering can become</h2>
-          <p>
-            The 2024 convening brought together leaders from education, mental health, public
-            defense, health care, community advocacy, youth services, the private sector, and
-            student leadership. That breadth matters because no single institution can do this work
-            alone, and because cross-sector leadership is essential to lasting change.
-          </p>
-        </article>
-
-        <article className="panel story-panel">
-          <p className="eyebrow">What 2026 Builds On</p>
-          <h2>The 2026 convening continues that work with a sharper focus on partnership</h2>
-          <p>
-            This year’s gathering builds on the relationships, lessons, and shared commitments that
-            have already emerged through FS2S. The goal is not simply to gather again, but to share
-            what has been built, strengthen national partnerships, and move the work forward
-            together.
-          </p>
+          <div className="hero-actions">
+            <Link href="/learn-more" className="button-secondary button-link">
+              Visit Learn More
+            </Link>
+          </div>
         </article>
       </section>
 
@@ -246,6 +168,25 @@ export default async function HomePage() {
             </p>
           </div>
         </article>
+      </section>
+
+      <section className="panel learn-more-panel">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Learn More</p>
+            <h2>The full story of FS2S, See Forever, and the convening leadership</h2>
+          </div>
+        </div>
+        <p className="muted">
+          If you want the deeper context behind the convening, visit the Learn More page for the
+          history of FS2S, highlights from past convenings, and more about the organizational work
+          that powers this gathering.
+        </p>
+        <div className="hero-actions">
+          <Link href="/learn-more" className="button button-link">
+            Go to Learn More
+          </Link>
+        </div>
       </section>
 
       <div className="schedule-layout" id="schedule">
