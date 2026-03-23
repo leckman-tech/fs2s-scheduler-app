@@ -5,7 +5,7 @@ export function AnnouncementsBanner({ announcements }: { announcements: Announce
   const urgentCount = announcements.filter((announcement) => announcement.priority === "urgent").length;
 
   return (
-    <section className="panel sticky-panel announcements-panel">
+    <section className="panel sticky-panel announcements-panel" id="live-updates">
       <div className="section-heading">
         <div>
           <p className="eyebrow">Live Updates</p>

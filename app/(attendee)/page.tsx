@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AnnouncementsBanner } from "@/components/announcements-banner";
+import { LiveUpdatesTicker } from "@/components/live-updates-ticker";
 import { ScheduleExplorer } from "@/components/schedule-explorer";
 import { TicketPromoModal } from "@/components/ticket-promo-modal";
 import { EVENTBRITE_URL, TICKET_PROMO_CODE } from "@/lib/constants";
@@ -17,6 +18,7 @@ export default async function HomePage() {
   return (
     <div className="container">
       <TicketPromoModal />
+      <LiveUpdatesTicker announcements={announcements} />
 
       <section className="hero-card">
         <div className="hero-card__grid">
