@@ -156,9 +156,10 @@ export default function LearnMorePage() {
               partners nationwide.
             </p>
             <p>
-              Dr. Clarisse Mendoza-Davis leads the See Forever Foundation and the broader
-              institutional work that grounds this convening in scholar-centered education,
-              advocacy, and opportunity for young people across Washington.
+              He also serves on the OST Commission and contributes to legal-journal advocacy
+              focused on educational equity, with particular attention to access to funds and
+              accountability for how those funds are used to support young people and their
+              communities.
             </p>
           </div>
         </article>
