@@ -28,10 +28,10 @@ export default async function HomePage() {
               Young Adults
             </p>
             <p>
-              Join a national gathering led by the See Forever Foundation and Maya Angelou Schools,
-              where educators, youth-serving organizations, policymakers, advocates, and community
-              leaders come together to strengthen support for opportunity and justice-involved youth
-              and young adults.
+              Join a national convening shaped by the leadership of the See Forever Foundation and
+              Maya Angelou Schools, where educators, youth-serving organizations, policymakers,
+              advocates, and community leaders come together to strengthen support for opportunity
+              and justice-involved youth and young adults.
             </p>
             <div className="hero-meta">
               <span className="hero-pill">April 1-3, 2026</span>
@@ -110,7 +110,7 @@ export default async function HomePage() {
               </article>
               <article className="story-stat">
                 <strong>{workshopCount}</strong>
-                <span>workshop sessions in the current draft program</span>
+                <span>workshop sessions currently on the agenda</span>
               </article>
               <article className="story-stat">
                 <strong>{featuredCount}</strong>
