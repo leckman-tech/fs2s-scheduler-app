@@ -3,8 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {
+  ATTENDEE_PORTAL_ROLES,
   CONFIRMATION_STATUSES,
   PARTICIPANT_ROLES,
+  SPEAKER_PORTAL_ROLES,
   SESSION_RESOURCE_BUCKET,
   SESSION_CATEGORIES,
   SESSION_STATUSES
@@ -26,6 +28,25 @@ function sanitizeFileName(value: string) {
     .replace(/[^a-z0-9.\-_]+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+async function getCurrentRole() {
+  const supabase = await createClient();
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { supabase, role: null as string | null };
+  }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  return { supabase, role: profile?.role ?? null };
 }
 
 function parseSpeakers(rawValue: string) {
@@ -176,6 +197,13 @@ export async function loginAdmin(formData: FormData) {
     redirect(`/admin/login?error=${encodeURIComponent(error.message)}`);
   }
 
+  const { role } = await getCurrentRole();
+
+  if (role !== "admin") {
+    await supabase.auth.signOut();
+    redirect("/admin/login?error=This%20login%20does%20not%20include%20admin%20access");
+  }
+
   redirect("/admin/dashboard");
 }
 
@@ -190,6 +218,13 @@ export async function loginPortal(formData: FormData) {
     redirect(`/portal/login?error=${encodeURIComponent(error.message)}`);
   }
 
+  const { role } = await getCurrentRole();
+
+  if (!SPEAKER_PORTAL_ROLES.includes(role as (typeof SPEAKER_PORTAL_ROLES)[number])) {
+    await supabase.auth.signOut();
+    redirect("/portal/login?error=This%20login%20does%20not%20include%20speaker%20or%20presenter%20access");
+  }
+
   redirect("/portal");
 }
 
@@ -202,6 +237,13 @@ export async function loginAttendee(formData: FormData) {
 
   if (error) {
     redirect(`/attendee/login?error=${encodeURIComponent(error.message)}`);
+  }
+
+  const { role } = await getCurrentRole();
+
+  if (!ATTENDEE_PORTAL_ROLES.includes(role as (typeof ATTENDEE_PORTAL_ROLES)[number])) {
+    await supabase.auth.signOut();
+    redirect("/attendee/login?error=This%20login%20does%20not%20include%20attendee%20portal%20access");
   }
 
   redirect("/attendee");

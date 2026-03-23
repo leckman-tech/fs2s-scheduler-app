@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
-import { SESSION_RESOURCE_BUCKET, USER_ROLES } from "@/lib/constants";
+import { ATTENDEE_PORTAL_ROLES, SESSION_RESOURCE_BUCKET, SPEAKER_PORTAL_ROLES } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/server";
 import { displaySessionTitle } from "@/lib/utils";
 import type {
@@ -397,8 +397,13 @@ export const requireAttendeePortalUser = cache(async () => {
     .eq("id", user.id)
     .maybeSingle();
 
-  if (!profile || !USER_ROLES.includes(profile.role as (typeof USER_ROLES)[number])) {
-    redirect("/attendee/login?error=No%20attendee%20portal%20access%20found");
+  if (
+    !profile ||
+    !ATTENDEE_PORTAL_ROLES.includes(
+      profile.role as (typeof ATTENDEE_PORTAL_ROLES)[number]
+    )
+  ) {
+    redirect("/attendee/login?error=This%20login%20does%20not%20include%20attendee%20portal%20access");
   }
 
   return { user, profile };
@@ -649,11 +654,12 @@ export const requirePrivateScheduleUser = cache(async () => {
     .eq("id", user.id)
     .maybeSingle();
 
-  if (!profile || !USER_ROLES.includes(profile.role as (typeof USER_ROLES)[number])) {
-    redirect("/portal/login?error=No%20private%20schedule%20access%20found");
-  }
-
-  if (profile.role === "attendee") {
+  if (
+    !profile ||
+    !SPEAKER_PORTAL_ROLES.includes(
+      profile.role as (typeof SPEAKER_PORTAL_ROLES)[number]
+    )
+  ) {
     redirect("/portal/login?error=Your%20account%20does%20not%20include%20speaker%20or%20presenter%20access");
   }
 
