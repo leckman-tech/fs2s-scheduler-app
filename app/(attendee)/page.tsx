@@ -121,30 +121,38 @@ export default async function HomePage() {
         </article>
 
         <article className="panel story-panel story-panel--accent">
-          <p className="eyebrow">At a Glance</p>
-          <h2>A clearer landing page, with the full story one click away</h2>
+          <p className="eyebrow">Plan Your Visit</p>
+          <h2>Register now and start planning your convening experience</h2>
           <p>
-            Start here for the live schedule, announcements, speakers, and logistics. When you want
-            the history of FS2S, the work of See Forever Foundation, and more about the leadership
-            behind the convening, head to the Learn More page.
+            Use this site to register, browse the schedule, review speakers, and prepare for three
+            days of conversation, learning, and partnership in Washington, D.C. Use code{" "}
+            <strong>{TICKET_PROMO_CODE}</strong> for 75% off the first 50 registrations.
           </p>
           <div className="story-stat-grid">
             <article className="story-stat">
+              <strong>{days.length}</strong>
+              <span>days of programming across the convening</span>
+            </article>
+            <article className="story-stat">
               <strong>{workshopCount}</strong>
-              <span>workshop slots across the convening</span>
+              <span>workshop sessions in the current program</span>
             </article>
             <article className="story-stat">
               <strong>{featuredCount}</strong>
               <span>featured sessions across keynote, panel, scholar, and evening events</span>
             </article>
-            <article className="story-stat">
-              <strong>{announcements.length}</strong>
-              <span>announcement channels ready for live updates</span>
-            </article>
           </div>
           <div className="hero-actions">
+            <a
+              href={EVENTBRITE_URL}
+              className="button button-link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Purchase tickets
+            </a>
             <Link href="/learn-more" className="button-secondary button-link">
-              Visit Learn More
+              Learn more
             </Link>
           </div>
         </article>
