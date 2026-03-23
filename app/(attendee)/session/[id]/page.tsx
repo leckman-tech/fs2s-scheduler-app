@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/favorite-button";
 import { FeedbackForm } from "@/components/feedback-form";
 import { getSessionById } from "@/lib/queries";
+import { getSessionMetadata, getSessionStructuredData } from "@/lib/seo";
 import {
   displaySessionTitle,
   formatDateLabel,
@@ -10,6 +12,27 @@ import {
   labelForStatus,
   statusClassName
 } from "@/lib/utils";
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const session = await getSessionById(id);
+
+  if (!session) {
+    return {
+      title: "Session not found",
+      robots: {
+        index: false,
+        follow: false
+      }
+    };
+  }
+
+  return getSessionMetadata(session);
+}
 
 export default async function SessionDetailPage({
   params
@@ -23,8 +46,14 @@ export default async function SessionDetailPage({
     notFound();
   }
 
+  const structuredData = getSessionStructuredData(session);
+
   return (
     <div className="container detail-grid">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <div className="stack">
         <section className={`hero-card detail-header detail-header--${session.category}`}>
           <div className="session-card__top">

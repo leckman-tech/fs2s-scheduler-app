@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import { loginPortal } from "@/lib/actions/admin";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Speaker and Presenter Portal Login",
+  description: "Private speaker and presenter login for FS2S 2026 logistics and shared documents.",
+  path: "/portal/login",
+  noIndex: true
+});
 
 export default async function PortalLoginPage({
   searchParams

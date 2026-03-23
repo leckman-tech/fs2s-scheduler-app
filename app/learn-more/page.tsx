@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { EVENTBRITE_URL } from "@/lib/constants";
+import { buildMetadata, getLeadershipStructuredData } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Mission, Leadership, and Convening History",
+  description:
+    "Learn about the mission behind From Silos to Solutions 2026, the work of the See Forever Foundation, foundation leadership under Dr. Clarisse Mendoza-Davis, and Convening Director Levi W. Eckman, J.D.",
+  path: "/learn-more"
+});
 
 const storyShowcases = [
   {
@@ -26,8 +35,14 @@ const storyShowcases = [
 ];
 
 export default function LearnMorePage() {
+  const structuredData = getLeadershipStructuredData();
+
   return (
     <div className="container stack">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <section className="hero-card learn-hero">
         <div className="hero-card__grid">
           <div className="hero-card__content">

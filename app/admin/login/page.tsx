@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import { loginAdmin } from "@/lib/actions/admin";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Admin Login",
+  description: "Private admin login for From Silos to Solutions 2026.",
+  path: "/admin/login",
+  noIndex: true
+});
 
 export default async function AdminLoginPage({
   searchParams

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { AnnouncementsBanner } from "@/components/announcements-banner";
 import { LiveUpdatesTicker } from "@/components/live-updates-ticker";
@@ -5,6 +6,14 @@ import { ScheduleExplorer } from "@/components/schedule-explorer";
 import { TicketPromoModal } from "@/components/ticket-promo-modal";
 import { EVENTBRITE_URL, TICKET_PROMO_CODE } from "@/lib/constants";
 import { getConferenceDays, getPublicAnnouncements, getPublicSessions } from "@/lib/queries";
+import { buildMetadata, getEventStructuredData } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "National Convening in Washington, D.C.",
+  description:
+    "From Silos to Solutions 2026 is a national Washington, D.C. convening focused on coordinating supports for opportunity and justice-involved youth and young adults. Convening Director Levi W. Eckman, J.D. leads the gathering alongside the scholar-centered work of the See Forever Foundation and Maya Angelou Schools.",
+  path: "/"
+});
 
 export default async function HomePage() {
   const [sessions, announcements, days] = await Promise.all([
@@ -14,9 +23,14 @@ export default async function HomePage() {
   ]);
   const featuredCount = sessions.filter((session) => session.featured).length;
   const workshopCount = sessions.filter((session) => session.category === "workshop").length;
+  const structuredData = getEventStructuredData();
 
   return (
     <div className="container">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <TicketPromoModal />
       <LiveUpdatesTicker announcements={announcements} />
 

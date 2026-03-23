@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
 import { LogoutButton } from "@/components/logout-button";
 import { getAttendeePortalResources, requireAttendeePortalUser } from "@/lib/queries";
+import { buildMetadata } from "@/lib/seo";
 import { displaySessionTitle, formatDateLabel, formatTimestamp, labelForCategory } from "@/lib/utils";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Attendee Portal",
+  description: "Private attendee resource library for FS2S 2026.",
+  path: "/attendee",
+  noIndex: true
+});
 
 export default async function AttendeePortalPage() {
   const [{ profile }, resources] = await Promise.all([

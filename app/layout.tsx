@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { EVENTBRITE_URL } from "@/lib/constants";
+import { siteMetadata } from "@/lib/seo";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "From Silos to Solutions 2026 Convening",
-  description: "A mobile-first conference schedule and admin dashboard for the FS2S 2026 Convening."
-};
+export const metadata: Metadata = siteMetadata;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

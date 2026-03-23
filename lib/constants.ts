@@ -93,6 +93,13 @@ export const STATUS_LABELS: Record<SessionStatus, string> = {
 
 export const SESSION_RESOURCE_BUCKET = "session-resources";
 
+export const SITE_URL = "https://fs2shub.com";
+export const SITE_NAME = "From Silos to Solutions 2026";
+export const SITE_DESCRIPTION =
+  "From Silos to Solutions 2026 is a national convening in Washington, D.C. focused on coordinating supports for opportunity and justice-involved youth and young adults through partnership, advocacy, and scholar-centered practice.";
+export const SEO_OG_IMAGE = "/fs2s/fs2s-room-wide.jpg";
+export const SEE_FOREVER_URL = "https://www.seeforever.org";
+
 export const EVENTBRITE_URL =
   "https://www.eventbrite.com/e/from-silos-to-solutions-2026-tickets-1317628495299?utm-campaign=social&utm-content=attendeeshare&utm-medium=discovery&utm-term=listing&utm-source=cp&aff=ebdsshcopyurl";
 

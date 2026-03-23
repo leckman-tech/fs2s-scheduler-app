@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import { loginAttendee } from "@/lib/actions/admin";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Attendee Portal Login",
+  description: "Private attendee login for FS2S 2026 documents and conference resources.",
+  path: "/attendee/login",
+  noIndex: true
+});
 
 export default async function AttendeeLoginPage({
   searchParams

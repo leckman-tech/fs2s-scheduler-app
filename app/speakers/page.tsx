@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getPublicSpeakers } from "@/lib/queries";
+import { buildMetadata } from "@/lib/seo";
 import { displaySessionTitle, formatDateLabel, labelForCategory } from "@/lib/utils";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Speakers and Panelists",
+  description:
+    "Browse the public speaker and panelist directory for From Silos to Solutions 2026, including keynote, panel, workshop, and featured convening voices.",
+  path: "/speakers"
+});
 
 export default async function SpeakersPage() {
   const speakers = await getPublicSpeakers();
