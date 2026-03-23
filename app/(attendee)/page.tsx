@@ -84,7 +84,7 @@ export default async function HomePage() {
           >
             Purchase tickets
           </a>
-          <a href="#schedule" className="button button-link">
+          <a href="#schedule" className="button-tertiary button-link">
             Explore schedule
           </a>
           <Link href="/learn-more" className="button-secondary button-link">

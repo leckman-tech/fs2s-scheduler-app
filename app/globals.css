@@ -6,8 +6,9 @@
   --ink: #111111;
   --muted: #5f5f5f;
   --line: rgba(17, 17, 17, 0.12);
-  --accent: #c1121f;
+  --accent: #b51224;
   --accent-deep: #8f0d17;
+  --accent-soft: #fff2f4;
   --success: #297045;
   --warning: #a05e00;
   --danger: #8f0d17;
@@ -266,10 +267,10 @@ select {
   justify-content: center;
   padding: 0.62rem 0.95rem;
   border-radius: 999px;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
   color: white;
   font-weight: 700;
-  box-shadow: 0 10px 22px rgba(193, 18, 31, 0.18);
+  box-shadow: 0 10px 22px rgba(181, 18, 36, 0.2);
 }
 
 .site-nav a:hover,
@@ -1224,6 +1225,7 @@ select {
 }
 
 .button,
+.button-tertiary,
 .button-secondary,
 .button-danger {
   display: inline-flex;
@@ -1238,6 +1240,7 @@ select {
 }
 
 .button:hover,
+.button-tertiary:hover,
 .button-secondary:hover,
 .button-danger:hover {
   transform: translateY(-1px);
@@ -1245,14 +1248,23 @@ select {
 }
 
 .button {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
   color: white;
+  box-shadow: 0 12px 24px rgba(181, 18, 36, 0.18);
+}
+
+.button-tertiary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: white;
+  backdrop-filter: blur(10px);
 }
 
 .button-secondary {
-  background: white;
-  border: 1px solid rgba(17, 17, 17, 0.12);
+  background: linear-gradient(180deg, rgba(255, 245, 247, 0.98), rgba(255, 255, 255, 0.98));
+  border: 1px solid rgba(181, 18, 36, 0.16);
   color: var(--surface-contrast);
+  box-shadow: 0 10px 22px rgba(17, 17, 17, 0.05);
 }
 
 .button-danger {
