@@ -125,6 +125,39 @@ export default function LearnMorePage() {
       </section>
 
       <section className="experience-band">
+        <article className="experience-card experience-card--city">
+          <div className="experience-card__copy">
+            <p className="eyebrow">Inside the Convening</p>
+            <h2>The room is built for honest discussion, practical strategy, and real connection</h2>
+            <p>
+              FS2S is designed to bring different sectors into the same room with enough structure
+              to learn from one another and enough openness to build real partnership.
+            </p>
+          </div>
+        </article>
+        <article className="experience-card experience-card--scholars">
+          <div className="experience-card__copy">
+            <p className="eyebrow">Voices in the Room</p>
+            <h2>Lived experience, practitioner wisdom, and community leadership stay close to the work</h2>
+            <p>
+              The convening is strongest when people can speak frankly about what young people
+              need, what systems miss, and what partnership looks like in practice.
+            </p>
+          </div>
+        </article>
+        <article className="experience-card experience-card--agenda">
+          <div className="experience-card__copy">
+            <p className="eyebrow">Collaboration in Motion</p>
+            <h2>Sessions are only part of the value; the exchange between people is part of the point</h2>
+            <p>
+              Use the schedule to move with confidence, then let the conversations, workshops, and
+              shared problem-solving carry the convening forward.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section className="experience-band">
         {historyMoments.map((moment) => (
           <article key={moment.title} className={`experience-card ${moment.className}`}>
             <div className="experience-card__copy">
