@@ -151,15 +151,15 @@ export default function LearnMorePage() {
             <p className="eyebrow">Convening Leadership</p>
             <h2>Convening Director Levi W. Eckman, J.D.</h2>
             <p>
-              Levi W. Eckman, J.D. serves as Convening Director and Administrator, helping shape an
-              experience that is mission-driven, practical, and built to share what works with
-              partners nationwide.
+              Levi W. Eckman, J.D. serves as Convening Director and Administrator for From Silos
+              to Solutions 2026, helping guide a convening that is mission-driven, strategically
+              grounded, and designed to share practical lessons with partners across the country.
             </p>
             <p>
-              He also serves on the OST Commission and contributes to legal-journal advocacy
-              focused on educational equity, with particular attention to access to funds and
-              accountability for how those funds are used to support young people and their
-              communities.
+              His broader advocacy includes service on the OST Commission and contributions to
+              legal-journal work advancing educational equity, with particular focus on access to
+              funding and accountability for how public resources are invested in young people and
+              their communities.
             </p>
           </div>
         </article>
@@ -179,13 +179,13 @@ export default function LearnMorePage() {
             <h2>Dr. Clarisse Mendoza-Davis leads the broader work that grounds the convening</h2>
             <p>
               Under Dr. Clarisse Mendoza-Davis's leadership, the See Forever Foundation and Maya
-              Angelou Schools continue to build scholar-centered education, well-being,
+              Angelou Schools continue to expand scholar-centered education, well-being,
               postsecondary support, and opportunity for young people across Washington.
             </p>
             <p>
-              From Silos to Solutions grows directly out of that institutional work and shares it
-              with national partners so the convening stays connected to families, scholars, and
-              real practice rather than abstract conversation alone.
+              From Silos to Solutions grows directly out of that institutional work, carrying
+              forward a leadership approach rooted in scholar success, family partnership, and
+              meaningful accountability to the communities the schools and foundation serve.
             </p>
           </div>
         </article>
