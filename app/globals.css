@@ -179,8 +179,7 @@ select {
 
 @media (prefers-reduced-motion: reduce) {
   .spring-canvas__capitol,
-  .petal,
-  .live-ticker__track {
+  .petal {
     animation: none;
   }
 }
@@ -302,7 +301,7 @@ select {
   padding: 0.7rem 0.9rem;
   border: 1px solid rgba(17, 17, 17, 0.08);
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(14px);
   box-shadow: 0 12px 24px rgba(17, 17, 17, 0.08);
 }
@@ -327,21 +326,13 @@ select {
   min-width: 0;
 }
 
-.live-ticker__track {
-  display: inline-flex;
-  align-items: center;
-  gap: 2rem;
-  min-width: max-content;
-  animation: ticker-scroll 28s linear infinite;
-}
-
 .live-ticker__item {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.55rem;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.8rem;
   color: var(--muted);
   font-size: 0.94rem;
-  white-space: nowrap;
 }
 
 .live-ticker__item strong {
@@ -352,20 +343,6 @@ select {
   color: var(--accent);
 }
 
-.live-ticker__item::after {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: rgba(17, 17, 17, 0.14);
-  margin-left: 1.4rem;
-  flex: 0 0 auto;
-}
-
-.live-ticker__item:last-child::after {
-  display: none;
-}
-
 .live-ticker__link {
   color: var(--accent);
   font-size: 0.9rem;
@@ -373,13 +350,16 @@ select {
   white-space: nowrap;
 }
 
-@keyframes ticker-scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+.live-ticker__more {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(193, 18, 31, 0.08);
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .hero-card,
@@ -946,8 +926,7 @@ select {
 }
 
 .announcements-panel {
-  background:
-    linear-gradient(180deg, rgba(193, 18, 31, 0.03), #ffffff);
+  background: #ffffff;
 }
 
 .announcements-panel__intro {
