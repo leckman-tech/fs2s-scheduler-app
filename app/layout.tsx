@@ -32,13 +32,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <div>
                 <p className="eyebrow">From Silos to Solutions 2026 Convening</p>
                 <Link href="/" className="site-title">
-                  Conference Schedule
+                  Conference Landing Page
                 </Link>
               </div>
               <nav className="site-nav" aria-label="Primary navigation">
                 <Link href="/">Schedule</Link>
-                <Link href="/learn-more">Learn More</Link>
                 <Link href="/speakers">Speakers</Link>
+                <Link href="/learn-more">Learn More</Link>
                 <Link href="/attendee/login">Attendee Portal</Link>
                 <Link href="/portal/login">Speaker/Presenter Portal</Link>
                 <a
