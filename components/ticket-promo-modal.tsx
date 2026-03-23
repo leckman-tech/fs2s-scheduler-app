@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EVENTBRITE_URL } from "@/lib/constants";
 
 export function HomeVideoModal() {
   const [isOpen, setIsOpen] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (!isOpen) {
@@ -20,6 +22,21 @@ export function HomeVideoModal() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!videoRef.current) {
+      return;
+    }
+
+    videoRef.current.muted = isMuted;
+
+    if (!isMuted) {
+      videoRef.current.volume = 1;
+      void videoRef.current.play().catch(() => {
+        setIsMuted(true);
+      });
+    }
+  }, [isMuted]);
 
   const dismiss = () => {
     setIsOpen(false);
@@ -54,18 +71,26 @@ export function HomeVideoModal() {
         </p>
         <div className="promo-modal__video-frame">
           <video
+            ref={videoRef}
             className="promo-modal__video"
             autoPlay
             muted
             loop
             playsInline
-            controls
             preload="metadata"
             poster="/fs2s/fs2s-room-wide.jpg"
           >
             <source src="/fs2s/silos.mov" type="video/quicktime" />
             Your browser does not support embedded video.
           </video>
+          <button
+            type="button"
+            className="promo-modal__sound"
+            onClick={() => setIsMuted((value) => !value)}
+            aria-label={isMuted ? "Turn sound on" : "Mute video"}
+          >
+            {isMuted ? "Tap for sound" : "Sound on"}
+          </button>
         </div>
         <div className="promo-modal__actions">
           <button type="button" className="button-tertiary" onClick={dismiss}>

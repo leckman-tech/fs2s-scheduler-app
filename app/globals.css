@@ -1361,7 +1361,8 @@ select {
 }
 
 .promo-modal__card--video {
-  width: min(100%, 52rem);
+  width: min(100%, 29rem);
+  padding: 1rem;
 }
 
 .promo-modal__card h2 {
@@ -1386,17 +1387,40 @@ select {
 
 .promo-modal__video-frame {
   margin-top: 1rem;
+  position: relative;
   overflow: hidden;
   border-radius: 20px;
   border: 1px solid rgba(17, 17, 17, 0.08);
-  background: rgba(17, 17, 17, 0.06);
+  background: #111111;
+  aspect-ratio: 9 / 16;
 }
 
 .promo-modal__video {
   display: block;
   width: 100%;
-  max-height: min(68vh, 34rem);
+  height: 100%;
+  object-fit: cover;
   background: #111111;
+}
+
+.promo-modal__sound {
+  position: absolute;
+  right: 0.85rem;
+  bottom: 0.85rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.65rem 0.95rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(17, 17, 17, 0.18);
+}
+
+.promo-modal__sound:hover,
+.promo-modal__sound:focus-visible {
+  background: #ffffff;
 }
 
 .promo-modal__close {
@@ -1688,7 +1712,18 @@ th {
   }
 
   .promo-modal__card--video {
-    width: min(100%, 42rem);
+    width: min(100%, 26rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .promo-modal__card--video {
+    width: min(100%, 23.5rem);
+    padding: 0.9rem;
+  }
+
+  .promo-modal__video-frame {
+    aspect-ratio: 4 / 5;
   }
 }
 
