@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AnnouncementsBanner } from "@/components/announcements-banner";
-import { HomeVideoModal } from "@/components/ticket-promo-modal";
 import { LiveUpdatesTicker } from "@/components/live-updates-ticker";
 import { ScheduleExplorer } from "@/components/schedule-explorer";
+import { TicketPromoModal } from "@/components/ticket-promo-modal";
 import { EVENTBRITE_URL, TICKET_PROMO_CODE } from "@/lib/constants";
 import { getConferenceDays, getPublicAnnouncements, getPublicSessions } from "@/lib/queries";
 import { buildMetadata, getEventStructuredData } from "@/lib/seo";
@@ -31,7 +31,7 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <HomeVideoModal />
+      <TicketPromoModal />
       <LiveUpdatesTicker announcements={announcements} />
 
       <section className="hero-card">
@@ -58,7 +58,20 @@ export default async function HomePage() {
 
           <div className="hero-card__visual">
             <div className="hero-photo hero-photo--dc">
-              <span className="hero-photo__label">Opening voice</span>
+              <video
+                className="hero-photo__video"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/fs2s/fs2s-speaker-podium.jpg"
+                aria-label="Short video from the From Silos to Solutions convening"
+              >
+                <source src="/fs2s/silos.mov" type="video/quicktime" />
+                Your browser does not support embedded video.
+              </video>
+              <span className="hero-photo__label">Convening in motion</span>
             </div>
             <div className="hero-photo hero-photo--conference">
               <span className="hero-photo__label">In the room</span>
