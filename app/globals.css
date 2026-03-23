@@ -1633,6 +1633,12 @@ th {
     padding: 0.75rem 0.8rem;
   }
 
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
   .hero-card,
   .panel,
   .card {
