@@ -1256,6 +1256,36 @@ select {
   gap: 0.85rem;
 }
 
+.admin-edit-details {
+  margin-top: 0.9rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed rgba(17, 17, 17, 0.12);
+}
+
+.admin-edit-details summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--accent-deep);
+  list-style: none;
+}
+
+.admin-edit-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.admin-edit-details[open] summary {
+  margin-bottom: 0.8rem;
+}
+
+.admin-edit-details__form {
+  margin-bottom: 0.85rem;
+}
+
+.admin-edit-details__meta {
+  margin: -0.15rem 0 0.75rem;
+  font-size: 0.94rem;
+}
+
 .announcement {
   border: 1px solid rgba(193, 18, 31, 0.14);
   background: linear-gradient(180deg, rgba(193, 18, 31, 0.04), rgba(255, 255, 255, 0.98));

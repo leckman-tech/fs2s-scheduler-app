@@ -1,8 +1,19 @@
 import Link from "next/link";
+import {
+  deleteLobbyDaySignup,
+  deleteSessionSignup,
+  updateLobbyDaySignup,
+  updateSessionSignup
+} from "@/lib/actions/admin";
 import { getAdminLobbyDaySignups, getAdminSessionSignups } from "@/lib/queries";
 import { displaySessionTitle, formatDateLabel, formatTimestamp, formatTimeRange } from "@/lib/utils";
 
-export default async function AdminSignupsPage() {
+export default async function AdminSignupsPage({
+  searchParams
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const params = await searchParams;
   const [signups, lobbyDaySignups] = await Promise.all([
     getAdminSessionSignups(),
     getAdminLobbyDaySignups()
@@ -53,6 +64,8 @@ export default async function AdminSignupsPage() {
 
   return (
     <div className="stack">
+      {params.error ? <div className="empty-state">{params.error}</div> : null}
+
       <section className="hero-card">
         <h1>Event sign-ups</h1>
         <p>
@@ -108,6 +121,65 @@ export default async function AdminSignupsPage() {
                     <span className="muted">{signup.organization || "Not provided"}</span>
                   </div>
                 </div>
+                <details className="admin-edit-details">
+                  <summary>Edit or remove</summary>
+                  <form action={updateLobbyDaySignup} className="form-grid admin-edit-details__form">
+                    <input type="hidden" name="id" value={signup.id} />
+                    <div className="form-grid form-grid--two">
+                      <div className="field">
+                        <label htmlFor={`lobby-signup-name-${signup.id}`}>Full name</label>
+                        <input
+                          id={`lobby-signup-name-${signup.id}`}
+                          name="full_name"
+                          defaultValue={signup.full_name}
+                          required
+                        />
+                      </div>
+                      <div className="field">
+                        <label htmlFor={`lobby-signup-email-${signup.id}`}>Email</label>
+                        <input
+                          id={`lobby-signup-email-${signup.id}`}
+                          name="email"
+                          type="email"
+                          defaultValue={signup.email}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="form-grid form-grid--two">
+                      <div className="field">
+                        <label htmlFor={`lobby-signup-phone-${signup.id}`}>Phone</label>
+                        <input
+                          id={`lobby-signup-phone-${signup.id}`}
+                          name="phone"
+                          defaultValue={signup.phone}
+                          required
+                        />
+                      </div>
+                      <div className="field">
+                        <label htmlFor={`lobby-signup-organization-${signup.id}`}>
+                          Organization
+                        </label>
+                        <input
+                          id={`lobby-signup-organization-${signup.id}`}
+                          name="organization"
+                          defaultValue={signup.organization ?? ""}
+                        />
+                      </div>
+                    </div>
+                    <div className="admin-actions">
+                      <button type="submit" className="button-secondary">
+                        Save changes
+                      </button>
+                    </div>
+                  </form>
+                  <form action={deleteLobbyDaySignup} className="admin-actions">
+                    <input type="hidden" name="id" value={signup.id} />
+                    <button type="submit" className="button-danger">
+                      Remove sign-up
+                    </button>
+                  </form>
+                </details>
               </article>
             ))
           ) : (
@@ -196,6 +268,72 @@ export default async function AdminSignupsPage() {
                     <span className="muted">{signup.organization || "Not provided"}</span>
                   </div>
                 </div>
+                <details className="admin-edit-details">
+                  <summary>Edit or remove</summary>
+                  <div className="admin-edit-details__meta muted">
+                    {signup.session ? displaySessionTitle(signup.session) : "Unknown event"}
+                    {signup.status === "confirmed"
+                      ? " · confirmed"
+                      : " · waitlist"}
+                  </div>
+                  <form action={updateSessionSignup} className="form-grid admin-edit-details__form">
+                    <input type="hidden" name="id" value={signup.id} />
+                    <input type="hidden" name="session_id" value={signup.session_id} />
+                    <div className="form-grid form-grid--two">
+                      <div className="field">
+                        <label htmlFor={`session-signup-name-${signup.id}`}>Full name</label>
+                        <input
+                          id={`session-signup-name-${signup.id}`}
+                          name="full_name"
+                          defaultValue={signup.full_name}
+                          required
+                        />
+                      </div>
+                      <div className="field">
+                        <label htmlFor={`session-signup-email-${signup.id}`}>Email</label>
+                        <input
+                          id={`session-signup-email-${signup.id}`}
+                          name="email"
+                          type="email"
+                          defaultValue={signup.email}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="form-grid form-grid--two">
+                      <div className="field">
+                        <label htmlFor={`session-signup-phone-${signup.id}`}>Phone</label>
+                        <input
+                          id={`session-signup-phone-${signup.id}`}
+                          name="phone"
+                          defaultValue={signup.phone ?? ""}
+                        />
+                      </div>
+                      <div className="field">
+                        <label htmlFor={`session-signup-organization-${signup.id}`}>
+                          Organization
+                        </label>
+                        <input
+                          id={`session-signup-organization-${signup.id}`}
+                          name="organization"
+                          defaultValue={signup.organization ?? ""}
+                        />
+                      </div>
+                    </div>
+                    <div className="admin-actions">
+                      <button type="submit" className="button-secondary">
+                        Save changes
+                      </button>
+                    </div>
+                  </form>
+                  <form action={deleteSessionSignup} className="admin-actions">
+                    <input type="hidden" name="id" value={signup.id} />
+                    <input type="hidden" name="session_id" value={signup.session_id} />
+                    <button type="submit" className="button-danger">
+                      Remove sign-up
+                    </button>
+                  </form>
+                </details>
               </article>
             ))
           ) : (

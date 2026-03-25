@@ -20,7 +20,8 @@ export function formatDateLabel(dateString: string) {
 export function formatTimeRange(start: string, end?: string | null) {
   const formatter = new Intl.DateTimeFormat("en-US", {
     hour: "numeric",
-    minute: "2-digit"
+    minute: "2-digit",
+    timeZone: "America/New_York"
   });
 
   if (!end) {
@@ -35,7 +36,9 @@ export function formatTimestamp(value: string) {
     month: "short",
     day: "numeric",
     hour: "numeric",
-    minute: "2-digit"
+    minute: "2-digit",
+    timeZoneName: "short",
+    timeZone: "America/New_York"
   }).format(new Date(value));
 }
 

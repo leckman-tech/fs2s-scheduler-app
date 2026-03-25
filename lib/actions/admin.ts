@@ -49,6 +49,91 @@ async function getCurrentRole() {
   return { supabase, role: profile?.role ?? null };
 }
 
+async function rebalanceSessionSignups(sessionId: string) {
+  const supabase = await createClient();
+
+  const { data: session, error: sessionError } = await supabase
+    .from("sessions")
+    .select("signup_capacity")
+    .eq("id", sessionId)
+    .maybeSingle();
+
+  if (sessionError) {
+    throw sessionError;
+  }
+
+  if (!session) {
+    return;
+  }
+
+  const { data: signups, error: signupsError } = await supabase
+    .from("session_signups")
+    .select("id")
+    .eq("session_id", sessionId)
+    .order("created_at", { ascending: true });
+
+  if (signupsError) {
+    throw signupsError;
+  }
+
+  const rows = signups ?? [];
+
+  if (!rows.length) {
+    return;
+  }
+
+  if (session.signup_capacity == null) {
+    const { error } = await supabase
+      .from("session_signups")
+      .update({ status: "confirmed" })
+      .eq("session_id", sessionId)
+      .neq("status", "confirmed");
+
+    if (error) {
+      throw error;
+    }
+
+    return;
+  }
+
+  const confirmedIds = rows.slice(0, session.signup_capacity).map((signup) => signup.id);
+  const waitlistIds = rows.slice(session.signup_capacity).map((signup) => signup.id);
+
+  if (confirmedIds.length) {
+    const { error } = await supabase
+      .from("session_signups")
+      .update({ status: "confirmed" })
+      .in("id", confirmedIds)
+      .neq("status", "confirmed");
+
+    if (error) {
+      throw error;
+    }
+  }
+
+  if (waitlistIds.length) {
+    const { error } = await supabase
+      .from("session_signups")
+      .update({ status: "waitlist" })
+      .in("id", waitlistIds)
+      .neq("status", "waitlist");
+
+    if (error) {
+      throw error;
+    }
+  }
+}
+
+function revalidateSignupPaths(sessionId?: string) {
+  revalidatePath("/admin/dashboard/signups");
+  revalidatePath("/lobby-day");
+  revalidatePath("/");
+
+  if (sessionId) {
+    revalidatePath(`/session/${sessionId}`);
+  }
+}
+
 function parseSpeakers(rawValue: string) {
   return rawValue
     .split("\n")
@@ -585,4 +670,112 @@ export async function deleteSpeakerPortalMessage(formData: FormData) {
 
   revalidatePath("/portal");
   revalidatePath("/admin/dashboard/resources");
+}
+
+export async function updateSessionSignup(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+
+  const id = String(formData.get("id") ?? "").trim();
+  const sessionId = String(formData.get("session_id") ?? "").trim();
+  const fullName = String(formData.get("full_name") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim();
+  const phone = String(formData.get("phone") ?? "").trim();
+  const organization = String(formData.get("organization") ?? "").trim();
+
+  if (!id || !sessionId || !fullName || !email) {
+    redirect("/admin/dashboard/signups?error=Name%20and%20email%20are%20required");
+  }
+
+  const { error } = await supabase
+    .from("session_signups")
+    .update({
+      full_name: fullName,
+      email,
+      phone: phone || null,
+      organization: organization || null
+    })
+    .eq("id", id);
+
+  if (error) {
+    redirect(`/admin/dashboard/signups?error=${encodeURIComponent(error.message)}`);
+  }
+
+  await rebalanceSessionSignups(sessionId);
+  revalidateSignupPaths(sessionId);
+  redirect("/admin/dashboard/signups");
+}
+
+export async function deleteSessionSignup(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+
+  const id = String(formData.get("id") ?? "").trim();
+  const sessionId = String(formData.get("session_id") ?? "").trim();
+
+  if (!id || !sessionId) {
+    redirect("/admin/dashboard/signups?error=That%20sign-up%20could%20not%20be%20removed");
+  }
+
+  const { error } = await supabase.from("session_signups").delete().eq("id", id);
+
+  if (error) {
+    redirect(`/admin/dashboard/signups?error=${encodeURIComponent(error.message)}`);
+  }
+
+  await rebalanceSessionSignups(sessionId);
+  revalidateSignupPaths(sessionId);
+  redirect("/admin/dashboard/signups");
+}
+
+export async function updateLobbyDaySignup(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+
+  const id = String(formData.get("id") ?? "").trim();
+  const fullName = String(formData.get("full_name") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim();
+  const phone = String(formData.get("phone") ?? "").trim();
+  const organization = String(formData.get("organization") ?? "").trim();
+
+  if (!id || !fullName || !email || !phone) {
+    redirect("/admin/dashboard/signups?error=Name,%20email,%20and%20phone%20are%20required");
+  }
+
+  const { error } = await supabase
+    .from("lobby_day_signups")
+    .update({
+      full_name: fullName,
+      email,
+      phone,
+      organization: organization || null
+    })
+    .eq("id", id);
+
+  if (error) {
+    redirect(`/admin/dashboard/signups?error=${encodeURIComponent(error.message)}`);
+  }
+
+  revalidateSignupPaths();
+  redirect("/admin/dashboard/signups");
+}
+
+export async function deleteLobbyDaySignup(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+
+  const id = String(formData.get("id") ?? "").trim();
+
+  if (!id) {
+    redirect("/admin/dashboard/signups?error=That%20Lobby%20Day%20sign-up%20could%20not%20be%20removed");
+  }
+
+  const { error } = await supabase.from("lobby_day_signups").delete().eq("id", id);
+
+  if (error) {
+    redirect(`/admin/dashboard/signups?error=${encodeURIComponent(error.message)}`);
+  }
+
+  revalidateSignupPaths();
+  redirect("/admin/dashboard/signups");
 }
