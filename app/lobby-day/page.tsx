@@ -117,16 +117,14 @@ export default async function LobbyDayPage() {
                 role="img"
                 aria-label="Lobby Day sign-up momentum toward the Capitol Hill goal"
               >
-                <div className="hero-progress__copy">
-                  <span className="hero-progress__label">Capitol Hill turnout goal</span>
-                  <strong>{signupRemaining} away from our 300-person goal</strong>
-                </div>
+                <span className="hero-progress__label">Capitol Hill goal</span>
                 <div className="hero-progress__track" aria-hidden="true">
                   <div
                     className="hero-progress__fill"
                     style={{ width: `${visibleSignupProgress}%` }}
                   />
                 </div>
+                <span className="hero-progress__caption">{signupRemaining} to go</span>
               </div>
             </div>
             <div className="hero-actions">

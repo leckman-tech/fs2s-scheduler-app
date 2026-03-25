@@ -39,8 +39,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <nav className="site-nav" aria-label="Primary navigation">
                 <Link href="/">Schedule</Link>
                 <Link href="/speakers">Speakers</Link>
+                <Link href="/lobby-day">Fall 2026 Lobby Day</Link>
                 <Link href="/learn-more">Learn More</Link>
-                <Link href="/lobby-day">Lobby Day</Link>
                 <Link href="/attendee/login">Attendee Portal</Link>
                 <Link href="/portal/login">Speaker Portal</Link>
               </nav>
