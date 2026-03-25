@@ -70,6 +70,7 @@ insert into public.sessions (session_code, placeholder_code, final_title, title,
   ('d2s16', null, null, 'Big Bus Sunset Tour of Washington', 'big-bus-sunset-tour-of-washington', 'evening_event', '2026-04-02', '2026-04-02T18:00:00-04:00', '2026-04-02T20:30:00-04:00', 'Washington, D.C.', 'Meet Outside N.U.B.', 'Big Bus tour featuring cherry blossoms and Washington monuments at sunset.', 'This evening Big Bus tour will feature the cherry blossoms and Washington monuments at sunset. It is open to all conference attendees, staff, and volunteers, with space reserved for the first 50 people who sign up at registration on Wednesday morning or on Thursday if spots remain.', null, 'scheduled', true, true, false),
   ('d3s1', null, null, 'Arrival & Light Breakfast', 'arrival-light-breakfast', 'breakfast', '2026-04-03', '2026-04-03T09:30:00-04:00', '2026-04-03T10:00:00-04:00', 'Maya Angelou Learning Campus, P.A.C., Cafeteria, & Gymnasium', 'Lobby of Performing Arts Center', 'Arrival window with breakfast and time to settle in before programming begins.', 'Arrival window with breakfast and time to settle in before programming begins.', null, 'scheduled', true, false, false),
   ('d3s2', null, null, 'Welcome & Day Three Framing', 'welcome-day-three-framing', 'opening_session', '2026-04-03', '2026-04-03T10:00:00-04:00', '2026-04-03T10:10:00-04:00', 'Maya Angelou Learning Campus, P.A.C., Cafeteria, & Gymnasium', 'Performing Arts Center', 'Opening remarks to welcome attendees and frame the day ahead.', 'Opening remarks to welcome attendees and frame the day ahead.', null, 'scheduled', true, false, false),
+  ('d3s2b', null, null, 'Limited Excursion: Private Tour of a Secure Site', 'limited-excursion-private-tour-of-a-secure-site', 'special_event', '2026-04-03', '2026-04-03T10:00:00-04:00', '2026-04-03T12:30:00-04:00', 'Washington, D.C.', 'Details shared with confirmed participants', 'Optional private tour of one of our secure sites in Washington, D.C., available to the first 10 attendees who sign up.', 'An optional limited excursion offering a private tour of one of our secure sites in Washington, D.C. This experience reflects our work as the exclusive provider for incarcerated education in the city. Space is limited to the first 10 attendees who sign up, and confirmed participants will receive follow-up logistics directly.', null, 'scheduled', true, false, false),
   ('d3s3', null, null, 'Maya Angelou Schools Documentary Screening', 'maya-angelou-schools-documentary-screening', 'special_event', '2026-04-03', '2026-04-03T10:10:00-04:00', '2026-04-03T10:55:00-04:00', 'Maya Angelou Learning Campus, P.A.C., Cafeteria, & Gymnasium', 'Performing Arts Center', 'Documentary screening highlighting Maya Angelou Schools and the work behind the convening.', 'Documentary screening highlighting Maya Angelou Schools and the work behind the convening.', null, 'scheduled', true, false, false),
   ('d3s4', null, null, 'Coffee Break', 'coffee-break-d3s4', 'break', '2026-04-03', '2026-04-03T10:55:00-04:00', '2026-04-03T11:10:00-04:00', 'Maya Angelou Learning Campus, P.A.C., Cafeteria, & Gymnasium', 'Lobby of Performing Arts Center', 'Short break between programming blocks.', 'Short break between programming blocks.', null, 'scheduled', true, false, false),
   ('d3s5', null, null, 'Fireside Chat: Sustainable Leadership and the Structure of the SFF/MAS Charter and Nonprofit Model', 'fireside-chat-sustainable-leadership-and-the-structure-of-the-sff-mas-charter-and-nonprofit-model', 'fireside_chat', '2026-04-03', '2026-04-03T11:10:00-04:00', '2026-04-03T11:50:00-04:00', 'Maya Angelou Learning Campus, P.A.C., Cafeteria, & Gymnasium', 'Performing Arts Center', 'A conversation on sustainable leadership and the structure of the See Forever Foundation and Maya Angelou Schools charter and nonprofit model.', 'A conversation on sustainable leadership and the structure of the See Forever Foundation and Maya Angelou Schools charter and nonprofit model.', null, 'scheduled', true, true, false),
@@ -93,6 +94,25 @@ begin
       signup_capacity = 50,
       signup_instructions = 'Save your spot for the Big Bus sunset tour here. Phone number is optional, but helpful if the conference team needs to send a text update. The first 50 sign-ups will be confirmed and any additional sign-ups will be placed on the waitlist.'
     where session_code = 'd2s16';
+
+    update public.sessions
+    set
+      signup_enabled = true,
+      signup_capacity = 10,
+      signup_instructions = 'Use this form to request a spot on the limited Friday excursion. Space is available to the first 10 attendees, and sign-ups close on Wednesday, April 1. Confirmed participants will receive private location details directly.'
+    where session_code = 'd3s2b';
+  end if;
+
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'sessions'
+      and column_name = 'signup_deadline'
+  ) then
+    update public.sessions
+    set signup_deadline = '2026-04-01T23:59:00-04:00'
+    where session_code = 'd3s2b';
   end if;
 end $$;
 
