@@ -28,7 +28,6 @@ export function BottomLiveUpdatesBar() {
           .from("announcements")
           .select("id,title,body,priority,published,created_at")
           .eq("published", true)
-          .order("priority", { ascending: false })
           .order("created_at", { ascending: false });
 
         if (error || isCancelled) {
@@ -44,9 +43,13 @@ export function BottomLiveUpdatesBar() {
     }
 
     void loadAnnouncements();
+    const interval = window.setInterval(() => {
+      void loadAnnouncements();
+    }, 15000);
 
     return () => {
       isCancelled = true;
+      window.clearInterval(interval);
     };
   }, []);
 
