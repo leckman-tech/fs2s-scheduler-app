@@ -19,7 +19,10 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
     totalCount
   });
   const progressTarget = 300;
-  const visibleSignupProgress = Math.min((Math.max(state.totalCount, 25) / progressTarget) * 100, 100);
+  const progressBaseline = 25;
+  const visibleSignupCount = progressBaseline + state.totalCount;
+  const visibleSignupProgress = Math.min((visibleSignupCount / progressTarget) * 100, 100);
+  const remainingToGoal = Math.max(progressTarget - visibleSignupCount, 0);
 
   async function handleSubmit(formData: FormData) {
     setState((current) => ({ ...current, status: "saving", message: "" }));
@@ -74,7 +77,10 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
           role="img"
           aria-label="Lobby Day sign-up momentum toward the Capitol Hill goal"
         >
-          <span className="signup-progress__label">Building toward 300 on Capitol Hill</span>
+          <div className="signup-progress__copy">
+            <span className="signup-progress__label">Capitol Hill turnout goal</span>
+            <strong>{remainingToGoal} away from our 300-person goal</strong>
+          </div>
           <div className="signup-progress__track" aria-hidden="true">
             <div
               className="signup-progress__fill"
