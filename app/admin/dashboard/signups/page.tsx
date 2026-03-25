@@ -47,7 +47,7 @@ export default async function AdminSignupsPage() {
       acc[key] = current;
       return acc;
     }, {})
-  ).sort((a, b) => a.startsAt.localeCompare(b.startsAt));
+  ).sort((a, b) => `${a.date}T${a.startsAt}`.localeCompare(`${b.date}T${b.startsAt}`));
 
   const totalSignupCount = signups.length + lobbyDaySignups.length;
 
