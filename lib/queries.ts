@@ -826,7 +826,27 @@ export const getCurrentUserAssignedSessions = cache(async () => {
       return [];
     }
 
-    return (data ?? [])
+    return ((data as unknown as Array<{
+      session_role?: string | null;
+      speakers: Speaker | Speaker[] | null;
+      session_speaker_logistics:
+        | {
+            confirmation_status: string | null;
+            arrival_time: string | null;
+            av_needs: string | null;
+            staff_contact: string | null;
+            private_logistics_note: string | null;
+          }
+        | Array<{
+            confirmation_status: string | null;
+            arrival_time: string | null;
+            av_needs: string | null;
+            staff_contact: string | null;
+            private_logistics_note: string | null;
+          }>
+        | null;
+      sessions: SessionRow | SessionRow[] | null;
+    }> | null) ?? [])
       .map((entry) => {
         const session = Array.isArray(entry.sessions) ? entry.sessions[0] : entry.sessions;
         if (!session) {
