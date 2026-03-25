@@ -9,6 +9,7 @@ import type {
   SessionRecord,
   PortalDocumentRecord,
   PortalMessageRecord,
+  LobbyDaySignupRecord,
   SessionSignupRecord,
   SessionSignupSummaryRecord,
   SpeakerDirectoryRecord,
@@ -175,6 +176,15 @@ type SessionSignupRow = {
     | null;
 };
 
+type LobbyDaySignupRow = {
+  id: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  organization: string | null;
+  created_at: string;
+};
+
 function mapSession(row: SessionRow): SessionRecord {
   const speakers: SessionSpeaker[] =
     row.session_speakers
@@ -274,6 +284,17 @@ function mapSessionSignup(row: SessionSignupRow): SessionSignupRecord {
     status: row.status,
     created_at: row.created_at,
     session
+  };
+}
+
+function mapLobbyDaySignup(row: LobbyDaySignupRow): LobbyDaySignupRecord {
+  return {
+    id: row.id,
+    full_name: row.full_name,
+    email: row.email,
+    phone: row.phone,
+    organization: row.organization,
+    created_at: row.created_at
   };
 }
 
@@ -466,6 +487,24 @@ export const getPublicSessionSignupSummary = cache(async (sessionId: string) => 
   } catch (error) {
     console.error(error);
     return null as SessionSignupSummaryRecord | null;
+  }
+});
+
+export const getPublicLobbyDaySignupCount = cache(async () => {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase.rpc("get_public_lobby_day_signup_summary");
+
+    if (error) {
+      console.error(error);
+      return 0;
+    }
+
+    const row = Array.isArray(data) ? data[0] : data;
+    return Number(row?.total_count ?? 0);
+  } catch (error) {
+    console.error(error);
+    return 0;
   }
 });
 
@@ -931,6 +970,26 @@ export const getAdminSessionSignups = cache(async () => {
   } catch (error) {
     console.error(error);
     return [] as SessionSignupRecord[];
+  }
+});
+
+export const getAdminLobbyDaySignups = cache(async () => {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("lobby_day_signups")
+      .select("id,full_name,email,phone,organization,created_at")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return [] as LobbyDaySignupRecord[];
+    }
+
+    return ((data as unknown as LobbyDaySignupRow[]) ?? []).map(mapLobbyDaySignup);
+  } catch (error) {
+    console.error(error);
+    return [] as LobbyDaySignupRecord[];
   }
 });
 
