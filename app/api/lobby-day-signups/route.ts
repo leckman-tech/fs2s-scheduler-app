@@ -32,30 +32,61 @@ export async function POST(request: Request) {
 
     const supabase = getPublicSupabaseClient();
 
-    const { error } = await supabase.rpc("create_lobby_day_signup", {
-      p_full_name: body.fullName,
-      p_email: body.email,
-      p_phone: body.phone,
-      p_organization: body.organization?.trim() || null
+    const normalizedEmail = body.email.trim().toLowerCase();
+    const { count: existingCount, error: existingError } = await supabase
+      .from("lobby_day_signups")
+      .select("id", { count: "exact", head: true })
+      .eq("email", normalizedEmail);
+
+    if (existingError) {
+      return NextResponse.json(
+        {
+          error:
+            existingError.message.includes("lobby_day_signups")
+              ? "Lobby Day signups are not enabled in Supabase yet. Run the 012_lobby_day_signups.sql migration first."
+              : existingError.message
+        },
+        { status: 400 }
+      );
+    }
+
+    if ((existingCount ?? 0) > 0) {
+      return NextResponse.json(
+        { error: "This email is already signed up for Lobby Day." },
+        { status: 400 }
+      );
+    }
+
+    const { error } = await supabase.from("lobby_day_signups").insert({
+      full_name: body.fullName.trim(),
+      email: normalizedEmail,
+      phone: body.phone.trim(),
+      organization: body.organization?.trim() || null
     });
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      return NextResponse.json(
+        {
+          error:
+            error.message.includes("lobby_day_signups")
+              ? "Lobby Day signups are not enabled in Supabase yet. Run the 012_lobby_day_signups.sql migration first."
+              : error.message
+        },
+        { status: 400 }
+      );
     }
 
-    const { data: summary, error: summaryError } = await supabase.rpc(
-      "get_public_lobby_day_signup_summary"
-    );
+    const { count, error: summaryError } = await supabase
+      .from("lobby_day_signups")
+      .select("id", { count: "exact", head: true });
 
     if (summaryError) {
       return NextResponse.json({ error: summaryError.message }, { status: 500 });
     }
 
-    const row = Array.isArray(summary) ? summary[0] : summary;
-
     return NextResponse.json({
       ok: true,
-      totalCount: Number(row?.total_count ?? 0)
+      totalCount: Number(count ?? 0)
     });
   } catch (error) {
     return NextResponse.json(
