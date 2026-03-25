@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import { AttendeeBoard } from "@/components/attendee-board";
 import { LogoutButton } from "@/components/logout-button";
 import {
-  postAttendeeBoardMessage,
   saveAttendeeDirectoryEntry
 } from "@/lib/actions/admin";
 import {
-  getAttendeeBoardPosts,
+  getAttendeeBoardFeed,
   getAttendeeDirectoryEntries,
   getAttendeePortalResources,
   requireAttendeePortalUser
@@ -32,10 +32,10 @@ export default async function AttendeePortalPage({
   searchParams: Promise<{ error?: string; success?: string }>;
 }) {
   const params = await searchParams;
-  const [{ profile }, resources, boardPosts, directoryEntries] = await Promise.all([
+  const [{ profile }, resources, boardFeed, directoryEntries] = await Promise.all([
     requireAttendeePortalUser(),
     getAttendeePortalResources(),
-    getAttendeeBoardPosts(),
+    getAttendeeBoardFeed(),
     getAttendeeDirectoryEntries()
   ]);
 
@@ -62,7 +62,7 @@ export default async function AttendeePortalPage({
             {resources.length} available document{resources.length === 1 ? "" : "s"}
           </span>
           <span className="hero-pill">
-            {boardPosts.length} attendee board post{boardPosts.length === 1 ? "" : "s"}
+            {boardFeed.length} attendee board post{boardFeed.length === 1 ? "" : "s"}
           </span>
           <span className="hero-pill">
             {directoryEntries.length} shared contact{directoryEntries.length === 1 ? "" : "s"}
@@ -182,56 +182,7 @@ export default async function AttendeePortalPage({
           </form>
         </article>
 
-        <article className="panel detail-side-panel">
-          <div className="section-heading">
-            <div>
-              <h2>Attendee Board</h2>
-              <p className="muted" style={{ margin: "0.35rem 0 0" }}>
-                Post under your own name so the conversation stays real, useful, and connected.
-              </p>
-            </div>
-          </div>
-
-          <form action={postAttendeeBoardMessage} className="form-grid">
-            <div className="form-grid form-grid--two">
-              <div className="field">
-                <label htmlFor="attendee-board-name">Full name</label>
-                <input id="attendee-board-name" name="full_name" required />
-              </div>
-              <div className="field">
-                <label htmlFor="attendee-board-email">Email</label>
-                <input id="attendee-board-email" name="email" type="email" required />
-              </div>
-            </div>
-
-            <div className="field">
-              <label htmlFor="attendee-board-organization">Organization</label>
-              <input id="attendee-board-organization" name="organization" placeholder="Optional" />
-            </div>
-
-            <div className="field">
-              <label htmlFor="attendee-board-body">Message</label>
-              <textarea
-                id="attendee-board-body"
-                name="body"
-                rows={4}
-                placeholder="Share a resource, ask a question, or invite people to connect."
-                required
-              />
-            </div>
-
-            <p className="field-hint">
-              Posts are never anonymous. Your email is required for accountability, but it does not
-              appear on the public board.
-            </p>
-
-            <div className="admin-actions">
-              <button type="submit" className="button">
-                Post to attendee board
-              </button>
-            </div>
-          </form>
-        </article>
+        <AttendeeBoard initialThreads={boardFeed} />
       </section>
 
       <section className="panel detail-side-panel">
@@ -298,18 +249,16 @@ export default async function AttendeePortalPage({
           <h2>Recent attendee board posts</h2>
         </div>
         <div className="resource-list">
-          {boardPosts.length ? (
-            boardPosts.map((post) => (
-              <article key={post.id} className="announcement">
-                <strong>{post.full_name}</strong>
-                <div className="muted">
-                  {[post.organization, formatTimestamp(post.created_at)]
-                    .filter(Boolean)
-                    .join(" · ")}
-                </div>
-                <p className="muted">{post.body}</p>
-              </article>
-            ))
+          {boardFeed.length ? (
+            <div className="announcement">
+              <strong>{boardFeed[0].full_name}</strong>
+              <div className="muted">
+                {[boardFeed[0].organization, formatTimestamp(boardFeed[0].created_at)]
+                  .filter(Boolean)
+                  .join(" · ")}
+              </div>
+              <p className="muted">{boardFeed[0].body}</p>
+            </div>
           ) : (
             <div className="empty-state">
               No attendee board posts yet. The first post can set the tone for the conversation.
