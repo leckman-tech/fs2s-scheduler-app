@@ -34,17 +34,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                   <Image
                     src="/fs2s/fs2s-lanyard-logo.png"
                     alt="FS2S logo"
-                    width={84}
-                    height={84}
+                    width={62}
+                    height={62}
                     className="site-brand__logo"
                     priority
                   />
                 </Link>
                 <div className="site-brand__copy">
-                  <p className="eyebrow">From Silos to Solutions 2026 Convening</p>
                   <Link href="/" className="site-title">
-                    From Silos to Solutions 2026
+                    FS2S 2026
                   </Link>
+                  <p className="site-brand__subtitle">From Silos to Solutions</p>
                 </div>
               </div>
               <nav className="site-nav" aria-label="Primary navigation">
@@ -54,15 +54,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <Link href="/lobby-day">Lobby Day</Link>
                 <Link href="/attendee/login">Attendee Portal</Link>
                 <Link href="/portal/login">Speaker/Presenter Portal</Link>
-                <a
-                  href={EVENTBRITE_URL}
-                  className="site-nav__cta"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Purchase Tickets
-                </a>
               </nav>
+              <a href={EVENTBRITE_URL} className="site-nav__cta" target="_blank" rel="noreferrer">
+                Purchase Tickets
+              </a>
             </div>
           </header>
           <main>{children}</main>
