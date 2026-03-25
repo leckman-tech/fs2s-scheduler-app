@@ -138,3 +138,12 @@ export type SessionSignupRecord = {
     signup_capacity: number | null;
   } | null;
 };
+
+export type LobbyDaySignupRecord = {
+  id: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  organization: string | null;
+  created_at: string;
+};
