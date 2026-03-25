@@ -1256,6 +1256,12 @@ select {
   gap: 0.85rem;
 }
 
+.community-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
 .admin-edit-details {
   margin-top: 0.9rem;
   padding-top: 0.85rem;
@@ -1744,6 +1750,17 @@ select {
   gap: 0.4rem;
 }
 
+.field--checkbox {
+  grid-auto-flow: column;
+  justify-content: start;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.field--checkbox input {
+  width: auto;
+}
+
 .field label {
   font-size: 0.92rem;
   font-weight: 700;
@@ -2006,6 +2023,10 @@ th {
   .panel,
   .card {
     border-radius: 20px;
+  }
+
+  .community-grid {
+    grid-template-columns: 1fr;
   }
 
   .form-grid--two {

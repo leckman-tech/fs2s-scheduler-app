@@ -1,10 +1,14 @@
 import {
+  deleteAttendeeBoardPost,
+  deleteAttendeeDirectoryEntry,
   deletePortalDocument,
   deleteSpeakerPortalMessage,
   togglePortalDocumentPublish,
   uploadPortalDocument
 } from "@/lib/actions/admin";
 import {
+  getAdminAttendeeBoardPosts,
+  getAdminAttendeeDirectoryEntries,
   getAdminPortalDocuments,
   getAdminPortalMessages,
   getResourceEligibleSessions
@@ -22,10 +26,12 @@ export default async function AdminResourcesPage({
   searchParams: Promise<{ error?: string }>;
 }) {
   const params = await searchParams;
-  const [sessions, documents, messages] = await Promise.all([
+  const [sessions, documents, messages, attendeePosts, attendeeDirectory] = await Promise.all([
     getResourceEligibleSessions(),
     getAdminPortalDocuments(),
-    getAdminPortalMessages()
+    getAdminPortalMessages(),
+    getAdminAttendeeBoardPosts(),
+    getAdminAttendeeDirectoryEntries()
   ]);
 
   return (
@@ -39,6 +45,8 @@ export default async function AdminResourcesPage({
         <div className="hero-meta">
           <span className="hero-pill">{documents.length} portal documents</span>
           <span className="hero-pill">{messages.length} speaker board posts</span>
+          <span className="hero-pill">{attendeePosts.length} attendee board posts</span>
+          <span className="hero-pill">{attendeeDirectory.length} attendee contact entries</span>
         </div>
       </section>
 
@@ -58,6 +66,14 @@ export default async function AdminResourcesPage({
           <article className="story-stat">
             <strong>Admin controls</strong>
             <span>Upload, publish, unpublish, and remove files or board posts across both portals.</span>
+          </article>
+          <article className="story-stat">
+            <strong>Attendee board</strong>
+            <span>Review named attendee posts and remove anything that should not stay public.</span>
+          </article>
+          <article className="story-stat">
+            <strong>Attendee contact page</strong>
+            <span>See who opted to share their information with planners and, if selected, other attendees.</span>
           </article>
         </div>
       </section>
@@ -198,6 +214,81 @@ export default async function AdminResourcesPage({
             ))
           ) : (
             <div className="empty-state">No speaker board posts yet.</div>
+          )}
+        </div>
+      </section>
+
+      <section className="panel">
+        <div className="section-heading">
+          <h2>Attendee board moderation</h2>
+        </div>
+        <div className="resource-list">
+          {attendeePosts.length ? (
+            attendeePosts.map((post) => (
+              <article key={post.id} className="announcement">
+                <strong>{post.full_name}</strong>
+                <div className="muted">
+                  {[post.email, post.organization, formatTimestamp(post.created_at)]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </div>
+                <p className="muted">{post.body}</p>
+                <form action={deleteAttendeeBoardPost}>
+                  <input type="hidden" name="id" value={post.id} />
+                  <button type="submit" className="button-danger">
+                    Remove post
+                  </button>
+                </form>
+              </article>
+            ))
+          ) : (
+            <div className="empty-state">No attendee board posts yet.</div>
+          )}
+        </div>
+      </section>
+
+      <section className="panel">
+        <div className="section-heading">
+          <h2>Attendee contact entries</h2>
+        </div>
+        <div className="resource-list">
+          {attendeeDirectory.length ? (
+            attendeeDirectory.map((entry) => (
+              <article key={entry.id} className="announcement">
+                <strong>{entry.full_name}</strong>
+                <div className="muted">
+                  {[entry.title, entry.organization, formatTimestamp(entry.updated_at)]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </div>
+                <div className="detail-list">
+                  <div>
+                    <strong>Email</strong>
+                    <span className="muted">{entry.email}</span>
+                  </div>
+                  <div>
+                    <strong>Phone</strong>
+                    <span className="muted">{entry.phone || "Not provided"}</span>
+                  </div>
+                  <div>
+                    <strong>Shared with attendees</strong>
+                    <span className="muted">{entry.share_with_attendees ? "Yes" : "No"}</span>
+                  </div>
+                  <div>
+                    <strong>Shared with planners</strong>
+                    <span className="muted">{entry.share_with_planners ? "Yes" : "No"}</span>
+                  </div>
+                </div>
+                <form action={deleteAttendeeDirectoryEntry}>
+                  <input type="hidden" name="id" value={entry.id} />
+                  <button type="submit" className="button-danger">
+                    Remove entry
+                  </button>
+                </form>
+              </article>
+            ))
+          ) : (
+            <div className="empty-state">No attendee contact entries yet.</div>
           )}
         </div>
       </section>

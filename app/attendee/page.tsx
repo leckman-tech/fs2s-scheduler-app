@@ -1,20 +1,42 @@
 import type { Metadata } from "next";
 import { LogoutButton } from "@/components/logout-button";
-import { getAttendeePortalResources, requireAttendeePortalUser } from "@/lib/queries";
+import {
+  postAttendeeBoardMessage,
+  saveAttendeeDirectoryEntry
+} from "@/lib/actions/admin";
+import {
+  getAttendeeBoardPosts,
+  getAttendeeDirectoryEntries,
+  getAttendeePortalResources,
+  requireAttendeePortalUser
+} from "@/lib/queries";
 import { buildMetadata } from "@/lib/seo";
-import { displaySessionTitle, formatDateLabel, formatTimestamp, labelForCategory } from "@/lib/utils";
+import {
+  displaySessionTitle,
+  formatDateLabel,
+  formatTimestamp,
+  labelForCategory
+} from "@/lib/utils";
 
 export const metadata: Metadata = buildMetadata({
   title: "Attendee Portal",
-  description: "Shared attendee document library for FS2S 2026 workshop, keynote, and panel materials.",
+  description:
+    "Shared attendee document library, attendee board, and opt-in contact directory for FS2S 2026.",
   path: "/attendee",
   noIndex: true
 });
 
-export default async function AttendeePortalPage() {
-  const [{ profile }, resources] = await Promise.all([
+export default async function AttendeePortalPage({
+  searchParams
+}: {
+  searchParams: Promise<{ error?: string; success?: string }>;
+}) {
+  const params = await searchParams;
+  const [{ profile }, resources, boardPosts, directoryEntries] = await Promise.all([
     requireAttendeePortalUser(),
-    getAttendeePortalResources()
+    getAttendeePortalResources(),
+    getAttendeeBoardPosts(),
+    getAttendeeDirectoryEntries()
   ]);
 
   const grouped = resources.reduce<Record<string, typeof resources>>((acc, resource) => {
@@ -32,12 +54,19 @@ export default async function AttendeePortalPage() {
         <h1>Attendee Portal</h1>
         <p>
           {profile.full_name ? `${profile.full_name}, ` : ""}
-          this shared portal gives attendees one place to open workshop documents, keynote
-          resources, panel materials, and general conference files.
+          this shared portal gives attendees one place to open conference documents, post to the
+          attendee board, and opt into year-round connection with planners and other attendees.
         </p>
         <div className="hero-meta">
-          <span className="hero-pill">{resources.length} available document{resources.length === 1 ? "" : "s"}</span>
-          <span className="hero-pill">Shared library access</span>
+          <span className="hero-pill">
+            {resources.length} available document{resources.length === 1 ? "" : "s"}
+          </span>
+          <span className="hero-pill">
+            {boardPosts.length} attendee board post{boardPosts.length === 1 ? "" : "s"}
+          </span>
+          <span className="hero-pill">
+            {directoryEntries.length} shared contact{directoryEntries.length === 1 ? "" : "s"}
+          </span>
           <LogoutButton destination="attendee" />
         </div>
       </section>
@@ -49,16 +78,208 @@ export default async function AttendeePortalPage() {
         <div className="story-stat-grid">
           <article className="story-stat">
             <strong>Session files</strong>
-            <span>Open workshop handouts, keynote materials, panel resources, and related documents.</span>
+            <span>
+              Open workshop handouts, keynote materials, panel resources, and related documents.
+            </span>
           </article>
           <article className="story-stat">
-            <strong>Shared access</strong>
-            <span>This portal uses conference-wide credentials, so it works as a common document library.</span>
+            <strong>Attendee board</strong>
+            <span>
+              Post under your own name so attendees can share reflections, resources, and questions.
+            </span>
           </article>
           <article className="story-stat">
-            <strong>Posted for all attendees</strong>
-            <span>This shared portal keeps conference files in one place, so attendees can return to the same library throughout the convening.</span>
+            <strong>Contact sharing</strong>
+            <span>
+              Opt into year-round connection with planners and, if you choose, the attendee
+              community.
+            </span>
           </article>
+        </div>
+      </section>
+
+      {params.error ? <div className="empty-state">{params.error}</div> : null}
+      {params.success ? <div className="announcement announcement--urgent">{params.success}</div> : null}
+
+      <section className="community-grid">
+        <article className="panel detail-side-panel">
+          <div className="section-heading">
+            <div>
+              <h2>Attendee Contact Page</h2>
+              <p className="muted" style={{ margin: "0.35rem 0 0" }}>
+                Share your contact information with planners and, if you choose, other attendees.
+              </p>
+            </div>
+          </div>
+
+          <form action={saveAttendeeDirectoryEntry} className="form-grid">
+            <div className="form-grid form-grid--two">
+              <div className="field">
+                <label htmlFor="attendee-directory-name">Full name</label>
+                <input id="attendee-directory-name" name="full_name" required />
+              </div>
+              <div className="field">
+                <label htmlFor="attendee-directory-email">Email</label>
+                <input id="attendee-directory-email" name="email" type="email" required />
+              </div>
+            </div>
+
+            <div className="form-grid form-grid--two">
+              <div className="field">
+                <label htmlFor="attendee-directory-phone">Phone number</label>
+                <input id="attendee-directory-phone" name="phone" type="tel" />
+              </div>
+              <div className="field">
+                <label htmlFor="attendee-directory-title">Title</label>
+                <input id="attendee-directory-title" name="title" placeholder="Optional" />
+              </div>
+            </div>
+
+            <div className="field">
+              <label htmlFor="attendee-directory-organization">Organization</label>
+              <input
+                id="attendee-directory-organization"
+                name="organization"
+                placeholder="Optional"
+              />
+            </div>
+
+            <div className="form-grid">
+              <label className="field field--checkbox">
+                <input type="checkbox" name="share_with_planners" defaultChecked />
+                <span>Share my information with event planners.</span>
+              </label>
+              <label className="field field--checkbox">
+                <input type="checkbox" name="share_with_attendees" />
+                <span>Share my information with other attendees in this portal.</span>
+              </label>
+            </div>
+
+            <p className="field-hint">
+              Your email is required so the entry is tied to a real person. Only the information you
+              opt to share with attendees will appear in the directory below.
+            </p>
+
+            <div className="admin-actions">
+              <button type="submit" className="button">
+                Save contact entry
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <article className="panel detail-side-panel">
+          <div className="section-heading">
+            <div>
+              <h2>Attendee Board</h2>
+              <p className="muted" style={{ margin: "0.35rem 0 0" }}>
+                Post under your own name so the conversation stays real, useful, and connected.
+              </p>
+            </div>
+          </div>
+
+          <form action={postAttendeeBoardMessage} className="form-grid">
+            <div className="form-grid form-grid--two">
+              <div className="field">
+                <label htmlFor="attendee-board-name">Full name</label>
+                <input id="attendee-board-name" name="full_name" required />
+              </div>
+              <div className="field">
+                <label htmlFor="attendee-board-email">Email</label>
+                <input id="attendee-board-email" name="email" type="email" required />
+              </div>
+            </div>
+
+            <div className="field">
+              <label htmlFor="attendee-board-organization">Organization</label>
+              <input id="attendee-board-organization" name="organization" placeholder="Optional" />
+            </div>
+
+            <div className="field">
+              <label htmlFor="attendee-board-body">Message</label>
+              <textarea
+                id="attendee-board-body"
+                name="body"
+                rows={4}
+                placeholder="Share a resource, ask a question, or invite people to connect."
+                required
+              />
+            </div>
+
+            <p className="field-hint">
+              Posts are never anonymous. Your email is required for accountability, but it does not
+              appear on the public board.
+            </p>
+
+            <div className="admin-actions">
+              <button type="submit" className="button">
+                Post to attendee board
+              </button>
+            </div>
+          </form>
+        </article>
+      </section>
+
+      <section className="panel detail-side-panel">
+        <div className="section-heading">
+          <h2>Attendee Directory</h2>
+        </div>
+        <p className="muted" style={{ marginTop: 0 }}>
+          This directory includes attendees who chose to share their contact information with the
+          wider community.
+        </p>
+        <div className="resource-list">
+          {directoryEntries.length ? (
+            directoryEntries.map((entry) => (
+              <article key={entry.id} className="announcement">
+                <strong>{entry.full_name}</strong>
+                <div className="muted">
+                  {[entry.title, entry.organization].filter(Boolean).join(" · ") || "Attendee"}
+                </div>
+                <div className="detail-list">
+                  <div>
+                    <strong>Email</strong>
+                    <span className="muted">{entry.email}</span>
+                  </div>
+                  {entry.phone ? (
+                    <div>
+                      <strong>Phone</strong>
+                      <span className="muted">{entry.phone}</span>
+                    </div>
+                  ) : null}
+                </div>
+              </article>
+            ))
+          ) : (
+            <div className="empty-state">
+              No attendee contact entries have been shared yet.
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="panel detail-side-panel">
+        <div className="section-heading">
+          <h2>Recent attendee board posts</h2>
+        </div>
+        <div className="resource-list">
+          {boardPosts.length ? (
+            boardPosts.map((post) => (
+              <article key={post.id} className="announcement">
+                <strong>{post.full_name}</strong>
+                <div className="muted">
+                  {[post.organization, formatTimestamp(post.created_at)]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </div>
+                <p className="muted">{post.body}</p>
+              </article>
+            ))
+          ) : (
+            <div className="empty-state">
+              No attendee board posts yet. The first post can set the tone for the conversation.
+            </div>
+          )}
         </div>
       </section>
 
@@ -85,7 +306,12 @@ export default async function AttendeePortalPage() {
                     {document.description ? <p className="muted">{document.description}</p> : null}
                     <div className="admin-actions">
                       {document.signed_url ? (
-                        <a href={document.signed_url} className="button button-link" target="_blank" rel="noreferrer">
+                        <a
+                          href={document.signed_url}
+                          className="button button-link"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
                           Open document
                         </a>
                       ) : null}
