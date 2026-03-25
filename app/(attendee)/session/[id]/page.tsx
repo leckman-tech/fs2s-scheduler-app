@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { FeedbackForm } from "@/components/feedback-form";
-import { getSessionById } from "@/lib/queries";
+import { SessionSignupForm } from "@/components/session-signup-form";
+import { getPublicSessionSignupSummary, getSessionById } from "@/lib/queries";
 import { getSessionMetadata, getSessionStructuredData } from "@/lib/seo";
 import {
   displaySessionTitle,
@@ -45,6 +46,10 @@ export default async function SessionDetailPage({
     notFound();
   }
 
+  const signupSummary = session.signup_enabled
+    ? await getPublicSessionSignupSummary(session.id)
+    : null;
+
   const structuredData = getSessionStructuredData(session);
 
   return (
@@ -76,6 +81,17 @@ export default async function SessionDetailPage({
           </div>
           <div className="detail-copy">{session.description}</div>
         </section>
+
+        {session.signup_enabled ? (
+          <SessionSignupForm
+            sessionId={session.id}
+            sessionTitle={displaySessionTitle(session)}
+            confirmedCount={signupSummary?.confirmedCount ?? 0}
+            waitlistCount={signupSummary?.waitlistCount ?? 0}
+            capacity={session.signup_capacity}
+            instructions={session.signup_instructions}
+          />
+        ) : null}
 
         <FeedbackForm sessionId={session.id} />
       </div>

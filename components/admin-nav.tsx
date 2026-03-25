@@ -23,6 +23,9 @@ export function AdminNav() {
         <Link href="/admin/dashboard/resources" className="button-secondary button-link">
           Portal docs
         </Link>
+        <Link href="/admin/dashboard/signups" className="button-secondary button-link">
+          Sign-ups
+        </Link>
         <Link href="/admin/dashboard/feedback" className="button-secondary button-link">
           Feedback
         </Link>

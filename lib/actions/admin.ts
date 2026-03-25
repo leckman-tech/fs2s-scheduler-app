@@ -286,6 +286,10 @@ export async function saveSession(formData: FormData) {
   const short_description = String(formData.get("short_description") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
   const live_updates = String(formData.get("live_updates") ?? "").trim();
+  const signup_enabled = formData.get("signup_enabled") === "on";
+  const signup_capacity_input = String(formData.get("signup_capacity") ?? "").trim();
+  const signup_capacity = signup_capacity_input ? Number(signup_capacity_input) : null;
+  const signup_instructions = String(formData.get("signup_instructions") ?? "").trim();
   const status = String(formData.get("status") ?? "scheduled").trim();
   const published = formData.get("published") === "on";
   const featured = formData.get("featured") === "on";
@@ -298,6 +302,10 @@ export async function saveSession(formData: FormData) {
 
   if (!SESSION_STATUSES.includes(status as (typeof SESSION_STATUSES)[number])) {
     redirect("/admin/dashboard?error=Invalid%20session%20status");
+  }
+
+  if (signup_enabled && signup_capacity !== null && (!Number.isInteger(signup_capacity) || signup_capacity < 1)) {
+    redirect("/admin/dashboard?error=RSVP%20capacity%20must%20be%20a%20whole%20number%20greater%20than%200");
   }
 
   const payload = {
@@ -315,6 +323,9 @@ export async function saveSession(formData: FormData) {
     short_description,
     description,
     live_updates: live_updates || null,
+    signup_enabled,
+    signup_capacity: signup_enabled ? signup_capacity : null,
+    signup_instructions: signup_enabled && signup_instructions ? signup_instructions : null,
     status,
     published,
     featured,

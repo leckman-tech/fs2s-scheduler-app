@@ -178,6 +178,46 @@ export function SessionForm({ session }: { session?: SessionRecord | null }) {
         />
       </div>
 
+      <section className="panel detail-side-panel">
+        <div className="section-heading">
+          <h2>Optional RSVP / sign-up</h2>
+        </div>
+
+        <div className="form-grid form-grid--two">
+          <div className="field">
+            <label htmlFor="signup_enabled">Enable sign-up form for this session</label>
+            <input
+              id="signup_enabled"
+              type="checkbox"
+              name="signup_enabled"
+              defaultChecked={session?.signup_enabled ?? false}
+            />
+          </div>
+
+          <div className="field">
+            <label htmlFor="signup_capacity">Capacity</label>
+            <input
+              id="signup_capacity"
+              type="number"
+              min="1"
+              name="signup_capacity"
+              defaultValue={session?.signup_capacity ?? ""}
+              placeholder="50"
+            />
+          </div>
+        </div>
+
+        <div className="field">
+          <label htmlFor="signup_instructions">Sign-up instructions</label>
+          <textarea
+            id="signup_instructions"
+            name="signup_instructions"
+            defaultValue={session?.signup_instructions ?? ""}
+            placeholder="Add any note attendees should see, such as first-come-first-served details or text update guidance."
+          />
+        </div>
+      </section>
+
       <div className="admin-actions">
         <button type="submit" className="button">
           {session ? "Save changes" : "Create session"}
