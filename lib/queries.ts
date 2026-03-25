@@ -32,9 +32,9 @@ type SessionRow = {
   short_description: string;
   description: string;
   live_updates: string | null;
-  signup_enabled: boolean;
-  signup_capacity: number | null;
-  signup_instructions: string | null;
+  signup_enabled?: boolean | null;
+  signup_capacity?: number | null;
+  signup_instructions?: string | null;
   status: SessionRecord["status"];
   published: boolean;
   featured: boolean;
@@ -60,6 +60,37 @@ type SessionRow = {
     speakers: Speaker | Speaker[] | null;
   }> | null;
 };
+
+const SESSION_SELECT_PUBLIC =
+  "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder,session_speakers(speakers(id,slug,name,title,organization))";
+
+const SESSION_SELECT_PUBLIC_LEGACY =
+  "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,status,published,featured,is_placeholder,session_speakers(speakers(id,slug,name,title,organization))";
+
+const SESSION_SELECT_ADMIN =
+  "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder,session_speakers(session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note))";
+
+const SESSION_SELECT_ADMIN_LEGACY =
+  "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,status,published,featured,is_placeholder,session_speakers(session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note))";
+
+const ASSIGNED_SESSION_SELECT =
+  "session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note),sessions(id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder)";
+
+const ASSIGNED_SESSION_SELECT_LEGACY =
+  "session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note),sessions(id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,status,published,featured,is_placeholder)";
+
+function isMissingSignupColumnError(error: unknown) {
+  const message =
+    typeof error === "object" && error
+      ? `${"message" in error ? String(error.message ?? "") : ""} ${
+          "details" in error ? String(error.details ?? "") : ""
+        }`
+      : "";
+
+  return ["signup_enabled", "signup_capacity", "signup_instructions"].some((column) =>
+    message.includes(column)
+  );
+}
 
 type PortalDocumentRow = {
   id: string;
@@ -186,9 +217,9 @@ function mapSession(row: SessionRow): SessionRecord {
     short_description: row.short_description,
     description: row.description,
     live_updates: row.live_updates,
-    signup_enabled: row.signup_enabled,
-    signup_capacity: row.signup_capacity,
-    signup_instructions: row.signup_instructions,
+    signup_enabled: Boolean(row.signup_enabled),
+    signup_capacity: row.signup_capacity ?? null,
+    signup_instructions: row.signup_instructions ?? null,
     status: row.status,
     published: row.published,
     featured: row.featured,
@@ -249,13 +280,18 @@ function mapSessionSignup(row: SessionSignupRow): SessionSignupRecord {
 export const getPublicSessions = cache(async () => {
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("sessions")
-      .select(
-        "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder,session_speakers(speakers(id,slug,name,title,organization))"
-      )
-      .eq("published", true)
-      .order("starts_at", { ascending: true });
+    const runQuery = async (selectClause: string) =>
+      supabase
+        .from("sessions")
+        .select(selectClause)
+        .eq("published", true)
+        .order("starts_at", { ascending: true });
+
+    let { data, error } = await runQuery(SESSION_SELECT_PUBLIC);
+
+    if (error && isMissingSignupColumnError(error)) {
+      ({ data, error } = await runQuery(SESSION_SELECT_PUBLIC_LEGACY));
+    }
 
     if (error) {
       console.error(error);
@@ -272,12 +308,14 @@ export const getPublicSessions = cache(async () => {
 export const getAdminSessions = cache(async () => {
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("sessions")
-      .select(
-        "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder,session_speakers(session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note))"
-      )
-      .order("starts_at", { ascending: true });
+    const runQuery = async (selectClause: string) =>
+      supabase.from("sessions").select(selectClause).order("starts_at", { ascending: true });
+
+    let { data, error } = await runQuery(SESSION_SELECT_ADMIN);
+
+    if (error && isMissingSignupColumnError(error)) {
+      ({ data, error } = await runQuery(SESSION_SELECT_ADMIN_LEGACY));
+    }
 
     if (error) {
       console.error(error);
@@ -294,18 +332,20 @@ export const getAdminSessions = cache(async () => {
 export const getSessionById = cache(async (id: string, includeUnpublished = false) => {
   try {
     const supabase = await createClient();
-    let query = supabase
-      .from("sessions")
-      .select(
-        "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder,session_speakers(speakers(id,slug,name,title,organization))"
-      )
-      .eq("id", id);
+    const runQuery = async (selectClause: string) => {
+      let query = supabase.from("sessions").select(selectClause).eq("id", id);
+      if (!includeUnpublished) {
+        query = query.eq("published", true);
+      }
+      return query;
+    };
 
-    if (!includeUnpublished) {
-      query = query.eq("published", true);
+    let { data, error } = await (await runQuery(SESSION_SELECT_PUBLIC)).maybeSingle();
+
+    if (error && isMissingSignupColumnError(error)) {
+      ({ data, error } = await (await runQuery(SESSION_SELECT_PUBLIC_LEGACY)).maybeSingle());
     }
 
-    const { data, error } = await query.maybeSingle();
     if (error || !data) {
       if (error) {
         console.error(error);
@@ -323,13 +363,19 @@ export const getSessionById = cache(async (id: string, includeUnpublished = fals
 export const getAdminSessionById = cache(async (id: string) => {
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from("sessions")
-      .select(
-        "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder,session_speakers(session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note))"
-      )
+      .select(SESSION_SELECT_ADMIN)
       .eq("id", id)
       .maybeSingle();
+
+    if (error && isMissingSignupColumnError(error)) {
+      ({ data, error } = await supabase
+        .from("sessions")
+        .select(SESSION_SELECT_ADMIN_LEGACY)
+        .eq("id", id)
+        .maybeSingle());
+    }
 
     if (error || !data) {
       if (error) {
@@ -763,12 +809,17 @@ export const getCurrentUserAssignedSessions = cache(async () => {
 
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("session_speakers")
-      .select(
-        "session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note),sessions(id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder)"
-      )
-      .eq("speaker_id", profile.speaker_id);
+    const runQuery = async (selectClause: string) =>
+      supabase
+        .from("session_speakers")
+        .select(selectClause)
+        .eq("speaker_id", profile.speaker_id);
+
+    let { data, error } = await runQuery(ASSIGNED_SESSION_SELECT);
+
+    if (error && isMissingSignupColumnError(error)) {
+      ({ data, error } = await runQuery(ASSIGNED_SESSION_SELECT_LEGACY));
+    }
 
     if (error) {
       console.error(error);

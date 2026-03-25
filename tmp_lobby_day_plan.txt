@@ -1,0 +1,363 @@
+National Advocacy Day on Capitol Hill: Complete Plan and Execution Package for a New fs2shub.com Event Tab
+Executive summary
+This package provides a complete event plan and implementation blueprint to launch a National Advocacy Day on Wednesday, October 21, 2026 (8:30 a.m.–3:30 p.m.) on Capitol Hill, centered on supporting incarcerated and returning opportunity/justice-involved youth and young adults through education and cross-system supports. The proposed design aligns with Convening themes described publicly for “From Silos to Solutions,” which emphasizes collaboration across educators, policymakers, and stakeholders to advance bold policy reform and inclusive systems for justice-involved youth and young adults. [1]
+The recommended event structure is a Capitol Hill briefing + advocacy training + scheduled congressional office meetings + structured debrief. This format is designed to be realistic within Capitol Hill operational constraints, especially those governing use of United States Capitol Visitor Center[2] spaces (member sponsorship, legislative nexus, occupancy limits, restrictions on fundraising/charging, promotional limits, and possible short-notice changes based on congressional business). [3]
+Key operational constraints that shape the plan:
+	•	CVC rooms/spaces: must be requested by a current Member of Congress or Officer of Congress, must have a clear legislative connection, requests can be made up to 4 months in advance, and CVC may cancel/move events on short notice due to congressional business. [4]
+	•	No fees/fundraising in CVC: no charge may be levied on participants; no money or items may be collected; no fundraising permitted. [5]
+	•	CVC A/V, press, vendors: press conferences are not permitted; press must be coordinated through House/Senate Radio/TV galleries; vendors need approval lead time and insurance requirements may apply. [6]
+	•	Capitol Grounds demonstrations: events may require permitting; accessibility routes must remain unblocked; temporary structures and shelters are prohibited; sign supports and sound amplification have restrictions. [7]
+	•	Visitor screening & prohibited items: all visitors are screened by magnetometer/x-ray; plan for delays and strict prohibited-items rules (including limitations on bags, food/beverage, and sign supports). [8]
+Recommended capacity planning:
+	•	Core Advocacy Briefing in CVC auditorium: up to 450 (theater style) with no food/beverage in the auditorium. [9]
+	•	Smaller training breakouts in CVC meeting rooms (82 each) or off-site partner space if breakout capacity is constrained. [9]
+	•	Hill meetings: capacity is governed by meeting scheduling bandwidth; this plan assumes a primary participant cap of ~150–200 to ensure quality meetings, staffing coverage, and accessible support (assumption; refine once staffing level and meeting count targets are set).
+Assumptions (explicit because not specified):
+	•	Exact reserved spaces (CVC vs House office buildings vs off-site) are not yet confirmed; plan includes decision gates and fallbacks. [10]
+	•	Budget cap is not provided; a scalable budget with ranges is included.
+	•	Confirmed “Convening” agenda integration and attendee pipeline are not provided; messaging and schedules assume this Advocacy Day is an official Convening track and should be marketed accordingly with proper approvals. [11]
+	•	Direct access to fs2shub.com content was blocked in research (site returned access errors), so the web implementation portion is designed as a stack-agnostic blueprint with two implementation paths (CMS-first and code-first). (Observed limitation; no public citation.)
+Success metrics (KPIs) are built around: participant conversion, diversity and lived-experience participation, number/quality of Hill meetings, advocacy actions completed, post-event commitments/follow-ups, and satisfaction/accessibility performance, supported by privacy-appropriate analytics and structured evaluation. [12]
+Event strategy and format options
+Purpose and goals
+Purpose: Convene and equip a cross-sector coalition—especially people with lived experience of incarceration and reentry—to advocate for policies and funding that strengthen educational access, reentry supports, and system coordination for opportunity/justice-involved youth and young adults. This purpose aligns with the publicly described “From Silos to Solutions” convening intent to coordinate supports for justice-involved youth and adults through collaboration and policy reform. [1]
+Goals (measurable): 1. Policy engagement: secure scheduled meetings with congressional offices and deliver a consistent, values-based policy message with clear requests (targets set in planning). 2. Capacity building: train participants in advocacy meeting structure, trauma-informed storytelling, and “the ask,” emphasizing safe participation for impacted youth. 3. Coalition building: strengthen cross-system coordination among educators, reentry providers, youth-serving orgs, and philanthropic partners aligned to opportunity/justice-involved communities. [1] 4. Visibility (optional): conduct a compliant, permitted visibility moment (photo or rally) that does not violate Capitol Grounds rules or CVC promotional restrictions. [13] 5. Sustained follow-through: convert Advocacy Day into ongoing action (district follow-ups, list building, and post-event campaigns) with compliant email and privacy practices. [14]
+Format options comparison
+The table below compares three viable models given Capitol Hill constraints (CVC policies and Capitol Grounds permitting).
+Option
+Core components
+Strengths
+Risks / constraints
+Best when
+Training + advocacy meetings (recommended)
+Morning briefing/training indoors; afternoon meetings with offices; structured debrief
+Maximizes meeting quality; lower permitting burden; easier to scale/accessibility
+Needs strong scheduling ops; indoor space rules (no charging, promotion limits, possible changes) [15]
+Primary goal is legislative relationship-building and concrete asks
+Rally/photo moment + meetings
+Short outdoor visibility action + meetings + debrief
+Higher visibility; strong narrative momentum
+Requires permit planning and strict rules (areas, props, temporary structures, sound amplification) [7]
+Coalition wants a public-facing moment and has staffing to manage it
+Hybrid with distributed participation
+Smaller in-person cohort on Hill; simultaneous virtual training/action
+Broad reach; reduces travel cost; inclusive for those unable to travel
+Requires strong tech and facilitation; still must respect CVC/Capitol promotional restrictions if CVC space used [16]
+Budget constraints or high national demand with limited onsite capacity
+Recommended format
+Recommendation: “Training + advocacy meetings (recommended)” with an optional, tightly-managed visibility moment (photo + short remarks) in a designated area only if permitting and staffing thresholds are met. This provides a high probability of success within known constraints and reduces risk of noncompliance with event-space rules on Capitol Hill. [17]
+Program design and staffing plan
+Recommended hourly schedule (8:30 a.m.–3:30 p.m.)
+This schedule is intentionally structured to accommodate screening delays and to respect prohibitions on food/beverage and large items in many Capitol complex areas. Attendees should be told to arrive early because visitors entering the Capitol are screened by United States Capitol Police[18] and should plan for extended wait times; visitors are advised to arrive at least 60 minutes before reservations in general Capitol visiting guidance. [8]
+Pre-arrival buffer (strongly recommended, not part of formal “program time”): 7:30–8:30 Arrival window + security screening + check-in assistance (especially for accessibility requests)
+Program (8:30–3:30):
+Time
+Segment
+Location assumptions
+Lead(s)
+Output
+8:30–8:45
+Welcome & norms (trauma-informed, youth-centered)
+CVC auditorium or meeting room
+Event Director + Emcee
+Shared goals, safety norms
+8:45–9:15
+Framing keynote: “Why advocacy for justice-involved youth now”
+Same
+Policy Lead + Lived-experience speaker
+Motivation + narrative arc
+9:15–9:55
+Policy briefing: 2–3 priority asks + “what Congress can do this year”
+Same
+Policy Lead
+One-page “asks” handout
+9:55–10:05
+Break + accessibility check-in
+Nearby
+Accessibility Lead
+Real-time accommodations
+10:05–10:50
+Advocacy skills training
+Breakout rooms (or auditorium-style w/ exercises)
+Training Lead
+Meeting script, role-play
+10:50–11:15
+Delegation huddles: finalize teams, routes, meeting packets
+Staging area
+Hill Meetings Lead
+Teams assigned, packets distributed
+11:15–12:45
+Capitol Hill meetings block 1
+House/Senate office buildings
+Team Captains
+1–2 meetings/team
+12:45–1:30
+Lunch + transit + regroup
+Off-site or designated compliant space
+Logistics Lead
+Attendance maintained
+1:30–2:45
+Capitol Hill meetings block 2
+House/Senate office buildings
+Team Captains
+1–2 meetings/team
+2:45–3:05
+Debrief circle (teams report + quick data capture)
+Staging area
+Data Lead + Facilitators
+Meeting outcomes logged
+3:05–3:25
+Commitments + next steps: district follow-ups + “day-after actions”
+Same
+Comms Lead
+Action pledge + follow-up plan
+3:25–3:30
+Closing
+Same
+Emcee
+Clear dismissal instructions
+Why this schedule works with Capitol Hill rules: indoor/auditorium segments can happen within CVC operating-hour constraints and capacity limits; outdoor activities are not required; and direct congressional meetings are not restricted like demonstrations (but participants must comply with building rules, prohibited items, and signage limitations). [19]
+Roles and staffing needs
+This staffing model emphasizes (1) Hill meeting execution quality, (2) safety/accessibility, and (3) high-fidelity data capture.
+Core roles:
+	•	Event Director (overall accountability): owns run-of-show, decision gates, and congressional sponsor liaison.
+	•	Hill Meetings Lead: manages meeting request list, confirmations, team assignments, and real-time changes.
+	•	Training Lead: develops facilitation guide, role-play scripts, and briefing content.
+	•	Registration & Data Lead: owns attendee data, check-in, meeting outcome capture, and analytics reporting (with privacy-by-design controls aligned to risk management frameworks). [20]
+	•	Accessibility Lead: coordinates reasonable accommodations and effective communication (auxiliary aids/services when needed). [21]
+	•	Safety & Compliance Lead: coordinates with venue policies, ensures compliance with Capitol Grounds restrictions if any outdoor activity is planned. [22]
+	•	Volunteer Coordinator: recruits/trains volunteers and assigns positions (wayfinding, check-in, runners).
+	•	Communications Lead: outreach, partner toolkits, social content, and press handling aligned to venue restrictions (e.g., CVC press-conference ban). [16]
+	•	A/V & Tech Lead (day-of): microphones, slides, accessibility tech, and live troubleshooting.
+Recommended staffing quantities (scalable target ranges; assumptions):
+	•	Team Captains: 1 captain per delegation team (ideally 8–12 attendees/team).
+	•	Meeting Schedulers (pre-event): 1–2 staff dedicated in the final 6–8 weeks.
+	•	Check-in & wayfinding: 6–12 volunteers depending on venue complexity.
+	•	Accessibility support: 1 dedicated point person + 1 floating assistant; coordinate with Office of Congressional Accessibility Services[23] for Capitol complex-specific supports (adaptive tours, sign language interpreting services, wheelchair loans). [24]
+Safety, accessibility, and compliance design
+Accessibility commitments (programmatic and communications): - Provide a clear accommodation request process and deliver auxiliary aids/services where needed for effective communication, consistent with ADA effective communication expectations. [25] - Ensure service-animal policy is ADA-consistent (service animals defined as trained dogs performing tasks related to disability; no certification requirement). [26] - Avoid blocking accessible routes for any outdoor activation; this is explicitly required for permitted Capitol Grounds activities. [27] - Offer materials in accessible formats (large print, screen-reader friendly PDFs, captions for videos where used), aligning with DOJ accessibility guidance for communication aids/services and web accessibility expectations. [28]
+Capitol Hill restrictions (high-impact rules to operationalize): - If using CVC: event must be legislatively connected, cannot charge participants, cannot fundraise/collect items, and promotional materials may be restricted (including limitations on referencing CVC/Capitol use). [29] - If incorporating an outdoor demonstration/rally: permits may be required; signs and props have restrictions; no shelters or temporary structures; sound amplification must not disrupt Congress and must face away from core buildings. [30] - Press conferences in CVC are not permitted; press-related activity must be coordinated via House and Senate Radio/TV galleries. [31]
+Public health & medical readiness (proportionate to scale): - Use a risk-based approach to mass-gathering health (e.g., infectious disease considerations are known risks at mass gatherings). [32] - Maintain a basic first-aid plan (onsite first-aid supplies, emergency contact protocol, trained staff/volunteer point person), consistent with widely used special-event risk guidance. [33]
+Templates: day-of run sheet and volunteer brief
+Day-of run sheet (condensed template) (Use as a living document; print 10 copies and keep a shared digital version.)
+	•	Event name: National Advocacy Day (Oct 21, 2026)
+	•	Locations: [TBD: CVC Auditorium / Meeting Room / Off-site backup]
+	•	Primary contacts:
+	•	Event Director: [name / cell]
+	•	Hill Meetings Lead: [name / cell]
+	•	Security/Compliance Lead: [name / cell]
+	•	Accessibility Lead: [name / cell]
+	•	A/V Lead: [name / cell]
+	•	Emergency: 911 if immediate danger; notify venue security desk; document incidents.
+Operational blocks: - 7:00–7:30 Staff call-time; venue walk-through; A/V check; place signage (only where permitted). [34] - 7:30–8:30 Attendee arrivals; check-in; distribute name badges and meeting packets; accessibility support check. [8] - 8:30–11:15 Program + training + delegation huddles - 11:15–2:45 Hill meetings (rolling coverage; “HQ” text channel for changes) - 2:45–3:30 Debrief + action pledge + dismissal - 3:30–4:15 Breakdown; secure materials; data lead completes attendance and meeting-count reconciliation
+Volunteer brief (one-page template) - Mission: help participants navigate safely and effectively; treat everyone with dignity; defer policy questions to staff leads. - Do: guide attendees, keep pathways clear, report issues quickly, respect privacy. - Don’t: give legal advice, argue with security, photograph youth without consent, block hallways/doors, bring prohibited items. [35] - If lost attendee: escort to check-in/HQ. - If someone is distressed: offer quiet space + notify Accessibility Lead / Safety Lead.
+Registration and outreach plan
+Registration timeline and deadlines (spring–summer cadence)
+This schedule is built backward from Oct 21, 2026 and integrates known venue reservation constraints. Because CVC space requests open on a monthly cadence and can be requested up to 4 months in advance, the plan includes an early “interest” phase and a later “confirmed registration” phase. [36]
+Spring (March–May 2026): design + build - Late March (now): finalize Advocacy Day goals, draft policy “asks,” confirm whether CVC/House rooms will be used, and initiate congressional sponsor outreach. [37] - Mid-April: stand up fs2shub.com “coming soon” event tab + interest list; begin partner recruitment. (Assumption; web build detailed later.) - Late April: if using House-controlled event rooms, pursue reservations (some House event rooms may be reservable up to six months in advance). [38] - May: publish “Save the Date” toolkit and open Interest Registration (free) segmented by role and state/delegation.
+Summer (June–August 2026): lock venue + lock attendance - June 1 (8:30 a.m. ET target): submit CVC reservation request(s) for October dates once the 4‑month window opens (CVC policy: requests up to 4 months in advance; monthly availability cadence). [39] - June (first half): wait for written confirmation; CVC processing for external groups can take up to ~15 business days. [39] - Mid-June: convert interest list to Confirmed Registration once space is confirmed; open travel stipend application window (if offered). - Late July: deadline for (a) accommodation requests requiring contracted services (e.g., interpreters/CART) and (b) travel stipend submissions (assumption; aligned to vendor lead times). [40] - Mid-August: finalize meeting request packets (constituent grouping, “asks,” leave-behinds). - Late August: close “standard registration,” keep waitlist open.
+Fall (September–October 2026): finalize meetings + execute - Early September: meeting confirmations pushed; team assignments finalized; send logistics packet (prohibited items, arrival times, transit, maps). [8] - Late September: final attendance confirmation deadline; release waitlist seats. - Two weeks prior: send final schedule + “Know Before You Go” and confirm accommodations. [41] - 72 hours prior: final reminder with arrival guidance and prohibited items. [8]
+Ticket types, capacity limits, and waitlist policy
+Because charging participants can be prohibited in CVC (and fundraising is prohibited), the default ticket model should be $0 tickets used purely for capacity management and communication. [5]
+Recommended ticket types (all $0): - General Attendee (partner org / educator / provider) - Youth & Young Adult Participant (lived experience / student / alumni) - Congressional Staff (observer) - Volunteer / Runner - Media Inquiry (intake only; attendance subject to approval and venue rules)
+Capacity model (set caps by “critical constraint,” not aspirational marketing): - Cap Confirmed Registration to the smallest guaranteed briefing/training space or to Hill meeting scheduling bandwidth (whichever is smaller). CVC rooms have published capacity limits that cannot be exceeded. [42]
+Waitlist policy (recommended): - Waitlist turns on automatically at cap. - Prioritization tiers (transparent, values-aligned): (1) directly impacted youth/young adults, (2) geography balance across states/districts, (3) essential partners (education + reentry), (4) general attendees. (Assumption; document publicly.) - Release waitlist seats in weekly waves starting 4 weeks out, then daily in final week. - Require confirmation within 24–48 hours; otherwise seat rolls.
+Outreach and recruitment plan
+Messaging pillars (copy-tested themes): - “Education and opportunity should not end at incarceration.” - “Reentry succeeds when schools, workforce, and justice systems coordinate.” - “Directly impacted youth and young adults must be at the center of policy design.”
+These themes mirror the Convening’s publicly stated focus on uniting educators, policymakers, and stakeholders to build inclusive education systems for justice-involved youth and young adults. [1]
+Channels: - Convening email list + partner newsletters (primary conversion channel) - LinkedIn (professional stakeholders), Instagram/TikTok (youth-centered storytelling), X (policy community) - Direct outreach to congressional district networks (state delegations) - Partner organizations in youth justice, reentry education, and workforce development (examples to be confirmed)
+Partner recruitment targets (categories): - Reentry education providers and alternative education networks - Juvenile justice reform organizations - Workforce and apprenticeship intermediaries - Youth-led advocacy organizations - Higher-ed in prison and correctional education networks
+Templates: outreach email, social posts, press blurb
+Outreach email (template) Subject: Join us on Capitol Hill: National Advocacy Day for Justice-Involved Youth (Oct 21) Body: Hello [First Name], On Wednesday, October 21, 2026, we’re convening educators, directly impacted young people, and partners on Capitol Hill for a National Advocacy Day focused on supporting incarcerated and returning opportunity/justice-involved youth and young adults. You’ll receive: advocacy training, a clear set of policy “asks,” and coordinated meetings with congressional offices. Register (free) / Join the update list: [link] Accessibility accommodations and travel support options will be available (limited). With appreciation, [Name / Title]
+(Add a footer with unsubscribe/opt-out mechanics; while CAN‑SPAM applies to commercial email, adopting clear opt-out is a strong best practice and required for covered commercial messages. [43])
+Social post (LinkedIn template) We’re launching a National Advocacy Day on Capitol Hill (Oct 21, 2026): advocacy training + coordinated Hill meetings to advance supports for justice-involved youth and young adults. Register (free): [link]
+Social post (Instagram template) 📍Capitol Hill | Oct 21, 2026 Youth voices + educators + partners = change. Join the Advocacy Day to fight for opportunity for youth returning home. 🔗 in bio.
+Press blurb (template; comply with venue restrictions) On Oct. 21, 2026, advocates, educators, and directly impacted young people will gather on Capitol Hill in Washington, D.C., for a National Advocacy Day focused on strengthening educational opportunity and reentry supports for justice-involved youth and young adults. (If any activity occurs in CVC space, ensure language is reviewed/approved consistent with restrictions on promotional references and press activity. [44])
+Logistics and budget
+Venue and space strategy
+Primary venue pathways (decision gate by June 2026):
+	•	CVC-based briefing hub (preferred for a large morning convening)
+	•	Capacities: CVC Congressional Auditorium (450); Meeting Rooms (82 each); Atrium (200, reserved with auditorium). [9]
+	•	Must be requested by a Member/Officer; must be connected to legislative business; written confirmation required. [39]
+	•	No charging participants; no fundraising; promotional limits. [11]
+	•	House office buildings meeting rooms (useful for smaller briefing hubs)
+	•	House guidance indicates rooms can be booked via House room reservation processes, and event rooms may be reservable further in advance than self-service rooms (self-service rooms up to two weeks; event rooms up to six months). [45]
+	•	Off-site backup venue (essential contingency)
+	•	필요 because CVC functions may be moved/canceled on short notice due to congressional business. [39]
+	•	Use an accessible DC venue near Capitol Hill (e.g., nonprofit conference center/hotel meeting space) with rapid communication plan.
+A/V, signage, and security
+A/V - Confirm whether venue provides in-room microphones/projectors; if using CVC, coordinate A/V requests through the Special Events Office, and note that broadcasting/webcasting restrictions apply. [31] - Build captions/accessibility into A/V planning (CART, ASL, assistive listening as needed). [25]
+Signage - Keep signage minimal, portable, and compliant: - For Capitol complex indoor spaces: prohibited items rules restrict sign size and supports; large sign supports are prohibited. [46] - For CVC: restrictions include limits on materials outside event space and the need for advance approval for certain materials. [11] - For Capitol Grounds demonstrations: signs may be permitted within the demonstration rules; supports must meet constraints (dimensions, no sharp ends/fasteners). [47]
+Security - All visitors screened; recommend arrival buffer and strict “what not to bring” guidance. [8] - If using outdoor demonstration areas, follow USCP permit process and guidelines; applications can be made via fax/in-person and must be signed. [48]
+Meals, travel stipends, childcare, ADA accommodations
+Meals - If using CVC auditorium: no food/beverage permitted in the auditorium; food/beverage rules vary by space and must stay within the scheduled event space. [49] - Use a “light refreshments” model for any congressional staff attendance; House ethics guidance highlights how event attendance and refreshments are treated under gift rules (design conservatively). [50]
+Travel stipends (optional program) - Use transparent criteria (priority to directly impacted youth and low-resource community orgs; cap per person). - For budgeting baselines, federal per diem rates for Washington, DC provide a reference point for lodging and meals (note: October 2026 will be FY 2027 per diem, not yet published; use current rates as estimate). [51]
+Childcare - Capitol complex entry rules allow exceptions for childcare-related special needs on a case-by-case basis; provide a childcare accommodation contact and avoid bringing prohibited items. [52] - Operationally, provide childcare stipends to support participants who arrange licensed childcare locally (assumption; verify legal requirements and insurance).
+ADA accommodations - Provide a clear request process; coordinate Capitol-complex assistance with OCAS as appropriate (wheelchair loans, interpreting services). [24] - Ensure effective communication via auxiliary aids/services when needed. [25]
+Legal and compliance considerations (high-priority)
+Nonprofit advocacy and lobbying (program design constraint): - IRS guidance distinguishes political campaign activity (prohibited for 501(c)(3)) from lobbying (allowed within limits). [53] - IRS definitions of direct and grassroots lobbying should inform training content and tracking. [54]
+Capitol Grounds restrictions: - Soliciting contributions and advertising are prohibited; USCP guidelines also prohibit shelters/temporary structures and describe rules for signage and equipment. [55]
+CVC restrictions (if used): - No charging participants, no fundraising, restrictions on promo references and signage, vendor insurance requirements, and press limitations. [56]
+Budget estimate (ranges + line items)
+Below is a scalable estimate for a 150–200 person advocacy day with partial travel support (assumptions). Costs vary widely based on stipend strategy, interpretation needs, production levels, and whether a backup venue is reserved.
+Category
+Line items
+Range (USD)
+Notes / assumptions
+People & staffing
+Temp staff, stipends for youth facilitators, volunteer support costs
+6,000–25,000
+Depends on paid vs volunteer staffing
+Venue & contingency
+Backup venue hold (off-site), accessibility rentals
+0–15,000
+CVC space has no rental fee but can shift/cancel [36]
+A/V & production
+Microphones, projector, recording (if approved), hybrid add-ons
+3,000–20,000
+Broadcasting approvals may apply in CVC [31]
+Accessibility services
+ASL interpreters, CART, large-print, translation
+2,500–18,000
+Driven by accommodation requests [21]
+Catering / meals
+Coffee, snacks, boxed lunch
+4,000–16,000
+Food rules depend on space; per diem meal breakdown provides planning reference [57]
+Printing & materials
+Badges, lanyards, packets, signage
+800–4,000
+Keep signage compliant with prohibited items rules [58]
+Travel stipends
+Air/rail partials, lodging partials, local transit
+15,000–90,000
+Highly variable; DC per diem rates provide baseline reference [51]
+Childcare support
+Reimbursements/stipends
+1,000–10,000
+Assumption; policy needed
+Insurance & compliance
+Event liability, vendor COIs
+500–5,000
+CVC vendors may need $1M liability and naming requirements [59]
+Technology
+Form tool, CRM, SMS, check-in
+0–8,000
+Depends on existing stack
+Total estimate
+
+32,800–211,000
+Wide range reflects stipend and production choices
+fs2shub.com Event Tab implementation package
+Information architecture and design mockup description
+Goal: add a new persistent “National Advocacy Day” tab on fs2shub.com that supports (1) registration, (2) update-list sign-up, (3) logistics + accessibility, (4) advocacy toolkit, and (5) post-event evaluation.
+Recommended nav structure (top-level tab + anchored sections): - Overview - Schedule - Register - Logistics & Accessibility - Advocacy Toolkit - Volunteer - FAQs - Contact / Update List
+Wireframe (text mockup)
+[National Advocacy Day]  (hero) - Date: Wed, Oct 21, 2026 | 8:30–3:30 | Capitol Hill, Washington, DC - Primary CTA: Register (Free) - Secondary CTA: Get Updates  [Purpose] Short statement + 3 goals  [What to expect] - advocacy training - coordinated meetings - debrief + next steps  [Schedule] Accordion or table  [Registration] Embedded form + ticket types + capacity/waitlist policy  [Logistics] - Arrival time & security screening - Prohibited items highlights - Maps/transit - Meals - Travel stipend info - Childcare support info  [Accessibility] Accommodation request workflow + service animals + contact  [Advocacy Toolkit] - Policy asks (PDF) - Meeting script - Social toolkit  [FAQ] [Footer + privacy terms + email opt-out]
+Security-screening and prohibited-items guidance should be linked or summarized because visitor guidance highlights screening, the need to arrive early, and strict prohibition rules. [8]
+Registration form fields (registration + update list)
+Form A: Register (free, capacity-managed) Required: - First name, last name - Email, mobile (SMS optional) - State + zip (for delegation assignment) - Role category (youth/young adult, educator, provider, policymaker, etc.) - Agreement checkbox: code of conduct + privacy notice + photo policy
+Optional (strongly recommended): - Accessibility accommodations request (with free-text + preferred contact method) [25] - Dietary restrictions - Hill meeting participation preference (yes/no) - Travel stipend interest (yes/no; if yes, open conditional questions) - Age range (Under 18 / 18–24 / 25+) to trigger youth consent workflow (and to avoid collecting online data from children under 13 without safeguards). [60]
+Form B: Get Updates (minimal-data list building) - Email (required) - First name (optional) - State (optional) - Checkbox consent to receive updates + link to unsubscribe approach (align with best practices; CAN‑SPAM opt-out requirements are explicit for covered commercial email). [61]
+Data privacy, consent language, and retention (copy-ready)
+Privacy & consent (short version for form footer): By registering, you consent to us using your information to administer this event, send event-related updates, and (if selected) coordinate Hill meeting logistics. We will minimize the data we collect, limit access to authorized staff/vendors, and protect your information using reasonable administrative, technical, and organizational safeguards. (These practices align with privacy risk management principles in widely-used frameworks.) [20]
+Email consent & opt-out: You can unsubscribe from non-essential emails at any time using the link in our messages. We will process opt-out requests promptly. [61]
+Youth/minor note (conditional): If you are under 18, we may require a guardian/emergency contact and additional consent documentation for participation. If you are under 13, a parent/guardian must complete the registration process on your behalf, and we will not collect personal information from you online without appropriate parental consent processes. [62]
+Automated email flows (recommended)
+Email 1: Registration confirmation (immediate) - Confirms “free registration,” notes capacity is limited, includes calendar file, and provides “Know Before You Go” summary (arrive early; screening; prohibited items; no bag storage). [8]
+Email 2: Logistics packet (T–14 days) - Final schedule, transit, prohibited items, meeting-day expectations - Accommodation request deadline reminder
+Email 3: Final reminder (T–3 days) - Arrival guidance (buffer time due to screening) and what not to bring [8]
+Email 4: Morning-of “today” message - Last-mile instructions + HQ phone/text + contingency notice (if using CVC, acknowledge congressional-business changes are possible) [39]
+Email 5: Post-event survey (T+1 day) - Survey link + follow-up action items (district follow-ups)
+Analytics tracking plan (privacy-aware)
+Implement event tracking to measure funnel performance without excessive PII:
+	•	Page views & scroll depth on /national-advocacy-day
+	•	CTA clicks: Register, Get Updates, Download Toolkit
+	•	Form conversions: register_submit, updates_submit
+	•	Email performance: open/click (through email platform)
+	•	Attendance: checked_in = true
+	•	Meeting outcomes logged per team
+Use a privacy-risk lens consistent with widely used guidance (inventory and map data processing; limit access; document retention). [63]
+Data flow diagram (mermaid)
+flowchart LR   A[fs2shub.com Advocacy Day tab] --> B[Register Form]   A --> C[Get Updates Form]   B --> D[(Event CRM / Database)]   C --> E[(Email list / CRM)]   D --> F[Automated Emails]   E --> F   D --> G[Check-in List]   G --> H[Meeting Outcomes Log]   H --> I[Post-event Survey + KPIs Dashboard]
+Step-by-step Codex implementation instructions
+Because the fs2shub.com stack could not be inspected directly during research, these instructions are written as an execution “Codex” that works for both common pathways.
+Codex for the web team
+Phase 1: Discovery (1–2 days) 1. Identify stack: CMS (e.g., WordPress) vs codebase (e.g., Next.js) vs hybrid. 2. Identify existing form handling (plugin/embedded tool) and existing email automation provider. 3. Confirm analytics tooling (GA4, Tag Manager, or alternative).
+Phase 2: Build the new tab and page (3–8 days) 4. Create the new nav item: “National Advocacy Day” with URL /national-advocacy-day. 5. Implement page sections per the wireframe; ensure mobile-first layout. 6. Add “Register” and “Get Updates” forms with validation and spam protection. 7. Ensure web accessibility (semantic headings, labels, error messages, visible focus states; captions/alt text). DOJ guidance emphasizes accessibility and communication aids/services as part of ADA compliance thinking, and web guidance provides practical direction. [64]
+Phase 3: Backend + integrations (3–10 days) 8. Create database tables or CRM objects: - attendees (registration data) - updates_subscribers - accommodations_requests (restricted access) - meeting_teams + meeting_notes 9. Configure automated emails (templates + event triggers). 10. Set up analytics events and conversion goals.
+Phase 4: QA + launch (3–5 days) 11. QA checklist: - Forms submit successfully and send confirmation email - Waitlist triggers at cap - Admin export works (CSV) - Accessibility QA (keyboard-only, screen reader smoke test) - Mobile QA 12. Security checklist: - HTTPS enforced - Rate limiting on forms - Access control for admin exports - Data minimization (only collect what is needed) consistent with privacy-risk best practice frameworks. [20] 13. Launch to production and monitor error logs.
+Codex for event staff (operational implementation)
+	•	Define registration cap + priority rules and publish waitlist policy.
+	•	Maintain an internal “Meeting Tracker” (CSV or CRM) with:
+	•	Attendee name, state/district, team assignment
+	•	Meeting requests and confirmations
+	•	Notes and outcomes (commitments, follow-up contact)
+	•	Send weekly registration updates to leadership; flag accommodation requests requiring vendor procurement (ASL/CART). [40]
+	•	Prepare a “Know Before You Go” packet emphasizing screening and prohibited items (bags, food/beverage restrictions, sign rules). [8]
+	•	Day-of: run check-in, manage live schedule changes, and capture meeting outcomes.
+	•	Post-event: send survey, compile outcomes, and schedule debrief.
+Launch checklist (copy-ready)
+	•	Page content approved (including any CVC-related promotional language constraints) [44]
+	•	Congressional sponsor confirmed (if using CVC space) [39]
+	•	Registration cap configured + waitlist tested
+	•	Confirmation + reminder emails tested
+	•	Accessibility workflow tested (accommodation requests route to proper staff) [25]
+	•	Prohibited items & security screening guidance included [8]
+	•	Analytics events firing
+	•	Data export permissions restricted
+	•	Backup venue/virtual fallback documented (if CVC schedule changes) [39]
+Project timeline (Gantt-style, backward from Oct 21, 2026)
+gantt   dateFormat  YYYY-MM-DD   title National Advocacy Day delivery plan (Oct 21, 2026)    section Strategy & sponsorship   Define goals, asks, success metrics           :a1, 2026-03-25, 21d   Secure congressional sponsor(s)               :a2, 2026-04-01, 60d    section Venues & permits   House/CVC venue decision gate                :b1, 2026-04-10, 21d   Book House event rooms (if needed)           :b2, 2026-04-21, 45d   Submit CVC request window opens              :milestone, b3, 2026-06-01, 0d   CVC confirmation & vendor coordination        :b4, 2026-06-01, 20d   USCP permit (only if outdoor activity)        :b5, 2026-09-01, 30d    section Web & registration   Build event tab (MVP)                         :c1, 2026-04-15, 30d   Open interest list                             :milestone, c2, 2026-05-15, 0d   Convert to confirmed registration              :c3, 2026-06-15, 20d   Automation + analytics finalized               :c4, 2026-06-15, 30d    section Outreach & recruitment   Partner outreach sprint                         :d1, 2026-05-01, 90d   Social/email campaign waves                     :d2, 2026-06-15, 90d    section Program operations   Training content + toolkits finalized           :e1, 2026-07-01, 60d   Hill meeting scheduling and team assignments    :e2, 2026-07-15, 80d   Final logistics packet                           :e3, 2026-10-01, 14d    section Execution & evaluation   Event day                                       :milestone, f1, 2026-10-21, 0d   Post-event survey + debrief                      :f2, 2026-10-22, 21d
+Measurement and post-event evaluation plan
+Metrics and KPIs
+KPIs should be tracked at three levels: (1) participation, (2) policy engagement, and (3) systems-building.
+Participation - Total registrations; attendance rate; waitlist conversion - Representation of directly impacted youth/young adults (self-identified and optional) - Accommodation requests fulfilled (count + satisfaction) consistent with effective communication expectations. [25]
+Policy engagement - Number of Hill meetings completed - Number of offices attending briefing (if applicable) - Number of offices requesting follow-up information - Concrete outcomes: commitments, letters, co-sponsorship exploration, staff touchpoints captured (qualitative + structured)
+Communications - Email list growth (update list sign-ups) and opt-out compliance (opt-out processing expectations are explicit for covered commercial email; adopt as standard practice). [61] - Social reach and engagement for campaign hashtags (if used)
+Operational quality - On-time start rate; schedule adherence - Incident log count (security, accessibility, health) and resolution time - “Know Before You Go” effectiveness (self-reported: screening friction, prohibited items issues). [8]
+Post-event evaluation methods
+Within 24 hours - Send a short survey (5–10 questions) segmented by role (youth vs provider vs educator). - Require structured meeting-note submission from captains (3 prompts: what was asked, response, next step).
+Within 10 business days - Conduct a cross-team debrief focused on: what worked, what failed, what to change—consistent with special event guidance emphasizing planning, stakeholder coordination, and after-action learning. [65] - Publish a brief internal “Advocacy Day outcomes memo” (for partners and funders) that avoids restricted promotional references if any activities were in CVC spaces. [11]
+Within 30–60 days - Track follow-ups: meeting thank-yous, district meeting scheduling, campaign actions, and policy progress updates. - Maintain privacy and security controls consistent with widely used cybersecurity/privacy frameworks for managing risk around stored personal data. [66]
+
+[1] https://www.seeforever.org/events/from-silos-to-solutions-a-convening-to-coordinate-supports-for-opportunity-justice-involved-youth-and-adults/
+https://www.seeforever.org/events/from-silos-to-solutions-a-convening-to-coordinate-supports-for-opportunity-justice-involved-youth-and-adults/
+[2] [12] [20] [63] https://csrc.nist.gov/pubs/cswp/10/nist-privacy-framework-version-10/final
+https://csrc.nist.gov/pubs/cswp/10/nist-privacy-framework-version-10/final
+[3] [4] [5] [6] [9] [10] [11] [15] [16] [17] [19] [23] [29] [31] [34] [36] [37] [39] [42] [44] [49] [56] [59] https://cvc.aoc.gov/wp-content/uploads/2020/09/CVC_PolicyUse_MeetingRoomSpaces_July2015Update.pdf
+https://cvc.aoc.gov/wp-content/uploads/2020/09/CVC_PolicyUse_MeetingRoomSpaces_July2015Update.pdf
+[7] [13] [18] [22] [27] [30] [47] [55] https://www.uscp.gov/sites/evo-subsites/www.uscp.gov/files/documents/Guidelines%20For%20Conducting%20an%20Event%20on%20United%20States%20Capitol%20Grounds%201.9.24.pdf
+https://www.uscp.gov/sites/evo-subsites/www.uscp.gov/files/documents/Guidelines%20For%20Conducting%20an%20Event%20on%20United%20States%20Capitol%20Grounds%201.9.24.pdf
+[8] https://www.visitthecapitol.gov/visit/book-a-tour
+https://www.visitthecapitol.gov/visit/book-a-tour
+[14] [43] [61] https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business
+https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business
+[21] [25] [28] [40] [41] https://www.ada.gov/resources/effective-communication/
+https://www.ada.gov/resources/effective-communication/
+[24] [38] [45] https://cha.house.gov/user-s-guide
+https://cha.house.gov/user-s-guide
+[26] https://www.ada.gov/resources/service-animals-2010-requirements/
+https://www.ada.gov/resources/service-animals-2010-requirements/
+[32] https://www.cdc.gov/yellow-book/hcp/travel-for-work-other/mass-gatherings.html
+https://www.cdc.gov/yellow-book/hcp/travel-for-work-other/mass-gatherings.html
+[33] [65] https://cdpsdocs.state.co.us/safeschools/Resources/FEMA%20Federal%20Emergency%20Management%20Agency/FEMA%20Special%20Events%20Contigency%20Planning.pdf
+https://cdpsdocs.state.co.us/safeschools/Resources/FEMA%20Federal%20Emergency%20Management%20Agency/FEMA%20Special%20Events%20Contigency%20Planning.pdf
+[35] [46] [52] [58] https://www.visitthecapitol.gov/visit/know-before-you-go/prohibited-items
+https://www.visitthecapitol.gov/visit/know-before-you-go/prohibited-items
+[48] https://www.uscp.gov/visiting-capitol-hill/activities-requiring-permits
+https://www.uscp.gov/visiting-capitol-hill/activities-requiring-permits
+[50] https://ethics.house.gov/wp-content/uploads/2025/01/FINAL-Highlights-Overview-Booklet-2023-1.pdf
+https://ethics.house.gov/wp-content/uploads/2025/01/FINAL-Highlights-Overview-Booklet-2023-1.pdf
+[51] [57] https://www.gsa.gov/travel/plan-book/per-diem-rates/per-diem-rates-results?action=perdiems_report&city=&fiscal_year=2026&state=DC&zip=
+https://www.gsa.gov/travel/plan-book/per-diem-rates/per-diem-rates-results?action=perdiems_report&city=&fiscal_year=2026&state=DC&zip=
+[53] https://www.irs.gov/charities-non-profits/charitable-organizations/political-and-lobbying-activities
+https://www.irs.gov/charities-non-profits/charitable-organizations/political-and-lobbying-activities
+[54] https://www.irs.gov/charities-non-profits/direct-and-grass-roots-lobbying
+https://www.irs.gov/charities-non-profits/direct-and-grass-roots-lobbying
+[60] [62] https://www.ftc.gov/legal-library/browse/rules/childrens-online-privacy-protection-rule-coppa
+https://www.ftc.gov/legal-library/browse/rules/childrens-online-privacy-protection-rule-coppa
+[64] https://www.ada.gov/resources/web-guidance/
+https://www.ada.gov/resources/web-guidance/
+[66] https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf
+https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf
