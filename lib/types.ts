@@ -157,6 +157,7 @@ export type AttendeeBoardPostRecord = {
   body: string;
   published: boolean;
   created_at: string;
+  updated_at?: string | null;
 };
 
 export type AttendeeDirectoryEntryRecord = {
@@ -170,4 +171,30 @@ export type AttendeeDirectoryEntryRecord = {
   share_with_planners: boolean;
   created_at: string;
   updated_at: string;
+};
+
+export type AttendeeBoardReplyRecord = {
+  id: string;
+  post_id: string;
+  full_name: string;
+  email: string;
+  organization: string | null;
+  body: string;
+  created_at: string;
+  updated_at: string | null;
+  canEdit: boolean;
+};
+
+export type AttendeeBoardThreadRecord = {
+  id: string;
+  full_name: string;
+  email: string;
+  organization: string | null;
+  body: string;
+  created_at: string;
+  updated_at: string | null;
+  canEdit: boolean;
+  likedByViewer: boolean;
+  likeCount: number;
+  replies: AttendeeBoardReplyRecord[];
 };

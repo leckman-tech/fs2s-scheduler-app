@@ -1,10 +1,13 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { ATTENDEE_PORTAL_ROLES, SESSION_RESOURCE_BUCKET, SPEAKER_PORTAL_ROLES } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/server";
 import { displaySessionTitle } from "@/lib/utils";
 import type {
   AnnouncementRecord,
+  AttendeeBoardReplyRecord,
+  AttendeeBoardThreadRecord,
   FeedbackSummaryRecord,
   SessionRecord,
   PortalDocumentRecord,
@@ -196,6 +199,8 @@ type AttendeeBoardPostRow = {
   body: string;
   published: boolean;
   created_at: string;
+  updated_at: string | null;
+  author_token?: string | null;
 };
 
 type AttendeeDirectoryEntryRow = {
@@ -209,6 +214,23 @@ type AttendeeDirectoryEntryRow = {
   share_with_planners: boolean;
   created_at: string;
   updated_at: string;
+};
+
+type AttendeeBoardReplyRow = {
+  id: string;
+  post_id: string;
+  full_name: string;
+  email: string;
+  organization: string | null;
+  body: string;
+  created_at: string;
+  updated_at: string | null;
+  author_token?: string | null;
+};
+
+type AttendeeBoardLikeRow = {
+  post_id: string;
+  viewer_token: string;
 };
 
 function mapSession(row: SessionRow): SessionRecord {
@@ -333,7 +355,8 @@ function mapAttendeeBoardPost(row: AttendeeBoardPostRow): AttendeeBoardPostRecor
     organization: row.organization,
     body: row.body,
     published: row.published,
-    created_at: row.created_at
+    created_at: row.created_at,
+    updated_at: row.updated_at ?? null
   };
 }
 
@@ -787,6 +810,86 @@ export const getAttendeeBoardPosts = cache(async () => {
   } catch (error) {
     console.error(error);
     return [] as AttendeeBoardPostRecord[];
+  }
+});
+
+export const getAttendeeBoardFeed = cache(async () => {
+  await requireAttendeePortalUser();
+
+  try {
+    const supabase = await createClient();
+    const cookieStore = await cookies();
+    const viewerToken = cookieStore.get("fs2s_attendee_token")?.value ?? null;
+
+    const [{ data: posts, error: postsError }, { data: replies, error: repliesError }, { data: likes, error: likesError }] =
+      await Promise.all([
+        supabase
+          .from("attendee_board_posts")
+          .select("id,full_name,email,organization,body,published,created_at,updated_at,author_token")
+          .eq("published", true)
+          .order("created_at", { ascending: false }),
+        supabase
+          .from("attendee_board_replies")
+          .select("id,post_id,full_name,email,organization,body,created_at,updated_at,author_token")
+          .eq("published", true)
+          .order("created_at", { ascending: true }),
+        supabase
+          .from("attendee_board_likes")
+          .select("post_id,viewer_token")
+      ]);
+
+    if (postsError || repliesError || likesError) {
+      console.error(postsError ?? repliesError ?? likesError);
+      return [] as AttendeeBoardThreadRecord[];
+    }
+
+    const repliesByPost = ((replies as AttendeeBoardReplyRow[]) ?? []).reduce<
+      Record<string, AttendeeBoardReplyRecord[]>
+    >((acc, reply) => {
+      const item: AttendeeBoardReplyRecord = {
+        id: reply.id,
+        post_id: reply.post_id,
+        full_name: reply.full_name,
+        email: reply.email,
+        organization: reply.organization,
+        body: reply.body,
+        created_at: reply.created_at,
+        updated_at: reply.updated_at ?? null,
+        canEdit: Boolean(viewerToken && reply.author_token === viewerToken)
+      };
+
+      acc[reply.post_id] = acc[reply.post_id] ? [...acc[reply.post_id], item] : [item];
+      return acc;
+    }, {});
+
+    const likesByPost = ((likes as AttendeeBoardLikeRow[]) ?? []).reduce<
+      Record<string, { count: number; likedByViewer: boolean }>
+    >((acc, like) => {
+      const current = acc[like.post_id] ?? { count: 0, likedByViewer: false };
+      current.count += 1;
+      if (viewerToken && like.viewer_token === viewerToken) {
+        current.likedByViewer = true;
+      }
+      acc[like.post_id] = current;
+      return acc;
+    }, {});
+
+    return ((posts as AttendeeBoardPostRow[]) ?? []).map((post) => ({
+      id: post.id,
+      full_name: post.full_name,
+      email: post.email,
+      organization: post.organization,
+      body: post.body,
+      created_at: post.created_at,
+      updated_at: post.updated_at ?? null,
+      canEdit: Boolean(viewerToken && post.author_token === viewerToken),
+      likedByViewer: likesByPost[post.id]?.likedByViewer ?? false,
+      likeCount: likesByPost[post.id]?.count ?? 0,
+      replies: repliesByPost[post.id] ?? []
+    })) as AttendeeBoardThreadRecord[];
+  } catch (error) {
+    console.error(error);
+    return [] as AttendeeBoardThreadRecord[];
   }
 });
 
