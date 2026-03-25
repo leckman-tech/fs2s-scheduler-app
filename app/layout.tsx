@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { BottomLiveUpdatesBar } from "@/components/bottom-live-updates-bar";
 import { EVENTBRITE_URL } from "@/lib/constants";
@@ -30,21 +29,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <header className="site-header">
             <div className="site-header__inner">
               <div className="site-brand">
-                <Link href="/" className="site-brand__logo-link" aria-label="From Silos to Solutions 2026 home">
-                  <Image
-                    src="/fs2s/fs2s-lanyard-logo.png"
-                    alt="FS2S logo"
-                    width={62}
-                    height={62}
-                    className="site-brand__logo"
-                    priority
-                  />
-                </Link>
                 <div className="site-brand__copy">
+                  <p className="site-brand__eyebrow">Power Through Partnerships</p>
                   <Link href="/" className="site-title">
-                    FS2S 2026
+                    From Silos to Solutions 2026
                   </Link>
-                  <p className="site-brand__subtitle">From Silos to Solutions</p>
                 </div>
               </div>
               <nav className="site-nav" aria-label="Primary navigation">
@@ -53,7 +42,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <Link href="/learn-more">Learn More</Link>
                 <Link href="/lobby-day">Lobby Day</Link>
                 <Link href="/attendee/login">Attendee Portal</Link>
-                <Link href="/portal/login">Speaker/Presenter Portal</Link>
+                <Link href="/portal/login">Speaker Portal</Link>
               </nav>
               <a href={EVENTBRITE_URL} className="site-nav__cta" target="_blank" rel="noreferrer">
                 Purchase Tickets
