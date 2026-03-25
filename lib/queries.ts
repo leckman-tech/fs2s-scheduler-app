@@ -298,7 +298,7 @@ export const getPublicSessions = cache(async () => {
       return [] as SessionRecord[];
     }
 
-    return (data as SessionRow[]).map(mapSession);
+    return (data as unknown as SessionRow[]).map(mapSession);
   } catch (error) {
     console.error(error);
     return [] as SessionRecord[];
@@ -322,7 +322,7 @@ export const getAdminSessions = cache(async () => {
       return [] as SessionRecord[];
     }
 
-    return (data as SessionRow[]).map(mapSession);
+    return (data as unknown as SessionRow[]).map(mapSession);
   } catch (error) {
     console.error(error);
     return [] as SessionRecord[];
@@ -332,7 +332,7 @@ export const getAdminSessions = cache(async () => {
 export const getSessionById = cache(async (id: string, includeUnpublished = false) => {
   try {
     const supabase = await createClient();
-    const runQuery = async (selectClause: string) => {
+    const runQuery = (selectClause: string) => {
       let query = supabase.from("sessions").select(selectClause).eq("id", id);
       if (!includeUnpublished) {
         query = query.eq("published", true);
@@ -340,10 +340,10 @@ export const getSessionById = cache(async (id: string, includeUnpublished = fals
       return query;
     };
 
-    let { data, error } = await (await runQuery(SESSION_SELECT_PUBLIC)).maybeSingle();
+    let { data, error } = await runQuery(SESSION_SELECT_PUBLIC).maybeSingle();
 
     if (error && isMissingSignupColumnError(error)) {
-      ({ data, error } = await (await runQuery(SESSION_SELECT_PUBLIC_LEGACY)).maybeSingle());
+      ({ data, error } = await runQuery(SESSION_SELECT_PUBLIC_LEGACY).maybeSingle());
     }
 
     if (error || !data) {
@@ -353,7 +353,7 @@ export const getSessionById = cache(async (id: string, includeUnpublished = fals
       return null;
     }
 
-    return mapSession(data as SessionRow);
+    return mapSession(data as unknown as SessionRow);
   } catch (error) {
     console.error(error);
     return null;
@@ -384,7 +384,7 @@ export const getAdminSessionById = cache(async (id: string) => {
       return null;
     }
 
-    return mapSession(data as SessionRow);
+    return mapSession(data as unknown as SessionRow);
   } catch (error) {
     console.error(error);
     return null;
