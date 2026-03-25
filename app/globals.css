@@ -625,6 +625,86 @@ select {
   margin-top: 1.25rem;
 }
 
+.hero-progress,
+.signup-progress {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.hero-progress {
+  flex: 1 1 19rem;
+  min-width: min(100%, 19rem);
+  padding: 0.7rem 0.85rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.signup-progress {
+  width: min(100%, 19rem);
+}
+
+.hero-progress__copy,
+.signup-progress__copy {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.hero-progress__label,
+.signup-progress__label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-progress__label {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.signup-progress__label {
+  color: var(--accent);
+}
+
+.hero-progress strong,
+.signup-progress strong {
+  font-size: 0.95rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.hero-progress strong {
+  color: white;
+}
+
+.signup-progress strong {
+  color: var(--ink);
+}
+
+.hero-progress__track,
+.signup-progress__track {
+  position: relative;
+  height: 0.58rem;
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.hero-progress__track {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.signup-progress__track {
+  background: rgba(17, 17, 17, 0.08);
+}
+
+.hero-progress__fill,
+.signup-progress__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f45f70, var(--accent));
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
 .hero-metrics {
   position: relative;
   z-index: 1;
@@ -1870,6 +1950,12 @@ th {
     align-items: flex-start;
     flex-direction: column;
     gap: 0.6rem;
+  }
+
+  .hero-progress,
+  .signup-progress {
+    min-width: 0;
+    width: 100%;
   }
 
   .hero-card,
