@@ -47,7 +47,10 @@ const timeline = [
 export default async function LobbyDayPage() {
   const signupCount = await getPublicLobbyDaySignupCount();
   const signupGoal = 300;
-  const visibleSignupProgress = Math.min((Math.max(signupCount, 25) / signupGoal) * 100, 100);
+  const signupBaseline = 25;
+  const visibleSignupCount = signupBaseline + signupCount;
+  const signupRemaining = Math.max(signupGoal - visibleSignupCount, 0);
+  const visibleSignupProgress = Math.min((visibleSignupCount / signupGoal) * 100, 100);
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Event",
@@ -114,7 +117,10 @@ export default async function LobbyDayPage() {
                 role="img"
                 aria-label="Lobby Day sign-up momentum toward the Capitol Hill goal"
               >
-                <span className="hero-progress__label">Building toward 300 on Capitol Hill</span>
+                <div className="hero-progress__copy">
+                  <span className="hero-progress__label">Capitol Hill turnout goal</span>
+                  <strong>{signupRemaining} away from our 300-person goal</strong>
+                </div>
                 <div className="hero-progress__track" aria-hidden="true">
                   <div
                     className="hero-progress__fill"
