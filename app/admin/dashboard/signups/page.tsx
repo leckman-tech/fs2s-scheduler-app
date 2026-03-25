@@ -1,9 +1,12 @@
 import Link from "next/link";
-import { getAdminSessionSignups } from "@/lib/queries";
+import { getAdminLobbyDaySignups, getAdminSessionSignups } from "@/lib/queries";
 import { displaySessionTitle, formatDateLabel, formatTimestamp, formatTimeRange } from "@/lib/utils";
 
 export default async function AdminSignupsPage() {
-  const signups = await getAdminSessionSignups();
+  const [signups, lobbyDaySignups] = await Promise.all([
+    getAdminSessionSignups(),
+    getAdminLobbyDaySignups()
+  ]);
 
   const grouped = Object.values(
     signups.reduce<
@@ -46,19 +49,70 @@ export default async function AdminSignupsPage() {
     }, {})
   ).sort((a, b) => a.startsAt.localeCompare(b.startsAt));
 
+  const totalSignupCount = signups.length + lobbyDaySignups.length;
+
   return (
     <div className="stack">
       <section className="hero-card">
         <h1>Event sign-ups</h1>
         <p>
-          Review limited-capacity RSVP lists, monitor confirmed versus waitlist numbers, and
-          export attendee information for text updates and logistics.
+          Review RSVP lists, track limited-capacity events, and export attendee information for
+          text updates, logistics, and follow-up.
         </p>
         <div className="hero-meta">
-          <span className="hero-pill">{signups.length} total sign-up{signups.length === 1 ? "" : "s"}</span>
+          <span className="hero-pill">
+            {totalSignupCount} total sign-up{totalSignupCount === 1 ? "" : "s"}
+          </span>
           <Link href="/admin/dashboard/signups/export" className="button-secondary button-link">
-            Export all sign-ups
+            Export session sign-ups
           </Link>
+          <Link
+            href="/admin/dashboard/signups/export?type=lobby-day"
+            className="button-secondary button-link"
+          >
+            Export Lobby Day list
+          </Link>
+        </div>
+      </section>
+
+      <section className="panel">
+        <div className="section-heading">
+          <div>
+            <h2>Fall 2026 Lobby Day</h2>
+            <p className="muted" style={{ margin: "0.35rem 0 0" }}>
+              Training, lunch, Capitol Hill advocacy, and same-day debrief
+            </p>
+          </div>
+          <span className="hero-pill">
+            {lobbyDaySignups.length} Lobby Day sign-up{lobbyDaySignups.length === 1 ? "" : "s"}
+          </span>
+        </div>
+
+        <div className="resource-list">
+          {lobbyDaySignups.length ? (
+            lobbyDaySignups.map((signup) => (
+              <article key={signup.id} className="announcement">
+                <strong>{signup.full_name}</strong>
+                <div className="muted">{["Fall 2026 Lobby Day", formatTimestamp(signup.created_at)].join(" · ")}</div>
+                <div className="detail-list">
+                  <div>
+                    <strong>Email</strong>
+                    <span className="muted">{signup.email}</span>
+                  </div>
+                  <div>
+                    <strong>Phone</strong>
+                    <span className="muted">{signup.phone || "Not provided"}</span>
+                  </div>
+                  <div>
+                    <strong>Organization</strong>
+                    <span className="muted">{signup.organization || "Not provided"}</span>
+                  </div>
+                </div>
+              </article>
+            ))
+          ) : (
+            <div className="empty-state">No Lobby Day sign-ups have been submitted yet.</div>
+          )}
         </div>
       </section>
 
