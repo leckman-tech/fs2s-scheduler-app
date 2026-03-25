@@ -562,6 +562,15 @@ select {
   background: #111111;
 }
 
+.hero-photo--lobby-video,
+.hero-photo--lobby-meeting-video {
+  background: #111111;
+}
+
+.hero-photo--lobby-video {
+  grid-row: 1 / span 2;
+}
+
 .hero-photo--conference {
   background-image:
     linear-gradient(180deg, rgba(17, 17, 17, 0.08), rgba(17, 17, 17, 0.38)),

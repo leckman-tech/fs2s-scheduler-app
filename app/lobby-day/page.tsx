@@ -90,11 +90,11 @@ export default async function LobbyDayPage() {
       <section className="hero-card">
         <div className="hero-card__grid">
           <div className="hero-card__content">
-            <p className="eyebrow">Lobby Day</p>
-            <h1>Training, advocacy, and action on Capitol Hill</h1>
+            <p className="eyebrow">FS2S 2026</p>
+            <h1>Lobby Day</h1>
             <p className="hero-kicker">
-              A planned FS2S advocacy day built around preparation, shared travel, direct
-              engagement, and a thoughtful debrief at the close of the afternoon.
+              Training, advocacy, and action on Capitol Hill, with preparation at the PAC, a
+              provided lunch, shared transportation, and a same-day Zoom debrief.
             </p>
             <p>
               This Lobby Day is being planned as a connected extension of From Silos to Solutions.
@@ -151,9 +151,6 @@ export default async function LobbyDayPage() {
               >
                 <source src="/fs2s/lobby-day-advocacy.mp4" type="video/mp4" />
               </video>
-              <span className="hero-photo__label">Shared advocacy</span>
-            </div>
-            <div className="hero-photo hero-photo--community">
               <span className="hero-photo__label">Shared advocacy</span>
             </div>
           </div>
