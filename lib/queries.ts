@@ -975,6 +975,8 @@ export const getAdminSessionSignups = cache(async () => {
 });
 
 export const getAdminLobbyDaySignups = cache(async () => {
+  await requireAdmin();
+
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
