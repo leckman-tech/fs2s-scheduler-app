@@ -80,3 +80,21 @@ set
   description = 'This evening Big Bus tour will feature the cherry blossoms and Washington monuments at sunset. It is open to all conference attendees, staff, and volunteers, with space reserved for the first 50 people who sign up at registration on Wednesday morning or on Thursday if spots remain.',
   featured = true
 where session_code = 'd2s16';
+
+do $$
+begin
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'sessions'
+      and column_name = 'signup_enabled'
+  ) then
+    update public.sessions
+    set
+      signup_enabled = true,
+      signup_capacity = 50,
+      signup_instructions = 'Save your spot for the Big Bus sunset tour here. Phone number is optional, but helpful if the conference team needs to send a text update. The first 50 sign-ups will be confirmed and any additional sign-ups will be placed on the waitlist.'
+    where session_code = 'd2s16';
+  end if;
+end $$;

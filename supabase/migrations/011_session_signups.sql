@@ -1,6 +1,14 @@
-create type public.session_signup_status as enum ('confirmed', 'waitlist');
-
-alter type public.session_signup_status owner to postgres;
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_type
+    where typname = 'session_signup_status'
+      and typnamespace = 'public'::regnamespace
+  ) then
+    create type public.session_signup_status as enum ('confirmed', 'waitlist');
+  end if;
+end $$;
 
 alter table public.sessions
   add column if not exists signup_enabled boolean not null default false,

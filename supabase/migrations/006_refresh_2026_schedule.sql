@@ -78,6 +78,24 @@ insert into public.sessions (session_code, placeholder_code, final_title, title,
   ('d3s8', null, null, 'Community Lunch & Campus Experience', 'community-lunch-campus-experience', 'lunch', '2026-04-03', '2026-04-03T12:30:00-04:00', '2026-04-03T14:00:00-04:00', 'Maya Angelou Learning Campus, P.A.C., Cafeteria, & Gymnasium', 'Cafeteria (Lunch) & Gymnasium (Student Exhibits, Partner Engagement, Tours)', 'Shared lunch, campus engagement, and time with student exhibits, partner engagement, and tours.', 'Shared lunch, campus engagement, and time with student exhibits, partner engagement, and tours.', null, 'scheduled', true, false, false),
   ('d3s9', null, null, 'Dr. Maya Angelou Birthday Celebration with Scholars & Attendees', 'dr-maya-angelou-birthday-celebration-with-scholars-attendees', 'scholar_session', '2026-04-03', '2026-04-03T14:00:00-04:00', '2026-04-03T15:30:00-04:00', 'Maya Angelou Learning Campus, P.A.C., Cafeteria, & Gymnasium', 'Performing Arts Center', 'Celebration with scholars and attendees honoring Dr. Maya Angelou and the scholar-centered spirit of the convening.', 'Celebration with scholars and attendees honoring Dr. Maya Angelou and the scholar-centered spirit of the convening.', null, 'scheduled', true, true, false);
 
+do $$
+begin
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'sessions'
+      and column_name = 'signup_enabled'
+  ) then
+    update public.sessions
+    set
+      signup_enabled = true,
+      signup_capacity = 50,
+      signup_instructions = 'Save your spot for the Big Bus sunset tour here. Phone number is optional, but helpful if the conference team needs to send a text update. The first 50 sign-ups will be confirmed and any additional sign-ups will be placed on the waitlist.'
+    where session_code = 'd2s16';
+  end if;
+end $$;
+
 insert into public.session_speakers (session_id, speaker_id, session_role) values
   ((select id from public.sessions where slug = 'opening-keynote-dr-bettina-love'), (select id from public.speakers where slug = 'dr-bettina-love'), 'speaker'),
   ((select id from public.sessions where slug = 'from-superpower-to-shared-power-building-strategic-partnerships-that-sustain-community-impact-a'), (select id from public.speakers where slug = 'shandell-richards'), 'workshop_presenter'),
