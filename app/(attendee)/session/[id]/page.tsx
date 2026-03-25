@@ -90,6 +90,7 @@ export default async function SessionDetailPage({
             waitlistCount={signupSummary?.waitlistCount ?? 0}
             capacity={session.signup_capacity}
             instructions={session.signup_instructions}
+            signupDeadline={session.signup_deadline}
           />
         ) : null}
 

@@ -36,6 +36,7 @@ type SessionRow = {
   signup_enabled?: boolean | null;
   signup_capacity?: number | null;
   signup_instructions?: string | null;
+  signup_deadline?: string | null;
   status: SessionRecord["status"];
   published: boolean;
   featured: boolean;
@@ -63,19 +64,19 @@ type SessionRow = {
 };
 
 const SESSION_SELECT_PUBLIC =
-  "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder,session_speakers(speakers(id,slug,name,title,organization))";
+  "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,signup_deadline,status,published,featured,is_placeholder,session_speakers(speakers(id,slug,name,title,organization))";
 
 const SESSION_SELECT_PUBLIC_LEGACY =
   "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,status,published,featured,is_placeholder,session_speakers(speakers(id,slug,name,title,organization))";
 
 const SESSION_SELECT_ADMIN =
-  "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder,session_speakers(session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note))";
+  "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,signup_deadline,status,published,featured,is_placeholder,session_speakers(session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note))";
 
 const SESSION_SELECT_ADMIN_LEGACY =
   "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,status,published,featured,is_placeholder,session_speakers(session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note))";
 
 const ASSIGNED_SESSION_SELECT =
-  "session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note),sessions(id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder)";
+  "session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note),sessions(id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,signup_deadline,status,published,featured,is_placeholder)";
 
 const ASSIGNED_SESSION_SELECT_LEGACY =
   "session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note),sessions(id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,status,published,featured,is_placeholder)";
@@ -88,7 +89,7 @@ function isMissingSignupColumnError(error: unknown) {
         }`
       : "";
 
-  return ["signup_enabled", "signup_capacity", "signup_instructions"].some((column) =>
+  return ["signup_enabled", "signup_capacity", "signup_instructions", "signup_deadline"].some((column) =>
     message.includes(column)
   );
 }
@@ -230,6 +231,7 @@ function mapSession(row: SessionRow): SessionRecord {
     signup_enabled: Boolean(row.signup_enabled),
     signup_capacity: row.signup_capacity ?? null,
     signup_instructions: row.signup_instructions ?? null,
+    signup_deadline: row.signup_deadline ?? null,
     status: row.status,
     published: row.published,
     featured: row.featured,

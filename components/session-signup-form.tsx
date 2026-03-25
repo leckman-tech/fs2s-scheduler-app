@@ -9,6 +9,7 @@ type SessionSignupFormProps = {
   waitlistCount: number;
   capacity: number | null;
   instructions?: string | null;
+  signupDeadline?: string | null;
 };
 
 type SignupState = {
@@ -25,7 +26,8 @@ export function SessionSignupForm({
   confirmedCount,
   waitlistCount,
   capacity,
-  instructions
+  instructions,
+  signupDeadline
 }: SessionSignupFormProps) {
   const [state, setState] = useState<SignupState>({
     status: "idle",
@@ -34,6 +36,17 @@ export function SessionSignupForm({
     waitlistCount,
     signupStatus: null
   });
+  const deadlineDate = signupDeadline ? new Date(signupDeadline) : null;
+  const isClosed = deadlineDate ? deadlineDate.getTime() < Date.now() : false;
+  const deadlineLabel = deadlineDate
+    ? new Intl.DateTimeFormat("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      }).format(deadlineDate)
+    : null;
 
   async function handleSubmit(formData: FormData) {
     setState((current) => ({ ...current, status: "saving", message: "" }));
@@ -101,6 +114,12 @@ export function SessionSignupForm({
           "Use this form to hold your spot. Phone number is optional, but helpful if the conference team needs to send text updates."}
       </p>
 
+      {deadlineLabel ? (
+        <p className="muted" style={{ marginTop: "-0.25rem" }}>
+          Sign-ups close {deadlineLabel}.
+        </p>
+      ) : null}
+
       <div className="session-signup-stats">
         <article className="session-signup-stat">
           <strong>{state.confirmedCount}</strong>
@@ -115,29 +134,29 @@ export function SessionSignupForm({
       <form id={`session-signup-form-${sessionId}`} className="form-grid" action={handleSubmit}>
         <div className="field">
           <label htmlFor={`full_name-${sessionId}`}>Full name</label>
-          <input id={`full_name-${sessionId}`} name="full_name" required />
+          <input id={`full_name-${sessionId}`} name="full_name" required disabled={isClosed} />
         </div>
 
         <div className="form-grid form-grid--two">
           <div className="field">
             <label htmlFor={`email-${sessionId}`}>Email</label>
-            <input id={`email-${sessionId}`} name="email" type="email" required />
+            <input id={`email-${sessionId}`} name="email" type="email" required disabled={isClosed} />
           </div>
 
           <div className="field">
             <label htmlFor={`phone-${sessionId}`}>Phone number</label>
-            <input id={`phone-${sessionId}`} name="phone" type="tel" placeholder="Optional" />
+            <input id={`phone-${sessionId}`} name="phone" type="tel" placeholder="Optional" disabled={isClosed} />
           </div>
         </div>
 
         <div className="field">
           <label htmlFor={`organization-${sessionId}`}>Organization or affiliation</label>
-          <input id={`organization-${sessionId}`} name="organization" placeholder="Optional" />
+          <input id={`organization-${sessionId}`} name="organization" placeholder="Optional" disabled={isClosed} />
         </div>
 
         <div className="admin-actions">
-          <button className="button" type="submit" disabled={state.status === "saving"}>
-            {state.status === "saving" ? "Saving..." : "Save my spot"}
+          <button className="button" type="submit" disabled={state.status === "saving" || isClosed}>
+            {isClosed ? "Sign-ups closed" : state.status === "saving" ? "Saving..." : "Save my spot"}
           </button>
           {state.message ? (
             <span className={state.status === "error" ? "status-pill status-cancelled" : "muted"}>

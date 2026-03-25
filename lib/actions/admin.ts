@@ -290,6 +290,8 @@ export async function saveSession(formData: FormData) {
   const signup_capacity_input = String(formData.get("signup_capacity") ?? "").trim();
   const signup_capacity = signup_capacity_input ? Number(signup_capacity_input) : null;
   const signup_instructions = String(formData.get("signup_instructions") ?? "").trim();
+  const signup_deadline_input = String(formData.get("signup_deadline") ?? "").trim();
+  const signup_deadline = signup_deadline_input ? normalizeDateTimeInput(signup_deadline_input) : null;
   const status = String(formData.get("status") ?? "scheduled").trim();
   const published = formData.get("published") === "on";
   const featured = formData.get("featured") === "on";
@@ -326,6 +328,7 @@ export async function saveSession(formData: FormData) {
     signup_enabled,
     signup_capacity: signup_enabled ? signup_capacity : null,
     signup_instructions: signup_enabled && signup_instructions ? signup_instructions : null,
+    signup_deadline: signup_enabled ? signup_deadline : null,
     status,
     published,
     featured,

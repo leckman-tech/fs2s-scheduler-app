@@ -216,6 +216,16 @@ export function SessionForm({ session }: { session?: SessionRecord | null }) {
             placeholder="Add any note attendees should see, such as first-come-first-served details or text update guidance."
           />
         </div>
+
+        <div className="field">
+          <label htmlFor="signup_deadline">Sign-up deadline</label>
+          <input
+            id="signup_deadline"
+            type="datetime-local"
+            name="signup_deadline"
+            defaultValue={toLocalDateTime(session?.signup_deadline ?? "")}
+          />
+        </div>
       </section>
 
       <div className="admin-actions">

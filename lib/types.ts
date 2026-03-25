@@ -36,6 +36,7 @@ export type SessionRecord = {
   signup_enabled: boolean;
   signup_capacity: number | null;
   signup_instructions: string | null;
+  signup_deadline: string | null;
   status: SessionStatus;
   published: boolean;
   featured: boolean;
