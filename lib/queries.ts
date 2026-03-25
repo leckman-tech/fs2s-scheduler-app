@@ -9,6 +9,8 @@ import type {
   SessionRecord,
   PortalDocumentRecord,
   PortalMessageRecord,
+  SessionSignupRecord,
+  SessionSignupSummaryRecord,
   SpeakerDirectoryRecord,
   SessionSpeaker,
   Speaker
@@ -30,6 +32,9 @@ type SessionRow = {
   short_description: string;
   description: string;
   live_updates: string | null;
+  signup_enabled: boolean;
+  signup_capacity: number | null;
+  signup_instructions: string | null;
   status: SessionRecord["status"];
   published: boolean;
   featured: boolean;
@@ -106,6 +111,39 @@ type PortalMessageRow = {
     | null;
 };
 
+type SessionSignupRow = {
+  id: string;
+  session_id: string;
+  full_name: string;
+  email: string;
+  phone: string | null;
+  organization: string | null;
+  status: "confirmed" | "waitlist";
+  created_at: string;
+  sessions:
+    | {
+        id: string;
+        title: string;
+        final_title: string | null;
+        placeholder_code: string | null;
+        category: SessionRecord["category"];
+        date: string;
+        starts_at: string;
+        signup_capacity: number | null;
+      }
+    | Array<{
+        id: string;
+        title: string;
+        final_title: string | null;
+        placeholder_code: string | null;
+        category: SessionRecord["category"];
+        date: string;
+        starts_at: string;
+        signup_capacity: number | null;
+      }>
+    | null;
+};
+
 function mapSession(row: SessionRow): SessionRecord {
   const speakers: SessionSpeaker[] =
     row.session_speakers
@@ -148,6 +186,9 @@ function mapSession(row: SessionRow): SessionRecord {
     short_description: row.short_description,
     description: row.description,
     live_updates: row.live_updates,
+    signup_enabled: row.signup_enabled,
+    signup_capacity: row.signup_capacity,
+    signup_instructions: row.signup_instructions,
     status: row.status,
     published: row.published,
     featured: row.featured,
@@ -189,13 +230,29 @@ function mapPortalMessage(row: PortalMessageRow): PortalMessageRecord {
   };
 }
 
+function mapSessionSignup(row: SessionSignupRow): SessionSignupRecord {
+  const session = Array.isArray(row.sessions) ? row.sessions[0] : row.sessions;
+
+  return {
+    id: row.id,
+    session_id: row.session_id,
+    full_name: row.full_name,
+    email: row.email,
+    phone: row.phone,
+    organization: row.organization,
+    status: row.status,
+    created_at: row.created_at,
+    session
+  };
+}
+
 export const getPublicSessions = cache(async () => {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("sessions")
       .select(
-        "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,status,published,featured,is_placeholder,session_speakers(speakers(id,slug,name,title,organization))"
+        "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder,session_speakers(speakers(id,slug,name,title,organization))"
       )
       .eq("published", true)
       .order("starts_at", { ascending: true });
@@ -218,7 +275,7 @@ export const getAdminSessions = cache(async () => {
     const { data, error } = await supabase
       .from("sessions")
       .select(
-        "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,status,published,featured,is_placeholder,session_speakers(session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note))"
+        "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder,session_speakers(session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note))"
       )
       .order("starts_at", { ascending: true });
 
@@ -240,7 +297,7 @@ export const getSessionById = cache(async (id: string, includeUnpublished = fals
     let query = supabase
       .from("sessions")
       .select(
-        "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,status,published,featured,is_placeholder,session_speakers(speakers(id,slug,name,title,organization))"
+        "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder,session_speakers(speakers(id,slug,name,title,organization))"
       )
       .eq("id", id);
 
@@ -269,7 +326,7 @@ export const getAdminSessionById = cache(async (id: string) => {
     const { data, error } = await supabase
       .from("sessions")
       .select(
-        "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,status,published,featured,is_placeholder,session_speakers(session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note))"
+        "id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder,session_speakers(session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note))"
       )
       .eq("id", id)
       .maybeSingle();
@@ -334,6 +391,37 @@ export async function getConferenceDays() {
   const sessions = await getPublicSessions();
   return [...new Set(sessions.map((session) => session.date))];
 }
+
+export const getPublicSessionSignupSummary = cache(async (sessionId: string) => {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase.rpc("get_public_session_signup_summary", {
+      check_session: sessionId
+    });
+
+    if (error) {
+      console.error(error);
+      return null as SessionSignupSummaryRecord | null;
+    }
+
+    const row = Array.isArray(data) ? data[0] : data;
+
+    if (!row) {
+      return null as SessionSignupSummaryRecord | null;
+    }
+
+    return {
+      signupEnabled: Boolean(row.signup_enabled),
+      signupCapacity: row.signup_capacity ?? null,
+      signupInstructions: row.signup_instructions ?? null,
+      confirmedCount: Number(row.confirmed_count ?? 0),
+      waitlistCount: Number(row.waitlist_count ?? 0)
+    };
+  } catch (error) {
+    console.error(error);
+    return null as SessionSignupSummaryRecord | null;
+  }
+});
 
 export const requireAdmin = cache(async () => {
   const supabase = await createClient();
@@ -748,6 +836,30 @@ export const getFeedbackSummary = cache(async () => {
   } catch (error) {
     console.error(error);
     return [] as FeedbackSummaryRecord[];
+  }
+});
+
+export const getAdminSessionSignups = cache(async () => {
+  await requireAdmin();
+
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("session_signups")
+      .select(
+        "id,session_id,full_name,email,phone,organization,status,created_at,sessions(id,title,final_title,placeholder_code,category,date,starts_at,signup_capacity)"
+      )
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return [] as SessionSignupRecord[];
+    }
+
+    return (data as SessionSignupRow[]).map(mapSessionSignup);
+  } catch (error) {
+    console.error(error);
+    return [] as SessionSignupRecord[];
   }
 });
 

@@ -33,6 +33,9 @@ export type SessionRecord = {
   short_description: string;
   description: string;
   live_updates: string | null;
+  signup_enabled: boolean;
+  signup_capacity: number | null;
+  signup_instructions: string | null;
   status: SessionStatus;
   published: boolean;
   featured: boolean;
@@ -105,4 +108,33 @@ export type PortalMessageRecord = {
   created_at: string;
   author_name: string | null;
   author_role: string | null;
+};
+
+export type SessionSignupSummaryRecord = {
+  signupEnabled: boolean;
+  signupCapacity: number | null;
+  signupInstructions: string | null;
+  confirmedCount: number;
+  waitlistCount: number;
+};
+
+export type SessionSignupRecord = {
+  id: string;
+  session_id: string;
+  full_name: string;
+  email: string;
+  phone: string | null;
+  organization: string | null;
+  status: "confirmed" | "waitlist";
+  created_at: string;
+  session: {
+    id: string;
+    title: string;
+    final_title: string | null;
+    placeholder_code: string | null;
+    category: SessionCategory;
+    date: string;
+    starts_at: string;
+    signup_capacity: number | null;
+  } | null;
 };
