@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { LobbyDaySignupForm } from "@/components/lobby-day-signup-form";
+import { getPublicLobbyDaySignupCount } from "@/lib/queries";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -42,7 +44,8 @@ const timeline = [
   }
 ];
 
-export default function LobbyDayPage() {
+export default async function LobbyDayPage() {
+  const signupCount = await getPublicLobbyDaySignupCount();
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Event",
@@ -104,6 +107,7 @@ export default function LobbyDayPage() {
               <span className="hero-pill">No additional cost</span>
               <span className="hero-pill">PAC at MAPCS High School</span>
               <span className="hero-pill">Capitol Hill</span>
+              <span className="hero-pill">{signupCount} signed up</span>
             </div>
             <div className="hero-actions">
               <Link href="/" className="button button-link">
@@ -116,18 +120,47 @@ export default function LobbyDayPage() {
           </div>
 
           <div className="hero-card__visual">
+            <div className="hero-photo hero-photo--lobby-video">
+              <video
+                className="hero-photo__video"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/fs2s/fs2s-room-wide.jpg"
+                aria-label="Lobby Day Washington, D.C. footage"
+              >
+                <source src="/fs2s/lobby-day-capitol.mp4" type="video/mp4" />
+              </video>
+              <span className="hero-photo__label">Washington, D.C.</span>
+            </div>
             <div className="hero-photo hero-photo--conference">
               <span className="hero-photo__label">Training together</span>
+            </div>
+            <div className="hero-photo hero-photo--lobby-meeting-video">
+              <video
+                className="hero-photo__video"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/fs2s/fs2s-partnership-activity.jpg"
+                aria-label="Advocacy and meeting footage"
+              >
+                <source src="/fs2s/lobby-day-advocacy.mp4" type="video/mp4" />
+              </video>
+              <span className="hero-photo__label">Shared advocacy</span>
             </div>
             <div className="hero-photo hero-photo--community">
               <span className="hero-photo__label">Shared advocacy</span>
             </div>
-            <div className="hero-photo hero-photo--dc">
-              <span className="hero-photo__label">Washington, D.C.</span>
-            </div>
           </div>
         </div>
       </section>
+
+      <LobbyDaySignupForm totalCount={signupCount} />
 
       <section className="context-grid">
         <article className="panel story-panel">

@@ -52,7 +52,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main>{children}</main>
           <footer className="site-footer">
             <div className="site-footer__inner">
-              <span>From Silos to Solutions 2026</span>
+              <span>&copy; 2026 From Silos to Solutions</span>
               <Link href="/admin/login">Admin Portal</Link>
             </div>
           </footer>
