@@ -18,6 +18,8 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
     message: "",
     totalCount
   });
+  const progressTarget = 300;
+  const visibleSignupProgress = Math.min((Math.max(state.totalCount, 25) / progressTarget) * 100, 100);
 
   async function handleSubmit(formData: FormData) {
     setState((current) => ({ ...current, status: "saving", message: "" }));
@@ -67,12 +69,24 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
     <section className="panel form-grid">
       <div className="section-heading">
         <h2>Sign up for Lobby Day</h2>
-        <span className="hero-pill">{state.totalCount} signed up</span>
+        <div
+          className="signup-progress"
+          role="img"
+          aria-label="Lobby Day sign-up momentum toward the Capitol Hill goal"
+        >
+          <span className="signup-progress__label">Building toward 300 on Capitol Hill</span>
+          <div className="signup-progress__track" aria-hidden="true">
+            <div
+              className="signup-progress__fill"
+              style={{ width: `${visibleSignupProgress}%` }}
+            />
+          </div>
+        </div>
       </div>
 
       <p className="muted" style={{ marginTop: 0 }}>
         Use this form to add your name to the Lobby Day list. We’ll collect a phone number so the
-        conference team can send same-day updates if needed.
+        conference team can send same-day updates and Capitol Hill logistics if needed.
       </p>
 
       <form id="lobby-day-signup-form" className="form-grid" action={handleSubmit}>
