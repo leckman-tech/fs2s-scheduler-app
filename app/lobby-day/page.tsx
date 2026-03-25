@@ -120,19 +120,7 @@ export default async function LobbyDayPage() {
           </div>
 
           <div className="hero-card__visual">
-            <div className="hero-photo hero-photo--lobby-video">
-              <video
-                className="hero-photo__video"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster="/fs2s/fs2s-room-wide.jpg"
-                aria-label="Lobby Day Washington, D.C. footage"
-              >
-                <source src="/fs2s/lobby-day-capitol.mp4" type="video/mp4" />
-              </video>
+            <div className="hero-photo hero-photo--dc">
               <span className="hero-photo__label">Washington, D.C.</span>
             </div>
             <div className="hero-photo hero-photo--conference">
