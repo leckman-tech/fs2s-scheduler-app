@@ -20,11 +20,56 @@ const ogImage = {
 export const siteMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: SITE_NAME,
+  alternates: {
+    canonical: SITE_URL
+  },
+  manifest: "/manifest.webmanifest",
+  category: "conference",
+  creator: "From Silos to Solutions 2026",
+  publisher: "From Silos to Solutions 2026",
+  authors: [
+    { name: "Levi W. Eckman, J.D." },
+    { name: "See Forever Foundation" }
+  ],
+  keywords: [
+    "From Silos to Solutions",
+    "FS2S",
+    "FS2S 2026",
+    "Power Through Partnerships",
+    "Levi W. Eckman",
+    "Levi W. Eckman J.D.",
+    "See Forever Foundation",
+    "Maya Angelou Schools",
+    "justice-involved youth",
+    "opportunity youth",
+    "Washington DC convening",
+    "education advocacy conference",
+    "youth justice convening"
+  ],
+  icons: {
+    icon: [{ url: "/icon", type: "image/png", sizes: "512x512" }],
+    apple: [{ url: "/apple-icon", type: "image/png", sizes: "180x180" }],
+    shortcut: [{ url: "/icon" }]
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1
+    }
+  },
   title: {
     default: `${SITE_NAME} | National Convening in Washington, D.C.`,
     template: `%s | ${SITE_NAME}`
   },
   description: SITE_DESCRIPTION,
+  other: {
+    "theme-color": "#c1121f"
+  },
   openGraph: {
     type: "website",
     url: SITE_URL,
@@ -116,6 +161,7 @@ export function getEventStructuredData() {
         "@id": `${SITE_URL}/#organization`,
         name: "See Forever Foundation and Maya Angelou Schools",
         url: SEE_FOREVER_URL,
+        logo: `${SITE_URL}/icon`,
         description:
           "Scholar-centered education, advocacy, and opportunity-building work that grounds From Silos to Solutions.",
         sameAs: [SEE_FOREVER_URL]
