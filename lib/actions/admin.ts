@@ -12,7 +12,7 @@ import {
   SESSION_STATUSES
 } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/queries";
+import { requireAdmin, requireAttendeePortalUser } from "@/lib/queries";
 import { toSlug } from "@/lib/utils";
 
 function normalizeDateTimeInput(value: string) {
@@ -669,6 +669,96 @@ export async function deleteSpeakerPortalMessage(formData: FormData) {
   await supabase.from("portal_messages").delete().eq("id", id);
 
   revalidatePath("/portal");
+  revalidatePath("/admin/dashboard/resources");
+}
+
+export async function postAttendeeBoardMessage(formData: FormData) {
+  await requireAttendeePortalUser();
+  const supabase = await createClient();
+
+  const fullName = String(formData.get("full_name") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const organization = String(formData.get("organization") ?? "").trim();
+  const body = String(formData.get("body") ?? "").trim();
+
+  if (!fullName || !email || !body) {
+    redirect("/attendee?error=Name,%20email,%20and%20message%20are%20required");
+  }
+
+  const { error } = await supabase.rpc("create_attendee_board_post", {
+    p_full_name: fullName,
+    p_email: email,
+    p_organization: organization || null,
+    p_body: body
+  });
+
+  if (error) {
+    redirect(`/attendee?error=${encodeURIComponent(error.message)}`);
+  }
+
+  revalidatePath("/attendee");
+  revalidatePath("/admin/dashboard/resources");
+  redirect("/attendee?success=Your%20post%20is%20live%20on%20the%20attendee%20board");
+}
+
+export async function saveAttendeeDirectoryEntry(formData: FormData) {
+  await requireAttendeePortalUser();
+  const supabase = await createClient();
+
+  const fullName = String(formData.get("full_name") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const phone = String(formData.get("phone") ?? "").trim();
+  const title = String(formData.get("title") ?? "").trim();
+  const organization = String(formData.get("organization") ?? "").trim();
+  const shareWithAttendees = formData.get("share_with_attendees") === "on";
+  const shareWithPlanners = formData.get("share_with_planners") === "on";
+
+  if (!fullName || !email) {
+    redirect("/attendee?error=Name%20and%20email%20are%20required%20for%20the%20attendee%20directory");
+  }
+
+  if (!shareWithAttendees && !shareWithPlanners) {
+    redirect("/attendee?error=Choose%20at%20least%20one%20sharing%20option%20for%20your%20contact%20entry");
+  }
+
+  const { error } = await supabase.rpc("upsert_attendee_directory_entry", {
+    p_full_name: fullName,
+    p_email: email,
+    p_phone: phone || null,
+    p_title: title || null,
+    p_organization: organization || null,
+    p_share_with_attendees: shareWithAttendees,
+    p_share_with_planners: shareWithPlanners
+  });
+
+  if (error) {
+    redirect(`/attendee?error=${encodeURIComponent(error.message)}`);
+  }
+
+  revalidatePath("/attendee");
+  revalidatePath("/admin/dashboard/resources");
+  redirect("/attendee?success=Your%20contact%20entry%20has%20been%20saved");
+}
+
+export async function deleteAttendeeBoardPost(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const id = String(formData.get("id") ?? "").trim();
+
+  await supabase.from("attendee_board_posts").delete().eq("id", id);
+
+  revalidatePath("/attendee");
+  revalidatePath("/admin/dashboard/resources");
+}
+
+export async function deleteAttendeeDirectoryEntry(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const id = String(formData.get("id") ?? "").trim();
+
+  await supabase.from("attendee_directory_entries").delete().eq("id", id);
+
+  revalidatePath("/attendee");
   revalidatePath("/admin/dashboard/resources");
 }
 

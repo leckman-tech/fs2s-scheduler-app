@@ -148,3 +148,26 @@ export type LobbyDaySignupRecord = {
   organization: string | null;
   created_at: string;
 };
+
+export type AttendeeBoardPostRecord = {
+  id: string;
+  full_name: string;
+  email: string;
+  organization: string | null;
+  body: string;
+  published: boolean;
+  created_at: string;
+};
+
+export type AttendeeDirectoryEntryRecord = {
+  id: string;
+  full_name: string;
+  email: string;
+  phone: string | null;
+  title: string | null;
+  organization: string | null;
+  share_with_attendees: boolean;
+  share_with_planners: boolean;
+  created_at: string;
+  updated_at: string;
+};
