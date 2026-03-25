@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { BottomLiveUpdatesBar } from "@/components/bottom-live-updates-bar";
 import { EVENTBRITE_URL } from "@/lib/constants";
@@ -28,11 +29,23 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </div>
           <header className="site-header">
             <div className="site-header__inner">
-              <div>
-                <p className="eyebrow">From Silos to Solutions 2026 Convening</p>
-                <Link href="/" className="site-title">
-                  From Silos to Solutions 2026
+              <div className="site-brand">
+                <Link href="/" className="site-brand__logo-link" aria-label="From Silos to Solutions 2026 home">
+                  <Image
+                    src="/fs2s/fs2s-lanyard-logo.png"
+                    alt="FS2S logo"
+                    width={84}
+                    height={84}
+                    className="site-brand__logo"
+                    priority
+                  />
                 </Link>
+                <div className="site-brand__copy">
+                  <p className="eyebrow">From Silos to Solutions 2026 Convening</p>
+                  <Link href="/" className="site-title">
+                    From Silos to Solutions 2026
+                  </Link>
+                </div>
               </div>
               <nav className="site-nav" aria-label="Primary navigation">
                 <Link href="/">Schedule</Link>
