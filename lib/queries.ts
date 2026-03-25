@@ -493,15 +493,16 @@ export const getPublicSessionSignupSummary = cache(async (sessionId: string) => 
 export const getPublicLobbyDaySignupCount = cache(async () => {
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase.rpc("get_public_lobby_day_signup_summary");
+    const { count, error } = await supabase
+      .from("lobby_day_signups")
+      .select("id", { count: "exact", head: true });
 
     if (error) {
       console.error(error);
       return 0;
     }
 
-    const row = Array.isArray(data) ? data[0] : data;
-    return Number(row?.total_count ?? 0);
+    return Number(count ?? 0);
   } catch (error) {
     console.error(error);
     return 0;
