@@ -693,6 +693,14 @@ export async function postAttendeeBoardMessage(formData: FormData) {
   });
 
   if (error) {
+    if (
+      error.message.includes("create_attendee_board_post") ||
+      error.message.includes("attendee_board_posts")
+    ) {
+      redirect(
+        "/attendee?error=Attendee%20community%20is%20not%20enabled%20in%20Supabase%20yet.%20Run%20the%20014_attendee_community.sql%20migration%20first."
+      );
+    }
     redirect(`/attendee?error=${encodeURIComponent(error.message)}`);
   }
 
@@ -732,6 +740,14 @@ export async function saveAttendeeDirectoryEntry(formData: FormData) {
   });
 
   if (error) {
+    if (
+      error.message.includes("upsert_attendee_directory_entry") ||
+      error.message.includes("attendee_directory_entries")
+    ) {
+      redirect(
+        "/attendee?error=Attendee%20directory%20is%20not%20enabled%20in%20Supabase%20yet.%20Run%20the%20014_attendee_community.sql%20migration%20first."
+      );
+    }
     redirect(`/attendee?error=${encodeURIComponent(error.message)}`);
   }
 

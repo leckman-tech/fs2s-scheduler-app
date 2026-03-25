@@ -144,20 +144,34 @@ export default async function AttendeePortalPage({
               />
             </div>
 
-            <div className="form-grid">
-              <label className="field field--checkbox">
+            <div className="sharing-choice-grid">
+              <label className="sharing-choice-card">
                 <input type="checkbox" name="share_with_planners" defaultChecked />
-                <span>Share my information with event planners.</span>
+                <span className="sharing-choice-card__box" aria-hidden="true" />
+                <span className="sharing-choice-card__content">
+                  <strong>Share with planners</strong>
+                  <span>
+                    Let the FS2S team keep your information for logistics, follow-up, and future
+                    planning.
+                  </span>
+                </span>
               </label>
-              <label className="field field--checkbox">
+              <label className="sharing-choice-card">
                 <input type="checkbox" name="share_with_attendees" />
-                <span>Share my information with other attendees in this portal.</span>
+                <span className="sharing-choice-card__box" aria-hidden="true" />
+                <span className="sharing-choice-card__content">
+                  <strong>Share with attendees</strong>
+                  <span>
+                    Add me to the live attendee directory below so people can connect with me
+                    directly.
+                  </span>
+                </span>
               </label>
             </div>
 
             <p className="field-hint">
               Your email is required so the entry is tied to a real person. Only the information you
-              opt to share with attendees will appear in the directory below.
+              choose to share with attendees will appear in the live directory below.
             </p>
 
             <div className="admin-actions">
@@ -222,30 +236,51 @@ export default async function AttendeePortalPage({
 
       <section className="panel detail-side-panel">
         <div className="section-heading">
-          <h2>Attendee Directory</h2>
+          <div>
+            <h2>Live Attendee Directory</h2>
+            <p className="muted" style={{ margin: "0.35rem 0 0" }}>
+              Attendees who opted in to sharing with the community appear here as soon as their
+              entry is saved.
+            </p>
+          </div>
         </div>
-        <p className="muted" style={{ marginTop: 0 }}>
-          This directory includes attendees who chose to share their contact information with the
-          wider community.
-        </p>
         <div className="resource-list">
           {directoryEntries.length ? (
             directoryEntries.map((entry) => (
-              <article key={entry.id} className="announcement">
-                <strong>{entry.full_name}</strong>
-                <div className="muted">
-                  {[entry.title, entry.organization].filter(Boolean).join(" · ") || "Attendee"}
+              <article key={entry.id} className="announcement directory-card">
+                <div className="directory-card__header">
+                  <div>
+                    <strong>{entry.full_name}</strong>
+                    <div className="muted">
+                      {[entry.title, entry.organization].filter(Boolean).join(" · ") || "Attendee"}
+                    </div>
+                  </div>
+                  <span className="chip">Open to connect</span>
                 </div>
-                <div className="detail-list">
+                <div className="detail-list directory-card__details">
                   <div>
                     <strong>Email</strong>
-                    <span className="muted">{entry.email}</span>
+                    <a href={`mailto:${entry.email}`} className="directory-card__link">
+                      {entry.email}
+                    </a>
                   </div>
                   {entry.phone ? (
                     <div>
                       <strong>Phone</strong>
-                      <span className="muted">{entry.phone}</span>
+                      <a href={`tel:${entry.phone}`} className="directory-card__link">
+                        {entry.phone}
+                      </a>
                     </div>
+                  ) : null}
+                </div>
+                <div className="admin-actions">
+                  <a href={`mailto:${entry.email}`} className="button-secondary button-link">
+                    Email
+                  </a>
+                  {entry.phone ? (
+                    <a href={`sms:${entry.phone}`} className="button-secondary button-link">
+                      Text
+                    </a>
                   ) : null}
                 </div>
               </article>
