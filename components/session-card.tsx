@@ -56,11 +56,7 @@ export function SessionCard({ session }: { session: SessionRecord }) {
             View details
           </Link>
         </div>
-      ) : (
-        <div className="session-card__note">
-          Visible for planning, but no detail page is needed for this schedule block.
-        </div>
-      )}
+      ) : null}
     </article>
   );
 }

@@ -1349,13 +1349,6 @@ select {
   background: rgba(248, 248, 248, 0.88);
 }
 
-.session-card__note {
-  padding-top: 0.2rem;
-  color: var(--muted);
-  font-size: 0.9rem;
-  border-top: 1px dashed rgba(17, 17, 17, 0.1);
-}
-
 .status-pill {
   background: rgba(17, 17, 17, 0.07);
   color: var(--surface-contrast);
