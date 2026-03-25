@@ -681,6 +681,20 @@ select {
   color: var(--ink);
 }
 
+.hero-progress__caption,
+.signup-progress__caption {
+  font-size: 0.82rem;
+  line-height: 1;
+}
+
+.hero-progress__caption {
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.signup-progress__caption {
+  color: var(--muted);
+}
+
 .hero-progress__track,
 .signup-progress__track {
   position: relative;
