@@ -27,6 +27,9 @@ export default async function AdminDashboardPage() {
           <Link href="/admin/dashboard/resources" className="button-secondary button-link">
             Portal documents
           </Link>
+          <Link href="/admin/dashboard/signups" className="button-secondary button-link">
+            Event sign-ups
+          </Link>
         </div>
       </section>
 

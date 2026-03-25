@@ -766,7 +766,7 @@ export const getCurrentUserAssignedSessions = cache(async () => {
     const { data, error } = await supabase
       .from("session_speakers")
       .select(
-        "session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note),sessions(id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,status,published,featured,is_placeholder)"
+        "session_role,speakers(id,slug,name,title,organization),session_speaker_logistics(confirmation_status,arrival_time,av_needs,staff_contact,private_logistics_note),sessions(id,session_code,placeholder_code,final_title,title,slug,category,date,starts_at,ends_at,venue,room,short_description,description,live_updates,signup_enabled,signup_capacity,signup_instructions,status,published,featured,is_placeholder)"
       )
       .eq("speaker_id", profile.speaker_id);
 
