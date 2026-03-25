@@ -52,6 +52,40 @@ export async function GET(request: Request) {
 
     const url = new URL(request.url);
     const sessionId = url.searchParams.get("sessionId");
+    const exportType = url.searchParams.get("type");
+
+    if (exportType === "lobby-day") {
+      const { data, error } = await supabase
+        .from("lobby_day_signups")
+        .select("id,full_name,email,phone,organization,created_at")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        return new NextResponse(error.message, { status: 500 });
+      }
+
+      const rows = [
+        ["id", "event", "full_name", "email", "phone", "organization", "created_at"],
+        ...(data ?? []).map((entry) => [
+          entry.id,
+          "Fall 2026 Lobby Day",
+          entry.full_name,
+          entry.email,
+          entry.phone,
+          entry.organization,
+          entry.created_at
+        ])
+      ];
+
+      const csv = rows.map((row) => row.map((value) => escapeCsv(value)).join(",")).join("\n");
+
+      return new NextResponse(csv, {
+        headers: {
+          "Content-Type": "text/csv; charset=utf-8",
+          "Content-Disposition": 'attachment; filename="fs2s-lobby-day-signups.csv"'
+        }
+      });
+    }
 
     let query = supabase
       .from("session_signups")
