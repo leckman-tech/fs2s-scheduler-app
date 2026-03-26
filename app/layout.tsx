@@ -38,7 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <Link href="/">Schedule</Link>
                 <Link href="/speakers">Speakers</Link>
                 <Link href="/lobby-day">Fall 2026 Lobby Day</Link>
-                <Link href="/learn-more">Learn More</Link>
+                <Link href="/learn-more">Who We Are</Link>
                 <Link href="/learn-more#faq">FAQ</Link>
                 <Link href="/attendee/login">Attendee Portal</Link>
                 <Link href="/portal/login">Speaker Portal</Link>
