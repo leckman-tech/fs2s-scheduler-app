@@ -9,8 +9,10 @@ import {
   SPEAKER_PORTAL_ROLES,
   SESSION_RESOURCE_BUCKET,
   SESSION_CATEGORIES,
-  SESSION_STATUSES
+  SESSION_STATUSES,
+  SITE_URL
 } from "@/lib/constants";
+import { sendAttendeeAccountWelcomeEmail } from "@/lib/email";
 import { toPublicErrorMessage, toRedirectErrorParam } from "@/lib/public-errors";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin, requireAttendeePortalUser } from "@/lib/queries";
@@ -64,6 +66,12 @@ async function waitForRole(expectedRole: string, attempts = 4, delayMs = 250) {
   }
 
   return false;
+}
+
+async function ensureAttendeeProfile() {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("ensure_attendee_profile");
+  return !error;
 }
 
 async function rebalanceSessionSignups(sessionId: string) {
@@ -413,6 +421,13 @@ export async function loginAttendee(formData: FormData) {
   const { role } = await getCurrentRole();
 
   if (!role) {
+    await ensureAttendeeProfile();
+    const attendeeReady = await waitForRole("attendee");
+
+    if (attendeeReady) {
+      redirect("/attendee");
+    }
+
     await supabase.auth.signOut();
     redirect(
       "/attendee/login?error=Your%20attendee%20account%20is%20still%20finishing%20setup.%20Please%20wait%20a%20moment%20and%20sign%20in%20again."
@@ -483,9 +498,14 @@ export async function createAttendeeAccount(formData: FormData) {
   });
 
   if (!signInError) {
+    await ensureAttendeeProfile();
     const attendeeReady = await waitForRole("attendee");
 
     if (attendeeReady) {
+      await sendAttendeeAccountWelcomeEmail({
+        to: email,
+        fullName
+      });
       revalidatePath("/attendee");
       redirect(
         "/attendee?success=Your%20attendee%20account%20is%20ready.%20You%20can%20update%20your%20phone%2C%20organization%2C%20and%20sharing%20preferences%20inside%20the%20portal."
@@ -500,12 +520,43 @@ export async function createAttendeeAccount(formData: FormData) {
   }
 
   if (signUpData.user) {
+    await sendAttendeeAccountWelcomeEmail({
+      to: email,
+      fullName
+    });
     redirect(
       "/attendee/login?success=Your%20account%20has%20been%20created.%20Sign%20in%20with%20your%20email%20and%20password%20to%20continue."
     );
   }
 
   redirect("/attendee/login?error=We%20couldn%27t%20finish%20creating%20your%20account.%20Please%20try%20again.");
+}
+
+export async function requestAttendeePasswordReset(formData: FormData) {
+  const supabase = await createClient();
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+
+  if (!email) {
+    redirect("/attendee/forgot-password?error=Enter%20the%20email%20for%20your%20attendee%20account");
+  }
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${SITE_URL}/auth/callback?next=/attendee/reset-password`
+  });
+
+  if (error) {
+    redirect(
+      `/attendee/forgot-password?error=${toRedirectErrorParam(
+        toPublicErrorMessage(error, {
+          fallback: "We couldn't send a reset link right now. Please try again."
+        })
+      )}`
+    );
+  }
+
+  redirect(
+    "/attendee/forgot-password?success=If%20that%20email%20belongs%20to%20an%20attendee%20account%2C%20a%20password%20reset%20link%20is%20on%20the%20way."
+  );
 }
 
 export async function logoutAdmin() {
