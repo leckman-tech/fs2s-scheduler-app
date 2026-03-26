@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Analytics } from "@vercel/analytics/react";
 import { BottomLiveUpdatesBar } from "@/components/bottom-live-updates-bar";
 import { EVENTBRITE_URL } from "@/lib/constants";
 import { siteMetadata } from "@/lib/seo";
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             </div>
           </footer>
           <BottomLiveUpdatesBar />
+          <Analytics />
         </div>
       </body>
     </html>
