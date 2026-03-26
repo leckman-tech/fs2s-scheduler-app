@@ -1006,6 +1006,63 @@ export async function deleteAttendeeBoardPost(formData: FormData) {
   revalidatePath("/admin/dashboard/resources");
 }
 
+export async function updateAttendeeAccount(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+
+  const id = String(formData.get("id") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const fullName = String(formData.get("full_name") ?? "").trim();
+  const phone = String(formData.get("phone") ?? "").trim();
+  const title = String(formData.get("title") ?? "").trim();
+  const organization = String(formData.get("organization") ?? "").trim();
+  const shareWithAttendees = formData.get("share_with_attendees") === "on";
+  const shareWithPlanners = formData.get("share_with_planners") === "on";
+
+  if (!id || !email || !fullName) {
+    redirect("/admin/dashboard/accounts?error=Account%20name%20and%20email%20are%20required");
+  }
+
+  if (!shareWithAttendees && !shareWithPlanners) {
+    redirect("/admin/dashboard/accounts?error=Choose%20at%20least%20one%20sharing%20option");
+  }
+
+  const { error: profileError } = await supabase
+    .from("profiles")
+    .update({ full_name: fullName })
+    .eq("id", id);
+
+  if (profileError) {
+    redirect(`/admin/dashboard/accounts?error=${toRedirectErrorParam("We couldn't update that attendee account right now.")}`);
+  }
+
+  const { error: directoryError } = await supabase
+    .from("attendee_directory_entries")
+    .upsert(
+      {
+        account_id: id,
+        full_name: fullName,
+        email,
+        phone: phone || null,
+        title: title || null,
+        organization: organization || null,
+        share_with_attendees: shareWithAttendees,
+        share_with_planners: shareWithPlanners,
+        updated_at: new Date().toISOString()
+      },
+      { onConflict: "email" }
+    );
+
+  if (directoryError) {
+    redirect(`/admin/dashboard/accounts?error=${toRedirectErrorParam("We couldn't save the attendee contact settings right now.")}`);
+  }
+
+  revalidatePath("/admin/dashboard/accounts");
+  revalidatePath("/admin/dashboard/system");
+  revalidatePath("/attendee");
+  redirect("/admin/dashboard/accounts");
+}
+
 export async function deleteAttendeeBoardReply(formData: FormData) {
   await requireAdmin();
   const supabase = await createClient();

@@ -5,6 +5,7 @@ import { ATTENDEE_PORTAL_ROLES, SESSION_RESOURCE_BUCKET, SPEAKER_PORTAL_ROLES } 
 import { createClient } from "@/lib/supabase/server";
 import { displaySessionTitle } from "@/lib/utils";
 import type {
+  AttendeeAccountAdminRecord,
   AnnouncementRecord,
   AttendeeBoardReplyRecord,
   AttendeeBoardThreadRecord,
@@ -218,6 +219,7 @@ type AttendeeBoardPostRow = {
 
 type AttendeeDirectoryEntryRow = {
   id: string;
+  account_id?: string | null;
   full_name: string;
   email: string;
   phone: string | null;
@@ -352,6 +354,7 @@ function mapSessionSignup(row: SessionSignupRow): SessionSignupRecord {
 function mapLobbyDaySignup(row: LobbyDaySignupRow): LobbyDaySignupRecord {
   return {
     id: row.id,
+    account_id: row.account_id ?? null,
     full_name: row.full_name,
     email: row.email,
     phone: row.phone,
@@ -1190,7 +1193,7 @@ export const getAdminAttendeeDirectoryEntries = cache(async () => {
     const { data, error } = await supabase
       .from("attendee_directory_entries")
       .select(
-        "id,full_name,email,phone,title,organization,share_with_attendees,share_with_planners,created_at,updated_at"
+        "id,account_id,full_name,email,phone,title,organization,share_with_attendees,share_with_planners,created_at,updated_at"
       )
       .order("created_at", { ascending: false });
 
@@ -1203,6 +1206,70 @@ export const getAdminAttendeeDirectoryEntries = cache(async () => {
   } catch (error) {
     console.error(error);
     return [] as AttendeeDirectoryEntryRecord[];
+  }
+});
+
+export const getAdminAttendeeAccounts = cache(async () => {
+  await requireAdmin();
+
+  try {
+    const supabase = await createClient();
+    const [{ data: profiles, error: profilesError }, { data: directoryEntries, error: directoryError }] =
+      await Promise.all([
+        supabase
+          .from("profiles")
+          .select("id,full_name,created_at,role")
+          .eq("role", "attendee")
+          .order("created_at", { ascending: false }),
+        supabase
+          .from("attendee_directory_entries")
+          .select(
+            "account_id,full_name,email,phone,title,organization,share_with_attendees,share_with_planners,updated_at"
+          )
+          .not("account_id", "is", null)
+      ]);
+
+    if (profilesError || directoryError) {
+      console.error(profilesError || directoryError);
+      return [] as AttendeeAccountAdminRecord[];
+    }
+
+    const directoryByAccountId = new Map(
+      ((directoryEntries as Array<{
+        account_id: string | null;
+        full_name: string;
+        email: string;
+        phone: string | null;
+        title: string | null;
+        organization: string | null;
+        share_with_attendees: boolean;
+        share_with_planners: boolean;
+        updated_at: string;
+      }>) ?? [])
+        .filter((entry) => entry.account_id)
+        .map((entry) => [entry.account_id as string, entry])
+    );
+
+    return ((profiles as Array<{ id: string; full_name: string | null; created_at: string; role: string }>) ?? []).map(
+      (profile) => {
+        const directory = directoryByAccountId.get(profile.id);
+        return {
+          id: profile.id,
+          full_name: directory?.full_name || profile.full_name || "Attendee",
+          email: directory?.email || "",
+          phone: directory?.phone ?? null,
+          title: directory?.title ?? null,
+          organization: directory?.organization ?? null,
+          share_with_attendees: directory?.share_with_attendees ?? false,
+          share_with_planners: directory?.share_with_planners ?? true,
+          created_at: profile.created_at,
+          updated_at: directory?.updated_at ?? profile.created_at
+        };
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    return [] as AttendeeAccountAdminRecord[];
   }
 });
 

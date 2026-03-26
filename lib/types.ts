@@ -184,6 +184,20 @@ export type AttendeeBoardPostRecord = {
 
 export type AttendeeDirectoryEntryRecord = {
   id: string;
+  account_id?: string | null;
+  full_name: string;
+  email: string;
+  phone: string | null;
+  title: string | null;
+  organization: string | null;
+  share_with_attendees: boolean;
+  share_with_planners: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type AttendeeAccountAdminRecord = {
+  id: string;
   full_name: string;
   email: string;
   phone: string | null;
