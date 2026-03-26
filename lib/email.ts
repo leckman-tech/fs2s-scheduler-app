@@ -207,3 +207,30 @@ export async function sendHappyHourConfirmationEmail(input: {
     text: content.text
   });
 }
+
+export async function sendAttendeeAccountWelcomeEmail(input: {
+  to: string;
+  fullName: string;
+}) {
+  const title = "Your FS2S attendee account is ready";
+  const content = wrapEmailContent(
+    title,
+    `Welcome, ${input.fullName}. Your attendee account has been created and you can now sign in to the portal with your own email and password.`,
+    [
+      "Open conference documents, handouts, and shared attendee resources.",
+      "Join the attendee board from your own account identity.",
+      "Update your contact card later with your phone, title, organization, and sharing preferences."
+    ],
+    {
+      href: `${SITE_URL}/attendee/login`,
+      label: "Open the Attendee Portal"
+    }
+  );
+
+  return sendEmail({
+    to: input.to,
+    subject: title,
+    html: content.html,
+    text: content.text
+  });
+}
