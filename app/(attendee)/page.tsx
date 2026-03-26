@@ -183,7 +183,7 @@ export default async function HomePage() {
             </div>
             <div className="hero-actions">
               <Link href="/learn-more" className="button button-link">
-                Visit Learn More
+                Meet the team
               </Link>
             </div>
           </section>

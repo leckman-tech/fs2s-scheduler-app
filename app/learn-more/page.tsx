@@ -184,7 +184,7 @@ export default function LearnMorePage() {
       <section className="hero-card learn-hero">
         <div className="hero-card__grid">
           <div className="hero-card__content">
-            <p className="eyebrow">Learn More</p>
+            <p className="eyebrow">Who We Are</p>
             <h1>Plan your visit and understand the work behind the convening</h1>
             <p className="hero-kicker">
               This page is built for attendees who want the practical details as well as the
