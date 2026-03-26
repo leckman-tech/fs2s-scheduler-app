@@ -43,9 +43,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <Link href="/portal/login">Speaker Portal</Link>
               </nav>
               <div className="site-header__actions">
-                <Link href="/happy-hour" className="site-nav__secondary">
-                  Happy Hour RSVP
-                </Link>
                 <a href={EVENTBRITE_URL} className="site-nav__cta" target="_blank" rel="noreferrer">
                   Purchase Tickets
                 </a>
