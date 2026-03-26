@@ -7,6 +7,7 @@ import {
   validateHumanSubmission
 } from "@/lib/anti-spam";
 import { sendHappyHourConfirmationEmail } from "@/lib/email";
+import { toPublicErrorMessage } from "@/lib/public-errors";
 
 function getPublicSupabaseClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -74,10 +75,14 @@ export async function POST(request: Request) {
     if (error) {
       return NextResponse.json(
         {
-          error:
-            error.message.includes("happy_hour_rsvps")
-              ? "Happy Hour RSVPs are not enabled in Supabase yet. Run the 017_happy_hour_rsvps.sql migration first."
-              : error.message
+          error: toPublicErrorMessage(error, {
+            fallback: "We couldn't save your Happy Hour RSVP just now. Please try again.",
+            setupMessage:
+              "Happy Hour RSVPs are not enabled in Supabase yet. Run the 017_happy_hour_rsvps.sql migration first.",
+            setupFragments: ["happy_hour_rsvps", "create_happy_hour_rsvp", "schema cache"],
+            duplicateMessage: "This email is already on the Happy Hour list.",
+            duplicateFragments: ["already on the happy hour list", "duplicate key", "unique"]
+          })
         },
         { status: 400 }
       );
@@ -88,7 +93,11 @@ export async function POST(request: Request) {
     );
 
     if (summaryError) {
-      return NextResponse.json({ error: summaryError.message }, { status: 500 });
+      console.error(summaryError);
+      return NextResponse.json(
+        { error: "Your RSVP was saved, but the summary could not refresh right away." },
+        { status: 500 }
+      );
     }
 
     const signupRow = Array.isArray(inserted) ? inserted[0] : inserted;
@@ -116,8 +125,9 @@ export async function POST(request: Request) {
       confirmationEmailSent: emailResult.sent
     });
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Unexpected error" },
+      { error: "We couldn't save your Happy Hour RSVP right now. Please try again in a moment." },
       { status: 500 }
     );
   }

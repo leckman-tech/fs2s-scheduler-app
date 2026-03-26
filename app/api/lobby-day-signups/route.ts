@@ -7,6 +7,7 @@ import {
   validateHumanSubmission
 } from "@/lib/anti-spam";
 import { sendLobbyDayConfirmationEmail } from "@/lib/email";
+import { toPublicErrorMessage } from "@/lib/public-errors";
 
 function getPublicSupabaseClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -70,10 +71,14 @@ export async function POST(request: Request) {
     if (existingError) {
       return NextResponse.json(
         {
-          error:
-            existingError.message.includes("lobby_day_signups")
-              ? "Lobby Day signups are not enabled in Supabase yet. Run the 012_lobby_day_signups.sql migration first."
-              : existingError.message
+          error: toPublicErrorMessage(existingError, {
+            fallback: "We couldn't check the Lobby Day list right now. Please try again.",
+            setupMessage:
+              "Lobby Day sign-ups are not enabled in Supabase yet. Run the 012_lobby_day_signups.sql migration first.",
+            setupFragments: ["lobby_day_signups", "schema cache"],
+            duplicateMessage: "This email is already signed up for Lobby Day.",
+            duplicateFragments: ["already signed up", "duplicate key", "unique"]
+          })
         },
         { status: 400 }
       );
@@ -96,10 +101,14 @@ export async function POST(request: Request) {
     if (error) {
       return NextResponse.json(
         {
-          error:
-            error.message.includes("lobby_day_signups")
-              ? "Lobby Day signups are not enabled in Supabase yet. Run the 012_lobby_day_signups.sql migration first."
-              : error.message
+          error: toPublicErrorMessage(error, {
+            fallback: "We couldn't save your Lobby Day sign-up just now. Please try again.",
+            setupMessage:
+              "Lobby Day sign-ups are not enabled in Supabase yet. Run the 012_lobby_day_signups.sql migration first.",
+            setupFragments: ["lobby_day_signups", "schema cache"],
+            duplicateMessage: "This email is already signed up for Lobby Day.",
+            duplicateFragments: ["already signed up", "duplicate key", "unique"]
+          })
         },
         { status: 400 }
       );
@@ -110,7 +119,11 @@ export async function POST(request: Request) {
       .select("id", { count: "exact", head: true });
 
     if (summaryError) {
-      return NextResponse.json({ error: summaryError.message }, { status: 500 });
+      console.error(summaryError);
+      return NextResponse.json(
+        { error: "Your Lobby Day sign-up was saved, but the live count could not refresh right away." },
+        { status: 500 }
+      );
     }
 
     const emailResult = await sendLobbyDayConfirmationEmail({
@@ -128,8 +141,9 @@ export async function POST(request: Request) {
       confirmationEmailSent: emailResult.sent
     });
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Unexpected error" },
+      { error: "We couldn't save your Lobby Day sign-up right now. Please try again in a moment." },
       { status: 500 }
     );
   }

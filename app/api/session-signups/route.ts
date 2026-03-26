@@ -7,6 +7,7 @@ import {
   validateHumanSubmission
 } from "@/lib/anti-spam";
 import { sendSessionSignupConfirmationEmail } from "@/lib/email";
+import { toPublicErrorMessage } from "@/lib/public-errors";
 import { displaySessionTitle, formatDateLabel, formatTimeRange } from "@/lib/utils";
 
 function getPublicSupabaseClient() {
@@ -70,7 +71,21 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: toPublicErrorMessage(error, {
+            fallback: "We couldn't save your sign-up just now. Please try again.",
+            setupMessage:
+              "Event sign-ups are not fully enabled in Supabase yet. Run the 011_session_signups.sql migration first.",
+            setupFragments: ["session_signups", "create_session_signup", "schema cache"],
+            duplicateMessage: "This email is already signed up for this event.",
+            duplicateFragments: ["already signed up", "duplicate key", "unique"],
+            closedMessage: "Sign-ups for this event are not currently available.",
+            closedFragments: ["sign-ups for this event are now closed", "not enabled"]
+          })
+        },
+        { status: 400 }
+      );
     }
 
     const { data: summary, error: summaryError } = await supabase.rpc("get_public_session_signup_summary", {
@@ -78,7 +93,11 @@ export async function POST(request: Request) {
     });
 
     if (summaryError) {
-      return NextResponse.json({ error: summaryError.message }, { status: 500 });
+      console.error(summaryError);
+      return NextResponse.json(
+        { error: "Your sign-up was saved, but the page counts could not refresh right away." },
+        { status: 500 }
+      );
     }
 
     const summaryRow = Array.isArray(summary) ? summary[0] : summary;
@@ -121,8 +140,9 @@ export async function POST(request: Request) {
       confirmationEmailSent
     });
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Unexpected error" },
+      { error: "We couldn't save your sign-up right now. Please try again in a moment." },
       { status: 500 }
     );
   }
