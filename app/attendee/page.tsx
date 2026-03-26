@@ -45,6 +45,9 @@ export default async function AttendeePortalPage({
     acc[key] = acc[key] ? [...acc[key], resource] : [resource];
     return acc;
   }, {});
+  const sortedDirectoryEntries = [...directoryEntries].sort((a, b) =>
+    a.full_name.localeCompare(b.full_name, undefined, { sensitivity: "base" })
+  );
 
   return (
     <div className="container stack">
@@ -194,45 +197,45 @@ export default async function AttendeePortalPage({
           </div>
         </div>
         <div className="resource-list">
-          {directoryEntries.length ? (
-            directoryEntries.map((entry) => (
-              <article key={entry.id} className="announcement directory-card">
-                <div className="directory-card__header">
-                  <div>
-                    <strong>{entry.full_name}</strong>
-                    <div className="muted">
-                      {[entry.title, entry.organization].filter(Boolean).join(" · ") || "Attendee"}
-                    </div>
+          {sortedDirectoryEntries.length ? (
+            sortedDirectoryEntries.map((entry) => (
+              <details key={entry.id} className="announcement directory-card directory-card--collapsible">
+                <summary className="directory-card__summary">
+                  <strong>{entry.full_name}</strong>
+                  <span className="chip">View contact</span>
+                </summary>
+                <div className="directory-card__expanded">
+                  <div className="muted directory-card__meta">
+                    {[entry.title, entry.organization].filter(Boolean).join(" · ") || "Attendee"}
                   </div>
-                  <span className="chip">Open to connect</span>
-                </div>
-                <div className="detail-list directory-card__details">
-                  <div>
-                    <strong>Email</strong>
-                    <a href={`mailto:${entry.email}`} className="directory-card__link">
-                      {entry.email}
-                    </a>
-                  </div>
-                  {entry.phone ? (
+                  <div className="detail-list directory-card__details">
                     <div>
-                      <strong>Phone</strong>
-                      <a href={`tel:${entry.phone}`} className="directory-card__link">
-                        {entry.phone}
+                      <strong>Email</strong>
+                      <a href={`mailto:${entry.email}`} className="directory-card__link">
+                        {entry.email}
                       </a>
                     </div>
-                  ) : null}
-                </div>
-                <div className="admin-actions">
-                  <a href={`mailto:${entry.email}`} className="button-secondary button-link">
-                    Email
-                  </a>
-                  {entry.phone ? (
-                    <a href={`sms:${entry.phone}`} className="button-secondary button-link">
-                      Text
+                    {entry.phone ? (
+                      <div>
+                        <strong>Phone</strong>
+                        <a href={`tel:${entry.phone}`} className="directory-card__link">
+                          {entry.phone}
+                        </a>
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="admin-actions">
+                    <a href={`mailto:${entry.email}`} className="button-secondary button-link">
+                      Email
                     </a>
-                  ) : null}
+                    {entry.phone ? (
+                      <a href={`sms:${entry.phone}`} className="button-secondary button-link">
+                        Text
+                      </a>
+                    ) : null}
+                  </div>
                 </div>
-              </article>
+              </details>
             ))
           ) : (
             <div className="empty-state">
