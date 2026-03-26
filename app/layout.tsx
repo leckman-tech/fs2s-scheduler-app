@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
 import { BottomLiveUpdatesBar } from "@/components/bottom-live-updates-bar";
 import { EVENTBRITE_URL } from "@/lib/constants";
 import { siteMetadata } from "@/lib/seo";
