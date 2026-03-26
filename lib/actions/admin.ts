@@ -124,9 +124,70 @@ async function rebalanceSessionSignups(sessionId: string) {
   }
 }
 
+async function rebalanceHappyHourRsvps() {
+  const supabase = await createClient();
+
+  const { data: signups, error } = await supabase
+    .from("happy_hour_rsvps")
+    .select("id,rsvp_group")
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    throw error;
+  }
+
+  const rows = signups ?? [];
+
+  if (!rows.length) {
+    return;
+  }
+
+  const confirmedIds = new Set<string>();
+  const waitlistIds = new Set<string>();
+
+  const staffRows = rows.filter((entry) => entry.rsvp_group === "staff");
+  const attendeeRows = rows.filter((entry) => entry.rsvp_group === "conference_attendee");
+
+  const confirmedStaff = staffRows.slice(0, 35);
+  const waitlistedStaff = staffRows.slice(35);
+  const attendeeCapacity = Math.max(150 - confirmedStaff.length, 0);
+  const confirmedAttendees = attendeeRows.slice(0, attendeeCapacity);
+  const waitlistedAttendees = attendeeRows.slice(attendeeCapacity);
+
+  confirmedStaff.forEach((entry) => confirmedIds.add(entry.id));
+  confirmedAttendees.forEach((entry) => confirmedIds.add(entry.id));
+  waitlistedStaff.forEach((entry) => waitlistIds.add(entry.id));
+  waitlistedAttendees.forEach((entry) => waitlistIds.add(entry.id));
+
+  if (confirmedIds.size) {
+    const { error: confirmedError } = await supabase
+      .from("happy_hour_rsvps")
+      .update({ status: "confirmed" })
+      .in("id", Array.from(confirmedIds))
+      .neq("status", "confirmed");
+
+    if (confirmedError) {
+      throw confirmedError;
+    }
+  }
+
+  if (waitlistIds.size) {
+    const { error: waitlistError } = await supabase
+      .from("happy_hour_rsvps")
+      .update({ status: "waitlist" })
+      .in("id", Array.from(waitlistIds))
+      .neq("status", "waitlist");
+
+    if (waitlistError) {
+      throw waitlistError;
+    }
+  }
+}
+
 function revalidateSignupPaths(sessionId?: string) {
   revalidatePath("/admin/dashboard/signups");
   revalidatePath("/lobby-day");
+  revalidatePath("/happy-hour");
   revalidatePath("/");
 
   if (sessionId) {
@@ -893,6 +954,62 @@ export async function deleteLobbyDaySignup(formData: FormData) {
     redirect(`/admin/dashboard/signups?error=${encodeURIComponent(error.message)}`);
   }
 
+  revalidateSignupPaths();
+  redirect("/admin/dashboard/signups");
+}
+
+export async function updateHappyHourRsvp(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+
+  const id = String(formData.get("id") ?? "").trim();
+  const fullName = String(formData.get("full_name") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim();
+  const phone = String(formData.get("phone") ?? "").trim();
+  const organization = String(formData.get("organization") ?? "").trim();
+  const rsvpGroup = String(formData.get("rsvp_group") ?? "").trim();
+
+  if (!id || !fullName || !email || !phone) {
+    redirect("/admin/dashboard/signups?error=Name,%20email,%20and%20phone%20are%20required");
+  }
+
+  const { error } = await supabase
+    .from("happy_hour_rsvps")
+    .update({
+      full_name: fullName,
+      email,
+      phone,
+      organization: organization || null,
+      rsvp_group: rsvpGroup === "staff" ? "staff" : "conference_attendee"
+    })
+    .eq("id", id);
+
+  if (error) {
+    redirect(`/admin/dashboard/signups?error=${encodeURIComponent(error.message)}`);
+  }
+
+  await rebalanceHappyHourRsvps();
+  revalidateSignupPaths();
+  redirect("/admin/dashboard/signups");
+}
+
+export async function deleteHappyHourRsvp(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+
+  const id = String(formData.get("id") ?? "").trim();
+
+  if (!id) {
+    redirect("/admin/dashboard/signups?error=That%20Happy%20Hour%20RSVP%20could%20not%20be%20removed");
+  }
+
+  const { error } = await supabase.from("happy_hour_rsvps").delete().eq("id", id);
+
+  if (error) {
+    redirect(`/admin/dashboard/signups?error=${encodeURIComponent(error.message)}`);
+  }
+
+  await rebalanceHappyHourRsvps();
   revalidateSignupPaths();
   redirect("/admin/dashboard/signups");
 }

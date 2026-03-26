@@ -1,11 +1,17 @@
 import Link from "next/link";
 import {
+  deleteHappyHourRsvp,
   deleteLobbyDaySignup,
   deleteSessionSignup,
+  updateHappyHourRsvp,
   updateLobbyDaySignup,
   updateSessionSignup
 } from "@/lib/actions/admin";
-import { getAdminLobbyDaySignups, getAdminSessionSignups } from "@/lib/queries";
+import {
+  getAdminHappyHourRsvps,
+  getAdminLobbyDaySignups,
+  getAdminSessionSignups
+} from "@/lib/queries";
 import { displaySessionTitle, formatDateLabel, formatTimestamp, formatTimeRange } from "@/lib/utils";
 
 export default async function AdminSignupsPage({
@@ -14,9 +20,10 @@ export default async function AdminSignupsPage({
   searchParams: Promise<{ error?: string }>;
 }) {
   const params = await searchParams;
-  const [signups, lobbyDaySignups] = await Promise.all([
+  const [signups, lobbyDaySignups, happyHourRsvps] = await Promise.all([
     getAdminSessionSignups(),
-    getAdminLobbyDaySignups()
+    getAdminLobbyDaySignups(),
+    getAdminHappyHourRsvps()
   ]);
 
   const grouped = Object.values(
@@ -60,7 +67,11 @@ export default async function AdminSignupsPage({
     }, {})
   ).sort((a, b) => `${a.date}T${a.startsAt}`.localeCompare(`${b.date}T${b.startsAt}`));
 
-  const totalSignupCount = signups.length + lobbyDaySignups.length;
+  const totalSignupCount = signups.length + lobbyDaySignups.length + happyHourRsvps.length;
+  const happyHourAttendeeCount = happyHourRsvps.filter(
+    (signup) => signup.rsvp_group === "conference_attendee"
+  ).length;
+  const happyHourStaffCount = happyHourRsvps.filter((signup) => signup.rsvp_group === "staff").length;
 
   return (
     <div className="stack">
@@ -85,6 +96,139 @@ export default async function AdminSignupsPage({
           >
             Export Lobby Day list
           </Link>
+          <Link
+            href="/admin/dashboard/signups/export?type=happy-hour"
+            className="button-secondary button-link"
+          >
+            Export Happy Hour RSVPs
+          </Link>
+        </div>
+      </section>
+
+      <section className="panel">
+        <div className="section-heading">
+          <div>
+            <h2>Day One Happy Hour</h2>
+            <p className="muted" style={{ margin: "0.35rem 0 0" }}>
+              Separate RSVP tracks for conference attendees and invited MAS/SFF staff
+            </p>
+          </div>
+          <span className="hero-pill">
+            {happyHourRsvps.length} Happy Hour RSVP{happyHourRsvps.length === 1 ? "" : "s"}
+          </span>
+        </div>
+
+        <div className="story-stat-grid story-stat-grid--compact">
+          <div className="story-stat">
+            <strong>{happyHourAttendeeCount}</strong>
+            <span>Conference attendee RSVPs</span>
+          </div>
+          <div className="story-stat">
+            <strong>{happyHourStaffCount}</strong>
+            <span>SFF/MAS staff RSVPs</span>
+          </div>
+        </div>
+
+        <div className="resource-list">
+          {happyHourRsvps.length ? (
+            happyHourRsvps.map((signup) => (
+              <article key={signup.id} className="announcement">
+                <strong>{signup.full_name}</strong>
+                <div className="muted">
+                  {[
+                    "From Silos to Solutions: A Happy Hour",
+                    signup.rsvp_group === "staff" ? "Staff RSVP" : "Conference attendee RSVP",
+                    signup.status === "confirmed" ? "Confirmed" : "Waitlist",
+                    formatTimestamp(signup.created_at)
+                  ].join(" · ")}
+                </div>
+                <div className="detail-list">
+                  <div>
+                    <strong>Email</strong>
+                    <span className="muted">{signup.email}</span>
+                  </div>
+                  <div>
+                    <strong>Phone</strong>
+                    <span className="muted">{signup.phone || "Not provided"}</span>
+                  </div>
+                  <div>
+                    <strong>Organization</strong>
+                    <span className="muted">{signup.organization || "Not provided"}</span>
+                  </div>
+                </div>
+                <details className="admin-edit-details">
+                  <summary>Edit or remove</summary>
+                  <form action={updateHappyHourRsvp} className="form-grid admin-edit-details__form">
+                    <input type="hidden" name="id" value={signup.id} />
+                    <div className="form-grid form-grid--two">
+                      <div className="field">
+                        <label htmlFor={`happy-hour-name-${signup.id}`}>Full name</label>
+                        <input
+                          id={`happy-hour-name-${signup.id}`}
+                          name="full_name"
+                          defaultValue={signup.full_name}
+                          required
+                        />
+                      </div>
+                      <div className="field">
+                        <label htmlFor={`happy-hour-email-${signup.id}`}>Email</label>
+                        <input
+                          id={`happy-hour-email-${signup.id}`}
+                          name="email"
+                          type="email"
+                          defaultValue={signup.email}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="form-grid form-grid--two">
+                      <div className="field">
+                        <label htmlFor={`happy-hour-phone-${signup.id}`}>Phone</label>
+                        <input
+                          id={`happy-hour-phone-${signup.id}`}
+                          name="phone"
+                          defaultValue={signup.phone}
+                          required
+                        />
+                      </div>
+                      <div className="field">
+                        <label htmlFor={`happy-hour-organization-${signup.id}`}>Organization</label>
+                        <input
+                          id={`happy-hour-organization-${signup.id}`}
+                          name="organization"
+                          defaultValue={signup.organization ?? ""}
+                        />
+                      </div>
+                    </div>
+                    <div className="field">
+                      <label htmlFor={`happy-hour-group-${signup.id}`}>RSVP group</label>
+                      <select
+                        id={`happy-hour-group-${signup.id}`}
+                        name="rsvp_group"
+                        defaultValue={signup.rsvp_group}
+                      >
+                        <option value="conference_attendee">Conference attendee</option>
+                        <option value="staff">SFF/MAS staff</option>
+                      </select>
+                    </div>
+                    <div className="admin-actions">
+                      <button type="submit" className="button-secondary">
+                        Save changes
+                      </button>
+                    </div>
+                  </form>
+                  <form action={deleteHappyHourRsvp} className="admin-actions">
+                    <input type="hidden" name="id" value={signup.id} />
+                    <button type="submit" className="button-danger">
+                      Remove RSVP
+                    </button>
+                  </form>
+                </details>
+              </article>
+            ))
+          ) : (
+            <div className="empty-state">No Happy Hour RSVPs have been submitted yet.</div>
+          )}
         </div>
       </section>
 

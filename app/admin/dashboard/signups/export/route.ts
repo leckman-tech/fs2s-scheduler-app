@@ -87,6 +87,51 @@ export async function GET(request: Request) {
       });
     }
 
+    if (exportType === "happy-hour") {
+      const { data, error } = await supabase
+        .from("happy_hour_rsvps")
+        .select("id,full_name,email,phone,organization,rsvp_group,status,created_at")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        return new NextResponse(error.message, { status: 500 });
+      }
+
+      const rows = [
+        [
+          "id",
+          "event",
+          "rsvp_group",
+          "status",
+          "full_name",
+          "email",
+          "phone",
+          "organization",
+          "created_at"
+        ],
+        ...(data ?? []).map((entry) => [
+          entry.id,
+          "From Silos to Solutions: A Happy Hour",
+          entry.rsvp_group === "staff" ? "SFF/MAS staff" : "Conference attendee",
+          entry.status,
+          entry.full_name,
+          entry.email,
+          entry.phone,
+          entry.organization,
+          entry.created_at
+        ])
+      ];
+
+      const csv = rows.map((row) => row.map((value) => escapeCsv(value)).join(",")).join("\n");
+
+      return new NextResponse(csv, {
+        headers: {
+          "Content-Type": "text/csv; charset=utf-8",
+          "Content-Disposition": 'attachment; filename="fs2s-happy-hour-rsvps.csv"'
+        }
+      });
+    }
+
     let query = supabase
       .from("session_signups")
       .select(
