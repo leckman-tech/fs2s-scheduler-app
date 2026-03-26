@@ -1,6 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { ATTENDEE_PORTAL_ROLES } from "@/lib/constants";
+import { toPublicErrorMessage } from "@/lib/public-errors";
 import { createClient } from "@/lib/supabase/server";
 
 type AttendeeBoardAction =
@@ -189,7 +190,11 @@ export async function POST(request: Request) {
         {
           error: isCommunitySetupError(rpcError)
             ? "Attendee community tools are not fully enabled in Supabase yet. Run the 015_attendee_board_engagement.sql migration first."
-            : rpcError.message || "We could not save that change."
+            : toPublicErrorMessage(rpcError, {
+                fallback: "We couldn't save that attendee board update just now. Please try again.",
+                duplicateMessage: "That action has already been recorded.",
+                duplicateFragments: ["duplicate key", "unique"]
+              })
         },
         { status: 400 }
       );
@@ -207,9 +212,10 @@ export async function POST(request: Request) {
 
     return response;
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       {
-        error: error instanceof Error ? error.message : "Unexpected attendee board error"
+        error: "We couldn't update the attendee board right now. Please try again in a moment."
       },
       { status: 500 }
     );
