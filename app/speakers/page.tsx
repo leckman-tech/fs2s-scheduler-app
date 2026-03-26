@@ -16,7 +16,7 @@ export default async function SpeakersPage() {
 
   return (
     <div className="container stack">
-      <section className="hero-card speakers-hero">
+      <section className="hero-card hero-card--premium speakers-hero">
         <div className="hero-card__grid">
           <div className="hero-card__content">
             <p className="eyebrow">Featured voices</p>

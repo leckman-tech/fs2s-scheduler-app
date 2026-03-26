@@ -69,25 +69,39 @@ export default function HelpPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(helpStructuredData) }}
       />
 
-      <section className="hero-card help-hero">
-        <div className="hero-card__content">
-          <p className="eyebrow">Help &amp; Contact</p>
-          <h1>Get conference support quickly</h1>
-          <p className="hero-kicker">
-            Use this page for day-of help, accessibility planning, ticketing questions, or any
-            issue that needs a real person.
-          </p>
-          <p>
-            For the fastest response, reach out directly to the conference team instead of waiting
-            on a general update.
-          </p>
-          <div className="hero-actions">
-            <a href={`mailto:${CONVENING_DIRECTOR_EMAIL}`} className="button button-link">
-              Email the conference team
-            </a>
-            <a href={CONVENING_DIRECTOR_PHONE_LINK} className="button-secondary button-link">
-              Call {CONVENING_DIRECTOR_PHONE}
-            </a>
+      <section className="hero-card hero-card--premium help-hero">
+        <div className="hero-card__grid">
+          <div className="hero-card__content">
+            <p className="eyebrow">Help &amp; Contact</p>
+            <h1>Get conference support quickly</h1>
+            <p className="hero-kicker">
+              Use this page for day-of help, accessibility planning, ticketing questions, or any
+              issue that needs a real person.
+            </p>
+            <p>
+              For the fastest response, reach out directly to the conference team instead of
+              waiting on a general update.
+            </p>
+            <div className="hero-actions">
+              <a href={`mailto:${CONVENING_DIRECTOR_EMAIL}`} className="button button-link">
+                Email the conference team
+              </a>
+              <a href={CONVENING_DIRECTOR_PHONE_LINK} className="button-secondary button-link">
+                Call {CONVENING_DIRECTOR_PHONE}
+              </a>
+            </div>
+          </div>
+
+          <div className="hero-card__visual">
+            <div className="hero-photo hero-photo--dc">
+              <span className="hero-photo__label">Washington, D.C.</span>
+            </div>
+            <div className="hero-photo hero-photo--conference">
+              <span className="hero-photo__label">On-site support</span>
+            </div>
+            <div className="hero-photo hero-photo--community">
+              <span className="hero-photo__label">Direct response</span>
+            </div>
           </div>
         </div>
       </section>

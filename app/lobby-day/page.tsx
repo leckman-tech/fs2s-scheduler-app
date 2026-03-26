@@ -92,7 +92,7 @@ export default async function LobbyDayPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      <section className="hero-card">
+      <section className="hero-card hero-card--premium">
         <div className="hero-card__grid">
           <div className="hero-card__content">
             <p className="eyebrow">FS2S 2026</p>

@@ -57,7 +57,7 @@ export default async function HappyHourPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      <section className="hero-card">
+      <section className="hero-card hero-card--premium">
         <div className="hero-card__grid">
           <div className="hero-card__content">
             <p className="eyebrow">Day One Reception</p>

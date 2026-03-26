@@ -181,7 +181,7 @@ export default function LearnMorePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
       />
 
-      <section className="hero-card learn-hero">
+      <section className="hero-card hero-card--premium learn-hero">
         <div className="hero-card__grid">
           <div className="hero-card__content">
             <p className="eyebrow">Who We Are</p>
