@@ -101,7 +101,7 @@ export function SessionSignupForm({
   }
 
   return (
-    <section className="panel form-grid">
+    <section id="signup" className="panel form-grid">
       <div className="section-heading">
         <h2>Sign up for this event</h2>
         <span className="hero-pill">
