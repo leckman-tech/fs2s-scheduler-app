@@ -377,6 +377,22 @@ function mapAttendeeDirectoryEntry(
   };
 }
 
+function isMissingAttendeeBoardEngagementError(error: unknown) {
+  const message =
+    typeof error === "object" && error
+      ? `${"message" in error ? String(error.message ?? "") : ""} ${
+          "details" in error ? String(error.details ?? "") : ""
+        }`
+      : "";
+
+  return [
+    "attendee_board_replies",
+    "attendee_board_likes",
+    "author_token",
+    "updated_at"
+  ].some((fragment) => message.includes(fragment));
+}
+
 export const getPublicSessions = cache(async () => {
   try {
     const supabase = await createClient();
@@ -821,29 +837,55 @@ export const getAttendeeBoardFeed = cache(async () => {
     const cookieStore = await cookies();
     const viewerToken = cookieStore.get("fs2s_attendee_token")?.value ?? null;
 
-    const [{ data: posts, error: postsError }, { data: replies, error: repliesError }, { data: likes, error: likesError }] =
-      await Promise.all([
-        supabase
-          .from("attendee_board_posts")
-          .select("id,full_name,email,organization,body,published,created_at,updated_at,author_token")
-          .eq("published", true)
-          .order("created_at", { ascending: false }),
-        supabase
-          .from("attendee_board_replies")
-          .select("id,post_id,full_name,email,organization,body,created_at,updated_at,author_token")
-          .eq("published", true)
-          .order("created_at", { ascending: true }),
-        supabase
-          .from("attendee_board_likes")
-          .select("post_id,viewer_token")
-      ]);
+    let { data: posts, error: postsError } = await supabase
+      .from("attendee_board_posts")
+      .select("id,full_name,email,organization,body,published,created_at,updated_at,author_token")
+      .eq("published", true)
+      .order("created_at", { ascending: false });
 
-    if (postsError || repliesError || likesError) {
-      console.error(postsError ?? repliesError ?? likesError);
+    if (postsError && isMissingAttendeeBoardEngagementError(postsError)) {
+      ({ data: posts, error: postsError } = await supabase
+        .from("attendee_board_posts")
+        .select("id,full_name,email,organization,body,published,created_at")
+        .eq("published", true)
+        .order("created_at", { ascending: false }));
+    }
+
+    if (postsError) {
+      console.error(postsError);
       return [] as AttendeeBoardThreadRecord[];
     }
 
-    const repliesByPost = ((replies as AttendeeBoardReplyRow[]) ?? []).reduce<
+    let replies: AttendeeBoardReplyRow[] = [];
+    let likes: AttendeeBoardLikeRow[] = [];
+
+    const { data: repliesData, error: repliesError } = await supabase
+      .from("attendee_board_replies")
+      .select("id,post_id,full_name,email,organization,body,created_at,updated_at,author_token")
+      .eq("published", true)
+      .order("created_at", { ascending: true });
+
+    if (repliesError) {
+      if (!isMissingAttendeeBoardEngagementError(repliesError)) {
+        console.error(repliesError);
+      }
+    } else {
+      replies = (repliesData as AttendeeBoardReplyRow[]) ?? [];
+    }
+
+    const { data: likesData, error: likesError } = await supabase
+      .from("attendee_board_likes")
+      .select("post_id,viewer_token");
+
+    if (likesError) {
+      if (!isMissingAttendeeBoardEngagementError(likesError)) {
+        console.error(likesError);
+      }
+    } else {
+      likes = (likesData as AttendeeBoardLikeRow[]) ?? [];
+    }
+
+    const repliesByPost = replies.reduce<
       Record<string, AttendeeBoardReplyRecord[]>
     >((acc, reply) => {
       const item: AttendeeBoardReplyRecord = {
@@ -862,7 +904,7 @@ export const getAttendeeBoardFeed = cache(async () => {
       return acc;
     }, {});
 
-    const likesByPost = ((likes as AttendeeBoardLikeRow[]) ?? []).reduce<
+    const likesByPost = likes.reduce<
       Record<string, { count: number; likedByViewer: boolean }>
     >((acc, like) => {
       const current = acc[like.post_id] ?? { count: 0, likedByViewer: false };
@@ -882,7 +924,7 @@ export const getAttendeeBoardFeed = cache(async () => {
       body: post.body,
       created_at: post.created_at,
       updated_at: post.updated_at ?? null,
-      canEdit: Boolean(viewerToken && post.author_token === viewerToken),
+      canEdit: Boolean(viewerToken && post.author_token && post.author_token === viewerToken),
       likedByViewer: likesByPost[post.id]?.likedByViewer ?? false,
       likeCount: likesByPost[post.id]?.count ?? 0,
       replies: repliesByPost[post.id] ?? []
@@ -1030,6 +1072,38 @@ export const getAdminAttendeeBoardPosts = cache(async () => {
   } catch (error) {
     console.error(error);
     return [] as AttendeeBoardPostRecord[];
+  }
+});
+
+export const getAdminAttendeeBoardReplies = cache(async () => {
+  await requireAdmin();
+
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("attendee_board_replies")
+      .select("id,post_id,full_name,email,organization,body,created_at,updated_at")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return [] as AttendeeBoardReplyRecord[];
+    }
+
+    return ((data as AttendeeBoardReplyRow[]) ?? []).map((reply) => ({
+      id: reply.id,
+      post_id: reply.post_id,
+      full_name: reply.full_name,
+      email: reply.email,
+      organization: reply.organization,
+      body: reply.body,
+      created_at: reply.created_at,
+      updated_at: reply.updated_at ?? null,
+      canEdit: false
+    }));
+  } catch (error) {
+    console.error(error);
+    return [] as AttendeeBoardReplyRecord[];
   }
 });
 

@@ -698,7 +698,7 @@ export async function postAttendeeBoardMessage(formData: FormData) {
       error.message.includes("attendee_board_posts")
     ) {
       redirect(
-        "/attendee?error=Attendee%20community%20is%20not%20enabled%20in%20Supabase%20yet.%20Run%20the%20014_attendee_community.sql%20migration%20first."
+        "/attendee?error=Attendee%20community%20is%20not%20enabled%20in%20Supabase%20yet.%20Run%20the%20015_attendee_board_engagement.sql%20migration%20first."
       );
     }
     redirect(`/attendee?error=${encodeURIComponent(error.message)}`);
@@ -745,7 +745,7 @@ export async function saveAttendeeDirectoryEntry(formData: FormData) {
       error.message.includes("attendee_directory_entries")
     ) {
       redirect(
-        "/attendee?error=Attendee%20directory%20is%20not%20enabled%20in%20Supabase%20yet.%20Run%20the%20014_attendee_community.sql%20migration%20first."
+        "/attendee?error=Attendee%20directory%20is%20not%20enabled%20in%20Supabase%20yet.%20Run%20the%20015_attendee_board_engagement.sql%20migration%20first."
       );
     }
     redirect(`/attendee?error=${encodeURIComponent(error.message)}`);
@@ -762,6 +762,17 @@ export async function deleteAttendeeBoardPost(formData: FormData) {
   const id = String(formData.get("id") ?? "").trim();
 
   await supabase.from("attendee_board_posts").delete().eq("id", id);
+
+  revalidatePath("/attendee");
+  revalidatePath("/admin/dashboard/resources");
+}
+
+export async function deleteAttendeeBoardReply(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const id = String(formData.get("id") ?? "").trim();
+
+  await supabase.from("attendee_board_replies").delete().eq("id", id);
 
   revalidatePath("/attendee");
   revalidatePath("/admin/dashboard/resources");

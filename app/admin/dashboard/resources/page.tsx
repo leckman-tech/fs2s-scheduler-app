@@ -1,5 +1,6 @@
 import {
   deleteAttendeeBoardPost,
+  deleteAttendeeBoardReply,
   deleteAttendeeDirectoryEntry,
   deletePortalDocument,
   deleteSpeakerPortalMessage,
@@ -8,6 +9,7 @@ import {
 } from "@/lib/actions/admin";
 import {
   getAdminAttendeeBoardPosts,
+  getAdminAttendeeBoardReplies,
   getAdminAttendeeDirectoryEntries,
   getAdminPortalDocuments,
   getAdminPortalMessages,
@@ -26,13 +28,15 @@ export default async function AdminResourcesPage({
   searchParams: Promise<{ error?: string }>;
 }) {
   const params = await searchParams;
-  const [sessions, documents, messages, attendeePosts, attendeeDirectory] = await Promise.all([
+  const [sessions, documents, messages, attendeePosts, attendeeReplies, attendeeDirectory] =
+    await Promise.all([
     getResourceEligibleSessions(),
     getAdminPortalDocuments(),
     getAdminPortalMessages(),
     getAdminAttendeeBoardPosts(),
+    getAdminAttendeeBoardReplies(),
     getAdminAttendeeDirectoryEntries()
-  ]);
+    ]);
 
   return (
     <div className="stack">
@@ -46,6 +50,7 @@ export default async function AdminResourcesPage({
           <span className="hero-pill">{documents.length} portal documents</span>
           <span className="hero-pill">{messages.length} speaker board posts</span>
           <span className="hero-pill">{attendeePosts.length} attendee board posts</span>
+          <span className="hero-pill">{attendeeReplies.length} attendee replies</span>
           <span className="hero-pill">{attendeeDirectory.length} attendee contact entries</span>
         </div>
       </section>
@@ -289,6 +294,35 @@ export default async function AdminResourcesPage({
             ))
           ) : (
             <div className="empty-state">No attendee contact entries yet.</div>
+          )}
+        </div>
+      </section>
+
+      <section className="panel">
+        <div className="section-heading">
+          <h2>Attendee reply moderation</h2>
+        </div>
+        <div className="resource-list">
+          {attendeeReplies.length ? (
+            attendeeReplies.map((reply) => (
+              <article key={reply.id} className="announcement">
+                <strong>{reply.full_name}</strong>
+                <div className="muted">
+                  {[reply.email, reply.organization, formatTimestamp(reply.created_at)]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </div>
+                <p className="muted">{reply.body}</p>
+                <form action={deleteAttendeeBoardReply}>
+                  <input type="hidden" name="id" value={reply.id} />
+                  <button type="submit" className="button-danger">
+                    Remove reply
+                  </button>
+                </form>
+              </article>
+            ))
+          ) : (
+            <div className="empty-state">No attendee replies yet.</div>
           )}
         </div>
       </section>

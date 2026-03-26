@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { AttendeeBoard } from "@/components/attendee-board";
 import { LogoutButton } from "@/components/logout-button";
-import {
-  saveAttendeeDirectoryEntry
-} from "@/lib/actions/admin";
+import { saveAttendeeDirectoryEntry } from "@/lib/actions/admin";
 import {
   getAttendeeBoardFeed,
   getAttendeeDirectoryEntries,
@@ -239,29 +237,6 @@ export default async function AttendeePortalPage({
           ) : (
             <div className="empty-state">
               No attendee contact entries have been shared yet.
-            </div>
-          )}
-        </div>
-      </section>
-
-      <section className="panel detail-side-panel">
-        <div className="section-heading">
-          <h2>Recent attendee board posts</h2>
-        </div>
-        <div className="resource-list">
-          {boardFeed.length ? (
-            <div className="announcement">
-              <strong>{boardFeed[0].full_name}</strong>
-              <div className="muted">
-                {[boardFeed[0].organization, formatTimestamp(boardFeed[0].created_at)]
-                  .filter(Boolean)
-                  .join(" · ")}
-              </div>
-              <p className="muted">{boardFeed[0].body}</p>
-            </div>
-          ) : (
-            <div className="empty-state">
-              No attendee board posts yet. The first post can set the tone for the conversation.
             </div>
           )}
         </div>
