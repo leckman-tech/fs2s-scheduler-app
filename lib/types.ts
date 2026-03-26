@@ -149,6 +149,28 @@ export type LobbyDaySignupRecord = {
   created_at: string;
 };
 
+export type HappyHourRsvpGroup = "conference_attendee" | "staff";
+
+export type HappyHourRsvpRecord = {
+  id: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  organization: string | null;
+  rsvp_group: HappyHourRsvpGroup;
+  status: "confirmed" | "waitlist";
+  created_at: string;
+};
+
+export type HappyHourRsvpSummaryRecord = {
+  confirmedCount: number;
+  waitlistCount: number;
+  confirmedAttendeeCount: number;
+  waitlistAttendeeCount: number;
+  confirmedStaffCount: number;
+  waitlistStaffCount: number;
+};
+
 export type AttendeeBoardPostRecord = {
   id: string;
   full_name: string;

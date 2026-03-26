@@ -9,6 +9,8 @@ import type {
   AttendeeBoardReplyRecord,
   AttendeeBoardThreadRecord,
   FeedbackSummaryRecord,
+  HappyHourRsvpRecord,
+  HappyHourRsvpSummaryRecord,
   SessionRecord,
   PortalDocumentRecord,
   PortalMessageRecord,
@@ -191,6 +193,17 @@ type LobbyDaySignupRow = {
   created_at: string;
 };
 
+type HappyHourRsvpRow = {
+  id: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  organization: string | null;
+  rsvp_group: "conference_attendee" | "staff";
+  status: "confirmed" | "waitlist";
+  created_at: string;
+};
+
 type AttendeeBoardPostRow = {
   id: string;
   full_name: string;
@@ -343,6 +356,19 @@ function mapLobbyDaySignup(row: LobbyDaySignupRow): LobbyDaySignupRecord {
     email: row.email,
     phone: row.phone,
     organization: row.organization,
+    created_at: row.created_at
+  };
+}
+
+function mapHappyHourRsvp(row: HappyHourRsvpRow): HappyHourRsvpRecord {
+  return {
+    id: row.id,
+    full_name: row.full_name,
+    email: row.email,
+    phone: row.phone,
+    organization: row.organization,
+    rsvp_group: row.rsvp_group,
+    status: row.status,
     created_at: row.created_at
   };
 }
@@ -601,6 +627,46 @@ export const getPublicLobbyDaySignupCount = cache(async () => {
   } catch (error) {
     console.error(error);
     return 0;
+  }
+});
+
+export const getPublicHappyHourRsvpSummary = cache(async () => {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase.rpc("get_public_happy_hour_rsvp_summary");
+
+    if (error) {
+      console.error(error);
+      return {
+        confirmedCount: 0,
+        waitlistCount: 0,
+        confirmedAttendeeCount: 0,
+        waitlistAttendeeCount: 0,
+        confirmedStaffCount: 0,
+        waitlistStaffCount: 0
+      } satisfies HappyHourRsvpSummaryRecord;
+    }
+
+    const row = Array.isArray(data) ? data[0] : data;
+
+    return {
+      confirmedCount: Number(row?.confirmed_count ?? 0),
+      waitlistCount: Number(row?.waitlist_count ?? 0),
+      confirmedAttendeeCount: Number(row?.confirmed_attendee_count ?? 0),
+      waitlistAttendeeCount: Number(row?.waitlist_attendee_count ?? 0),
+      confirmedStaffCount: Number(row?.confirmed_staff_count ?? 0),
+      waitlistStaffCount: Number(row?.waitlist_staff_count ?? 0)
+    } satisfies HappyHourRsvpSummaryRecord;
+  } catch (error) {
+    console.error(error);
+    return {
+      confirmedCount: 0,
+      waitlistCount: 0,
+      confirmedAttendeeCount: 0,
+      waitlistAttendeeCount: 0,
+      confirmedStaffCount: 0,
+      waitlistStaffCount: 0
+    } satisfies HappyHourRsvpSummaryRecord;
   }
 });
 
@@ -1329,6 +1395,28 @@ export const getAdminLobbyDaySignups = cache(async () => {
   } catch (error) {
     console.error(error);
     return [] as LobbyDaySignupRecord[];
+  }
+});
+
+export const getAdminHappyHourRsvps = cache(async () => {
+  await requireAdmin();
+
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("happy_hour_rsvps")
+      .select("id,full_name,email,phone,organization,rsvp_group,status,created_at")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return [] as HappyHourRsvpRecord[];
+    }
+
+    return ((data as unknown as HappyHourRsvpRow[]) ?? []).map(mapHappyHourRsvp);
+  } catch (error) {
+    console.error(error);
+    return [] as HappyHourRsvpRecord[];
   }
 });
 
