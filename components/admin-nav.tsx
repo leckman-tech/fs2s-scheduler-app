@@ -8,8 +8,14 @@ export function AdminNav() {
         <h2>Admin Portal</h2>
       </div>
       <nav className="admin-nav" aria-label="Admin navigation">
-        <Link href="/admin/dashboard" className="button-secondary button-link">
+        <Link href="/admin/dashboard/system" className="button-secondary button-link">
+          System Check
+        </Link>
+        <Link href="/admin/dashboard/overview" className="button-secondary button-link">
           Overview
+        </Link>
+        <Link href="/admin/dashboard/signups" className="button-secondary button-link">
+          Sign-ups
         </Link>
         <Link href="/admin/dashboard/sessions/new" className="button-secondary button-link">
           New session
@@ -22,12 +28,6 @@ export function AdminNav() {
         </Link>
         <Link href="/admin/dashboard/resources" className="button-secondary button-link">
           Portal docs
-        </Link>
-        <Link href="/admin/dashboard/signups" className="button-secondary button-link">
-          Sign-ups
-        </Link>
-        <Link href="/admin/dashboard/system" className="button-secondary button-link">
-          System Check
         </Link>
         <Link href="/admin/dashboard/feedback" className="button-secondary button-link">
           Feedback
