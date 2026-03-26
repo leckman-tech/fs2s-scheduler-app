@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FORM_HONEYPOT_FIELD, FORM_STARTED_AT_FIELD } from "@/lib/anti-spam";
 
 type SessionSignupFormProps = {
   sessionId: string;
@@ -56,7 +57,9 @@ export function SessionSignupForm({
       fullName: String(formData.get("full_name") ?? "").trim(),
       email: String(formData.get("email") ?? "").trim(),
       phone: String(formData.get("phone") ?? "").trim(),
-      organization: String(formData.get("organization") ?? "").trim()
+      organization: String(formData.get("organization") ?? "").trim(),
+      [FORM_HONEYPOT_FIELD]: String(formData.get(FORM_HONEYPOT_FIELD) ?? "").trim(),
+      [FORM_STARTED_AT_FIELD]: String(formData.get(FORM_STARTED_AT_FIELD) ?? "").trim()
     };
 
     const response = await fetch("/api/session-signups", {
@@ -73,6 +76,7 @@ export function SessionSignupForm({
           signupStatus?: "confirmed" | "waitlist";
           confirmedCount?: number;
           waitlistCount?: number;
+          confirmationEmailSent?: boolean;
         }
       | null;
 
@@ -95,8 +99,12 @@ export function SessionSignupForm({
       waitlistCount: data.waitlistCount ?? waitlistCount,
       message:
         data.signupStatus === "confirmed"
-          ? `You're confirmed for ${sessionTitle}.`
-          : `You're on the waitlist for ${sessionTitle}. We'll use the information you provided if a spot opens up.`
+          ? data.confirmationEmailSent
+            ? `You're confirmed for ${sessionTitle}. Check your inbox for a confirmation email.`
+            : `You're confirmed for ${sessionTitle}.`
+          : data.confirmationEmailSent
+            ? `You're on the waitlist for ${sessionTitle}. Check your inbox for a confirmation email.`
+            : `You're on the waitlist for ${sessionTitle}. We'll use the information you provided if a spot opens up.`
     });
   }
 
@@ -132,6 +140,16 @@ export function SessionSignupForm({
       </div>
 
       <form id={`session-signup-form-${sessionId}`} className="form-grid" action={handleSubmit}>
+        <input type="hidden" name={FORM_STARTED_AT_FIELD} value={String(Date.now())} />
+        <div className="sr-only" aria-hidden="true">
+          <label htmlFor={`website-${sessionId}`}>Leave this field empty</label>
+          <input
+            id={`website-${sessionId}`}
+            name={FORM_HONEYPOT_FIELD}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
         <div className="field">
           <label htmlFor={`full_name-${sessionId}`}>Full name</label>
           <input id={`full_name-${sessionId}`} name="full_name" required disabled={isClosed} />

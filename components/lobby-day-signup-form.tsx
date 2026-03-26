@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FORM_HONEYPOT_FIELD, FORM_STARTED_AT_FIELD } from "@/lib/anti-spam";
 
 type LobbyDaySignupFormProps = {
   totalCount: number;
@@ -31,7 +32,9 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
       fullName: String(formData.get("full_name") ?? "").trim(),
       email: String(formData.get("email") ?? "").trim(),
       phone: String(formData.get("phone") ?? "").trim(),
-      organization: String(formData.get("organization") ?? "").trim()
+      organization: String(formData.get("organization") ?? "").trim(),
+      [FORM_HONEYPOT_FIELD]: String(formData.get(FORM_HONEYPOT_FIELD) ?? "").trim(),
+      [FORM_STARTED_AT_FIELD]: String(formData.get(FORM_STARTED_AT_FIELD) ?? "").trim()
     };
 
     const response = await fetch("/api/lobby-day-signups", {
@@ -46,6 +49,7 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
       | {
           error?: string;
           totalCount?: number;
+          confirmationEmailSent?: boolean;
         }
       | null;
 
@@ -64,7 +68,9 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
     setState({
       status: "success",
       totalCount: data?.totalCount ?? totalCount,
-      message: "You're on the Lobby Day list. We'll use your contact information for updates and planning."
+      message: data?.confirmationEmailSent
+        ? "You're on the Lobby Day list. Check your inbox for a confirmation email."
+        : "You're on the Lobby Day list. We'll use your contact information for updates and planning."
     });
   }
 
@@ -94,6 +100,11 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
       </p>
 
       <form id="lobby-day-signup-form" className="form-grid" action={handleSubmit}>
+        <input type="hidden" name={FORM_STARTED_AT_FIELD} value={String(Date.now())} />
+        <div className="sr-only" aria-hidden="true">
+          <label htmlFor="lobby-day-website">Leave this field empty</label>
+          <input id="lobby-day-website" name={FORM_HONEYPOT_FIELD} tabIndex={-1} autoComplete="off" />
+        </div>
         <div className="field">
           <label htmlFor="lobby-day-full-name">Full name</label>
           <input id="lobby-day-full-name" name="full_name" required />

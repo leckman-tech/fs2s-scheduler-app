@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FORM_HONEYPOT_FIELD, FORM_STARTED_AT_FIELD } from "@/lib/anti-spam";
 import type { HappyHourRsvpSummaryRecord } from "@/lib/types";
 
 type HappyHourRsvpFormProps = {
@@ -39,7 +40,9 @@ export function HappyHourRsvpForm({ summary }: HappyHourRsvpFormProps) {
       email: String(formData.get("email") ?? "").trim(),
       phone: String(formData.get("phone") ?? "").trim(),
       organization: String(formData.get("organization") ?? "").trim(),
-      rsvpGroup: String(formData.get("rsvp_group") ?? "").trim() as "conference_attendee" | "staff"
+      rsvpGroup: String(formData.get("rsvp_group") ?? "").trim() as "conference_attendee" | "staff",
+      [FORM_HONEYPOT_FIELD]: String(formData.get(FORM_HONEYPOT_FIELD) ?? "").trim(),
+      [FORM_STARTED_AT_FIELD]: String(formData.get(FORM_STARTED_AT_FIELD) ?? "").trim()
     };
 
     const response = await fetch("/api/happy-hour-rsvps", {
@@ -54,6 +57,7 @@ export function HappyHourRsvpForm({ summary }: HappyHourRsvpFormProps) {
       | ({
           error?: string;
           signupStatus?: "confirmed" | "waitlist";
+          confirmationEmailSent?: boolean;
         } & Partial<HappyHourRsvpSummaryRecord>)
       | null;
 
@@ -87,8 +91,12 @@ export function HappyHourRsvpForm({ summary }: HappyHourRsvpFormProps) {
       },
       message:
         data.signupStatus === "confirmed"
-          ? "You're on the confirmed Happy Hour list. We'll use your contact information if logistics shift."
-          : "You're on the Happy Hour waitlist. We'll reach out if space opens up."
+          ? data.confirmationEmailSent
+            ? "You're on the confirmed Happy Hour list. Check your inbox for a confirmation email."
+            : "You're on the confirmed Happy Hour list. We'll use your contact information if logistics shift."
+          : data.confirmationEmailSent
+            ? "You're on the Happy Hour waitlist. Check your inbox for a confirmation email."
+            : "You're on the Happy Hour waitlist. We'll reach out if space opens up."
     }));
   }
 
@@ -120,6 +128,11 @@ export function HappyHourRsvpForm({ summary }: HappyHourRsvpFormProps) {
 
       <form id="happy-hour-rsvp-form" className="form-grid" action={handleSubmit}>
         <input type="hidden" name="rsvp_group" value={state.rsvpGroup} />
+        <input type="hidden" name={FORM_STARTED_AT_FIELD} value={String(Date.now())} />
+        <div className="sr-only" aria-hidden="true">
+          <label htmlFor="happy-hour-website">Leave this field empty</label>
+          <input id="happy-hour-website" name={FORM_HONEYPOT_FIELD} tabIndex={-1} autoComplete="off" />
+        </div>
 
         <div className="signup-choice-grid">
           <button
