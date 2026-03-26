@@ -269,11 +269,44 @@ select {
 }
 
 .bottom-live-bar__label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.38rem 0.72rem;
+  border-radius: 999px;
   font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #ffd9de;
+  color: transparent;
+  background: linear-gradient(90deg, #ff4b5f 0%, #ff8e99 46%, #fff3f5 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  isolation: isolate;
+}
+
+.bottom-live-bar__label::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 117, 131, 0.28);
+  background:
+    linear-gradient(135deg, rgba(181, 18, 36, 0.42), rgba(255, 255, 255, 0.08));
+  box-shadow:
+    0 8px 18px rgba(181, 18, 36, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.bottom-live-bar__label::after {
+  content: "";
+  width: 0.44rem;
+  height: 0.44rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, #ffb9c0 0%, #ff4b5f 72%);
+  box-shadow: 0 0 0 4px rgba(255, 75, 95, 0.16);
 }
 
 .bottom-live-bar__viewport {
