@@ -34,7 +34,7 @@ export default async function HomePage() {
       <TicketPromoModal />
       <LiveUpdatesTicker announcements={announcements} />
 
-      <section className="hero-card">
+      <section className="hero-card hero-card--landing">
         <div className="hero-card__grid">
           <div className="hero-card__content">
             <p className="eyebrow">From Silos to Solutions 2026</p>
@@ -52,7 +52,7 @@ export default async function HomePage() {
               <span className="hero-pill">April 1-3, 2026</span>
               <span className="hero-pill">Washington, D.C.</span>
               <span className="hero-pill">See Forever Foundation</span>
-              <span className="hero-pill">75% off with code {TICKET_PROMO_CODE}</span>
+              <span className="hero-pill hero-pill--promo">75% off with code {TICKET_PROMO_CODE}</span>
             </div>
           </div>
 
@@ -83,19 +83,23 @@ export default async function HomePage() {
         </div>
 
         <div className="hero-metrics">
-          <article className="hero-metric">
+          <article className="hero-metric hero-metric--primary">
+            <p className="hero-metric__eyebrow">Legacy</p>
             <strong>25+</strong>
             <span>years of Maya &amp; See Forever work</span>
           </article>
           <article className="hero-metric">
+            <p className="hero-metric__eyebrow">History</p>
             <strong>2024</strong>
             <span>year the inaugural convening launched</span>
           </article>
           <article className="hero-metric">
+            <p className="hero-metric__eyebrow">Network</p>
             <strong>5</strong>
             <span>schools across the Maya network</span>
           </article>
           <article className="hero-metric">
+            <p className="hero-metric__eyebrow">Program</p>
             <strong>{days.length}</strong>
             <span>days of live programming</span>
           </article>
