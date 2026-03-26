@@ -199,7 +199,7 @@ type AttendeeBoardPostRow = {
   body: string;
   published: boolean;
   created_at: string;
-  updated_at: string | null;
+  updated_at?: string | null;
   author_token?: string | null;
 };
 
@@ -837,18 +837,27 @@ export const getAttendeeBoardFeed = cache(async () => {
     const cookieStore = await cookies();
     const viewerToken = cookieStore.get("fs2s_attendee_token")?.value ?? null;
 
-    let { data: posts, error: postsError } = await supabase
+    let posts: AttendeeBoardPostRow[] = [];
+    let postsError: unknown = null;
+
+    const primaryPostsResponse = await supabase
       .from("attendee_board_posts")
       .select("id,full_name,email,organization,body,published,created_at,updated_at,author_token")
       .eq("published", true)
       .order("created_at", { ascending: false });
 
-    if (postsError && isMissingAttendeeBoardEngagementError(postsError)) {
-      ({ data: posts, error: postsError } = await supabase
+    if (primaryPostsResponse.error && isMissingAttendeeBoardEngagementError(primaryPostsResponse.error)) {
+      const fallbackPostsResponse = await supabase
         .from("attendee_board_posts")
         .select("id,full_name,email,organization,body,published,created_at")
         .eq("published", true)
-        .order("created_at", { ascending: false }));
+        .order("created_at", { ascending: false });
+
+      posts = ((fallbackPostsResponse.data as AttendeeBoardPostRow[] | null) ?? []);
+      postsError = fallbackPostsResponse.error;
+    } else {
+      posts = ((primaryPostsResponse.data as AttendeeBoardPostRow[] | null) ?? []);
+      postsError = primaryPostsResponse.error;
     }
 
     if (postsError) {

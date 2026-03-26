@@ -6,10 +6,10 @@ set name = excluded.name;
 update public.sessions
 set
   title = 'Workshop I',
-  final_title = null,
-  slug = 'workshop-i-lisa-leonard',
-  short_description = 'Workshop session presented by Lisa Leonard.',
-  description = 'Workshop details forthcoming. This 2:45 PM session will be presented by Lisa Leonard.',
+  final_title = 'Parenting through an EQ Lens',
+  slug = 'parenting-through-an-eq-lens-i',
+  short_description = 'Workshop presented by Lisa Leonard.',
+  description = 'Parenting through an EQ Lens is presented by Lisa Leonard during the 2:45 PM workshop block. Additional workshop details can be shared in the admin dashboard as needed.',
   featured = false
 where session_code = 'd2wI';
 
