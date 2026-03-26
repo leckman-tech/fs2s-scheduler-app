@@ -326,13 +326,13 @@ select {
 }
 
 .site-header__inner {
-  width: min(1240px, calc(100% - 1.5rem));
+  width: min(1280px, calc(100% - 1.5rem));
   margin: 0 auto;
   padding: 0.8rem 0;
   display: grid;
   grid-template-columns: minmax(220px, auto) minmax(0, 1fr) auto;
   align-items: center;
-  gap: 1.4rem;
+  gap: 1rem;
 }
 
 .site-brand {
@@ -367,7 +367,7 @@ select {
 
 .site-title {
   display: block;
-  font-size: clamp(1.26rem, 1.8vw, 1.7rem);
+  font-size: clamp(1.18rem, 1.65vw, 1.58rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 0.98;
@@ -377,8 +377,8 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  font-size: 0.94rem;
+  gap: 0.82rem;
+  font-size: 0.9rem;
   color: var(--muted);
   min-width: 0;
   flex-wrap: wrap;
