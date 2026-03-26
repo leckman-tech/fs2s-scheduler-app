@@ -132,7 +132,7 @@ export default async function LobbyDayPage() {
                 Return to schedule
               </Link>
               <Link href="/learn-more" className="button-secondary button-link">
-                Learn more about FS2S
+                Who We Are
               </Link>
             </div>
           </div>
