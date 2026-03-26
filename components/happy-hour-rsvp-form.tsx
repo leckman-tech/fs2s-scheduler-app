@@ -72,7 +72,7 @@ export function HappyHourRsvpForm({ summary }: HappyHourRsvpFormProps) {
     setState((current) => ({
       ...current,
       status: "success",
-      signupStatus: data.signupStatus,
+      signupStatus: data.signupStatus ?? null,
       summary: {
         confirmedCount: Number(data.confirmedCount ?? current.summary.confirmedCount),
         waitlistCount: Number(data.waitlistCount ?? current.summary.waitlistCount),

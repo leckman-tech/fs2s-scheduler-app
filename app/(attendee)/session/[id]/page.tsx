@@ -2,8 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FeedbackForm } from "@/components/feedback-form";
+import { HappyHourRsvpForm } from "@/components/happy-hour-rsvp-form";
 import { SessionSignupForm } from "@/components/session-signup-form";
-import { getPublicSessionSignupSummary, getSessionById } from "@/lib/queries";
+import {
+  getPublicHappyHourRsvpSummary,
+  getPublicSessionSignupSummary,
+  getSessionById
+} from "@/lib/queries";
 import { getSessionMetadata, getSessionStructuredData } from "@/lib/seo";
 import {
   displaySessionTitle,
@@ -50,7 +55,7 @@ export default async function SessionDetailPage({
   const signupSummary = session.signup_enabled
     ? await getPublicSessionSignupSummary(session.id)
     : null;
-  const specialRsvpHref = session.session_code === "d1s13" ? "/happy-hour" : null;
+  const happyHourSummary = session.session_code === "d1s13" ? await getPublicHappyHourRsvpSummary() : null;
 
   const structuredData = getSessionStructuredData(session);
 
@@ -84,17 +89,19 @@ export default async function SessionDetailPage({
           <div className="detail-copy">{session.description}</div>
         </section>
 
-        {specialRsvpHref ? (
+        {happyHourSummary ? (
           <section className="panel detail-section">
             <div className="section-heading">
               <h2>Happy Hour RSVP</h2>
             </div>
             <p className="muted" style={{ marginTop: 0 }}>
-              Conference attendees and invited MAS/SFF staff should use the dedicated Happy Hour
-              RSVP page so the team can manage the room list and waitlist cleanly.
+              Conference attendees and invited MAS/SFF staff can RSVP right here. The form below
+              keeps those two groups separate and moves people to the waitlist automatically if the
+              room fills.
             </p>
-            <Link href={specialRsvpHref} className="button button-link">
-              Go to Happy Hour RSVP
+            <HappyHourRsvpForm summary={happyHourSummary} />
+            <Link href="/happy-hour" className="button-secondary button-link">
+              Open the full Happy Hour page
             </Link>
           </section>
         ) : null}
