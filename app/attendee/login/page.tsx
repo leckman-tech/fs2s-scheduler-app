@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { createAttendeeAccount, loginAttendee } from "@/lib/actions/admin";
 import { buildMetadata } from "@/lib/seo";
 
@@ -58,6 +59,9 @@ export default async function AttendeeLoginPage({
           <button type="submit" className="button">
             Sign in
           </button>
+          <Link href="/attendee/forgot-password" className="button-secondary button-link">
+            Forgot password?
+          </Link>
           <p className="muted" style={{ margin: 0 }}>
             Your account keeps your attendee access professional, personal, and easier to manage
             than a shared conference login.
