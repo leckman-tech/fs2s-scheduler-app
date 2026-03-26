@@ -106,8 +106,8 @@ export function HappyHourRsvpForm({ summary }: HappyHourRsvpFormProps) {
         <div>
           <h2>Reserve your Happy Hour spot</h2>
           <p className="muted" style={{ margin: "0.3rem 0 0" }}>
-            RSVP as a conference attendee or as invited SFF/MAS staff. We&apos;re planning around
-            125 guests, with room to stretch to 150 total attendees and up to 35 staff RSVPs.
+            Choose the RSVP option that fits you. We&apos;re expecting around 125 guests, with room
+            to stretch to 150 total attendees and up to 35 invited staff guests.
           </p>
         </div>
       </div>
@@ -143,8 +143,8 @@ export function HappyHourRsvpForm({ summary }: HappyHourRsvpFormProps) {
             }
           >
             <span className="signup-choice__eyebrow">Conference RSVP</span>
-            <strong>Conference attendees</strong>
-            <span>For registered convening guests attending the Happy Hour after Day One.</span>
+            <strong>Conference guests</strong>
+            <span>For convening guests, presenters, panelists, volunteers, and invited attendees.</span>
           </button>
           <button
             type="button"
@@ -154,8 +154,8 @@ export function HappyHourRsvpForm({ summary }: HappyHourRsvpFormProps) {
             <span className="signup-choice__eyebrow">Staff RSVP</span>
             <strong>SFF/MAS staff</strong>
             <span>
-              For invited See Forever, Maya, and MAPCS staff. Staff RSVPs are managed within a
-              35-person allotment.
+              For invited See Forever, Maya, and MAPCS staff. A reserved block of spaces is being
+              held for staff guests.
             </span>
           </button>
         </div>
@@ -199,8 +199,8 @@ export function HappyHourRsvpForm({ summary }: HappyHourRsvpFormProps) {
 
         <div className="signup-footnote">
           <span>Open bar and light food will be provided.</span>
-          <span>Waitlist opens automatically if space fills.</span>
-          <span>We will text or email updates if logistics shift.</span>
+          <span>If space fills, new RSVPs will move to the waitlist automatically.</span>
+          <span>We’ll text or email updates if logistics shift.</span>
         </div>
       </form>
     </section>

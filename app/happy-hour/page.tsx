@@ -13,16 +13,16 @@ export const metadata: Metadata = buildMetadata({
 
 const detailCards = [
   {
-    title: "Conference attendees",
-    body: "For convening participants, presenters, panelists, volunteers, and conference guests who plan to join after Day One."
+    title: "Conference guests",
+    body: "For convening participants, presenters, panelists, volunteers, and guests who plan to join us after Day One."
   },
   {
-    title: "Invited SFF/MAS staff",
-    body: "A separate RSVP track is available for invited See Forever, Maya, and MAPCS staff, with a 35-person staff allotment."
+    title: "Invited staff guests",
+    body: "Invited See Forever, Maya, and MAPCS staff can use the staff RSVP option. A reserved block of spaces is being held for staff guests."
   },
   {
-    title: "Waitlist ready",
-    body: "If the room fills, the page will move additional names to a waitlist automatically so you can manage the list cleanly."
+    title: "If space fills",
+    body: "If the room reaches capacity, new RSVPs will automatically move to the waitlist. If space opens, we’ll follow up using the contact information you provide."
   }
 ];
 
@@ -66,9 +66,9 @@ export default async function HappyHourPage() {
               Open bar, light food, and time to connect at the National Union Building Speakeasy.
             </p>
             <p>
-              We&apos;re planning around 125 guests and can stretch to 150 total. Conference
-              attendees and invited See Forever / Maya staff should RSVP here so the team can plan
-              the room well and move people onto the waitlist if needed.
+              We&apos;re expecting around 125 guests and can stretch to 150 total. If you&apos;re
+              planning to join us, please RSVP here. If the room fills, new RSVPs will move to the
+              waitlist automatically.
             </p>
             <div className="hero-meta">
               <span className="hero-pill">Wednesday, April 1, 2026</span>

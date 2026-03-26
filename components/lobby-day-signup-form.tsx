@@ -70,7 +70,7 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
       totalCount: data?.totalCount ?? totalCount,
       message: data?.confirmationEmailSent
         ? "You're on the Lobby Day list. Check your inbox for a confirmation email."
-        : "You're on the Lobby Day list. We'll use your contact information for updates and planning."
+        : "You're on the Lobby Day list. We’ll use your contact information to share updates and next steps."
     });
   }
 
@@ -95,8 +95,8 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
       </div>
 
       <p className="muted" style={{ marginTop: 0 }}>
-        Use this form to add your name to the Lobby Day list. We’ll collect a phone number so the
-        conference team can send same-day updates and Capitol Hill logistics if needed.
+        Use this form to join the Lobby Day list. Please include a phone number so we can share
+        day-of updates and Capitol Hill logistics if needed.
       </p>
 
       <form id="lobby-day-signup-form" className="form-grid" action={handleSubmit}>

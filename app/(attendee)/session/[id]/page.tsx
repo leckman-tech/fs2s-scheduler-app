@@ -95,9 +95,8 @@ export default async function SessionDetailPage({
               <h2>Happy Hour RSVP</h2>
             </div>
             <p className="muted" style={{ marginTop: 0 }}>
-              Conference attendees and invited MAS/SFF staff can RSVP right here. The form below
-              keeps those two groups separate and moves people to the waitlist automatically if the
-              room fills.
+              Conference guests and invited MAS/SFF staff can RSVP right here. If the room reaches
+              capacity, new RSVPs will move to the waitlist automatically.
             </p>
             <HappyHourRsvpForm summary={happyHourSummary} />
             <Link href="/happy-hour" className="button-secondary button-link">

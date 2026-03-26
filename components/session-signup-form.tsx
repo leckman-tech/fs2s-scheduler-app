@@ -104,14 +104,14 @@ export function SessionSignupForm({
             : `You're confirmed for ${sessionTitle}.`
           : data.confirmationEmailSent
             ? `You're on the waitlist for ${sessionTitle}. Check your inbox for a confirmation email.`
-            : `You're on the waitlist for ${sessionTitle}. We'll use the information you provided if a spot opens up.`
+            : `You're on the waitlist for ${sessionTitle}. We’ll reach out if a spot opens up.`
     });
   }
 
   return (
     <section id="signup" className="panel form-grid">
       <div className="section-heading">
-        <h2>Sign up for this event</h2>
+        <h2>Reserve your place</h2>
         <span className="hero-pill">
           {capacity ? `${Math.min(state.confirmedCount, capacity)} / ${capacity} confirmed` : `${state.confirmedCount} confirmed`}
         </span>
@@ -119,7 +119,7 @@ export function SessionSignupForm({
 
       <p className="muted" style={{ marginTop: 0 }}>
         {instructions ||
-          "Use this form to hold your spot. Phone number is optional, but helpful if the conference team needs to send text updates."}
+          "Use this form to reserve your place. A phone number is optional, but helpful if we need to send a day-of text update."}
       </p>
 
       {deadlineLabel ? (
