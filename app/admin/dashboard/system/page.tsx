@@ -77,6 +77,7 @@ function createEnvCheck(
 
 export default async function AdminSystemCheckPage() {
   await requireAdmin();
+  const supabase = await createClient();
 
   const platformChecks = [
     createEnvCheck("Supabase URL", Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL), {
@@ -133,6 +134,18 @@ export default async function AdminSystemCheckPage() {
     runTableCheck("attendee_directory_entries", "Attendee directory entries"),
     runTableCheck("form_submission_guards", "Public form guard log")
   ]);
+
+  const { count: attendeeAccountCount } = await supabase
+    .from("profiles")
+    .select("id", { head: true, count: "exact" })
+    .eq("role", "attendee");
+
+  const accountWindowStart = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+  const { count: recentAttendeeCount } = await supabase
+    .from("profiles")
+    .select("id", { head: true, count: "exact" })
+    .eq("role", "attendee")
+    .gte("created_at", accountWindowStart);
 
   const allChecks = [...platformChecks, ...databaseChecks];
   const passCount = allChecks.filter((check) => check.state === "pass").length;
@@ -223,7 +236,41 @@ export default async function AdminSystemCheckPage() {
               <strong>{failCount}</strong>
               <span>Fix before launch</span>
             </article>
+            <article className="health-stat health-stat--pass">
+              <span className="health-stat__dot" aria-hidden="true" />
+              <strong>{recentAttendeeCount ?? 0}</strong>
+              <span>New attendee accounts in 24h</span>
+            </article>
           </div>
+        </div>
+      </section>
+
+      <section className="panel detail-side-panel">
+        <div className="section-heading">
+          <div>
+            <h2>Attendee account activity</h2>
+            <p className="muted" style={{ margin: "0.35rem 0 0" }}>
+              Watch attendee account creation and open the account manager when you need to adjust a
+              contact card or sharing preference.
+            </p>
+          </div>
+          <Link href="/admin/dashboard/accounts" className="button-secondary button-link">
+            Open Accounts
+          </Link>
+        </div>
+        <div className="story-stat-grid">
+          <article className="story-stat">
+            <strong>{attendeeAccountCount ?? 0}</strong>
+            <span>Total attendee accounts</span>
+          </article>
+          <article className="story-stat">
+            <strong>{recentAttendeeCount ?? 0}</strong>
+            <span>Created in the last 24 hours</span>
+          </article>
+          <article className="story-stat">
+            <strong>Accounts</strong>
+            <span>Use the Accounts page to edit attendee names, contact details, and directory visibility.</span>
+          </article>
         </div>
       </section>
 
