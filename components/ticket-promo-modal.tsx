@@ -48,10 +48,10 @@ export function TicketPromoModal() {
           x
         </button>
         <p className="eyebrow">Registration Open</p>
-        <h2 id="ticket-promo-title">Claim your FS2S 2026 ticket</h2>
+        <h2 id="ticket-promo-title">Register for FS2S 2026</h2>
         <p id="ticket-promo-description">
-          Use code <strong>{TICKET_PROMO_CODE}</strong> for 100% off your ticket, thanks to a
-          generous anonymous sponsorship.
+          Use code <strong>{TICKET_PROMO_CODE}</strong> for 75% off. This offer is available to
+          the first 20 people who claim it.
         </p>
         <div className="promo-modal__actions">
           <a
@@ -60,7 +60,7 @@ export function TicketPromoModal() {
             target="_blank"
             rel="noreferrer"
           >
-            Get free ticket
+            Get tickets
           </a>
           <button type="button" className="button-secondary" onClick={dismiss}>
             Maybe later

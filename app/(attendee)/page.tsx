@@ -52,7 +52,7 @@ export default async function HomePage() {
               <span className="hero-pill">April 1-3, 2026</span>
               <span className="hero-pill">Washington, D.C.</span>
               <span className="hero-pill">See Forever Foundation</span>
-              <span className="hero-pill">100% off with code {TICKET_PROMO_CODE}</span>
+              <span className="hero-pill">75% off with code {TICKET_PROMO_CODE}</span>
             </div>
           </div>
 

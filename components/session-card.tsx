@@ -13,6 +13,12 @@ import {
 export function SessionCard({ session }: { session: SessionRecord }) {
   const isInteractive = isPublicSessionInteractive(session.category);
   const isSecondary = isSecondarySessionCategory(session.category);
+  const signupHref =
+    session.session_code === "d1s13"
+      ? "/happy-hour"
+      : session.signup_enabled
+        ? `/session/${session.id}#signup`
+        : null;
 
   return (
     <article
@@ -55,6 +61,11 @@ export function SessionCard({ session }: { session: SessionRecord }) {
           <Link href={`/session/${session.id}`} className="button button-link">
             View details
           </Link>
+          {signupHref ? (
+            <Link href={signupHref} className="button-secondary button-link">
+              Sign-Up Now!
+            </Link>
+          ) : null}
         </div>
       ) : null}
     </article>
