@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FeedbackForm } from "@/components/feedback-form";
 import { SessionSignupForm } from "@/components/session-signup-form";
@@ -49,6 +50,7 @@ export default async function SessionDetailPage({
   const signupSummary = session.signup_enabled
     ? await getPublicSessionSignupSummary(session.id)
     : null;
+  const specialRsvpHref = session.session_code === "d1s13" ? "/happy-hour" : null;
 
   const structuredData = getSessionStructuredData(session);
 
@@ -81,6 +83,21 @@ export default async function SessionDetailPage({
           </div>
           <div className="detail-copy">{session.description}</div>
         </section>
+
+        {specialRsvpHref ? (
+          <section className="panel detail-section">
+            <div className="section-heading">
+              <h2>Happy Hour RSVP</h2>
+            </div>
+            <p className="muted" style={{ marginTop: 0 }}>
+              Conference attendees and invited MAS/SFF staff should use the dedicated Happy Hour
+              RSVP page so the team can manage the room list and waitlist cleanly.
+            </p>
+            <Link href={specialRsvpHref} className="button button-link">
+              Go to Happy Hour RSVP
+            </Link>
+          </section>
+        ) : null}
 
         {session.signup_enabled ? (
           <SessionSignupForm

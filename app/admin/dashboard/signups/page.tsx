@@ -118,7 +118,7 @@ export default async function AdminSignupsPage({
           </span>
         </div>
 
-        <div className="story-stat-grid story-stat-grid--compact">
+        <div className="story-stat-grid">
           <div className="story-stat">
             <strong>{happyHourAttendeeCount}</strong>
             <span>Conference attendee RSVPs</span>

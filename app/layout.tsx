@@ -29,12 +29,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <header className="site-header">
             <div className="site-header__inner">
               <div className="site-brand">
-                <div className="site-brand__copy">
-                  <p className="site-brand__eyebrow">Power Through Partnerships</p>
-                  <Link href="/" className="site-title">
-                    From Silos to Solutions 2026
-                  </Link>
-                </div>
+                <Link href="/" className="site-title">
+                  From Silos to Solutions 2026
+                </Link>
+                <p className="site-brand__eyebrow">Power Through Partnerships</p>
               </div>
               <nav className="site-nav" aria-label="Primary navigation">
                 <Link href="/">Schedule</Link>
@@ -44,9 +42,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <Link href="/attendee/login">Attendee Portal</Link>
                 <Link href="/portal/login">Speaker Portal</Link>
               </nav>
-              <a href={EVENTBRITE_URL} className="site-nav__cta" target="_blank" rel="noreferrer">
-                Purchase Tickets
-              </a>
+              <div className="site-header__actions">
+                <Link href="/happy-hour" className="site-nav__secondary">
+                  Happy Hour RSVP
+                </Link>
+                <a href={EVENTBRITE_URL} className="site-nav__cta" target="_blank" rel="noreferrer">
+                  Purchase Tickets
+                </a>
+              </div>
             </div>
           </header>
           <main>{children}</main>
