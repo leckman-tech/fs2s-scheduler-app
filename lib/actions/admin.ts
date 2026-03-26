@@ -50,6 +50,22 @@ async function getCurrentRole() {
   return { supabase, role: profile?.role ?? null };
 }
 
+async function waitForRole(expectedRole: string, attempts = 4, delayMs = 250) {
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    const { role } = await getCurrentRole();
+
+    if (role === expectedRole) {
+      return true;
+    }
+
+    if (attempt < attempts - 1) {
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
+  }
+
+  return false;
+}
+
 async function rebalanceSessionSignups(sessionId: string) {
   const supabase = await createClient();
 
@@ -396,6 +412,13 @@ export async function loginAttendee(formData: FormData) {
 
   const { role } = await getCurrentRole();
 
+  if (!role) {
+    await supabase.auth.signOut();
+    redirect(
+      "/attendee/login?error=Your%20attendee%20account%20is%20still%20finishing%20setup.%20Please%20wait%20a%20moment%20and%20sign%20in%20again."
+    );
+  }
+
   if (!ATTENDEE_PORTAL_ROLES.includes(role as (typeof ATTENDEE_PORTAL_ROLES)[number])) {
     await supabase.auth.signOut();
     redirect("/attendee/login?error=This%20login%20does%20not%20include%20attendee%20portal%20access");
@@ -460,9 +483,19 @@ export async function createAttendeeAccount(formData: FormData) {
   });
 
   if (!signInError) {
+    const attendeeReady = await waitForRole("attendee");
+
+    if (attendeeReady) {
+      revalidatePath("/attendee");
+      redirect(
+        "/attendee?success=Your%20attendee%20account%20is%20ready.%20You%20can%20update%20your%20phone%2C%20organization%2C%20and%20sharing%20preferences%20inside%20the%20portal."
+      );
+    }
+
+    await supabase.auth.signOut();
     revalidatePath("/attendee");
     redirect(
-      "/attendee?success=Your%20attendee%20account%20is%20ready.%20You%20can%20update%20your%20phone%2C%20organization%2C%20and%20sharing%20preferences%20inside%20the%20portal."
+      "/attendee/login?success=Your%20account%20has%20been%20created.%20Please%20sign%20in%20again%20in%20a%20moment%20to%20finish%20opening%20your%20attendee%20portal."
     );
   }
 
