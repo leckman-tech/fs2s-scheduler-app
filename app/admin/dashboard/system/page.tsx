@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { buildMetadata } from "@/lib/seo";
 import { requireAdmin } from "@/lib/queries";
 import { createClient } from "@/lib/supabase/server";
@@ -133,6 +134,9 @@ export default async function AdminSystemCheckPage() {
   const failCount = allChecks.filter((check) => check.state === "fail").length;
   const totalChecks = allChecks.length;
   const readinessPercent = totalChecks ? Math.round((passCount / totalChecks) * 100) : 0;
+  const healthMeterStyle = {
+    "--health-progress": `${readinessPercent}%`
+  } as CSSProperties;
 
   const launchNotes = [
     warnCount === 2 && !failCount
@@ -177,9 +181,7 @@ export default async function AdminSystemCheckPage() {
           <article className="health-meter">
             <div
               className="health-meter__ring"
-              style={{
-                ["--health-progress" as "--health-progress"]: `${readinessPercent}%`
-              }}
+              style={healthMeterStyle}
               aria-hidden="true"
             >
               <div className="health-meter__center">
