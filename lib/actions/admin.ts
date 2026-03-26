@@ -383,7 +383,15 @@ export async function loginAttendee(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    redirect(`/attendee/login?error=${encodeURIComponent(error.message)}`);
+    redirect(
+      `/attendee/login?error=${toRedirectErrorParam(
+        toPublicErrorMessage(error, {
+          fallback: "We couldn't sign you in with that email and password. Please try again.",
+          duplicateMessage: "That attendee account already exists. Sign in with your email and password instead.",
+          duplicateFragments: ["user already registered", "already been registered"]
+        })
+      )}`
+    );
   }
 
   const { role } = await getCurrentRole();
@@ -394,6 +402,77 @@ export async function loginAttendee(formData: FormData) {
   }
 
   redirect("/attendee");
+}
+
+export async function createAttendeeAccount(formData: FormData) {
+  const supabase = await createClient();
+  const fullName = String(formData.get("full_name") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const password = String(formData.get("password") ?? "");
+  const confirmPassword = String(formData.get("confirm_password") ?? "");
+  const accessCode = String(formData.get("access_code") ?? "").trim();
+  const expectedAccessCode = process.env.ATTENDEE_ACCESS_CODE?.trim();
+
+  if (!expectedAccessCode) {
+    redirect(
+      "/attendee/login?error=Attendee%20account%20creation%20is%20not%20enabled%20yet.%20Please%20contact%20the%20conference%20team."
+    );
+  }
+
+  if (!fullName || !email || !password || !confirmPassword || !accessCode) {
+    redirect("/attendee/login?error=Complete%20every%20field%20to%20create%20your%20attendee%20account");
+  }
+
+  if (password !== confirmPassword) {
+    redirect("/attendee/login?error=The%20passwords%20you%20entered%20do%20not%20match");
+  }
+
+  if (accessCode !== expectedAccessCode) {
+    redirect("/attendee/login?error=That%20conference%20access%20code%20is%20not%20valid");
+  }
+
+  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullName
+      }
+    }
+  });
+
+  if (signUpError) {
+    redirect(
+      `/attendee/login?error=${toRedirectErrorParam(
+        toPublicErrorMessage(signUpError, {
+          fallback: "We couldn't create your attendee account right now. Please try again.",
+          duplicateMessage:
+            "That email is already connected to an attendee account. Sign in instead of creating a new one.",
+          duplicateFragments: ["user already registered", "already been registered", "already exists"]
+        })
+      )}`
+    );
+  }
+
+  const { error: signInError } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (!signInError) {
+    revalidatePath("/attendee");
+    redirect(
+      "/attendee?success=Your%20attendee%20account%20is%20ready.%20You%20can%20update%20your%20phone%2C%20organization%2C%20and%20sharing%20preferences%20inside%20the%20portal."
+    );
+  }
+
+  if (signUpData.user) {
+    redirect(
+      "/attendee/login?success=Your%20account%20has%20been%20created.%20Sign%20in%20with%20your%20email%20and%20password%20to%20continue."
+    );
+  }
+
+  redirect("/attendee/login?error=We%20couldn%27t%20finish%20creating%20your%20account.%20Please%20try%20again.");
 }
 
 export async function logoutAdmin() {
@@ -778,11 +857,11 @@ export async function postAttendeeBoardMessage(formData: FormData) {
 }
 
 export async function saveAttendeeDirectoryEntry(formData: FormData) {
-  await requireAttendeePortalUser();
+  const { user, profile } = await requireAttendeePortalUser();
   const supabase = await createClient();
 
-  const fullName = String(formData.get("full_name") ?? "").trim();
-  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const fullName = String(formData.get("full_name") ?? "").trim() || profile.full_name?.trim() || "";
+  const email = (String(formData.get("email") ?? "").trim() || user.email || "").trim().toLowerCase();
   const phone = String(formData.get("phone") ?? "").trim();
   const title = String(formData.get("title") ?? "").trim();
   const organization = String(formData.get("organization") ?? "").trim();
@@ -790,7 +869,9 @@ export async function saveAttendeeDirectoryEntry(formData: FormData) {
   const shareWithPlanners = formData.get("share_with_planners") === "on";
 
   if (!fullName || !email) {
-    redirect("/attendee?error=Name%20and%20email%20are%20required%20for%20the%20attendee%20directory");
+    redirect(
+      "/attendee?error=Your%20attendee%20account%20needs%20a%20name%20and%20email%20before%20your%20contact%20card%20can%20be%20saved"
+    );
   }
 
   if (!shareWithAttendees && !shareWithPlanners) {

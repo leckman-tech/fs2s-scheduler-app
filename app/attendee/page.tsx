@@ -19,7 +19,7 @@ import {
 export const metadata: Metadata = buildMetadata({
   title: "Attendee Portal",
   description:
-    "Shared attendee document library, attendee board, and opt-in contact directory for FS2S 2026.",
+    "Your attendee account for FS2S 2026 documents, community updates, and opt-in contact sharing.",
   path: "/attendee",
   noIndex: true
 });
@@ -30,7 +30,7 @@ export default async function AttendeePortalPage({
   searchParams: Promise<{ error?: string; success?: string }>;
 }) {
   const params = await searchParams;
-  const [{ profile }, resources, boardFeed, directoryEntries] = await Promise.all([
+  const [{ profile, user }, resources, boardFeed, directoryEntries] = await Promise.all([
     requireAttendeePortalUser(),
     getAttendeePortalResources(),
     getAttendeeBoardFeed(),
@@ -55,8 +55,8 @@ export default async function AttendeePortalPage({
         <h1>Attendee Portal</h1>
         <p>
           {profile.full_name ? `${profile.full_name}, ` : ""}
-          this shared portal gives attendees one place to open conference documents, post to the
-          attendee board, and opt into year-round connection with planners and other attendees.
+          your attendee account gives you one place to open conference documents, join the attendee
+          board, and manage the contact information you want planners or other attendees to see.
         </p>
         <div className="hero-meta">
           <span className="hero-pill">
@@ -86,7 +86,8 @@ export default async function AttendeePortalPage({
           <article className="story-stat">
             <strong>Attendee board</strong>
             <span>
-              Post under your own name so attendees can share reflections, resources, and questions.
+              Post from your own attendee account so the conversation feels grounded, welcoming,
+              and accountable.
             </span>
           </article>
           <article className="story-stat">
@@ -106,22 +107,23 @@ export default async function AttendeePortalPage({
         <article className="panel detail-side-panel">
           <div className="section-heading">
             <div>
-              <h2>Attendee Contact Page</h2>
+              <h2>Your contact card</h2>
               <p className="muted" style={{ margin: "0.35rem 0 0" }}>
-                Share your contact information with planners and, if you choose, other attendees.
+                Your account email is already on file for planners. Add the details you want to
+                share and decide whether other attendees should see your card in the live directory.
               </p>
             </div>
           </div>
 
           <form action={saveAttendeeDirectoryEntry} className="form-grid">
-            <div className="form-grid form-grid--two">
-              <div className="field">
-                <label htmlFor="attendee-directory-name">Full name</label>
-                <input id="attendee-directory-name" name="full_name" required />
+            <div className="directory-account-summary">
+              <div>
+                <span className="directory-account-summary__label">Account name</span>
+                <strong>{profile.full_name || "Attendee"}</strong>
               </div>
-              <div className="field">
-                <label htmlFor="attendee-directory-email">Email</label>
-                <input id="attendee-directory-email" name="email" type="email" required />
+              <div>
+                <span className="directory-account-summary__label">Account email</span>
+                <strong>{user.email}</strong>
               </div>
             </div>
 
@@ -171,19 +173,27 @@ export default async function AttendeePortalPage({
             </div>
 
             <p className="field-hint">
-              Your email is required so the entry is tied to a real person. Only the information you
-              choose to share with attendees will appear in the live directory below.
+              Only the information you opt to share with attendees will appear in the live
+              directory below. Planner access can stay on even if you do not want to appear in the
+              attendee-facing list.
             </p>
 
             <div className="admin-actions">
               <button type="submit" className="button">
-                Save contact entry
+                Update contact card
               </button>
             </div>
           </form>
         </article>
 
-        <AttendeeBoard initialThreads={boardFeed} />
+        <AttendeeBoard
+          initialThreads={boardFeed}
+          initialIdentity={{
+            fullName: profile.full_name || user.email?.split("@")[0] || "Attendee",
+            email: user.email || "",
+            organization: ""
+          }}
+        />
       </section>
 
       <section className="panel detail-side-panel">

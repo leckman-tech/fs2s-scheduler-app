@@ -79,7 +79,7 @@ export async function POST(request: Request) {
 
     const { data: profile } = await supabase
       .from("profiles")
-      .select("role")
+      .select("role,full_name")
       .eq("id", user.id)
       .maybeSingle();
 
@@ -91,6 +91,12 @@ export async function POST(request: Request) {
     }
 
     const payload = (await request.json()) as AttendeeBoardAction;
+    const attendeeName =
+      profile?.full_name?.trim() ||
+      String(user.user_metadata?.full_name ?? "").trim() ||
+      user.email?.split("@")[0] ||
+      "Attendee";
+    const attendeeEmail = user.email?.trim().toLowerCase() ?? "";
     const responseToken =
       "authorToken" in payload
         ? normalizeToken(payload.authorToken)
@@ -102,16 +108,16 @@ export async function POST(request: Request) {
 
     switch (payload.action) {
       case "create-post": {
-        if (!payload.fullName?.trim() || !payload.email?.trim() || !payload.body?.trim()) {
+        if (!attendeeEmail || !payload.body?.trim()) {
           return NextResponse.json(
-            { error: "Name, email, and message are required." },
+            { error: "Your attendee account needs a valid email before you can post." },
             { status: 400 }
           );
         }
 
         const { error } = await supabase.rpc("create_attendee_board_post_with_token", {
-          p_full_name: payload.fullName.trim(),
-          p_email: payload.email.trim().toLowerCase(),
+          p_full_name: attendeeName,
+          p_email: attendeeEmail,
           p_organization: payload.organization?.trim() || null,
           p_body: payload.body.trim(),
           p_author_token: responseToken
@@ -135,17 +141,17 @@ export async function POST(request: Request) {
         break;
       }
       case "create-reply": {
-        if (!payload.postId?.trim() || !payload.fullName?.trim() || !payload.email?.trim() || !payload.body?.trim()) {
+        if (!payload.postId?.trim() || !attendeeEmail || !payload.body?.trim()) {
           return NextResponse.json(
-            { error: "Name, email, and reply are required." },
+            { error: "Your attendee account needs a valid email before you can reply." },
             { status: 400 }
           );
         }
 
         const { error } = await supabase.rpc("create_attendee_board_reply", {
           p_post_id: payload.postId.trim(),
-          p_full_name: payload.fullName.trim(),
-          p_email: payload.email.trim().toLowerCase(),
+          p_full_name: attendeeName,
+          p_email: attendeeEmail,
           p_organization: payload.organization?.trim() || null,
           p_body: payload.body.trim(),
           p_author_token: responseToken

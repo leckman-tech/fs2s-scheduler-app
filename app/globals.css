@@ -284,6 +284,7 @@ select {
   -webkit-background-clip: text;
   background-clip: text;
   isolation: isolate;
+  animation: bottom-live-label-breathe 2.2s ease-in-out infinite;
 }
 
 .bottom-live-bar__label::before {
@@ -298,6 +299,7 @@ select {
   box-shadow:
     0 8px 18px rgba(181, 18, 36, 0.18),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  animation: bottom-live-label-glow 2.2s ease-in-out infinite;
 }
 
 .bottom-live-bar__label::after {
@@ -307,6 +309,7 @@ select {
   border-radius: 999px;
   background: radial-gradient(circle, #ffb9c0 0%, #ff4b5f 72%);
   box-shadow: 0 0 0 4px rgba(255, 75, 95, 0.16);
+  animation: bottom-live-dot-pulse 1.15s ease-in-out infinite;
 }
 
 .bottom-live-bar__viewport {
@@ -357,6 +360,49 @@ select {
   }
   to {
     transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes bottom-live-label-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes bottom-live-label-glow {
+  0%,
+  100% {
+    opacity: 0.88;
+    box-shadow:
+      0 8px 18px rgba(181, 18, 36, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+  50% {
+    opacity: 1;
+    box-shadow:
+      0 10px 22px rgba(181, 18, 36, 0.26),
+      0 0 18px rgba(255, 102, 120, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  }
+}
+
+@keyframes bottom-live-dot-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.88;
+    box-shadow: 0 0 0 4px rgba(255, 75, 95, 0.16);
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+    box-shadow:
+      0 0 0 6px rgba(255, 75, 95, 0.12),
+      0 0 18px rgba(255, 95, 110, 0.28);
   }
 }
 
@@ -1796,6 +1842,32 @@ select {
   gap: 0.8rem;
 }
 
+.directory-account-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 245, 246, 0.86));
+}
+
+.directory-account-summary strong {
+  display: block;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.directory-account-summary__label {
+  display: inline-block;
+  margin-bottom: 0.32rem;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
 .sharing-choice-card {
   position: relative;
   display: grid;
@@ -3034,6 +3106,10 @@ th {
     grid-template-columns: 1fr;
   }
 
+  .directory-account-summary {
+    grid-template-columns: 1fr;
+  }
+
 }
 
 @media (max-width: 640px) {
@@ -3294,7 +3370,10 @@ th {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bottom-live-bar__track {
+  .bottom-live-bar__track,
+  .bottom-live-bar__label,
+  .bottom-live-bar__label::before,
+  .bottom-live-bar__label::after {
     animation: none;
   }
 }

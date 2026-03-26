@@ -43,7 +43,7 @@ export default async function AdminResourcesPage({
       <section className="hero-card">
         <h1>Portal documents and messaging</h1>
         <p>
-          Manage the shared attendee document library, the private speaker/presenter library, and
+          Manage the attendee account document library, the private speaker/presenter library, and
           the speaker board from one place.
         </p>
         <div className="hero-meta">
@@ -62,7 +62,7 @@ export default async function AdminResourcesPage({
         <div className="story-stat-grid">
           <article className="story-stat">
             <strong>Attendee Portal</strong>
-            <span>Shared document access for workshop, keynote, panel, and general conference files.</span>
+            <span>Individual attendee-account access for workshop, keynote, panel, and general conference files.</span>
           </article>
           <article className="story-stat">
             <strong>Speaker/Presenter Portal</strong>
@@ -144,7 +144,7 @@ export default async function AdminResourcesPage({
           <h2>Portal documents</h2>
         </div>
         <p className="muted" style={{ marginTop: 0 }}>
-          Use the audience label below to confirm whether a file appears in the shared attendee
+          Use the audience label below to confirm whether a file appears in the attendee account
           library, the private speaker/presenter library, or both.
         </p>
         <div className="resource-list">

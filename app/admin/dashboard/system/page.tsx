@@ -104,6 +104,12 @@ export default async function AdminSystemCheckPage() {
       configuredDetail: "Outgoing RSVP emails have a branded from address.",
       missingDetail: "Set RESEND_FROM_EMAIL so confirmations look polished."
     }),
+    createEnvCheck("Attendee access code", Boolean(process.env.ATTENDEE_ACCESS_CODE), {
+      required: false,
+      configuredDetail: "Attendees can create their own portal accounts with the conference access code.",
+      missingDetail:
+        "Set ATTENDEE_ACCESS_CODE if you want attendee self-registration turned on for the portal."
+    }),
     {
       label: "Vercel Analytics",
       state: "pass" as CheckState,
@@ -144,6 +150,9 @@ export default async function AdminSystemCheckPage() {
       : null,
     !process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL
       ? "Add Resend environment variables in Vercel if you want RSVP confirmation emails to go out automatically."
+      : null,
+    !process.env.ATTENDEE_ACCESS_CODE
+      ? "Add ATTENDEE_ACCESS_CODE in Vercel when you are ready to let attendees create their own portal accounts."
       : null,
     databaseChecks.some((check) => check.label === "Public form guard log" && check.state !== "pass")
       ? "Run 018_public_form_guard.sql in Supabase so the public signup forms have anti-spam protection."

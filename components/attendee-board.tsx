@@ -7,6 +7,7 @@ import { formatTimestamp } from "@/lib/utils";
 
 type AttendeeBoardProps = {
   initialThreads: AttendeeBoardThreadRecord[];
+  initialIdentity: Identity;
 };
 
 type Identity = {
@@ -21,8 +22,6 @@ type FlashState = {
 } | null;
 
 const TOKEN_KEY = "fs2s_attendee_token";
-const PROFILE_KEY = "fs2s_attendee_profile";
-
 function generateToken() {
   try {
     return crypto.randomUUID();
@@ -40,22 +39,10 @@ function syncAttendeeToken(token: string) {
   document.cookie = `fs2s_attendee_token=${token}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
 }
 
-function saveIdentity(identity: Identity) {
-  if (typeof window === "undefined") {
-    return;
-  }
-
-  localStorage.setItem(PROFILE_KEY, JSON.stringify(identity));
-}
-
-export function AttendeeBoard({ initialThreads }: AttendeeBoardProps) {
+export function AttendeeBoard({ initialThreads, initialIdentity }: AttendeeBoardProps) {
   const router = useRouter();
   const [threads, setThreads] = useState(initialThreads);
-  const [identity, setIdentity] = useState<Identity>({
-    fullName: "",
-    email: "",
-    organization: ""
-  });
+  const [identity, setIdentity] = useState<Identity>(initialIdentity);
   const [token, setToken] = useState("");
   const [newPostBody, setNewPostBody] = useState("");
   const [flash, setFlash] = useState<FlashState>(null);
@@ -72,6 +59,14 @@ export function AttendeeBoard({ initialThreads }: AttendeeBoardProps) {
   }, [initialThreads]);
 
   useEffect(() => {
+    setIdentity((current) => ({
+      ...current,
+      fullName: initialIdentity.fullName,
+      email: initialIdentity.email
+    }));
+  }, [initialIdentity.email, initialIdentity.fullName]);
+
+  useEffect(() => {
     if (typeof window === "undefined") {
       return;
     }
@@ -79,22 +74,6 @@ export function AttendeeBoard({ initialThreads }: AttendeeBoardProps) {
     const storedToken = localStorage.getItem(TOKEN_KEY) || generateToken();
     syncAttendeeToken(storedToken);
     setToken(storedToken);
-
-    const storedProfile = localStorage.getItem(PROFILE_KEY);
-    if (!storedProfile) {
-      return;
-    }
-
-    try {
-      const parsed = JSON.parse(storedProfile) as Partial<Identity>;
-      setIdentity({
-        fullName: parsed.fullName ?? "",
-        email: parsed.email ?? "",
-        organization: parsed.organization ?? ""
-      });
-    } catch {
-      // Ignore invalid saved profile data.
-    }
   }, []);
 
   async function submitAction(payload: Record<string, unknown>, successMessage?: string) {
@@ -147,18 +126,14 @@ export function AttendeeBoard({ initialThreads }: AttendeeBoardProps) {
     if (!identity.fullName.trim() || !identity.email.trim() || !newPostBody.trim()) {
       setFlash({
         tone: "error",
-        message: "Use your name, email, and a short message to publish to the attendee board."
+        message: "Your attendee account needs a name and email before you can post."
       });
       return;
     }
 
-    saveIdentity(identity);
-
     const ok = await submitAction(
       {
         action: "create-post",
-        fullName: identity.fullName,
-        email: identity.email,
         organization: identity.organization,
         body: newPostBody,
         authorToken: token
@@ -177,19 +152,15 @@ export function AttendeeBoard({ initialThreads }: AttendeeBoardProps) {
     if (!identity.fullName.trim() || !identity.email.trim() || !body) {
       setFlash({
         tone: "error",
-        message: "Use your name, email, and a reply before posting."
+        message: "Your attendee account needs a name and email before you can reply."
       });
       return;
     }
-
-    saveIdentity(identity);
 
     const ok = await submitAction(
       {
         action: "create-reply",
         postId,
-        fullName: identity.fullName,
-        email: identity.email,
         organization: identity.organization,
         body,
         authorToken: token
@@ -280,29 +251,14 @@ export function AttendeeBoard({ initialThreads }: AttendeeBoardProps) {
       ) : null}
 
       <div className="attendee-board__identity">
-        <div className="form-grid form-grid--two">
-          <div className="field">
-            <label htmlFor="attendee-board-name">Full name</label>
-            <input
-              id="attendee-board-name"
-              value={identity.fullName}
-              onChange={(event) =>
-                setIdentity((current) => ({ ...current, fullName: event.target.value }))
-              }
-              placeholder="How your post should appear"
-            />
+        <div className="directory-account-summary">
+          <div>
+            <span className="directory-account-summary__label">Posting as</span>
+            <strong>{identity.fullName}</strong>
           </div>
-          <div className="field">
-            <label htmlFor="attendee-board-email">Email</label>
-            <input
-              id="attendee-board-email"
-              type="email"
-              value={identity.email}
-              onChange={(event) =>
-                setIdentity((current) => ({ ...current, email: event.target.value }))
-              }
-              placeholder="Used for accountability only"
-            />
+          <div>
+            <span className="directory-account-summary__label">Account email</span>
+            <strong>{identity.email}</strong>
           </div>
         </div>
 
