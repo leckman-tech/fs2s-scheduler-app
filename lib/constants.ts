@@ -113,4 +113,4 @@ export const SEE_FOREVER_URL = "https://www.seeforever.org";
 export const EVENTBRITE_URL =
   "https://www.eventbrite.com/e/from-silos-to-solutions-2026-tickets-1317628495299?utm-campaign=social&utm-content=attendeeshare&utm-medium=discovery&utm-term=listing&utm-source=cp&aff=ebdsshcopyurl";
 
-export const TICKET_PROMO_CODE = "DCCIVIC";
+export const TICKET_PROMO_CODE = "FS2S26-SHARE";
