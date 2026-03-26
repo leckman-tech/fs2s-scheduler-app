@@ -131,8 +131,13 @@ export default async function AdminSystemCheckPage() {
   const passCount = allChecks.filter((check) => check.state === "pass").length;
   const warnCount = allChecks.filter((check) => check.state === "warn").length;
   const failCount = allChecks.filter((check) => check.state === "fail").length;
+  const totalChecks = allChecks.length;
+  const readinessPercent = totalChecks ? Math.round((passCount / totalChecks) * 100) : 0;
 
   const launchNotes = [
+    warnCount === 2 && !failCount
+      ? "Everything on the site is usable right now. The only missing piece is Resend, so confirmation emails will stay disabled until those Vercel variables are added."
+      : null,
     !process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL
       ? "Add Resend environment variables in Vercel if you want RSVP confirmation emails to go out automatically."
       : null,
@@ -156,6 +161,58 @@ export default async function AdminSystemCheckPage() {
           <span className="hero-pill">{passCount} passing</span>
           <span className="hero-pill">{warnCount} warning{warnCount === 1 ? "" : "s"}</span>
           <span className="hero-pill">{failCount} issue{failCount === 1 ? "" : "s"}</span>
+        </div>
+      </section>
+
+      <section className="panel">
+        <div className="section-heading">
+          <div>
+            <h2>Launch readiness snapshot</h2>
+            <p className="muted" style={{ margin: "0.35rem 0 0" }}>
+              A visual read on what is already ready, what is optional, and what still needs setup.
+            </p>
+          </div>
+        </div>
+        <div className="health-overview">
+          <article className="health-meter">
+            <div
+              className="health-meter__ring"
+              style={{
+                ["--health-progress" as "--health-progress"]: `${readinessPercent}%`
+              }}
+              aria-hidden="true"
+            >
+              <div className="health-meter__center">
+                <strong>{readinessPercent}%</strong>
+                <span>ready</span>
+              </div>
+            </div>
+            <div className="health-meter__copy">
+              <h3>Overall launch readiness</h3>
+              <p>
+                Core site functions, admin tools, and public sign-up flows are in place. Email
+                confirmations depend on the Resend setup below.
+              </p>
+            </div>
+          </article>
+
+          <div className="health-breakdown">
+            <article className="health-stat health-stat--pass">
+              <span className="health-stat__dot" aria-hidden="true" />
+              <strong>{passCount}</strong>
+              <span>Passing checks</span>
+            </article>
+            <article className="health-stat health-stat--warn">
+              <span className="health-stat__dot" aria-hidden="true" />
+              <strong>{warnCount}</strong>
+              <span>Warnings</span>
+            </article>
+            <article className="health-stat health-stat--fail">
+              <span className="health-stat__dot" aria-hidden="true" />
+              <strong>{failCount}</strong>
+              <span>Fix before launch</span>
+            </article>
+          </div>
         </div>
       </section>
 
