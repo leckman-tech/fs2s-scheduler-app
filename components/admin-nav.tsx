@@ -11,6 +11,9 @@ export function AdminNav() {
         <Link href="/admin/dashboard/system" className="button-secondary button-link">
           System Check
         </Link>
+        <Link href="/admin/dashboard/accounts" className="button-secondary button-link">
+          Accounts
+        </Link>
         <Link href="/admin/dashboard/overview" className="button-secondary button-link">
           Overview
         </Link>
