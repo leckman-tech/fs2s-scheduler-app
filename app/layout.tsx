@@ -41,7 +41,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <Link href="/learn-more">Who We Are</Link>
                 <Link href="/learn-more#faq">FAQ</Link>
                 <Link href="/attendee/login">Attendee Portal</Link>
-                <Link href="/portal/login">Speaker Portal</Link>
+                <Link href="/portal/login">Speaker/Presenter Portal</Link>
               </nav>
               <div className="site-header__actions">
                 <a href={EVENTBRITE_URL} className="site-nav__cta" target="_blank" rel="noreferrer">
