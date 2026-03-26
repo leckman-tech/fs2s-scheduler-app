@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import {
+  CONVENING_DIRECTOR_EMAIL,
+  CONVENING_DIRECTOR_NAME,
+  CONVENING_DIRECTOR_PHONE,
   EVENTBRITE_URL,
   SEE_FOREVER_URL,
   SEO_OG_IMAGE,
@@ -164,12 +167,22 @@ export function getEventStructuredData() {
         logo: `${SITE_URL}/icon`,
         description:
           "Scholar-centered education, advocacy, and opportunity-building work that grounds From Silos to Solutions.",
-        sameAs: [SEE_FOREVER_URL]
+        sameAs: [SEE_FOREVER_URL],
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "customer support",
+            email: CONVENING_DIRECTOR_EMAIL,
+            telephone: CONVENING_DIRECTOR_PHONE,
+            areaServed: "US",
+            availableLanguage: "English"
+          }
+        ]
       },
       {
         "@type": "Person",
         "@id": `${SITE_URL}/#levi-eckman`,
-        name: "Levi W. Eckman, J.D.",
+        name: CONVENING_DIRECTOR_NAME,
         jobTitle: "Convening Director and Administrator, From Silos to Solutions 2026",
         url: `${SITE_URL}/learn-more`,
         worksFor: {

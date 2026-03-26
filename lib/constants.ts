@@ -109,6 +109,11 @@ export const SITE_DESCRIPTION =
   "From Silos to Solutions 2026 is a national convening in Washington, D.C. focused on coordinating supports for opportunity and justice-involved youth and young adults through partnership, advocacy, and scholar-centered practice.";
 export const SEO_OG_IMAGE = "/fs2s/fs2s-room-wide.jpg";
 export const SEE_FOREVER_URL = "https://www.seeforever.org";
+export const CONVENING_DIRECTOR_NAME = "Levi W. Eckman, J.D.";
+export const CONVENING_DIRECTOR_TITLE = "Convening Director";
+export const CONVENING_DIRECTOR_EMAIL = "ConferenceDirector@SeeForever.org";
+export const CONVENING_DIRECTOR_PHONE = "(202) 838-7879";
+export const CONVENING_DIRECTOR_PHONE_LINK = "tel:+12028387879";
 
 export const EVENTBRITE_URL =
   "https://www.eventbrite.com/e/from-silos-to-solutions-2026-tickets-1317628495299?utm-campaign=social&utm-content=attendeeshare&utm-medium=discovery&utm-term=listing&utm-source=cp&aff=ebdsshcopyurl";
