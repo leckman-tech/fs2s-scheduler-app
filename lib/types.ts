@@ -142,9 +142,10 @@ export type SessionSignupRecord = {
 
 export type LobbyDaySignupRecord = {
   id: string;
+  account_id?: string | null;
   full_name: string;
   email: string;
-  phone: string;
+  phone: string | null;
   organization: string | null;
   created_at: string;
 };
@@ -173,6 +174,8 @@ export type HappyHourRsvpSummaryRecord = {
 
 export type AttendeeBoardPostRecord = {
   id: string;
+  account_id?: string | null;
+  room?: string | null;
   full_name: string;
   email: string;
   organization: string | null;
@@ -212,6 +215,7 @@ export type AttendeeAccountAdminRecord = {
 export type AttendeeBoardReplyRecord = {
   id: string;
   post_id: string;
+  account_id?: string | null;
   full_name: string;
   email: string;
   organization: string | null;
@@ -223,6 +227,8 @@ export type AttendeeBoardReplyRecord = {
 
 export type AttendeeBoardThreadRecord = {
   id: string;
+  account_id?: string | null;
+  room?: string | null;
   full_name: string;
   email: string;
   organization: string | null;

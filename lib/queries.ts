@@ -187,9 +187,10 @@ type SessionSignupRow = {
 
 type LobbyDaySignupRow = {
   id: string;
+  account_id?: string | null;
   full_name: string;
   email: string;
-  phone: string;
+  phone: string | null;
   organization: string | null;
   created_at: string;
 };
@@ -207,6 +208,8 @@ type HappyHourRsvpRow = {
 
 type AttendeeBoardPostRow = {
   id: string;
+  account_id?: string | null;
+  room?: string | null;
   full_name: string;
   email: string;
   organization: string | null;
@@ -234,6 +237,7 @@ type AttendeeDirectoryEntryRow = {
 type AttendeeBoardReplyRow = {
   id: string;
   post_id: string;
+  account_id?: string | null;
   full_name: string;
   email: string;
   organization: string | null;
@@ -379,6 +383,8 @@ function mapHappyHourRsvp(row: HappyHourRsvpRow): HappyHourRsvpRecord {
 function mapAttendeeBoardPost(row: AttendeeBoardPostRow): AttendeeBoardPostRecord {
   return {
     id: row.id,
+    account_id: row.account_id ?? null,
+    room: row.room ?? "Community Lounge",
     full_name: row.full_name,
     email: row.email,
     organization: row.organization,
@@ -729,11 +735,22 @@ export const requireAttendeePortalUser = cache(async () => {
     redirect("/attendee/login");
   }
 
-  const { data: profile } = await supabase
+  let { data: profile } = await supabase
     .from("profiles")
     .select("role,full_name")
     .eq("id", user.id)
     .maybeSingle();
+
+  if (!profile?.role) {
+    await supabase.rpc("ensure_attendee_profile");
+    const profileRefresh = await supabase
+      .from("profiles")
+      .select("role,full_name")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    profile = profileRefresh.data ?? null;
+  }
 
   if (
     !profile ||
@@ -880,18 +897,33 @@ export const getAttendeeBoardPosts = cache(async () => {
 
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase
+    const primaryResponse = await supabase
       .from("attendee_board_posts")
-      .select("id,full_name,email,organization,body,published,created_at")
+      .select("id,account_id,room,full_name,email,organization,body,published,created_at,updated_at")
       .eq("published", true)
       .order("created_at", { ascending: false });
 
-    if (error) {
-      console.error(error);
+    if (primaryResponse.error && isMissingAttendeeBoardEngagementError(primaryResponse.error)) {
+      const fallbackResponse = await supabase
+        .from("attendee_board_posts")
+        .select("id,full_name,email,organization,body,published,created_at,updated_at")
+        .eq("published", true)
+        .order("created_at", { ascending: false });
+
+      if (fallbackResponse.error) {
+        console.error(fallbackResponse.error);
+        return [] as AttendeeBoardPostRecord[];
+      }
+
+      return ((fallbackResponse.data as AttendeeBoardPostRow[]) ?? []).map(mapAttendeeBoardPost);
+    }
+
+    if (primaryResponse.error) {
+      console.error(primaryResponse.error);
       return [] as AttendeeBoardPostRecord[];
     }
 
-    return ((data as AttendeeBoardPostRow[]) ?? []).map(mapAttendeeBoardPost);
+    return ((primaryResponse.data as AttendeeBoardPostRow[]) ?? []).map(mapAttendeeBoardPost);
   } catch (error) {
     console.error(error);
     return [] as AttendeeBoardPostRecord[];
@@ -899,26 +931,27 @@ export const getAttendeeBoardPosts = cache(async () => {
 });
 
 export const getAttendeeBoardFeed = cache(async () => {
-  await requireAttendeePortalUser();
+  const { user } = await requireAttendeePortalUser();
 
   try {
     const supabase = await createClient();
     const cookieStore = await cookies();
     const viewerToken = cookieStore.get("fs2s_attendee_token")?.value ?? null;
+    const viewerAccountId = user.id;
 
     let posts: AttendeeBoardPostRow[] = [];
     let postsError: unknown = null;
 
     const primaryPostsResponse = await supabase
       .from("attendee_board_posts")
-      .select("id,full_name,email,organization,body,published,created_at,updated_at,author_token")
+      .select("id,account_id,room,full_name,email,organization,body,published,created_at,updated_at,author_token")
       .eq("published", true)
       .order("created_at", { ascending: false });
 
     if (primaryPostsResponse.error && isMissingAttendeeBoardEngagementError(primaryPostsResponse.error)) {
       const fallbackPostsResponse = await supabase
         .from("attendee_board_posts")
-        .select("id,full_name,email,organization,body,published,created_at")
+        .select("id,full_name,email,organization,body,published,created_at,updated_at")
         .eq("published", true)
         .order("created_at", { ascending: false });
 
@@ -939,7 +972,7 @@ export const getAttendeeBoardFeed = cache(async () => {
 
     const { data: repliesData, error: repliesError } = await supabase
       .from("attendee_board_replies")
-      .select("id,post_id,full_name,email,organization,body,created_at,updated_at,author_token")
+      .select("id,post_id,account_id,full_name,email,organization,body,created_at,updated_at,author_token")
       .eq("published", true)
       .order("created_at", { ascending: true });
 
@@ -969,13 +1002,17 @@ export const getAttendeeBoardFeed = cache(async () => {
       const item: AttendeeBoardReplyRecord = {
         id: reply.id,
         post_id: reply.post_id,
+        account_id: reply.account_id ?? null,
         full_name: reply.full_name,
         email: reply.email,
         organization: reply.organization,
         body: reply.body,
         created_at: reply.created_at,
         updated_at: reply.updated_at ?? null,
-        canEdit: Boolean(viewerToken && reply.author_token === viewerToken)
+        canEdit: Boolean(
+          (viewerAccountId && reply.account_id === viewerAccountId) ||
+            (viewerToken && reply.author_token === viewerToken)
+        )
       };
 
       acc[reply.post_id] = acc[reply.post_id] ? [...acc[reply.post_id], item] : [item];
@@ -996,13 +1033,18 @@ export const getAttendeeBoardFeed = cache(async () => {
 
     return ((posts as AttendeeBoardPostRow[]) ?? []).map((post) => ({
       id: post.id,
+      account_id: post.account_id ?? null,
+      room: post.room ?? "Community Lounge",
       full_name: post.full_name,
       email: post.email,
       organization: post.organization,
       body: post.body,
       created_at: post.created_at,
       updated_at: post.updated_at ?? null,
-      canEdit: Boolean(viewerToken && post.author_token && post.author_token === viewerToken),
+      canEdit: Boolean(
+        (viewerAccountId && post.account_id === viewerAccountId) ||
+          (viewerToken && post.author_token && post.author_token === viewerToken)
+      ),
       likedByViewer: likesByPost[post.id]?.likedByViewer ?? false,
       likeCount: likesByPost[post.id]?.count ?? 0,
       replies: repliesByPost[post.id] ?? []
@@ -1450,7 +1492,7 @@ export const getAdminLobbyDaySignups = cache(async () => {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("lobby_day_signups")
-      .select("id,full_name,email,phone,organization,created_at")
+      .select("id,account_id,full_name,email,phone,organization,created_at")
       .order("created_at", { ascending: false });
 
     if (error) {

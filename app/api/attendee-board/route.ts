@@ -7,23 +7,26 @@ import { createClient } from "@/lib/supabase/server";
 type AttendeeBoardAction =
   | {
       action: "create-post";
-      fullName?: string;
-      email?: string;
       organization?: string;
       body?: string;
+      room?: string;
       authorToken?: string;
     }
   | {
       action: "update-post";
       postId?: string;
       body?: string;
+      room?: string;
+      authorToken?: string;
+    }
+  | {
+      action: "delete-post";
+      postId?: string;
       authorToken?: string;
     }
   | {
       action: "create-reply";
       postId?: string;
-      fullName?: string;
-      email?: string;
       organization?: string;
       body?: string;
       authorToken?: string;
@@ -32,6 +35,11 @@ type AttendeeBoardAction =
       action: "update-reply";
       replyId?: string;
       body?: string;
+      authorToken?: string;
+    }
+  | {
+      action: "delete-reply";
+      replyId?: string;
       authorToken?: string;
     }
   | {
@@ -59,9 +67,13 @@ function isCommunitySetupError(error: unknown) {
     "attendee_board_likes",
     "create_attendee_board_post_with_token",
     "update_attendee_board_post",
+    "delete_attendee_board_post",
     "create_attendee_board_reply",
     "update_attendee_board_reply",
+    "delete_attendee_board_reply",
     "toggle_attendee_board_like",
+    "account_id",
+    "room",
     "schema cache"
   ].some((fragment) => message.includes(fragment));
 }
@@ -120,10 +132,22 @@ export async function POST(request: Request) {
           p_email: attendeeEmail,
           p_organization: payload.organization?.trim() || null,
           p_body: payload.body.trim(),
-          p_author_token: responseToken
+          p_author_token: responseToken,
+          p_room: payload.room?.trim() || null
         });
 
-        rpcError = error;
+        if (error && isCommunitySetupError(error)) {
+          const fallback = await supabase.rpc("create_attendee_board_post_with_token", {
+            p_full_name: attendeeName,
+            p_email: attendeeEmail,
+            p_organization: payload.organization?.trim() || null,
+            p_body: payload.body.trim(),
+            p_author_token: responseToken
+          });
+          rpcError = fallback.error;
+        } else {
+          rpcError = error;
+        }
         break;
       }
       case "update-post": {
@@ -134,6 +158,29 @@ export async function POST(request: Request) {
         const { error } = await supabase.rpc("update_attendee_board_post", {
           p_post_id: payload.postId.trim(),
           p_body: payload.body.trim(),
+          p_author_token: responseToken,
+          p_room: payload.room?.trim() || null
+        });
+
+        if (error && isCommunitySetupError(error)) {
+          const fallback = await supabase.rpc("update_attendee_board_post", {
+            p_post_id: payload.postId.trim(),
+            p_body: payload.body.trim(),
+            p_author_token: responseToken
+          });
+          rpcError = fallback.error;
+        } else {
+          rpcError = error;
+        }
+        break;
+      }
+      case "delete-post": {
+        if (!payload.postId?.trim()) {
+          return NextResponse.json({ error: "Choose a post to delete first." }, { status: 400 });
+        }
+
+        const { error } = await supabase.rpc("delete_attendee_board_post", {
+          p_post_id: payload.postId.trim(),
           p_author_token: responseToken
         });
 
@@ -168,6 +215,19 @@ export async function POST(request: Request) {
         const { error } = await supabase.rpc("update_attendee_board_reply", {
           p_reply_id: payload.replyId.trim(),
           p_body: payload.body.trim(),
+          p_author_token: responseToken
+        });
+
+        rpcError = error;
+        break;
+      }
+      case "delete-reply": {
+        if (!payload.replyId?.trim()) {
+          return NextResponse.json({ error: "Choose a reply to delete first." }, { status: 400 });
+        }
+
+        const { error } = await supabase.rpc("delete_attendee_board_reply", {
+          p_reply_id: payload.replyId.trim(),
           p_author_token: responseToken
         });
 
