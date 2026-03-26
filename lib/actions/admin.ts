@@ -11,6 +11,7 @@ import {
   SESSION_CATEGORIES,
   SESSION_STATUSES
 } from "@/lib/constants";
+import { toPublicErrorMessage, toRedirectErrorParam } from "@/lib/public-errors";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin, requireAttendeePortalUser } from "@/lib/queries";
 import { toSlug } from "@/lib/utils";
@@ -762,7 +763,13 @@ export async function postAttendeeBoardMessage(formData: FormData) {
         "/attendee?error=Attendee%20community%20is%20not%20enabled%20in%20Supabase%20yet.%20Run%20the%20015_attendee_board_engagement.sql%20migration%20first."
       );
     }
-    redirect(`/attendee?error=${encodeURIComponent(error.message)}`);
+    redirect(
+      `/attendee?error=${toRedirectErrorParam(
+        toPublicErrorMessage(error, {
+          fallback: "We couldn't publish your attendee board post right now. Please try again."
+        })
+      )}`
+    );
   }
 
   revalidatePath("/attendee");
@@ -809,7 +816,13 @@ export async function saveAttendeeDirectoryEntry(formData: FormData) {
         "/attendee?error=Attendee%20directory%20is%20not%20enabled%20in%20Supabase%20yet.%20Run%20the%20015_attendee_board_engagement.sql%20migration%20first."
       );
     }
-    redirect(`/attendee?error=${encodeURIComponent(error.message)}`);
+    redirect(
+      `/attendee?error=${toRedirectErrorParam(
+        toPublicErrorMessage(error, {
+          fallback: "We couldn't save your attendee contact entry right now. Please try again."
+        })
+      )}`
+    );
   }
 
   revalidatePath("/attendee");
