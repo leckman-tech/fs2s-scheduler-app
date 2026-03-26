@@ -1608,6 +1608,45 @@ select {
   gap: 0.8rem;
 }
 
+.directory-card--collapsible {
+  padding: 0;
+  overflow: hidden;
+}
+
+.directory-card__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 1rem 1.05rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.directory-card__summary::-webkit-details-marker {
+  display: none;
+}
+
+.directory-card__summary strong {
+  font-size: 1.02rem;
+  letter-spacing: -0.02em;
+}
+
+.directory-card__summary .chip {
+  flex-shrink: 0;
+}
+
+.directory-card__expanded {
+  display: grid;
+  gap: 0.9rem;
+  padding: 0 1.05rem 1rem;
+  border-top: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.directory-card__meta {
+  margin-top: -0.05rem;
+}
+
 .directory-card__header {
   display: flex;
   align-items: flex-start;
@@ -2455,6 +2494,11 @@ th {
   }
 
   .directory-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .directory-card__summary {
     flex-direction: column;
     align-items: flex-start;
   }
