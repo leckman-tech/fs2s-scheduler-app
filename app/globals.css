@@ -1837,6 +1837,18 @@ select {
   gap: 1rem;
 }
 
+.attendee-portal-card {
+  gap: 1.15rem;
+}
+
+.attendee-contact-form {
+  gap: 1rem;
+}
+
+.attendee-contact-form__sharing {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .sharing-choice-grid {
   display: grid;
   gap: 0.8rem;
@@ -2285,8 +2297,8 @@ select {
 
 .attendee-board__workspace {
   display: grid;
-  grid-template-columns: minmax(280px, 330px) minmax(0, 1fr);
-  gap: 1rem;
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  gap: 1.2rem;
   align-items: start;
 }
 
@@ -2304,7 +2316,7 @@ select {
 }
 
 .attendee-board__module {
-  padding: 1rem;
+  padding: 1.15rem;
   border: 1px solid rgba(17, 17, 17, 0.08);
   border-radius: 24px;
   background:
@@ -2368,8 +2380,8 @@ select {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1.1rem 1.15rem;
+  gap: 1.25rem;
+  padding: 1.2rem 1.25rem;
   border-radius: 24px;
   border: 1px solid rgba(17, 17, 17, 0.08);
   background:
@@ -2379,14 +2391,15 @@ select {
 
 .attendee-board__room-hero h3 {
   margin: 0.22rem 0 0.35rem;
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-size: clamp(1.05rem, 1.65vw, 1.45rem);
   line-height: 1.02;
   letter-spacing: -0.04em;
+  max-width: 13ch;
 }
 
 .attendee-board__room-hero p {
   margin: 0;
-  max-width: 56ch;
+  max-width: 40ch;
 }
 
 .attendee-board__room-stats {
@@ -2399,6 +2412,11 @@ select {
 .attendee-board__feed {
   display: grid;
   gap: 0.9rem;
+}
+
+.attendee-board__feed .empty-state {
+  min-height: 180px;
+  place-items: center;
 }
 
 .attendee-thread {
@@ -3406,6 +3424,10 @@ th {
   }
 
   .community-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .attendee-contact-form__sharing {
     grid-template-columns: 1fr;
   }
 

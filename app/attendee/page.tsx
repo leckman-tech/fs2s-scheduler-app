@@ -4,6 +4,7 @@ import { LogoutButton } from "@/components/logout-button";
 import { saveAttendeeDirectoryEntry } from "@/lib/actions/admin";
 import {
   getAttendeeBoardFeed,
+  getCurrentAttendeeDirectoryEntry,
   getAttendeeDirectoryEntries,
   getAttendeePortalResources,
   requireAttendeePortalUser
@@ -30,11 +31,12 @@ export default async function AttendeePortalPage({
   searchParams: Promise<{ error?: string; success?: string }>;
 }) {
   const params = await searchParams;
-  const [{ profile, user }, resources, boardFeed, directoryEntries] = await Promise.all([
+  const [{ profile, user }, resources, boardFeed, directoryEntries, currentDirectoryEntry] = await Promise.all([
     requireAttendeePortalUser(),
     getAttendeePortalResources(),
     getAttendeeBoardFeed(),
-    getAttendeeDirectoryEntries()
+    getAttendeeDirectoryEntries(),
+    getCurrentAttendeeDirectoryEntry()
   ]);
 
   const grouped = resources.reduce<Record<string, typeof resources>>((acc, resource) => {
@@ -103,98 +105,116 @@ export default async function AttendeePortalPage({
       {params.error ? <div className="empty-state">{params.error}</div> : null}
       {params.success ? <div className="announcement announcement--urgent">{params.success}</div> : null}
 
-      <section className="community-grid">
-        <article className="panel detail-side-panel">
-          <div className="section-heading">
+      <section className="panel detail-side-panel attendee-portal-card">
+        <div className="section-heading">
+          <div>
+            <h2>Your contact card</h2>
+            <p className="muted" style={{ margin: "0.35rem 0 0" }}>
+              Your account email is already on file for planners. Add the details you want to
+              share, save them once, and decide whether other attendees should see your card in the
+              live directory.
+            </p>
+          </div>
+        </div>
+
+        <form action={saveAttendeeDirectoryEntry} className="form-grid attendee-contact-form">
+          <div className="directory-account-summary">
             <div>
-              <h2>Your contact card</h2>
-              <p className="muted" style={{ margin: "0.35rem 0 0" }}>
-                Your account email is already on file for planners. Add the details you want to
-                share and decide whether other attendees should see your card in the live directory.
-              </p>
+              <span className="directory-account-summary__label">Account name</span>
+              <strong>{profile.full_name || "Attendee"}</strong>
+            </div>
+            <div>
+              <span className="directory-account-summary__label">Account email</span>
+              <strong>{user.email}</strong>
             </div>
           </div>
 
-          <form action={saveAttendeeDirectoryEntry} className="form-grid">
-            <div className="directory-account-summary">
-              <div>
-                <span className="directory-account-summary__label">Account name</span>
-                <strong>{profile.full_name || "Attendee"}</strong>
-              </div>
-              <div>
-                <span className="directory-account-summary__label">Account email</span>
-                <strong>{user.email}</strong>
-              </div>
-            </div>
-
-            <div className="form-grid form-grid--two">
-              <div className="field">
-                <label htmlFor="attendee-directory-phone">Phone number</label>
-                <input id="attendee-directory-phone" name="phone" type="tel" />
-              </div>
-              <div className="field">
-                <label htmlFor="attendee-directory-title">Title</label>
-                <input id="attendee-directory-title" name="title" placeholder="Optional" />
-              </div>
-            </div>
-
+          <div className="form-grid form-grid--two">
             <div className="field">
-              <label htmlFor="attendee-directory-organization">Organization</label>
+              <label htmlFor="attendee-directory-phone">Phone number</label>
               <input
-                id="attendee-directory-organization"
-                name="organization"
-                placeholder="Optional"
+                id="attendee-directory-phone"
+                name="phone"
+                type="tel"
+                defaultValue={currentDirectoryEntry?.phone ?? ""}
               />
             </div>
-
-            <div className="sharing-choice-grid">
-              <label className="sharing-choice-card">
-                <input type="checkbox" name="share_with_planners" defaultChecked />
-                <span className="sharing-choice-card__box" aria-hidden="true" />
-                <span className="sharing-choice-card__content">
-                  <strong>Share with planners</strong>
-                  <span>
-                    Let the FS2S team keep your information for logistics, follow-up, and future
-                    planning.
-                  </span>
-                </span>
-              </label>
-              <label className="sharing-choice-card">
-                <input type="checkbox" name="share_with_attendees" />
-                <span className="sharing-choice-card__box" aria-hidden="true" />
-                <span className="sharing-choice-card__content">
-                  <strong>Share with attendees</strong>
-                  <span>
-                    Add me to the live attendee directory below so people can connect with me
-                    directly.
-                  </span>
-                </span>
-              </label>
+            <div className="field">
+              <label htmlFor="attendee-directory-title">Title</label>
+              <input
+                id="attendee-directory-title"
+                name="title"
+                placeholder="Optional"
+                defaultValue={currentDirectoryEntry?.title ?? ""}
+              />
             </div>
+          </div>
 
-            <p className="field-hint">
-              Only the information you opt to share with attendees will appear in the live
-              directory below. Planner access can stay on even if you do not want to appear in the
-              attendee-facing list.
-            </p>
+          <div className="field">
+            <label htmlFor="attendee-directory-organization">Organization</label>
+            <input
+              id="attendee-directory-organization"
+              name="organization"
+              placeholder="Optional"
+              defaultValue={currentDirectoryEntry?.organization ?? ""}
+            />
+          </div>
 
-            <div className="admin-actions">
-              <button type="submit" className="button">
-                Update contact card
-              </button>
-            </div>
-          </form>
-        </article>
+          <div className="sharing-choice-grid attendee-contact-form__sharing">
+            <label className="sharing-choice-card">
+              <input
+                type="checkbox"
+                name="share_with_planners"
+                defaultChecked={currentDirectoryEntry?.share_with_planners ?? true}
+              />
+              <span className="sharing-choice-card__box" aria-hidden="true" />
+              <span className="sharing-choice-card__content">
+                <strong>Share with planners</strong>
+                <span>
+                  Let the FS2S team keep your information for logistics, follow-up, and future
+                  planning.
+                </span>
+              </span>
+            </label>
+            <label className="sharing-choice-card">
+              <input
+                type="checkbox"
+                name="share_with_attendees"
+                defaultChecked={currentDirectoryEntry?.share_with_attendees ?? false}
+              />
+              <span className="sharing-choice-card__box" aria-hidden="true" />
+              <span className="sharing-choice-card__content">
+                <strong>Share with attendees</strong>
+                <span>
+                  Add me to the live attendee directory below so people can connect with me
+                  directly.
+                </span>
+              </span>
+            </label>
+          </div>
 
-        <AttendeeBoard
-          initialThreads={boardFeed}
-          initialIdentity={{
-            fullName: profile.full_name || user.email?.split("@")[0] || "Attendee",
-            email: user.email || "",
-            organization: ""
-          }}
-        />
+          <p className="field-hint">
+            Only the information you opt to share with attendees will appear in the live
+            directory below. Planner access can stay on even if you do not want to appear in the
+            attendee-facing list.
+          </p>
+
+          <div className="admin-actions">
+            <button type="submit" className="button">
+              Save contact card
+            </button>
+          </div>
+        </form>
       </section>
+
+      <AttendeeBoard
+        initialThreads={boardFeed}
+        initialIdentity={{
+          fullName: profile.full_name || user.email?.split("@")[0] || "Attendee",
+          email: user.email || "",
+          organization: currentDirectoryEntry?.organization ?? ""
+        }}
+      />
 
       <section className="panel detail-side-panel">
         <div className="section-heading">
