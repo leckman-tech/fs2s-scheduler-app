@@ -26,6 +26,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.72
     },
     {
+      url: `${SITE_URL}/levi-w-eckman`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.76
+    },
+    {
       url: `${SITE_URL}/lobby-day`,
       lastModified: now,
       changeFrequency: "weekly",

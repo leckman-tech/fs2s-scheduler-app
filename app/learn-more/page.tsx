@@ -364,6 +364,11 @@ export default function LearnMorePage() {
               funding and accountability for how public resources are invested in young people and
               their communities.
             </p>
+            <div className="hero-actions">
+              <Link href="/levi-w-eckman" className="button-secondary button-link">
+                Read Levi&apos;s leadership profile
+              </Link>
+            </div>
           </div>
         </article>
 

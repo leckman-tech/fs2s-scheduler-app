@@ -9,9 +9,9 @@ import { getConferenceDays, getPublicAnnouncements, getPublicSessions } from "@/
 import { buildMetadata, getEventStructuredData } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "National Convening in Washington, D.C.",
+  title: "From Silos to Solutions 2026 (FS2S) | Washington, D.C. Convening",
   description:
-    "From Silos to Solutions 2026 is a Washington, D.C. convening focused on improving coordination, support, and opportunity for justice-involved youth and young adults. The convening is hosted by the See Forever Foundation and Maya Angelou Schools and led by Convening Director Levi W. Eckman, J.D.",
+    "From Silos to Solutions 2026 (FS2S), also known as Silos to Solutions, is a Washington, D.C. convening focused on improving coordination, support, and opportunity for justice-involved youth and young adults. The convening is hosted by the See Forever Foundation and Maya Angelou Schools and led by Convening Director Levi W. Eckman, J.D.",
   path: "/"
 });
 

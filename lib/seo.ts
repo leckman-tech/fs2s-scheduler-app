@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import {
   CONVENING_DIRECTOR_EMAIL,
   CONVENING_DIRECTOR_NAME,
+  CONVENING_DIRECTOR_TITLE,
   CONVENING_DIRECTOR_PHONE,
   EVENTBRITE_URL,
   SEE_FOREVER_URL,
@@ -19,6 +20,9 @@ const ogImage = {
   height: 630,
   alt: `${SITE_NAME} convening`
 };
+
+const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION?.trim();
+const bingSiteVerification = process.env.BING_SITE_VERIFICATION?.trim();
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -38,9 +42,14 @@ export const siteMetadata: Metadata = {
     "From Silos to Solutions",
     "FS2S",
     "FS2S 2026",
+    "Silos",
+    "Silos to Solutions",
+    "From Silos to Solutions conference",
+    "From Silos to Solutions Washington DC",
     "Power Through Partnerships",
     "Levi W. Eckman",
     "Levi W. Eckman J.D.",
+    "Levi Eckman",
     "See Forever Foundation",
     "Maya Angelou Schools",
     "justice-involved youth",
@@ -66,10 +75,20 @@ export const siteMetadata: Metadata = {
     }
   },
   title: {
-    default: `${SITE_NAME} | National Convening in Washington, D.C.`,
+    default: `${SITE_NAME} (FS2S) | National Convening in Washington, D.C.`,
     template: `%s | ${SITE_NAME}`
   },
   description: SITE_DESCRIPTION,
+  verification: {
+    ...(googleSiteVerification ? { google: googleSiteVerification } : {}),
+    ...(bingSiteVerification
+      ? {
+          other: {
+            "msvalidate.01": bingSiteVerification
+          }
+        }
+      : {})
+  },
   other: {
     "theme-color": "#c1121f"
   },
@@ -77,13 +96,13 @@ export const siteMetadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} | National Convening in Washington, D.C.`,
+    title: `${SITE_NAME} (FS2S) | National Convening in Washington, D.C.`,
     description: SITE_DESCRIPTION,
     images: [ogImage]
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} | National Convening in Washington, D.C.`,
+    title: `${SITE_NAME} (FS2S) | National Convening in Washington, D.C.`,
     description: SITE_DESCRIPTION,
     images: [SEO_OG_IMAGE]
   }
@@ -156,8 +175,11 @@ export function getEventStructuredData() {
         "@type": "WebSite",
         "@id": `${SITE_URL}/#website`,
         name: SITE_NAME,
+        alternateName: ["FS2S", "From Silos to Solutions", "Silos to Solutions"],
         url: SITE_URL,
-        description: SITE_DESCRIPTION
+        description: SITE_DESCRIPTION,
+        keywords:
+          "From Silos to Solutions, FS2S, Silos to Solutions, Power Through Partnerships, Washington DC convening"
       },
       {
         "@type": "Organization",
@@ -184,7 +206,7 @@ export function getEventStructuredData() {
         "@id": `${SITE_URL}/#levi-eckman`,
         name: CONVENING_DIRECTOR_NAME,
         jobTitle: "Convening Director and Administrator, From Silos to Solutions 2026",
-        url: `${SITE_URL}/learn-more`,
+        url: `${SITE_URL}/levi-w-eckman`,
         worksFor: {
           "@id": `${SITE_URL}/#organization`
         },
@@ -195,6 +217,7 @@ export function getEventStructuredData() {
         "@type": "Event",
         "@id": `${SITE_URL}/#event`,
         name: SITE_NAME,
+        alternateName: ["FS2S 2026", "From Silos to Solutions", "Silos to Solutions"],
         description:
           "Power Through Partnerships: a convening to coordinate supports for opportunity and justice-involved youth and young adults.",
         url: SITE_URL,
@@ -267,6 +290,73 @@ export function getLeadershipStructuredData() {
         },
         description:
           "Dr. Clarisse Mendoza-Davis leads the broader organizational work that grounds From Silos to Solutions in scholar-centered education and advocacy."
+      }
+    ]
+  };
+}
+
+export function getLeviProfileStructuredData() {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfilePage",
+        "@id": `${SITE_URL}/levi-w-eckman#profile`,
+        url: `${SITE_URL}/levi-w-eckman`,
+        name: `${CONVENING_DIRECTOR_NAME} | ${CONVENING_DIRECTOR_TITLE}`,
+        description:
+          "Leadership profile for Levi W. Eckman, J.D., Convening Director of From Silos to Solutions 2026."
+      },
+      {
+        "@type": "Person",
+        "@id": `${SITE_URL}/levi-w-eckman#person`,
+        name: CONVENING_DIRECTOR_NAME,
+        givenName: "Levi",
+        familyName: "Eckman",
+        honorificSuffix: "J.D.",
+        jobTitle: `${CONVENING_DIRECTOR_TITLE}, From Silos to Solutions 2026`,
+        email: CONVENING_DIRECTOR_EMAIL,
+        telephone: CONVENING_DIRECTOR_PHONE,
+        url: `${SITE_URL}/levi-w-eckman`,
+        worksFor: {
+          "@type": "Organization",
+          name: "From Silos to Solutions 2026"
+        },
+        knowsAbout: [
+          "From Silos to Solutions",
+          "FS2S",
+          "opportunity youth",
+          "justice-involved youth",
+          "education advocacy",
+          "public funding accountability",
+          "educational equity",
+          "Washington, D.C. advocacy"
+        ],
+        description:
+          "Levi W. Eckman, J.D. serves as Convening Director and Administrator for From Silos to Solutions 2026, with work focused on educational equity, advocacy, public funding accountability, and support for opportunity and justice-involved youth and young adults."
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: SITE_URL
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Who We Are",
+            item: `${SITE_URL}/learn-more`
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: CONVENING_DIRECTOR_NAME,
+            item: `${SITE_URL}/levi-w-eckman`
+          }
+        ]
       }
     ]
   };

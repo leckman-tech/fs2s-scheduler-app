@@ -8,13 +8,13 @@ export function LiveUpdatesTicker({
 }: {
   announcements: AnnouncementRecord[];
 }) {
-  const [visible, setVisible] = useState<boolean | null>(null);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    setVisible(window.localStorage.getItem("fs2s-live-updates-dismissed") !== "true");
-  }, []);
+    setVisible(true);
+  }, [announcements.length]);
 
-  if (!announcements.length || visible === false || visible === null) {
+  if (!announcements.length || !visible) {
     return null;
   }
 
@@ -23,7 +23,6 @@ export function LiveUpdatesTicker({
   const remainingCount = Math.max(announcements.length - 1, 0);
 
   const dismiss = () => {
-    window.localStorage.setItem("fs2s-live-updates-dismissed", "true");
     setVisible(false);
   };
 
