@@ -52,6 +52,10 @@ export function AttendeePasswordResetForm() {
           onChange={(event) => setPassword(event.target.value)}
           required
         />
+        <p className="field-hint">
+          Use at least 8 characters. A mix of uppercase and lowercase letters, a number, and a
+          symbol is recommended.
+        </p>
       </div>
       <div className="field">
         <label htmlFor="attendee-confirm-password">Confirm new password</label>

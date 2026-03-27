@@ -91,6 +91,10 @@ export default async function AttendeeLoginPage({
             <div className="field">
               <label htmlFor="create-password">Password</label>
               <input id="create-password" name="password" type="password" required minLength={8} />
+              <p className="field-hint">
+                Use at least 8 characters. A mix of uppercase and lowercase letters, a number, and
+                a symbol is recommended.
+              </p>
             </div>
             <div className="field">
               <label htmlFor="create-confirm-password">Confirm password</label>
@@ -121,6 +125,10 @@ export default async function AttendeeLoginPage({
             {selfServeEnabled
               ? "Your email will be added to the planner-side attendee roster automatically. You can add phone, organization, and sharing preferences after you sign in."
               : "Attendee self-registration is being finalized. If you need access right now, contact the conference team and they can help you get in quickly."}
+          </p>
+          <p className="field-hint" style={{ marginTop: "-0.15rem" }}>
+            Most accounts are ready right away. If the portal asks you to confirm your email first,
+            that usually takes less than a minute once you click the link in your inbox.
           </p>
         </form>
       </section>

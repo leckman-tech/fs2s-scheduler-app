@@ -82,7 +82,7 @@ export const USER_ROLES = [
   "admin"
 ] as const;
 
-export const ATTENDEE_PORTAL_ROLES = ["attendee"] as const;
+export const ATTENDEE_PORTAL_ROLES = ["attendee", "admin"] as const;
 
 export const SPEAKER_PORTAL_ROLES = [
   "speaker",
