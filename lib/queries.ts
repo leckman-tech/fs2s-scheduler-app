@@ -1080,6 +1080,35 @@ export const getAttendeeDirectoryEntries = cache(async () => {
   }
 });
 
+export const getCurrentAttendeeDirectoryEntry = cache(async () => {
+  const { user } = await requireAttendeePortalUser();
+
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("attendee_directory_entries")
+      .select(
+        "id,account_id,full_name,email,phone,title,organization,share_with_attendees,share_with_planners,created_at,updated_at"
+      )
+      .eq("email", (user.email ?? "").trim().toLowerCase())
+      .maybeSingle();
+
+    if (error) {
+      console.error(error);
+      return null as AttendeeDirectoryEntryRecord | null;
+    }
+
+    if (!data) {
+      return null as AttendeeDirectoryEntryRecord | null;
+    }
+
+    return mapAttendeeDirectoryEntry(data as AttendeeDirectoryEntryRow);
+  } catch (error) {
+    console.error(error);
+    return null as AttendeeDirectoryEntryRecord | null;
+  }
+});
+
 export const getSpeakerPortalDocuments = cache(async () => {
   await requirePrivateScheduleUser();
 
