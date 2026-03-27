@@ -411,6 +411,9 @@ export async function loginAttendee(formData: FormData) {
       `/attendee/login?error=${toRedirectErrorParam(
         toPublicErrorMessage(error, {
           fallback: "We couldn't sign you in with that email and password. Please try again.",
+          setupMessage:
+            "Your attendee account may still need email confirmation. Check your inbox, then try signing in again.",
+          setupFragments: ["email not confirmed", "confirm your email", "email link is invalid or has expired"],
           duplicateMessage: "That attendee account already exists. Sign in with your email and password instead.",
           duplicateFragments: ["user already registered", "already been registered"]
         })
@@ -538,6 +541,17 @@ export async function createAttendeeAccount(formData: FormData) {
   }
 
   if (signUpData.user) {
+    if (
+      signInError &&
+      ["email not confirmed", "confirm your email", "email link is invalid or has expired"].some((fragment) =>
+        signInError.message.toLowerCase().includes(fragment)
+      )
+    ) {
+      redirect(
+        "/attendee/login?success=Your%20account%20has%20been%20created.%20Please%20check%20your%20email%20to%20confirm%20the%20account%20before%20signing%20in."
+      );
+    }
+
     await sendAttendeeAccountWelcomeEmail({
       to: email,
       fullName
