@@ -2297,8 +2297,8 @@ select {
 
 .attendee-board__workspace {
   display: grid;
-  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
-  gap: 1.2rem;
+  grid-template-columns: minmax(280px, 330px) minmax(0, 1fr);
+  gap: 1.4rem;
   align-items: start;
 }
 
@@ -2377,9 +2377,9 @@ select {
 }
 
 .attendee-board__room-hero {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
   gap: 1.25rem;
   padding: 1.2rem 1.25rem;
   border-radius: 24px;
@@ -2394,7 +2394,7 @@ select {
   font-size: clamp(1.05rem, 1.65vw, 1.45rem);
   line-height: 1.02;
   letter-spacing: -0.04em;
-  max-width: 13ch;
+  max-width: 18ch;
 }
 
 .attendee-board__room-hero p {
@@ -2403,10 +2403,32 @@ select {
 }
 
 .attendee-board__room-stats {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 0.5rem;
-  justify-content: flex-end;
+  justify-items: end;
+  align-content: start;
+  min-width: 6rem;
+}
+
+.admin-edit-details--danger summary {
+  color: var(--accent-deep);
+}
+
+.admin-edit-details__danger-copy {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.attendee-danger-button {
+  border-color: rgba(193, 18, 31, 0.18);
+  color: var(--accent-deep);
+  background: rgba(193, 18, 31, 0.06);
+}
+
+.attendee-danger-button:hover,
+.attendee-danger-button:focus-visible {
+  border-color: rgba(193, 18, 31, 0.28);
+  background: rgba(193, 18, 31, 0.1);
 }
 
 .attendee-board__feed {
@@ -3440,11 +3462,11 @@ th {
   }
 
   .attendee-board__room-hero {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .attendee-board__room-stats {
-    justify-content: flex-start;
+    justify-items: start;
   }
 
   .directory-card__header {

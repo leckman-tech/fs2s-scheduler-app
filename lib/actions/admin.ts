@@ -1081,6 +1081,42 @@ export async function updateAttendeeAccount(formData: FormData) {
   redirect("/admin/dashboard/accounts");
 }
 
+export async function deleteAttendeeAccount(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+
+  const id = String(formData.get("id") ?? "").trim();
+  const fullName = String(formData.get("full_name") ?? "").trim();
+
+  if (!id) {
+    redirect("/admin/dashboard/accounts?error=Choose%20an%20attendee%20account%20to%20remove");
+  }
+
+  const { error } = await supabase.rpc("delete_attendee_account", {
+    p_account_id: id
+  });
+
+  if (error) {
+    redirect(
+      `/admin/dashboard/accounts?error=${toRedirectErrorParam(
+        toPublicErrorMessage(error, {
+          fallback: "We couldn't delete that attendee account right now. Please try again."
+        })
+      )}`
+    );
+  }
+
+  revalidatePath("/admin/dashboard/accounts");
+  revalidatePath("/admin/dashboard/system");
+  revalidatePath("/admin/dashboard/resources");
+  revalidatePath("/attendee");
+  redirect(
+    `/admin/dashboard/accounts?success=${toRedirectErrorParam(
+      `${fullName || "That attendee"} was removed from attendee accounts.`
+    )}`
+  );
+}
+
 export async function deleteAttendeeBoardReply(formData: FormData) {
   await requireAdmin();
   const supabase = await createClient();

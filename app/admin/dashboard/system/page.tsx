@@ -149,7 +149,7 @@ export default async function AdminSystemCheckPage() {
         label: "Attendee account roster",
         state: "warn",
         detail:
-          `We couldn't confirm the admin attendee roster function yet. ${attendeeRosterError.message} If you already ran 024_admin_attendee_roster.sql, try running it once more and refresh after Supabase updates its schema cache.`
+          `We couldn't confirm the admin attendee roster function yet. ${attendeeRosterError.message} Run 027_fix_admin_attendee_roster_signature.sql in Supabase, then refresh after Supabase updates its schema cache.`
       }
     : {
         label: "Attendee account roster",
@@ -201,7 +201,7 @@ export default async function AdminSystemCheckPage() {
       ? "Add ATTENDEE_ACCESS_CODE in Vercel when you are ready to let attendees create their own portal accounts."
       : null,
     process.env.ATTENDEE_ACCESS_CODE && (attendeeAccountCount ?? 0) === 0
-      ? "If attendees are creating accounts but none appear in Admin, run 022_attendee_account_management.sql and 024_admin_attendee_roster.sql in Supabase so login creation and admin account visibility stay in sync."
+      ? "If attendees are creating accounts but none appear in Admin, run 022_attendee_account_management.sql and 027_fix_admin_attendee_roster_signature.sql in Supabase so login creation and admin account visibility stay in sync."
       : null,
     databaseChecks.some((check) => check.label === "Public form guard log" && check.state !== "pass")
       ? "Run 018_public_form_guard.sql in Supabase so the public signup forms have anti-spam protection."

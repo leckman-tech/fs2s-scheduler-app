@@ -1,11 +1,11 @@
-import { updateAttendeeAccount } from "@/lib/actions/admin";
+import { deleteAttendeeAccount, updateAttendeeAccount } from "@/lib/actions/admin";
 import { getAdminAttendeeAccounts } from "@/lib/queries";
 import { formatTimestamp } from "@/lib/utils";
 
 export default async function AdminAccountsPage({
   searchParams
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; success?: string }>;
 }) {
   const params = await searchParams;
   const accounts = await getAdminAttendeeAccounts();
@@ -21,6 +21,7 @@ export default async function AdminAccountsPage({
   return (
     <div className="stack">
       {params.error ? <div className="empty-state">{params.error}</div> : null}
+      {params.success ? <div className="announcement announcement--urgent">{params.success}</div> : null}
 
       <section className="hero-card">
         <h1>Attendee accounts</h1>
@@ -194,6 +195,21 @@ export default async function AdminAccountsPage({
                     </div>
                   </form>
                 </details>
+
+                <details className="admin-edit-details admin-edit-details--danger">
+                  <summary>Delete attendee account</summary>
+                  <div className="admin-edit-details__danger-copy">
+                    This removes the attendee login, attendee directory card, and all attendee-board
+                    activity connected to this account.
+                  </div>
+                  <form action={deleteAttendeeAccount} className="admin-actions">
+                    <input type="hidden" name="id" value={account.id} />
+                    <input type="hidden" name="full_name" value={account.full_name} />
+                    <button type="submit" className="button-secondary attendee-danger-button">
+                      Delete account permanently
+                    </button>
+                  </form>
+                </details>
               </article>
             ))
           ) : (
@@ -201,7 +217,7 @@ export default async function AdminAccountsPage({
               No attendee accounts are visible yet. If attendees have already created logins, run
               <strong> 022_attendee_account_management.sql </strong>
               and
-              <strong> 024_admin_attendee_roster.sql </strong>
+              <strong> 027_fix_admin_attendee_roster_signature.sql </strong>
               in Supabase so the admin roster can surface both fully synced accounts and brand-new attendee logins.
             </div>
           )}
