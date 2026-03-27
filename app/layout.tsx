@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/next";
 import { BottomLiveUpdatesBar } from "@/components/bottom-live-updates-bar";
-import { EVENTBRITE_URL } from "@/lib/constants";
+import { SiteHeader } from "@/components/site-header";
 import { siteMetadata } from "@/lib/seo";
 import "./globals.css";
 
@@ -27,30 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <span className="petal petal--9" />
             <span className="petal petal--10" />
           </div>
-          <header className="site-header">
-            <div className="site-header__inner">
-              <div className="site-brand">
-                <Link href="/" className="site-title">
-                  From Silos to Solutions 2026
-                </Link>
-                <p className="site-brand__eyebrow">Power Through Partnerships</p>
-              </div>
-              <nav className="site-nav" aria-label="Primary navigation">
-                <Link href="/">Schedule</Link>
-                <Link href="/speakers">Speakers</Link>
-                <Link href="/lobby-day">Fall 2026 Lobby Day</Link>
-                <Link href="/learn-more">Who We Are</Link>
-                <Link href="/learn-more#faq">FAQ</Link>
-                <Link href="/attendee/login">Attendee Portal</Link>
-                <Link href="/portal/login">Speaker/Presenter Portal</Link>
-              </nav>
-              <div className="site-header__actions">
-                <a href={EVENTBRITE_URL} className="site-nav__cta" target="_blank" rel="noreferrer">
-                  Purchase Tickets
-                </a>
-              </div>
-            </div>
-          </header>
+          <SiteHeader />
           <main>{children}</main>
           <footer className="site-footer">
             <div className="site-footer__inner">

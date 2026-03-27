@@ -45,6 +45,9 @@ export function ScheduleExplorer({ sessions, days }: Props) {
           <div>
             <p className="eyebrow">Build your path</p>
             <h2>Browse the schedule</h2>
+            <p className="field-hint" style={{ marginTop: "0.45rem" }}>
+              Tap or click any session to expand the full details, location, and sign-up options.
+            </p>
           </div>
           <span className="schedule-count">
             {filteredSessions.length} session{filteredSessions.length === 1 ? "" : "s"}
