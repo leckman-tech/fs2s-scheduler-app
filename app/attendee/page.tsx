@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { AttendeeBoard } from "@/components/attendee-board";
 import { LogoutButton } from "@/components/logout-button";
 import { saveAttendeeDirectoryEntry } from "@/lib/actions/admin";
@@ -79,33 +80,36 @@ export default async function AttendeePortalPage({
           <h2>What this portal is for</h2>
         </div>
         <div className="story-stat-grid">
-          <article className="story-stat">
+          <Link href="#attendee-resources" className="story-stat story-stat--link portal-jump-card">
             <strong>Session files</strong>
             <span>
               Open workshop handouts, keynote materials, panel resources, and related documents.
             </span>
-          </article>
-          <article className="story-stat">
+            <span className="story-stat__cta">Open files</span>
+          </Link>
+          <Link href="#attendee-board" className="story-stat story-stat--link portal-jump-card">
             <strong>Attendee board</strong>
             <span>
               Post from your own attendee account so the conversation feels grounded, welcoming,
               and accountable.
             </span>
-          </article>
-          <article className="story-stat">
+            <span className="story-stat__cta">Jump to board</span>
+          </Link>
+          <Link href="#attendee-contact-card" className="story-stat story-stat--link portal-jump-card">
             <strong>Contact sharing</strong>
             <span>
               Opt into year-round connection with planners and, if you choose, the attendee
               community.
             </span>
-          </article>
+            <span className="story-stat__cta">Edit contact card</span>
+          </Link>
         </div>
       </section>
 
       {params.error ? <div className="empty-state">{params.error}</div> : null}
       {params.success ? <div className="announcement announcement--urgent">{params.success}</div> : null}
 
-      <section className="panel detail-side-panel attendee-portal-card">
+      <section id="attendee-contact-card" className="panel detail-side-panel attendee-portal-card section-anchor-target">
         <div className="section-heading">
           <div>
             <h2>Your contact card</h2>
@@ -207,14 +211,16 @@ export default async function AttendeePortalPage({
         </form>
       </section>
 
-      <AttendeeBoard
-        initialThreads={boardFeed}
-        initialIdentity={{
-          fullName: profile.full_name || user.email?.split("@")[0] || "Attendee",
-          email: user.email || "",
-          organization: currentDirectoryEntry?.organization ?? ""
-        }}
-      />
+      <div id="attendee-board" className="section-anchor-target">
+        <AttendeeBoard
+          initialThreads={boardFeed}
+          initialIdentity={{
+            fullName: profile.full_name || user.email?.split("@")[0] || "Attendee",
+            email: user.email || "",
+            organization: currentDirectoryEntry?.organization ?? ""
+          }}
+        />
+      </div>
 
       <section className="panel detail-side-panel">
         <div className="section-heading">
@@ -275,53 +281,55 @@ export default async function AttendeePortalPage({
         </div>
       </section>
 
-      {resources.length ? (
-        Object.entries(grouped).map(([key, docs]) => {
-          const session = docs[0]?.session;
-          return (
-            <section key={key} className="panel detail-side-panel">
-              <div className="section-heading">
-                <div>
-                  <h2>{session ? displaySessionTitle(session) : "General Conference Resources"}</h2>
-                  <p className="muted" style={{ margin: "0.35rem 0 0" }}>
-                    {session
-                      ? `${labelForCategory(session.category)} · ${formatDateLabel(session.date)}`
-                      : "Documents shared across the full convening"}
-                  </p>
+      <div id="attendee-resources" className="section-anchor-target stack">
+        {resources.length ? (
+          Object.entries(grouped).map(([key, docs]) => {
+            const session = docs[0]?.session;
+            return (
+              <section key={key} className="panel detail-side-panel">
+                <div className="section-heading">
+                  <div>
+                    <h2>{session ? displaySessionTitle(session) : "General Conference Resources"}</h2>
+                    <p className="muted" style={{ margin: "0.35rem 0 0" }}>
+                      {session
+                        ? `${labelForCategory(session.category)} · ${formatDateLabel(session.date)}`
+                        : "Documents shared across the full convening"}
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="resource-list">
-                {docs.map((document) => (
-                  <article key={document.id} className="announcement">
-                    <strong>{document.title}</strong>
-                    {document.description ? <p className="muted">{document.description}</p> : null}
-                    <div className="admin-actions">
-                      {document.signed_url ? (
-                        <a
-                          href={document.signed_url}
-                          className="button button-link"
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Open document
-                        </a>
-                      ) : null}
-                      <span className="muted">{document.file_name}</span>
-                      <span className="muted">Uploaded {formatTimestamp(document.created_at)}</span>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </section>
-          );
-        })
-      ) : (
-        <div className="empty-state">
-          No attendee documents have been uploaded yet. Once the conference team adds workshop,
-          keynote, or panel resources, they will appear here.
-        </div>
-      )}
+                <div className="resource-list">
+                  {docs.map((document) => (
+                    <article key={document.id} className="announcement">
+                      <strong>{document.title}</strong>
+                      {document.description ? <p className="muted">{document.description}</p> : null}
+                      <div className="admin-actions">
+                        {document.signed_url ? (
+                          <a
+                            href={document.signed_url}
+                            className="button button-link"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Open document
+                          </a>
+                        ) : null}
+                        <span className="muted">{document.file_name}</span>
+                        <span className="muted">Uploaded {formatTimestamp(document.created_at)}</span>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            );
+          })
+        ) : (
+          <div className="empty-state">
+            No attendee documents have been uploaded yet. Once the conference team adds workshop,
+            keynote, or panel resources, they will appear here.
+          </div>
+        )}
+      </div>
     </div>
   );
 }
