@@ -341,7 +341,7 @@ export default function LearnMorePage() {
         </article>
 
         <article className="feature-story feature-story--reverse">
-          <div className="feature-story__portrait">
+          <Link href="/levi-w-eckman" className="feature-story__portrait" aria-label="Open Levi W. Eckman leadership profile">
             <Image
               src="/fs2s/levi-face.png"
               alt="Levi W. Eckman, J.D., Convening Director"
@@ -349,10 +349,12 @@ export default function LearnMorePage() {
               sizes="(max-width: 860px) 100vw, 420px"
               className="feature-story__portrait-image feature-story__portrait-image--levi"
             />
-          </div>
+          </Link>
           <div className="feature-story__content">
             <p className="eyebrow">Convening Leadership</p>
-            <h2>Convening Director {CONVENING_DIRECTOR_NAME}</h2>
+            <h2>
+              <Link href="/levi-w-eckman">Convening Director {CONVENING_DIRECTOR_NAME}</Link>
+            </h2>
             <p>
               {CONVENING_DIRECTOR_NAME} serves as Convening Director and Administrator for From
               Silos to Solutions 2026, helping guide a convening that is focused, practical, and

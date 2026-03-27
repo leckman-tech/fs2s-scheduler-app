@@ -11,7 +11,7 @@ import { buildMetadata, getLeviProfileStructuredData } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "Levi W. Eckman, J.D. | Convening Director",
   description:
-    "Levi W. Eckman, J.D. serves as Convening Director for From Silos to Solutions 2026 (FS2S), with work focused on educational equity, advocacy, public funding accountability, and support for opportunity and justice-involved youth and young adults.",
+    "Public leadership profile for Levi W. Eckman, J.D., Convening Director of From Silos to Solutions 2026 (FS2S), with work focused on educational equity, advocacy, public accountability, and stronger support for opportunity and justice-involved youth and young adults.",
   path: "/levi-w-eckman"
 });
 
@@ -32,10 +32,9 @@ export default function LeviProfilePage() {
             <h1>{CONVENING_DIRECTOR_NAME}</h1>
             <p className="hero-kicker">Convening Director for From Silos to Solutions 2026.</p>
             <p>
-              Levi W. Eckman, J.D. serves as Convening Director and Administrator for From Silos to
-              Solutions 2026, helping shape a convening grounded in educational equity, advocacy,
-              public funding accountability, and stronger supports for opportunity and
-              justice-involved youth and young adults.
+              Levi W. Eckman, J.D. serves as Convening Director for From Silos to Solutions 2026,
+              helping lead a national convening built around partnership, public leadership, and
+              stronger support for opportunity and justice-involved youth and young adults.
             </p>
             <div className="hero-actions">
               <a href={`mailto:${CONVENING_DIRECTOR_EMAIL}`} className="button button-link">
@@ -69,38 +68,41 @@ export default function LeviProfilePage() {
           <p className="eyebrow">Focus Areas</p>
           <h2>Educational equity, advocacy, and public accountability</h2>
           <p>
-            Levi&apos;s work centers on improving educational access and accountability for young
-            people and their communities, with a particular focus on how funding reaches the people
-            it is meant to support and how institutions can be held responsible for results.
+            Levi&apos;s work focuses on educational equity, access to opportunity, and the public
+            accountability needed to make systems work better for young people and their
+            communities. That includes sustained attention to how funding is distributed, how it is
+            used, and whether institutions are delivering meaningful support where it is most
+            needed.
           </p>
           <div className="story-list">
             <div className="session-info-pill">
               <strong>Convening role</strong>
-              <span>Convening Director and Administrator</span>
+              <span>Convening Director for From Silos to Solutions 2026</span>
             </div>
             <div className="session-info-pill">
               <strong>Public service</strong>
-              <span>OST Commission service and policy-facing advocacy</span>
+              <span>Service on the District&apos;s OST Commission and policy-facing advocacy</span>
             </div>
             <div className="session-info-pill">
               <strong>Writing and advocacy</strong>
-              <span>Legal-journal contributions focused on educational equity</span>
+              <span>Legal and public-writing work focused on educational equity and accountability</span>
             </div>
           </div>
         </article>
 
         <article className="panel story-panel story-panel--accent">
           <p className="eyebrow">Why This Work Matters</p>
-          <h2>Building spaces that move from discussion to action</h2>
+          <h2>Building public spaces that move from conversation to action</h2>
           <p>
-            From Silos to Solutions is designed to help people leave with stronger relationships,
-            clearer next steps, and a better understanding of how systems, schools, advocates, and
-            communities can work together in practice rather than in theory alone.
+            From Silos to Solutions is designed to bring educators, advocates, policymakers,
+            providers, and community leaders into the same room to share what is working, name
+            where coordination breaks down, and strengthen the relationships needed for practical
+            action.
           </p>
           <p>
-            That same practical approach shapes the event&apos;s public information, attendee tools,
-            and planning systems, so the site works as a real convening platform rather than just a
-            static event page.
+            Levi&apos;s approach to the convening reflects that same public-facing focus: clear
+            information, useful tools, and a stronger bridge between advocacy, systems work, and
+            the daily realities young people and communities are navigating.
           </p>
         </article>
       </section>
