@@ -1870,6 +1870,11 @@ select {
   letter-spacing: -0.02em;
 }
 
+.directory-account-summary--board {
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
 .directory-account-summary__label {
   display: inline-block;
   margin-bottom: 0.32rem;
@@ -2024,6 +2029,16 @@ select {
     conic-gradient(
       from -90deg,
       #c1121f 0 var(--health-progress),
+      rgba(255, 255, 255, 0.12) var(--health-progress) 100%
+    );
+}
+
+.health-meter__ring--complete {
+  background:
+    radial-gradient(circle at center, rgba(29, 111, 66, 0.2), transparent 60%),
+    conic-gradient(
+      from -90deg,
+      #1d6f42 0 var(--health-progress),
       rgba(255, 255, 255, 0.12) var(--health-progress) 100%
     );
 }
@@ -2221,6 +2236,51 @@ select {
   line-height: 1.55;
 }
 
+.attendee-account-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.attendee-account-card__summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  cursor: pointer;
+}
+
+.attendee-account-card__summary::-webkit-details-marker {
+  display: none;
+}
+
+.attendee-account-card__summary-copy {
+  display: grid;
+  gap: 0.28rem;
+  min-width: 0;
+}
+
+.attendee-account-card__summary-copy strong {
+  margin: 0;
+  font-size: 1.02rem;
+  letter-spacing: -0.02em;
+}
+
+.attendee-account-card__summary-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.attendee-account-card__body {
+  display: grid;
+  gap: 1rem;
+  padding: 0 1.1rem 1.1rem;
+  border-top: 1px solid rgba(17, 17, 17, 0.06);
+}
+
 .directory-card {
   gap: 0.8rem;
 }
@@ -2378,7 +2438,7 @@ select {
 
 .attendee-board__room-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   align-items: start;
   gap: 1.25rem;
   padding: 1.2rem 1.25rem;
@@ -2399,15 +2459,14 @@ select {
 
 .attendee-board__room-hero p {
   margin: 0;
-  max-width: 40ch;
+  max-width: 54ch;
 }
 
 .attendee-board__room-stats {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  justify-items: end;
-  align-content: start;
-  min-width: 6rem;
+  justify-content: flex-start;
 }
 
 .admin-edit-details--danger summary {
@@ -2449,9 +2508,7 @@ select {
 }
 
 .attendee-thread__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  display: grid;
   gap: 0.8rem;
 }
 
@@ -2467,9 +2524,17 @@ select {
   gap: 0.55rem;
 }
 
+.attendee-thread__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  padding-top: 0.1rem;
+}
+
 .attendee-thread__action-button {
-  min-height: 2.4rem;
-  padding-inline: 0.9rem;
+  min-height: 2.25rem;
+  padding-inline: 0.82rem;
 }
 
 .attendee-thread__action-button--danger {
@@ -3477,6 +3542,15 @@ th {
   .directory-card__summary {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .attendee-account-card__summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .attendee-account-card__summary-meta {
+    justify-content: flex-start;
   }
 
   .attendee-thread__header {

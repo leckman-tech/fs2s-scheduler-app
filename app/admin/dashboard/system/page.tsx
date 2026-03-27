@@ -238,7 +238,7 @@ export default async function AdminSystemCheckPage() {
         <div className="health-overview">
           <article className="health-meter">
             <div
-              className="health-meter__ring"
+              className={`health-meter__ring ${readinessPercent === 100 ? "health-meter__ring--complete" : ""}`}
               style={healthMeterStyle}
               aria-hidden="true"
             >
