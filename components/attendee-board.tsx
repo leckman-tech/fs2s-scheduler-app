@@ -350,7 +350,16 @@ export function AttendeeBoard({ initialThreads, initialIdentity }: AttendeeBoard
       <div className="attendee-board__workspace">
         <aside className="attendee-board__sidebar">
           <div className="attendee-board__module">
-            <div className="directory-account-summary">
+            <div className="section-heading section-heading--stacked">
+              <div>
+                <h3>Your account</h3>
+                <p className="muted">
+                  Posts on the attendee board use your attendee account identity.
+                </p>
+              </div>
+            </div>
+
+            <div className="directory-account-summary directory-account-summary--board">
               <div>
                 <span className="directory-account-summary__label">Posting as</span>
                 <strong>{identity.fullName}</strong>
@@ -445,7 +454,7 @@ export function AttendeeBoard({ initialThreads, initialIdentity }: AttendeeBoard
 
         <div className="attendee-board__main">
           <div className="attendee-board__room-hero">
-            <div>
+            <div className="attendee-board__room-copy">
               <span className="directory-account-summary__label">
                 {selectedRoom === ALL_ACTIVITY_LABEL ? "Room overview" : "Current room"}
               </span>
@@ -492,6 +501,41 @@ export function AttendeeBoard({ initialThreads, initialIdentity }: AttendeeBoard
                           </div>
                         </div>
                       </div>
+                    </div>
+
+                    {isEditingPost ? (
+                      <div className="attendee-thread__edit">
+                        <textarea
+                          rows={3}
+                          value={editingPostBody}
+                          onChange={(event) => setEditingPostBody(event.target.value)}
+                        />
+                        <div className="admin-actions">
+                          <button
+                            type="button"
+                            className="button"
+                            onClick={() => handleUpdatePost(thread.id)}
+                            disabled={isPending}
+                          >
+                            Save edit
+                          </button>
+                          <button
+                            type="button"
+                            className="button-secondary"
+                            onClick={() => {
+                              setEditingPostId(null);
+                              setEditingPostBody("");
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="attendee-thread__body">{thread.body}</p>
+                    )}
+
+                    <div className="attendee-thread__toolbar">
                       <div className="attendee-thread__actions">
                         <button
                           type="button"
@@ -536,38 +580,6 @@ export function AttendeeBoard({ initialThreads, initialIdentity }: AttendeeBoard
                         ) : null}
                       </div>
                     </div>
-
-                    {isEditingPost ? (
-                      <div className="attendee-thread__edit">
-                        <textarea
-                          rows={3}
-                          value={editingPostBody}
-                          onChange={(event) => setEditingPostBody(event.target.value)}
-                        />
-                        <div className="admin-actions">
-                          <button
-                            type="button"
-                            className="button"
-                            onClick={() => handleUpdatePost(thread.id)}
-                            disabled={isPending}
-                          >
-                            Save edit
-                          </button>
-                          <button
-                            type="button"
-                            className="button-secondary"
-                            onClick={() => {
-                              setEditingPostId(null);
-                              setEditingPostBody("");
-                            }}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="attendee-thread__body">{thread.body}</p>
-                    )}
 
                     {thread.replies.length ? (
                       <div className="attendee-thread__replies">
