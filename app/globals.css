@@ -2809,7 +2809,7 @@ select {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 1rem;
-  align-items: center;
+  align-items: start;
   cursor: pointer;
 }
 
@@ -2829,11 +2829,12 @@ select {
 }
 
 .session-card__summary-meta {
-  display: grid;
-  gap: 0.55rem;
-  justify-items: end;
-  align-content: center;
-  min-width: min(220px, 100%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.95rem;
+  min-width: fit-content;
+  padding-top: 0.15rem;
 }
 
 .session-card__summary-line {
@@ -2841,6 +2842,7 @@ select {
   gap: 0.12rem;
   justify-items: end;
   text-align: right;
+  max-width: 17rem;
 }
 
 .session-card__summary-line strong {
@@ -2860,6 +2862,8 @@ select {
   border-bottom: 2px solid rgba(17, 17, 17, 0.42);
   transform: rotate(45deg);
   transition: transform 180ms ease, border-color 180ms ease;
+  flex-shrink: 0;
+  margin-top: -0.1rem;
 }
 
 .session-card[open] .session-card__chevron {
