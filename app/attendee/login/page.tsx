@@ -50,12 +50,34 @@ export default async function AttendeeLoginPage({
           </div>
           <div className="field">
             <label htmlFor="email">Email</label>
-            <input id="email" name="email" type="email" required />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              autoCapitalize="none"
+              autoCorrect="off"
+              autoComplete="email"
+              spellCheck={false}
+              inputMode="email"
+            />
           </div>
           <div className="field">
             <label htmlFor="password">Password</label>
-            <input id="password" name="password" type="password" required />
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              autoCapitalize="none"
+              autoCorrect="off"
+              autoComplete="current-password"
+              spellCheck={false}
+            />
           </div>
+          <p className="field-hint" style={{ marginTop: "-0.15rem" }}>
+            Email is not case-sensitive. Passwords are case-sensitive.
+          </p>
           <button type="submit" className="button">
             Sign in
           </button>
@@ -85,12 +107,32 @@ export default async function AttendeeLoginPage({
           </div>
           <div className="field">
             <label htmlFor="create-email">Email</label>
-            <input id="create-email" name="email" type="email" required />
+            <input
+              id="create-email"
+              name="email"
+              type="email"
+              required
+              autoCapitalize="none"
+              autoCorrect="off"
+              autoComplete="email"
+              spellCheck={false}
+              inputMode="email"
+            />
           </div>
           <div className="form-grid form-grid--two">
             <div className="field">
               <label htmlFor="create-password">Password</label>
-              <input id="create-password" name="password" type="password" required minLength={8} />
+              <input
+                id="create-password"
+                name="password"
+                type="password"
+                required
+                minLength={8}
+                autoCapitalize="none"
+                autoCorrect="off"
+                autoComplete="new-password"
+                spellCheck={false}
+              />
             </div>
             <div className="field">
               <label htmlFor="create-confirm-password">Confirm password</label>
@@ -100,12 +142,17 @@ export default async function AttendeeLoginPage({
                 type="password"
                 required
                 minLength={8}
+                autoCapitalize="none"
+                autoCorrect="off"
+                autoComplete="new-password"
+                spellCheck={false}
               />
             </div>
           </div>
           <p className="field-hint">
             Use at least 8 characters. A mix of uppercase and lowercase letters, a number, and a
-            symbol is recommended.
+            symbol is recommended. Email capitalization does not matter, but your password is
+            case-sensitive.
           </p>
           <div className="field">
             <label htmlFor="create-access-code">Conference access code</label>

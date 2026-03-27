@@ -34,12 +34,34 @@ export default async function PortalLoginPage({
       <form action={loginPortal} className="panel form-grid" style={{ marginTop: "1rem" }}>
         <div className="field">
           <label htmlFor="email">Email</label>
-          <input id="email" name="email" type="email" required />
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            autoCapitalize="none"
+            autoCorrect="off"
+            autoComplete="email"
+            spellCheck={false}
+            inputMode="email"
+          />
         </div>
         <div className="field">
           <label htmlFor="password">Password</label>
-          <input id="password" name="password" type="password" required />
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            autoCapitalize="none"
+            autoCorrect="off"
+            autoComplete="current-password"
+            spellCheck={false}
+          />
         </div>
+        <p className="field-hint" style={{ marginTop: "-0.15rem" }}>
+          Email is not case-sensitive. Passwords are case-sensitive.
+        </p>
         {params.error ? <div className="empty-state">{params.error}</div> : null}
         <button type="submit" className="button">
           Sign in

@@ -16,7 +16,7 @@ import { sendAttendeeAccountWelcomeEmail } from "@/lib/email";
 import { toPublicErrorMessage, toRedirectErrorParam } from "@/lib/public-errors";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin, requireAttendeePortalUser } from "@/lib/queries";
-import { toSlug } from "@/lib/utils";
+import { normalizeEmail, toSlug } from "@/lib/utils";
 
 function normalizeDateTimeInput(value: string) {
   if (!value) {
@@ -359,7 +359,7 @@ async function syncSessionSpeakers(
 
 export async function loginAdmin(formData: FormData) {
   const supabase = await createClient();
-  const email = String(formData.get("email") ?? "");
+  const email = normalizeEmail(formData.get("email") as string | null);
   const password = String(formData.get("password") ?? "");
 
   const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -380,7 +380,7 @@ export async function loginAdmin(formData: FormData) {
 
 export async function loginPortal(formData: FormData) {
   const supabase = await createClient();
-  const email = String(formData.get("email") ?? "");
+  const email = normalizeEmail(formData.get("email") as string | null);
   const password = String(formData.get("password") ?? "");
 
   const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -401,7 +401,7 @@ export async function loginPortal(formData: FormData) {
 
 export async function loginAttendee(formData: FormData) {
   const supabase = await createClient();
-  const email = String(formData.get("email") ?? "");
+  const email = normalizeEmail(formData.get("email") as string | null);
   const password = String(formData.get("password") ?? "");
 
   const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -456,7 +456,7 @@ export async function loginAttendee(formData: FormData) {
 export async function createAttendeeAccount(formData: FormData) {
   const supabase = await createClient();
   const fullName = String(formData.get("full_name") ?? "").trim();
-  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const email = normalizeEmail(formData.get("email") as string | null);
   const password = String(formData.get("password") ?? "");
   const confirmPassword = String(formData.get("confirm_password") ?? "");
   const accessCode = String(formData.get("access_code") ?? "").trim();
@@ -566,7 +566,7 @@ export async function createAttendeeAccount(formData: FormData) {
 
 export async function requestAttendeePasswordReset(formData: FormData) {
   const supabase = await createClient();
-  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const email = normalizeEmail(formData.get("email") as string | null);
 
   if (!email) {
     redirect("/attendee/forgot-password?error=Enter%20the%20email%20for%20your%20attendee%20account");

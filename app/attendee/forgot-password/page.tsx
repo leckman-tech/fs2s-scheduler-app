@@ -29,8 +29,21 @@ export default async function AttendeeForgotPasswordPage({
       <form action={requestAttendeePasswordReset} className="panel form-grid" style={{ marginTop: "1rem" }}>
         <div className="field">
           <label htmlFor="attendee-reset-email">Email</label>
-          <input id="attendee-reset-email" name="email" type="email" required />
+          <input
+            id="attendee-reset-email"
+            name="email"
+            type="email"
+            required
+            autoCapitalize="none"
+            autoCorrect="off"
+            autoComplete="email"
+            spellCheck={false}
+            inputMode="email"
+          />
         </div>
+        <p className="field-hint" style={{ marginTop: "-0.15rem" }}>
+          Email is not case-sensitive.
+        </p>
 
         {params.error ? <div className="empty-state">{params.error}</div> : null}
         {params.success ? <div className="announcement announcement--urgent">{params.success}</div> : null}

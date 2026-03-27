@@ -86,6 +86,10 @@ export function escapeCsv(value: string | number | boolean | null | undefined) {
   return normalized;
 }
 
+export function normalizeEmail(value: string | null | undefined) {
+  return String(value ?? "").trim().toLowerCase();
+}
+
 export function displaySessionTitle(session: Pick<SessionRecord, "title" | "category" | "final_title" | "placeholder_code">) {
   if (session.category === "workshop") {
     return session.final_title?.trim() || `Workshop ${session.placeholder_code ?? ""}`.trim();
