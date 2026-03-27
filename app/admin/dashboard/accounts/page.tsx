@@ -16,6 +16,7 @@ export default async function AdminAccountsPage({
     return Number.isFinite(createdAt) && now - createdAt <= 24 * 60 * 60 * 1000;
   }).length;
   const publicDirectoryCount = accounts.filter((account) => account.share_with_attendees).length;
+  const authOnlyCount = accounts.filter((account) => account.sync_status === "auth only").length;
 
   return (
     <div className="stack">
@@ -31,6 +32,7 @@ export default async function AdminAccountsPage({
           <span className="hero-pill">{accounts.length} attendee account{accounts.length === 1 ? "" : "s"}</span>
           <span className="hero-pill">{recentCount} created in the last 24 hours</span>
           <span className="hero-pill">{publicDirectoryCount} visible in the attendee directory</span>
+          {authOnlyCount ? <span className="hero-pill">{authOnlyCount} waiting on full sync</span> : null}
         </div>
       </section>
 
@@ -56,6 +58,10 @@ export default async function AdminAccountsPage({
             <strong>{publicDirectoryCount}</strong>
             <span>Accounts shared with the attendee directory</span>
           </article>
+          <article className="story-stat">
+            <strong>{authOnlyCount}</strong>
+            <span>New logins seen before full attendee sync</span>
+          </article>
         </div>
       </section>
 
@@ -79,6 +85,20 @@ export default async function AdminAccountsPage({
                   {[account.email || "Email on file", `Created ${formatTimestamp(account.created_at)}`].join(" · ")}
                 </div>
                 <div className="detail-list">
+                  <div>
+                    <strong>Sync status</strong>
+                    <span className="muted">
+                      {account.sync_status === "synced"
+                        ? "Fully synced"
+                        : account.sync_status === "auth only"
+                          ? "Login created, profile sync pending"
+                          : account.sync_status === "profile only"
+                            ? "Profile exists, directory sync pending"
+                            : account.sync_status === "directory only"
+                              ? "Directory record found"
+                              : "Account record available"}
+                    </span>
+                  </div>
                   <div>
                     <strong>Phone</strong>
                     <span className="muted">{account.phone || "Not provided"}</span>
@@ -177,7 +197,13 @@ export default async function AdminAccountsPage({
               </article>
             ))
           ) : (
-            <div className="empty-state">No attendee accounts have been created yet.</div>
+            <div className="empty-state">
+              No attendee accounts are visible yet. If attendees have already created logins, run
+              <strong> 022_attendee_account_management.sql </strong>
+              and
+              <strong> 024_admin_attendee_roster.sql </strong>
+              in Supabase so the admin roster can surface both fully synced accounts and brand-new attendee logins.
+            </div>
           )}
         </div>
       </section>

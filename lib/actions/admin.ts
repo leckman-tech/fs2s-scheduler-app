@@ -421,7 +421,15 @@ export async function loginAttendee(formData: FormData) {
   const { role } = await getCurrentRole();
 
   if (!role) {
-    await ensureAttendeeProfile();
+    const attendeeProfileReady = await ensureAttendeeProfile();
+
+    if (!attendeeProfileReady) {
+      await supabase.auth.signOut();
+      redirect(
+        "/attendee/login?error=Attendee%20account%20sync%20is%20not%20fully%20enabled%20yet.%20Run%20022_attendee_account_management.sql%20in%20Supabase%2C%20then%20try%20again."
+      );
+    }
+
     const attendeeReady = await waitForRole("attendee");
 
     if (attendeeReady) {
@@ -474,7 +482,9 @@ export async function createAttendeeAccount(formData: FormData) {
     password,
     options: {
       data: {
-        full_name: fullName
+        full_name: fullName,
+        portal_type: "attendee",
+        conference_role: "attendee"
       }
     }
   });
@@ -498,7 +508,15 @@ export async function createAttendeeAccount(formData: FormData) {
   });
 
   if (!signInError) {
-    await ensureAttendeeProfile();
+    const attendeeProfileReady = await ensureAttendeeProfile();
+
+    if (!attendeeProfileReady) {
+      await supabase.auth.signOut();
+      redirect(
+        "/attendee/login?error=Your%20account%20was%20created%2C%20but%20attendee%20account%20sync%20is%20not%20enabled%20yet.%20Run%20022_attendee_account_management.sql%20in%20Supabase%20first."
+      );
+    }
+
     const attendeeReady = await waitForRole("attendee");
 
     if (attendeeReady) {

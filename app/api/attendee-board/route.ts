@@ -255,7 +255,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error: isCommunitySetupError(rpcError)
-            ? "Attendee community tools are not fully enabled in Supabase yet. Run the 015_attendee_board_engagement.sql migration first."
+            ? "Attendee community tools are not fully enabled in Supabase yet. Run 015_attendee_board_engagement.sql and 023_attendee_board_rooms_and_self_service.sql in Supabase first."
             : toPublicErrorMessage(rpcError, {
                 fallback: "We couldn't save that attendee board update just now. Please try again.",
                 duplicateMessage: "That action has already been recorded.",

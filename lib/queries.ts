@@ -1256,6 +1256,25 @@ export const getAdminAttendeeAccounts = cache(async () => {
 
   try {
     const supabase = await createClient();
+    const { data: roster, error: rosterError } = await supabase.rpc("get_admin_attendee_account_roster");
+
+    if (!rosterError && Array.isArray(roster)) {
+      return roster.map((entry) => ({
+        id: entry.id,
+        full_name: entry.full_name || "Attendee",
+        email: entry.email || "",
+        phone: entry.phone ?? null,
+        title: entry.title ?? null,
+        organization: entry.organization ?? null,
+        share_with_attendees: entry.share_with_attendees ?? false,
+        share_with_planners: entry.share_with_planners ?? true,
+        created_at: entry.created_at,
+        updated_at: entry.updated_at ?? entry.created_at,
+        role: entry.role ?? null,
+        sync_status: entry.sync_status ?? null
+      })) as AttendeeAccountAdminRecord[];
+    }
+
     const [{ data: profiles, error: profilesError }, { data: directoryEntries, error: directoryError }] =
       await Promise.all([
         supabase
@@ -1272,7 +1291,7 @@ export const getAdminAttendeeAccounts = cache(async () => {
       ]);
 
     if (profilesError || directoryError) {
-      console.error(profilesError || directoryError);
+      console.error(rosterError || profilesError || directoryError);
       return [] as AttendeeAccountAdminRecord[];
     }
 
@@ -1305,7 +1324,9 @@ export const getAdminAttendeeAccounts = cache(async () => {
           share_with_attendees: directory?.share_with_attendees ?? false,
           share_with_planners: directory?.share_with_planners ?? true,
           created_at: profile.created_at,
-          updated_at: directory?.updated_at ?? profile.created_at
+          updated_at: directory?.updated_at ?? profile.created_at,
+          role: profile.role ?? null,
+          sync_status: directory ? "synced" : "profile only"
         };
       }
     );

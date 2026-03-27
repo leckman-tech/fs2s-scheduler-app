@@ -210,6 +210,8 @@ export type AttendeeAccountAdminRecord = {
   share_with_planners: boolean;
   created_at: string;
   updated_at: string;
+  role?: string | null;
+  sync_status?: string | null;
 };
 
 export type AttendeeBoardReplyRecord = {

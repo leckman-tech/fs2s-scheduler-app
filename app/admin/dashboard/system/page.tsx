@@ -13,6 +13,11 @@ type CheckItem = {
   detail: string;
 };
 
+type AttendeeRosterEntry = {
+  id: string;
+  created_at: string;
+};
+
 export const metadata: Metadata = buildMetadata({
   title: "System Check",
   description: "Launch readiness checks for FS2S 2026 site configuration, signups, and communications.",
@@ -78,6 +83,10 @@ function createEnvCheck(
 export default async function AdminSystemCheckPage() {
   await requireAdmin();
   const supabase = await createClient();
+  const { data: attendeeRoster, error: attendeeRosterError } = await supabase.rpc(
+    "get_admin_attendee_account_roster"
+  );
+  const rosterEntries = (attendeeRoster ?? []) as AttendeeRosterEntry[];
 
   const platformChecks = [
     createEnvCheck("Supabase URL", Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL), {
@@ -135,19 +144,43 @@ export default async function AdminSystemCheckPage() {
     runTableCheck("form_submission_guards", "Public form guard log")
   ]);
 
-  const { count: attendeeAccountCount } = await supabase
+  const attendeeRosterCheck: CheckItem = attendeeRosterError
+    ? {
+        label: "Attendee account roster",
+        state: "warn",
+        detail:
+          "Run 024_admin_attendee_roster.sql in Supabase so the Admin portal can see newly created attendee logins immediately."
+      }
+    : {
+        label: "Attendee account roster",
+        state: "pass",
+        detail: `${rosterEntries.length} attendee login${rosterEntries.length === 1 ? "" : "s"} visible to admin`
+      };
+
+  const { count: syncedAttendeeCount } = await supabase
     .from("profiles")
     .select("id", { head: true, count: "exact" })
     .eq("role", "attendee");
 
-  const accountWindowStart = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-  const { count: recentAttendeeCount } = await supabase
+  const accountWindowStartIso = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+  const { count: syncedRecentAttendeeCount } = await supabase
     .from("profiles")
     .select("id", { head: true, count: "exact" })
     .eq("role", "attendee")
-    .gte("created_at", accountWindowStart);
+    .gte("created_at", accountWindowStartIso);
 
-  const allChecks = [...platformChecks, ...databaseChecks];
+  const accountWindowStartMs = Date.now() - 24 * 60 * 60 * 1000;
+  const attendeeAccountCount =
+    attendeeRoster && !attendeeRosterError ? rosterEntries.length : syncedAttendeeCount ?? 0;
+  const recentAttendeeCount =
+    attendeeRoster && !attendeeRosterError
+      ? rosterEntries.filter((account) => {
+          const createdAt = new Date(account.created_at).getTime();
+          return Number.isFinite(createdAt) && createdAt >= accountWindowStartMs;
+        }).length
+      : syncedRecentAttendeeCount ?? 0;
+
+  const allChecks = [...platformChecks, attendeeRosterCheck, ...databaseChecks];
   const passCount = allChecks.filter((check) => check.state === "pass").length;
   const warnCount = allChecks.filter((check) => check.state === "warn").length;
   const failCount = allChecks.filter((check) => check.state === "fail").length;
@@ -166,6 +199,9 @@ export default async function AdminSystemCheckPage() {
       : null,
     !process.env.ATTENDEE_ACCESS_CODE
       ? "Add ATTENDEE_ACCESS_CODE in Vercel when you are ready to let attendees create their own portal accounts."
+      : null,
+    process.env.ATTENDEE_ACCESS_CODE && (attendeeAccountCount ?? 0) === 0
+      ? "If attendees are creating accounts but none appear in Admin, run 022_attendee_account_management.sql and 024_admin_attendee_roster.sql in Supabase so login creation and admin account visibility stay in sync."
       : null,
     databaseChecks.some((check) => check.label === "Public form guard log" && check.state !== "pass")
       ? "Run 018_public_form_guard.sql in Supabase so the public signup forms have anti-spam protection."

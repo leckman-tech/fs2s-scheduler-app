@@ -3409,6 +3409,22 @@ th {
     grid-template-columns: 1fr;
   }
 
+  .attendee-board__workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .attendee-board__sidebar {
+    position: static;
+  }
+
+  .attendee-board__room-hero {
+    flex-direction: column;
+  }
+
+  .attendee-board__room-stats {
+    justify-content: flex-start;
+  }
+
   .directory-card__header {
     flex-direction: column;
     align-items: flex-start;
@@ -3425,6 +3441,10 @@ th {
 
   .attendee-thread__actions {
     width: 100%;
+  }
+
+  .attendee-room-tab {
+    padding: 0.75rem 0.85rem;
   }
 
   .form-grid--two {

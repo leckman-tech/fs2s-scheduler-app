@@ -187,7 +187,7 @@ export default async function AdminSignupsPage({
                         <input
                           id={`happy-hour-phone-${signup.id}`}
                           name="phone"
-                          defaultValue={signup.phone}
+                          defaultValue={signup.phone ?? ""}
                           required
                         />
                       </div>
@@ -296,7 +296,7 @@ export default async function AdminSignupsPage({
                         <input
                           id={`lobby-signup-phone-${signup.id}`}
                           name="phone"
-                          defaultValue={signup.phone}
+                          defaultValue={signup.phone ?? ""}
                           required
                         />
                       </div>
