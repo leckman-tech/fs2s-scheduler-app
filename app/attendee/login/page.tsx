@@ -91,10 +91,6 @@ export default async function AttendeeLoginPage({
             <div className="field">
               <label htmlFor="create-password">Password</label>
               <input id="create-password" name="password" type="password" required minLength={8} />
-              <p className="field-hint">
-                Use at least 8 characters. A mix of uppercase and lowercase letters, a number, and
-                a symbol is recommended.
-              </p>
             </div>
             <div className="field">
               <label htmlFor="create-confirm-password">Confirm password</label>
@@ -107,6 +103,10 @@ export default async function AttendeeLoginPage({
               />
             </div>
           </div>
+          <p className="field-hint">
+            Use at least 8 characters. A mix of uppercase and lowercase letters, a number, and a
+            symbol is recommended.
+          </p>
           <div className="field">
             <label htmlFor="create-access-code">Conference access code</label>
             <input
