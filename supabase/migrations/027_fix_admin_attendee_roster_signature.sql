@@ -41,13 +41,15 @@ begin
     coalesce(p.created_at, u.created_at, timezone('utc', now()))::timestamptz as created_at,
     coalesce(d.updated_at, u.updated_at, p.created_at, u.created_at, timezone('utc', now()))::timestamptz as updated_at,
     coalesce(p.role::text, 'attendee')::text as role,
-    case
-      when p.role = 'attendee' and d.account_id = u.id then 'synced'
-      when p.role = 'attendee' then 'profile only'
-      when d.account_id = u.id then 'directory only'
-      when coalesce(u.raw_user_meta_data ->> 'portal_type', '') = 'attendee' then 'auth only'
-      else 'unclassified'
-    end::text as sync_status
+    (
+      case
+        when p.role = 'attendee' and d.account_id = u.id then 'synced'
+        when p.role = 'attendee' then 'profile only'
+        when d.account_id = u.id then 'directory only'
+        when coalesce(u.raw_user_meta_data ->> 'portal_type', '') = 'attendee' then 'auth only'
+        else 'unclassified'
+      end
+    )::text as sync_status
   from auth.users u
   left join public.profiles p on p.id = u.id
   left join public.attendee_directory_entries d
@@ -57,7 +59,7 @@ begin
     p.role = 'attendee'
     or coalesce(u.raw_user_meta_data ->> 'portal_type', '') = 'attendee'
     or d.id is not null
-  order by coalesce(p.created_at, u.created_at) desc;
+  order by coalesce(p.created_at, u.created_at, timezone('utc', now())) desc;
 end;
 $$;
 
