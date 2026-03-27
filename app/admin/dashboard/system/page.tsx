@@ -335,7 +335,7 @@ export default async function AdminSystemCheckPage() {
           </div>
         </div>
         <div className="system-check-grid">
-          {platformChecks.map((check) => (
+          {[...platformChecks, attendeeRosterCheck].map((check) => (
             <article key={check.label} className={`system-check-card system-check-card--${check.state}`}>
               <div className="system-check-card__header">
                 <strong>{check.label}</strong>
