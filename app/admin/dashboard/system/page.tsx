@@ -149,7 +149,7 @@ export default async function AdminSystemCheckPage() {
         label: "Attendee account roster",
         state: "warn",
         detail:
-          "Run 024_admin_attendee_roster.sql in Supabase so the Admin portal can see newly created attendee logins immediately."
+          `We couldn't confirm the admin attendee roster function yet. ${attendeeRosterError.message} If you already ran 024_admin_attendee_roster.sql, try running it once more and refresh after Supabase updates its schema cache.`
       }
     : {
         label: "Attendee account roster",
