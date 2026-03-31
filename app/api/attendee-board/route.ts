@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
-import { ATTENDEE_PORTAL_ROLES } from "@/lib/constants";
+import { ATTENDEE_BOARD_MEDIA_BUCKET, ATTENDEE_PORTAL_ROLES } from "@/lib/constants";
 import { toPublicErrorMessage } from "@/lib/public-errors";
 import { createClient } from "@/lib/supabase/server";
 
@@ -11,6 +11,7 @@ type AttendeeBoardAction =
       body?: string;
       room?: string;
       authorToken?: string;
+      imageFile?: File | null;
     }
   | {
       action: "update-post";
@@ -48,9 +49,45 @@ type AttendeeBoardAction =
       viewerToken?: string;
     };
 
+const ATTENDEE_BOARD_IMAGE_LIMIT_BYTES = 8 * 1024 * 1024;
+const SUPPORTED_ATTENDEE_BOARD_IMAGE_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif"
+]);
+
 function normalizeToken(value?: string) {
   const token = value?.trim();
   return token ? token : crypto.randomUUID();
+}
+
+function sanitizeFileName(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9.\-_]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+async function parsePayload(request: Request): Promise<AttendeeBoardAction> {
+  const contentType = request.headers.get("content-type") ?? "";
+
+  if (contentType.includes("multipart/form-data")) {
+    const formData = await request.formData();
+    const maybeImage = formData.get("image");
+
+    return {
+      action: "create-post",
+      organization: String(formData.get("organization") ?? "").trim() || undefined,
+      body: String(formData.get("body") ?? "").trim() || undefined,
+      room: String(formData.get("room") ?? "").trim() || undefined,
+      authorToken: String(formData.get("authorToken") ?? "").trim() || undefined,
+      imageFile: maybeImage instanceof File && maybeImage.size > 0 ? maybeImage : null
+    };
+  }
+
+  return (await request.json()) as AttendeeBoardAction;
 }
 
 function isCommunitySetupError(error: unknown) {
@@ -74,8 +111,26 @@ function isCommunitySetupError(error: unknown) {
     "toggle_attendee_board_like",
     "account_id",
     "room",
+    "image_path",
     "schema cache"
   ].some((fragment) => message.includes(fragment));
+}
+
+function isPhotoSetupError(error: unknown) {
+  const message =
+    typeof error === "object" && error
+      ? `${"message" in error ? String(error.message ?? "") : ""} ${
+          "details" in error ? String(error.details ?? "") : ""
+        }`
+      : "";
+
+  return [
+    ATTENDEE_BOARD_MEDIA_BUCKET,
+    "storage",
+    "bucket",
+    "row-level security",
+    "image_path"
+  ].some((fragment) => message.toLowerCase().includes(fragment.toLowerCase()));
 }
 
 export async function POST(request: Request) {
@@ -102,7 +157,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const payload = (await request.json()) as AttendeeBoardAction;
+    const payload = await parsePayload(request);
     const attendeeName =
       profile?.full_name?.trim() ||
       String(user.user_metadata?.full_name ?? "").trim() ||
@@ -117,6 +172,7 @@ export async function POST(request: Request) {
           : crypto.randomUUID();
 
     let rpcError: { message?: string; details?: string } | null = null;
+    let uploadedImagePath: string | null = null;
 
     switch (payload.action) {
       case "create-post": {
@@ -127,16 +183,56 @@ export async function POST(request: Request) {
           );
         }
 
+        if (payload.imageFile) {
+          if (!SUPPORTED_ATTENDEE_BOARD_IMAGE_TYPES.has(payload.imageFile.type)) {
+            return NextResponse.json(
+              { error: "Please upload a JPG, PNG, WEBP, or GIF image for the attendee board." },
+              { status: 400 }
+            );
+          }
+
+          if (payload.imageFile.size > ATTENDEE_BOARD_IMAGE_LIMIT_BYTES) {
+            return NextResponse.json(
+              { error: "Please keep attendee board photos under 8 MB." },
+              { status: 400 }
+            );
+          }
+
+          uploadedImagePath = `${user.id}/${Date.now()}-${sanitizeFileName(
+            payload.imageFile.name || "attendee-photo.jpg"
+          )}`;
+
+          const { error: uploadError } = await supabase.storage
+            .from(ATTENDEE_BOARD_MEDIA_BUCKET)
+            .upload(uploadedImagePath, payload.imageFile, {
+              upsert: false,
+              contentType: payload.imageFile.type,
+              cacheControl: "3600"
+            });
+
+          if (uploadError) {
+            return NextResponse.json(
+              {
+                error: isPhotoSetupError(uploadError)
+                  ? "Photo sharing is not fully enabled in Supabase yet. Ask the conference team to run 030_attendee_board_images.sql first."
+                  : "We couldn't upload that photo right now. Please try a smaller image or try again in a moment."
+              },
+              { status: 400 }
+            );
+          }
+        }
+
         const { error } = await supabase.rpc("create_attendee_board_post_with_token", {
           p_full_name: attendeeName,
           p_email: attendeeEmail,
           p_organization: payload.organization?.trim() || null,
           p_body: payload.body.trim(),
           p_author_token: responseToken,
-          p_room: payload.room?.trim() || null
+          p_room: payload.room?.trim() || null,
+          ...(uploadedImagePath ? { p_image_path: uploadedImagePath } : {})
         });
 
-        if (error && isCommunitySetupError(error)) {
+        if (error && !uploadedImagePath && isCommunitySetupError(error)) {
           const fallback = await supabase.rpc("create_attendee_board_post_with_token", {
             p_full_name: attendeeName,
             p_email: attendeeEmail,
@@ -179,12 +275,22 @@ export async function POST(request: Request) {
           return NextResponse.json({ error: "Choose a post to delete first." }, { status: 400 });
         }
 
+        const { data: postToDelete } = await supabase
+          .from("attendee_board_posts")
+          .select("image_path")
+          .eq("id", payload.postId.trim())
+          .maybeSingle();
+
         const { error } = await supabase.rpc("delete_attendee_board_post", {
           p_post_id: payload.postId.trim(),
           p_author_token: responseToken
         });
 
         rpcError = error;
+
+        if (!error && postToDelete?.image_path) {
+          await supabase.storage.from(ATTENDEE_BOARD_MEDIA_BUCKET).remove([postToDelete.image_path]);
+        }
         break;
       }
       case "create-reply": {
@@ -252,10 +358,16 @@ export async function POST(request: Request) {
     }
 
     if (rpcError) {
+      if (uploadedImagePath) {
+        await supabase.storage.from(ATTENDEE_BOARD_MEDIA_BUCKET).remove([uploadedImagePath]);
+      }
+
       return NextResponse.json(
         {
           error: isCommunitySetupError(rpcError)
-            ? "Attendee community tools are not fully enabled in Supabase yet. Run 015_attendee_board_engagement.sql and 023_attendee_board_rooms_and_self_service.sql in Supabase first."
+            ? uploadedImagePath
+              ? "Photo sharing is not fully enabled in Supabase yet. Ask the conference team to run 030_attendee_board_images.sql first."
+              : "Attendee community tools are not fully enabled in Supabase yet. Run 015_attendee_board_engagement.sql and 023_attendee_board_rooms_and_self_service.sql in Supabase first."
             : toPublicErrorMessage(rpcError, {
                 fallback: "We couldn't save that attendee board update just now. Please try again.",
                 duplicateMessage: "That action has already been recorded.",

@@ -102,6 +102,7 @@ export const STATUS_LABELS: Record<SessionStatus, string> = {
 };
 
 export const SESSION_RESOURCE_BUCKET = "session-resources";
+export const ATTENDEE_BOARD_MEDIA_BUCKET = "attendee-board-media";
 
 export const SITE_URL = "https://fs2shub.com";
 export const SITE_NAME = "From Silos to Solutions 2026";

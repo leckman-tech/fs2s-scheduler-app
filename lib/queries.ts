@@ -1,7 +1,12 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { ATTENDEE_PORTAL_ROLES, SESSION_RESOURCE_BUCKET, SPEAKER_PORTAL_ROLES } from "@/lib/constants";
+import {
+  ATTENDEE_BOARD_MEDIA_BUCKET,
+  ATTENDEE_PORTAL_ROLES,
+  SESSION_RESOURCE_BUCKET,
+  SPEAKER_PORTAL_ROLES
+} from "@/lib/constants";
 import { createClient } from "@/lib/supabase/server";
 import { displaySessionTitle } from "@/lib/utils";
 import type {
@@ -214,6 +219,7 @@ type AttendeeBoardPostRow = {
   email: string;
   organization: string | null;
   body: string;
+  image_path?: string | null;
   published: boolean;
   created_at: string;
   updated_at?: string | null;
@@ -389,10 +395,42 @@ function mapAttendeeBoardPost(row: AttendeeBoardPostRow): AttendeeBoardPostRecor
     email: row.email,
     organization: row.organization,
     body: row.body,
+    image_path: row.image_path ?? null,
     published: row.published,
     created_at: row.created_at,
     updated_at: row.updated_at ?? null
   };
+}
+
+async function attachAttendeeBoardImageUrls<T extends { image_path?: string | null }>(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  records: T[]
+) {
+  const paths = Array.from(
+    new Set(records.map((record) => record.image_path).filter((path): path is string => Boolean(path)))
+  );
+
+  if (!paths.length) {
+    return records.map((record) => ({ ...record, image_url: null }));
+  }
+
+  const { data, error } = await supabase.storage
+    .from(ATTENDEE_BOARD_MEDIA_BUCKET)
+    .createSignedUrls(paths, 60 * 60);
+
+  if (error) {
+    console.error(error);
+    return records.map((record) => ({ ...record, image_url: null }));
+  }
+
+  const urlByPath = new Map(
+    paths.map((path, index) => [path, data?.[index]?.signedUrl ?? null] as const)
+  );
+
+  return records.map((record) => ({
+    ...record,
+    image_url: record.image_path ? (urlByPath.get(record.image_path) ?? null) : null
+  }));
 }
 
 function mapAttendeeDirectoryEntry(
@@ -424,7 +462,8 @@ function isMissingAttendeeBoardEngagementError(error: unknown) {
     "attendee_board_replies",
     "attendee_board_likes",
     "author_token",
-    "updated_at"
+    "updated_at",
+    "image_path"
   ].some((fragment) => message.includes(fragment));
 }
 
@@ -899,7 +938,7 @@ export const getAttendeeBoardPosts = cache(async () => {
     const supabase = await createClient();
     const primaryResponse = await supabase
       .from("attendee_board_posts")
-      .select("id,account_id,room,full_name,email,organization,body,published,created_at,updated_at")
+      .select("id,account_id,room,full_name,email,organization,body,image_path,published,created_at,updated_at")
       .eq("published", true)
       .order("created_at", { ascending: false });
 
@@ -923,7 +962,8 @@ export const getAttendeeBoardPosts = cache(async () => {
       return [] as AttendeeBoardPostRecord[];
     }
 
-    return ((primaryResponse.data as AttendeeBoardPostRow[]) ?? []).map(mapAttendeeBoardPost);
+    const mappedPosts = ((primaryResponse.data as AttendeeBoardPostRow[]) ?? []).map(mapAttendeeBoardPost);
+    return attachAttendeeBoardImageUrls(supabase, mappedPosts);
   } catch (error) {
     console.error(error);
     return [] as AttendeeBoardPostRecord[];
@@ -944,7 +984,7 @@ export const getAttendeeBoardFeed = cache(async () => {
 
     const primaryPostsResponse = await supabase
       .from("attendee_board_posts")
-      .select("id,account_id,room,full_name,email,organization,body,published,created_at,updated_at,author_token")
+      .select("id,account_id,room,full_name,email,organization,body,image_path,published,created_at,updated_at,author_token")
       .eq("published", true)
       .order("created_at", { ascending: false });
 
@@ -1031,7 +1071,15 @@ export const getAttendeeBoardFeed = cache(async () => {
       return acc;
     }, {});
 
-    return ((posts as AttendeeBoardPostRow[]) ?? []).map((post) => ({
+    const postsWithImages = await attachAttendeeBoardImageUrls(
+      supabase,
+      ((posts as AttendeeBoardPostRow[]) ?? []).map((post) => ({
+        ...post,
+        image_path: post.image_path ?? null
+      }))
+    );
+
+    return postsWithImages.map((post) => ({
       id: post.id,
       account_id: post.account_id ?? null,
       room: post.room ?? "Community Lounge",
@@ -1039,6 +1087,8 @@ export const getAttendeeBoardFeed = cache(async () => {
       email: post.email,
       organization: post.organization,
       body: post.body,
+      image_path: post.image_path ?? null,
+      image_url: post.image_url ?? null,
       created_at: post.created_at,
       updated_at: post.updated_at ?? null,
       canEdit: Boolean(
@@ -1207,17 +1257,25 @@ export const getAdminAttendeeBoardPosts = cache(async () => {
 
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from("attendee_board_posts")
-      .select("id,full_name,email,organization,body,published,created_at")
+      .select("id,full_name,email,organization,body,image_path,published,created_at")
       .order("created_at", { ascending: false });
+
+    if (error && isMissingAttendeeBoardEngagementError(error)) {
+      ({ data, error } = await supabase
+        .from("attendee_board_posts")
+        .select("id,full_name,email,organization,body,published,created_at")
+        .order("created_at", { ascending: false }));
+    }
 
     if (error) {
       console.error(error);
       return [] as AttendeeBoardPostRecord[];
     }
 
-    return ((data as AttendeeBoardPostRow[]) ?? []).map(mapAttendeeBoardPost);
+    const mappedPosts = ((data as AttendeeBoardPostRow[]) ?? []).map(mapAttendeeBoardPost);
+    return attachAttendeeBoardImageUrls(supabase, mappedPosts);
   } catch (error) {
     console.error(error);
     return [] as AttendeeBoardPostRecord[];

@@ -180,6 +180,8 @@ export type AttendeeBoardPostRecord = {
   email: string;
   organization: string | null;
   body: string;
+  image_path?: string | null;
+  image_url?: string | null;
   published: boolean;
   created_at: string;
   updated_at?: string | null;
@@ -235,6 +237,8 @@ export type AttendeeBoardThreadRecord = {
   email: string;
   organization: string | null;
   body: string;
+  image_path?: string | null;
+  image_url?: string | null;
   created_at: string;
   updated_at: string | null;
   canEdit: boolean;
