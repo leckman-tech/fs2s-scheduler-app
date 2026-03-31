@@ -32,6 +32,10 @@ on conflict (slug) do update set
   name = excluded.name,
   organization = excluded.organization;
 
+update public.speakers
+set title = 'Movement builder and advocate'
+where slug = 'naike-savain';
+
 insert into public.sessions (session_code, placeholder_code, final_title, title, slug, category, date, starts_at, ends_at, venue, room, short_description, description, live_updates, status, published, featured, is_placeholder) values
   ('d1s1', null, null, 'Registration & Continental Breakfast', 'registration-continental-breakfast', 'breakfast', '2026-04-01', '2026-04-01T08:30:00-04:00', '2026-04-01T09:15:00-04:00', 'National Union Building', 'Lobby & Main Floor', 'Arrival window with breakfast and time to settle in before programming begins.', 'Arrival window with breakfast and time to settle in before programming begins.', null, 'scheduled', true, false, false),
   ('d1s2', null, null, 'Welcome Remarks & Land Acknowledgment', 'welcome-remarks-land-acknowledgment', 'opening_session', '2026-04-01', '2026-04-01T09:15:00-04:00', '2026-04-01T09:30:00-04:00', 'National Union Building', 'Sixth Floor North and South', 'Opening remarks to welcome attendees and frame the day ahead.', 'Opening remarks to welcome attendees and frame the day ahead.', null, 'scheduled', true, false, false),
