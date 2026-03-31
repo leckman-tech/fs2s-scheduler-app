@@ -1257,16 +1257,22 @@ export const getAdminAttendeeBoardPosts = cache(async () => {
 
   try {
     const supabase = await createClient();
-    let { data, error } = await supabase
+    const primaryResponse = await supabase
       .from("attendee_board_posts")
       .select("id,full_name,email,organization,body,image_path,published,created_at")
       .order("created_at", { ascending: false });
 
+    let data = (primaryResponse.data as AttendeeBoardPostRow[] | null) ?? null;
+    let error: unknown = primaryResponse.error;
+
     if (error && isMissingAttendeeBoardEngagementError(error)) {
-      ({ data, error } = await supabase
+      const fallbackResponse = await supabase
         .from("attendee_board_posts")
         .select("id,full_name,email,organization,body,published,created_at")
-        .order("created_at", { ascending: false }));
+        .order("created_at", { ascending: false });
+
+      data = (fallbackResponse.data as AttendeeBoardPostRow[] | null) ?? null;
+      error = fallbackResponse.error;
     }
 
     if (error) {
