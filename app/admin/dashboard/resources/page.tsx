@@ -237,6 +237,14 @@ export default async function AdminResourcesPage({
                     .filter(Boolean)
                     .join(" · ")}
                 </div>
+                {post.image_url ? (
+                  <figure className="admin-resource-image">
+                    <img
+                      src={post.image_url}
+                      alt={`Photo shared by ${post.full_name} on the attendee board`}
+                    />
+                  </figure>
+                ) : null}
                 <p className="muted">{post.body}</p>
                 <form action={deleteAttendeeBoardPost}>
                   <input type="hidden" name="id" value={post.id} />

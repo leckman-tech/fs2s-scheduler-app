@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {
+  ATTENDEE_BOARD_MEDIA_BUCKET,
   ATTENDEE_PORTAL_ROLES,
   CONFIRMATION_STATUSES,
   PARTICIPANT_ROLES,
@@ -1032,7 +1033,17 @@ export async function deleteAttendeeBoardPost(formData: FormData) {
   const supabase = await createClient();
   const id = String(formData.get("id") ?? "").trim();
 
+  const { data: post } = await supabase
+    .from("attendee_board_posts")
+    .select("image_path")
+    .eq("id", id)
+    .maybeSingle();
+
   await supabase.from("attendee_board_posts").delete().eq("id", id);
+
+  if (post?.image_path) {
+    await supabase.storage.from(ATTENDEE_BOARD_MEDIA_BUCKET).remove([post.image_path]);
+  }
 
   revalidatePath("/attendee");
   revalidatePath("/admin/dashboard/resources");

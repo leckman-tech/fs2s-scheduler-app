@@ -2448,6 +2448,33 @@ select {
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
+.attendee-board__image-preview {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.85rem;
+  border-radius: 20px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 247, 246, 0.92));
+}
+
+.attendee-board__image-preview img {
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid rgba(17, 17, 17, 0.06);
+}
+
+.attendee-board__image-preview-copy {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.attendee-board__remove-image {
+  justify-self: start;
+}
+
 .attendee-room-switcher {
   display: grid;
   gap: 0.55rem;
@@ -2617,6 +2644,19 @@ select {
   line-height: 1.65;
 }
 
+.attendee-thread__image {
+  margin: 0;
+}
+
+.attendee-thread__image img {
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 1px solid rgba(17, 17, 17, 0.06);
+  background: rgba(17, 17, 17, 0.03);
+}
+
 .attendee-thread__replies {
   display: grid;
   gap: 0.75rem;
@@ -2656,6 +2696,18 @@ select {
 .announcement strong {
   display: block;
   margin-bottom: 0.25rem;
+}
+
+.admin-resource-image {
+  margin: 0.75rem 0;
+}
+
+.admin-resource-image img {
+  display: block;
+  width: min(100%, 440px);
+  border-radius: 18px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  box-shadow: 0 14px 32px rgba(17, 17, 17, 0.08);
 }
 
 .announcement time {

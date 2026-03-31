@@ -92,6 +92,9 @@ export function AttendeeBoard({ initialThreads, initialIdentity }: AttendeeBoard
   const [flash, setFlash] = useState<FlashState>(null);
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyDrafts, setReplyDrafts] = useState<Record<string, string>>({});
+  const [composerImage, setComposerImage] = useState<File | null>(null);
+  const [composerImagePreview, setComposerImagePreview] = useState<string | null>(null);
+  const [composerUploadKey, setComposerUploadKey] = useState(0);
   const [editingPostId, setEditingPostId] = useState<string | null>(null);
   const [editingPostBody, setEditingPostBody] = useState("");
   const [editingReplyId, setEditingReplyId] = useState<string | null>(null);
@@ -119,6 +122,20 @@ export function AttendeeBoard({ initialThreads, initialIdentity }: AttendeeBoard
     syncAttendeeToken(storedToken);
     setToken(storedToken);
   }, []);
+
+  useEffect(() => {
+    if (!composerImage) {
+      setComposerImagePreview(null);
+      return;
+    }
+
+    const nextPreview = URL.createObjectURL(composerImage);
+    setComposerImagePreview(nextPreview);
+
+    return () => {
+      URL.revokeObjectURL(nextPreview);
+    };
+  }, [composerImage]);
 
   async function submitAction(payload: Record<string, unknown>, successMessage?: string) {
     setFlash(null);
@@ -166,6 +183,49 @@ export function AttendeeBoard({ initialThreads, initialIdentity }: AttendeeBoard
     return true;
   }
 
+  async function submitMultipartAction(formData: FormData, successMessage?: string) {
+    setFlash(null);
+
+    const response = await fetch("/api/attendee-board", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = (await response.json().catch(() => null)) as
+      | {
+          ok?: boolean;
+          error?: string;
+          viewerToken?: string;
+        }
+      | null;
+
+    if (!response.ok || !data?.ok) {
+      setFlash({
+        tone: "error",
+        message: data?.error || "We couldn't save that update just now. Please try again."
+      });
+      return false;
+    }
+
+    if (data.viewerToken) {
+      syncAttendeeToken(data.viewerToken);
+      setToken(data.viewerToken);
+    }
+
+    if (successMessage) {
+      setFlash({
+        tone: "success",
+        message: successMessage
+      });
+    }
+
+    startTransition(() => {
+      router.refresh();
+    });
+
+    return true;
+  }
+
   async function handleCreatePost() {
     if (!identity.fullName.trim() || !identity.email.trim() || !newPostBody.trim()) {
       setFlash({
@@ -175,19 +235,23 @@ export function AttendeeBoard({ initialThreads, initialIdentity }: AttendeeBoard
       return;
     }
 
-    const ok = await submitAction(
-      {
-        action: "create-post",
-        organization: identity.organization,
-        body: newPostBody,
-        room: normalizeRoomLabel(composerRoom),
-        authorToken: token
-      },
-      "Your post is live on the attendee board."
-    );
+    const formData = new FormData();
+    formData.set("action", "create-post");
+    formData.set("organization", identity.organization);
+    formData.set("body", newPostBody);
+    formData.set("room", normalizeRoomLabel(composerRoom));
+    formData.set("authorToken", token);
+
+    if (composerImage) {
+      formData.set("image", composerImage);
+    }
+
+    const ok = await submitMultipartAction(formData, "Your post is live on the attendee board.");
 
     if (ok) {
       setNewPostBody("");
+      setComposerImage(null);
+      setComposerUploadKey((current) => current + 1);
       setSelectedRoom(normalizeRoomLabel(composerRoom));
     }
   }
@@ -430,6 +494,43 @@ export function AttendeeBoard({ initialThreads, initialIdentity }: AttendeeBoard
             </div>
 
             <div className="field">
+              <label htmlFor="attendee-board-image">Add a photo</label>
+              <input
+                key={composerUploadKey}
+                id="attendee-board-image"
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif,image/*"
+                onChange={(event) => setComposerImage(event.target.files?.[0] ?? null)}
+              />
+              <p className="field-hint">
+                Add one photo from your phone or desktop. JPG, PNG, WEBP, or GIF up to 8 MB.
+              </p>
+            </div>
+
+            {composerImagePreview ? (
+              <div className="attendee-board__image-preview">
+                <img
+                  src={composerImagePreview}
+                  alt="Preview of the attendee board photo you selected"
+                />
+                <div className="attendee-board__image-preview-copy">
+                  <strong>{composerImage?.name || "Selected photo"}</strong>
+                  <span className="muted">This image will appear with your post.</span>
+                </div>
+                <button
+                  type="button"
+                  className="button-secondary attendee-board__remove-image"
+                  onClick={() => {
+                    setComposerImage(null);
+                    setComposerUploadKey((current) => current + 1);
+                  }}
+                >
+                  Remove photo
+                </button>
+              </div>
+            ) : null}
+
+            <div className="field">
               <label htmlFor="attendee-board-body">Start a conversation</label>
               <textarea
                 id="attendee-board-body"
@@ -502,6 +603,15 @@ export function AttendeeBoard({ initialThreads, initialIdentity }: AttendeeBoard
                         </div>
                       </div>
                     </div>
+
+                    {thread.image_url ? (
+                      <figure className="attendee-thread__image">
+                        <img
+                          src={thread.image_url}
+                          alt={`Photo shared by ${thread.full_name} in ${normalizeRoomLabel(thread.room)}`}
+                        />
+                      </figure>
+                    ) : null}
 
                     {isEditingPost ? (
                       <div className="attendee-thread__edit">
