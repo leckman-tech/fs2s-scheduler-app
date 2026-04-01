@@ -1,0 +1,6 @@
+update public.sessions
+set
+  final_title = 'Stories That Move: Crafting Your Advocacy Narrative for Change',
+  short_description = 'This interactive session explores how personal and community experiences with the criminal justice system can be shaped into advocacy narratives that influence decision-makers and the public.',
+  description = 'Your story is more than words. It is a tool for change. This interactive session invites educators, organizations, policymakers, advocates, and community leaders to explore how personal and community experiences with the criminal justice system can be transformed into powerful narratives that influence decision-makers and the public. Participants will begin by identifying their why, the core motivation behind the work they do, and learn how to turn that purpose into the foundation of an advocacy story. Using FAMM''s "Recipe for a Powerful Advocacy Story," attendees will craft and share their narratives in guided story labs, receive feedback, and refine their messaging to maximize impact. Learning objectives: Use storytelling as an advocacy tool for policy and systems change; Clarify an advocacy ask or action connected to a personal or community narrative; Build and refine a compelling story using FAMM''s advocacy storytelling framework.'
+where session_code = 'd1wC';
