@@ -118,6 +118,7 @@ type PortalDocumentRow = {
   mime_type: string | null;
   published: boolean;
   created_at: string;
+  uploaded_by?: string | null;
   sessions:
     | {
         id: string;
@@ -137,6 +138,23 @@ type PortalDocumentRow = {
       }>
     | null;
 };
+
+const PORTAL_DOCUMENT_SELECT =
+  "id,session_id,audience,title,description,file_name,file_path,mime_type,published,created_at,uploaded_by,sessions(id,title,final_title,placeholder_code,category,date)";
+
+const PORTAL_DOCUMENT_SELECT_LEGACY =
+  "id,session_id,audience,title,description,file_name,file_path,mime_type,published,created_at,sessions(id,title,final_title,placeholder_code,category,date)";
+
+function isMissingPortalDocumentUploaderError(error: unknown) {
+  const message =
+    typeof error === "object" && error
+      ? `${"message" in error ? String(error.message ?? "") : ""} ${
+          "details" in error ? String(error.details ?? "") : ""
+        }`
+      : "";
+
+  return message.includes("uploaded_by");
+}
 
 type PortalMessageRow = {
   id: string;
@@ -326,6 +344,7 @@ function mapPortalDocument(row: PortalDocumentRow): PortalDocumentRecord {
     mime_type: row.mime_type,
     published: row.published,
     created_at: row.created_at,
+    uploaded_by: row.uploaded_by ?? null,
     session
   };
 }
@@ -865,19 +884,24 @@ export const getPublicSpeakers = cache(async () => {
 export const getAdminPortalDocuments = cache(async () => {
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("portal_documents")
-      .select(
-        "id,session_id,audience,title,description,file_name,file_path,mime_type,published,created_at,sessions(id,title,final_title,placeholder_code,category,date)"
-      )
-      .order("created_at", { ascending: false });
+    const runQuery = async (selectClause: string) =>
+      supabase
+        .from("portal_documents")
+        .select(selectClause)
+        .order("created_at", { ascending: false });
+
+    let { data, error } = await runQuery(PORTAL_DOCUMENT_SELECT);
+
+    if (error && isMissingPortalDocumentUploaderError(error)) {
+      ({ data, error } = await runQuery(PORTAL_DOCUMENT_SELECT_LEGACY));
+    }
 
     if (error) {
       console.error(error);
       return [] as PortalDocumentRecord[];
     }
 
-    return (data as PortalDocumentRow[]).map(mapPortalDocument);
+    return (data as unknown as PortalDocumentRow[]).map(mapPortalDocument);
   } catch (error) {
     console.error(error);
     return [] as PortalDocumentRecord[];
@@ -889,21 +913,26 @@ export const getAttendeePortalResources = cache(async () => {
 
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("portal_documents")
-      .select(
-        "id,session_id,audience,title,description,file_name,file_path,mime_type,published,created_at,sessions(id,title,final_title,placeholder_code,category,date)"
-      )
-      .eq("published", true)
-      .in("audience", ["attendee", "both"])
-      .order("created_at", { ascending: false });
+    const runQuery = async (selectClause: string) =>
+      supabase
+        .from("portal_documents")
+        .select(selectClause)
+        .eq("published", true)
+        .in("audience", ["attendee", "both"])
+        .order("created_at", { ascending: false });
+
+    let { data, error } = await runQuery(PORTAL_DOCUMENT_SELECT);
+
+    if (error && isMissingPortalDocumentUploaderError(error)) {
+      ({ data, error } = await runQuery(PORTAL_DOCUMENT_SELECT_LEGACY));
+    }
 
     if (error) {
       console.error(error);
       return [] as PortalDocumentRecord[];
     }
 
-    const resources = (data as PortalDocumentRow[]).map(mapPortalDocument);
+    const resources = (data as unknown as PortalDocumentRow[]).map(mapPortalDocument);
 
     if (!resources.length) {
       return [];
@@ -1164,21 +1193,26 @@ export const getSpeakerPortalDocuments = cache(async () => {
 
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("portal_documents")
-      .select(
-        "id,session_id,audience,title,description,file_name,file_path,mime_type,published,created_at,sessions(id,title,final_title,placeholder_code,category,date)"
-      )
-      .eq("published", true)
-      .in("audience", ["speaker", "both"])
-      .order("created_at", { ascending: false });
+    const runQuery = async (selectClause: string) =>
+      supabase
+        .from("portal_documents")
+        .select(selectClause)
+        .eq("published", true)
+        .in("audience", ["speaker", "both"])
+        .order("created_at", { ascending: false });
+
+    let { data, error } = await runQuery(PORTAL_DOCUMENT_SELECT);
+
+    if (error && isMissingPortalDocumentUploaderError(error)) {
+      ({ data, error } = await runQuery(PORTAL_DOCUMENT_SELECT_LEGACY));
+    }
 
     if (error) {
       console.error(error);
       return [] as PortalDocumentRecord[];
     }
 
-    const documents = (data as PortalDocumentRow[]).map(mapPortalDocument);
+    const documents = (data as unknown as PortalDocumentRow[]).map(mapPortalDocument);
 
     if (!documents.length) {
       return [];
@@ -1228,6 +1262,34 @@ export const getSpeakerPortalMessages = cache(async () => {
     console.error(error);
     return [] as PortalMessageRecord[];
   }
+});
+
+export const getSpeakerPortalUploadSessions = cache(async () => {
+  await requirePrivateScheduleUser();
+
+  const assignedSessions = await getCurrentUserAssignedSessions();
+
+  if (assignedSessions.length) {
+    return assignedSessions.filter(
+      (session, index, sessions) => sessions.findIndex((entry) => entry.id === session.id) === index
+    );
+  }
+
+  const sessions = await getPublicSessions();
+  return sessions.filter((session) =>
+    [
+      "workshop",
+      "panel",
+      "keynote",
+      "fireside_chat",
+      "scholar_session",
+      "special_event",
+      "opening_session",
+      "closing_session",
+      "reception",
+      "evening_event"
+    ].includes(session.category)
+  );
 });
 
 export const getAdminPortalMessages = cache(async () => {

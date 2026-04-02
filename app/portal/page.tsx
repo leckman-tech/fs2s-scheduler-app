@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import { LogoutButton } from "@/components/logout-button";
-import { deleteSpeakerPortalMessage, postSpeakerPortalMessage } from "@/lib/actions/admin";
+import {
+  deleteOwnSpeakerPortalDocument,
+  deleteSpeakerPortalMessage,
+  postSpeakerPortalMessage,
+  uploadSpeakerPortalDocument
+} from "@/lib/actions/admin";
 import {
   getCurrentUserAssignedSessions,
   getSpeakerPortalDocuments,
   getSpeakerPortalMessages,
+  getSpeakerPortalUploadSessions,
   requirePrivateScheduleUser
 } from "@/lib/queries";
 import { buildMetadata } from "@/lib/seo";
@@ -26,14 +32,15 @@ export const metadata: Metadata = buildMetadata({
 export default async function PortalPage({
   searchParams
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; success?: string }>;
 }) {
   const params = await searchParams;
-  const [{ profile }, sessions, documents, messages] = await Promise.all([
+  const [{ user, profile }, sessions, documents, messages, uploadSessions] = await Promise.all([
     requirePrivateScheduleUser(),
     getCurrentUserAssignedSessions(),
     getSpeakerPortalDocuments(),
-    getSpeakerPortalMessages()
+    getSpeakerPortalMessages(),
+    getSpeakerPortalUploadSessions()
   ]);
 
   return (
@@ -74,6 +81,60 @@ export default async function PortalPage({
 
       <section className="panel detail-side-panel">
         <div className="section-heading">
+          <h2>Upload slides or handouts</h2>
+        </div>
+        <p className="muted">
+          Add your deck, notes, or supporting materials to the speaker/presenter library so the
+          conference team and fellow presenters can access the latest version in one place.
+        </p>
+        <form action={uploadSpeakerPortalDocument} className="form-grid" encType="multipart/form-data">
+          <div className="field">
+            <label htmlFor="speaker-upload-session">Attach to session</label>
+            <select id="speaker-upload-session" name="session_id" defaultValue="">
+              <option value="">General speaker/presenter resource</option>
+              {uploadSessions.map((session) => (
+                <option key={session.id} value={session.id}>
+                  {displaySessionTitle(session)} ({formatDateLabel(session.date)})
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="field">
+            <label htmlFor="speaker-upload-title">File title</label>
+            <input
+              id="speaker-upload-title"
+              name="title"
+              type="text"
+              placeholder="Ex: Panel slides, workshop handout, or speaking notes"
+              required
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="speaker-upload-description">Short note</label>
+            <textarea
+              id="speaker-upload-description"
+              name="description"
+              rows={3}
+              placeholder="Optional context for the conference team or fellow presenters."
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="speaker-upload-file">Choose file</label>
+            <input id="speaker-upload-file" name="file" type="file" required />
+            <p className="field-hint">PDF, PowerPoint, Keynote export, or handout files up to 50 MB.</p>
+          </div>
+          {params.success ? <div className="announcement">{params.success}</div> : null}
+          {params.error ? <div className="empty-state">{params.error}</div> : null}
+          <div className="admin-actions">
+            <button type="submit" className="button">
+              Upload to speaker library
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section className="panel detail-side-panel">
+        <div className="section-heading">
           <h2>Speaker/Presenter Library</h2>
         </div>
         <p className="muted">
@@ -96,6 +157,15 @@ export default async function PortalPage({
                     <a href={document.signed_url} className="button button-link" target="_blank" rel="noreferrer">
                       Open document
                     </a>
+                  ) : null}
+                  {document.uploaded_by === user.id ? (
+                    <form action={deleteOwnSpeakerPortalDocument}>
+                      <input type="hidden" name="id" value={document.id} />
+                      <input type="hidden" name="file_path" value={document.file_path} />
+                      <button type="submit" className="button-secondary">
+                        Remove upload
+                      </button>
+                    </form>
                   ) : null}
                   <span className="muted">{document.file_name}</span>
                 </div>
@@ -176,7 +246,6 @@ export default async function PortalPage({
               required
             />
           </div>
-          {params.error ? <div className="empty-state">{params.error}</div> : null}
           <div className="admin-actions">
             <button type="submit" className="button">
               Post message

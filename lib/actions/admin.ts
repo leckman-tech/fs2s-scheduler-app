@@ -16,7 +16,7 @@ import {
 import { sendAttendeeAccountWelcomeEmail } from "@/lib/email";
 import { toPublicErrorMessage, toRedirectErrorParam } from "@/lib/public-errors";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin, requireAttendeePortalUser } from "@/lib/queries";
+import { requireAdmin, requireAttendeePortalUser, requirePrivateScheduleUser } from "@/lib/queries";
 import { normalizeEmail, toSlug } from "@/lib/utils";
 
 function normalizeDateTimeInput(value: string) {
@@ -33,6 +33,8 @@ function sanitizeFileName(value: string) {
     .replace(/-+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
+
+const PORTAL_UPLOAD_MAX_BYTES = 50 * 1024 * 1024;
 
 async function getCurrentRole() {
   const supabase = await createClient();
@@ -886,6 +888,107 @@ export async function deletePortalDocument(formData: FormData) {
   revalidatePath("/attendee");
   revalidatePath("/portal");
   revalidatePath("/admin/dashboard/resources");
+}
+
+export async function uploadSpeakerPortalDocument(formData: FormData) {
+  const { user } = await requirePrivateScheduleUser();
+  const supabase = await createClient();
+
+  const sessionId = String(formData.get("session_id") ?? "").trim();
+  const title = String(formData.get("title") ?? "").trim();
+  const description = String(formData.get("description") ?? "").trim();
+  const file = formData.get("file");
+
+  if (!title || !(file instanceof File) || file.size === 0) {
+    redirect("/portal?error=Please%20add%20a%20title%20and%20choose%20a%20file%20to%20upload.");
+  }
+
+  if (file.size > PORTAL_UPLOAD_MAX_BYTES) {
+    redirect("/portal?error=Please%20upload%20a%20file%20smaller%20than%2050%20MB.");
+  }
+
+  const fileName = sanitizeFileName(file.name || `${title}.pdf`);
+  const storagePath = `speaker-submissions/${user.id}/${sessionId || "general"}/${Date.now()}-${fileName}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from(SESSION_RESOURCE_BUCKET)
+    .upload(storagePath, file, {
+      upsert: false,
+      contentType: file.type || undefined
+    });
+
+  if (uploadError) {
+    const message = `${uploadError.message ?? ""} ${uploadError.name ?? ""}`;
+    if (
+      message.includes("row-level security") ||
+      message.includes("permission") ||
+      message.includes("not authorized")
+    ) {
+      redirect(
+        "/portal?error=Speaker%20uploads%20are%20not%20enabled%20in%20Supabase%20yet.%20Run%20the%20speaker-portal%20upload%20migration%20first."
+      );
+    }
+
+    redirect(`/portal?error=${encodeURIComponent("We couldn't upload that file right now. Please try again.")}`);
+  }
+
+  const { error: insertError } = await supabase.from("portal_documents").insert({
+    session_id: sessionId || null,
+    audience: "speaker",
+    title,
+    description: description || null,
+    file_name: file.name || fileName,
+    file_path: storagePath,
+    mime_type: file.type || null,
+    published: true,
+    uploaded_by: user.id
+  });
+
+  if (insertError) {
+    await supabase.storage.from(SESSION_RESOURCE_BUCKET).remove([storagePath]);
+
+    const message = `${insertError.message ?? ""} ${insertError.details ?? ""}`;
+    if (message.includes("uploaded_by") || message.includes("portal_documents")) {
+      redirect(
+        "/portal?error=Speaker%20uploads%20are%20not%20fully%20enabled%20yet.%20Run%20the%20speaker-portal%20upload%20migration%20first."
+      );
+    }
+
+    redirect(`/portal?error=${encodeURIComponent("We couldn't save that upload right now. Please try again.")}`);
+  }
+
+  revalidatePath("/portal");
+  revalidatePath("/admin/dashboard/resources");
+  redirect("/portal?success=Your%20file%20is%20now%20available%20in%20the%20speaker%20library.");
+}
+
+export async function deleteOwnSpeakerPortalDocument(formData: FormData) {
+  const { user } = await requirePrivateScheduleUser();
+  const supabase = await createClient();
+
+  const id = String(formData.get("id") ?? "").trim();
+  const filePath = String(formData.get("file_path") ?? "").trim();
+
+  if (!id || !filePath) {
+    redirect("/portal?error=We%20couldn't%20remove%20that%20file.%20Please%20try%20again.");
+  }
+
+  const { data: document, error: lookupError } = await supabase
+    .from("portal_documents")
+    .select("id,uploaded_by,file_path")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (lookupError || !document || document.uploaded_by !== user.id) {
+    redirect("/portal?error=Only%20the%20person%20who%20uploaded%20this%20file%20can%20remove%20it.");
+  }
+
+  await supabase.from("portal_documents").delete().eq("id", id);
+  await supabase.storage.from(SESSION_RESOURCE_BUCKET).remove([filePath]);
+
+  revalidatePath("/portal");
+  revalidatePath("/admin/dashboard/resources");
+  redirect("/portal?success=Your%20uploaded%20file%20has%20been%20removed.");
 }
 
 export async function postSpeakerPortalMessage(formData: FormData) {

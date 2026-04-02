@@ -66,7 +66,7 @@ export default async function AdminResourcesPage({
           </article>
           <article className="story-stat">
             <strong>Speaker/Presenter Portal</strong>
-            <span>Assigned-session logistics, speaker materials, and private coordination updates.</span>
+            <span>Assigned-session logistics, private coordination updates, and speaker-uploaded decks or handouts.</span>
           </article>
           <article className="story-stat">
             <strong>Admin controls</strong>
@@ -159,6 +159,7 @@ export default async function AdminResourcesPage({
                       : document.audience === "speaker"
                         ? "Speaker/Presenter Portal"
                         : "Attendee Portal",
+                    document.uploaded_by ? "Speaker/presenter upload" : "Admin upload",
                     document.session
                       ? `${displaySessionTitle(document.session)} · ${labelForCategory(document.session.category)}`
                       : "General document",

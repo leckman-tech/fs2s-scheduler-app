@@ -89,6 +89,7 @@ export type PortalDocumentRecord = {
   mime_type: string | null;
   published: boolean;
   created_at: string;
+  uploaded_by?: string | null;
   signed_url?: string | null;
   session: {
     id: string;
