@@ -25,7 +25,7 @@ insert into public.speakers (slug, name, organization) values
   ('nate-balis', 'Nate Balis', 'Juvenile Justice Strategy Group'),
   ('penelope-spain', 'Penelope Spain', 'Open City Advocates'),
   ('michael-umpierre', 'Michael Umpierre', 'Center for Youth Justice at Georgetown University'),
-  ('senator-van-hollen', 'Senator Van Hollen', 'U.S. Senate'),
+  ('david-domenici', 'David Domenici', 'See Forever Foundation'),
   ('dr-tiffany-simmons', 'Dr. Tiffany Simmons', 'Mosaic IC'),
   ('julia-mascioli', 'Julia Mascioli', 'Free Minds Book Club & Writing Workshop'),
   ('tara-libert', 'Tara Libert', 'Free Minds Book Club & Writing Workshop'),
@@ -46,6 +46,10 @@ on conflict (slug) do update set
 update public.speakers
 set title = 'Movement builder and advocate'
 where slug = 'naike-savain';
+
+update public.speakers
+set title = 'Moderator, Co-Founder'
+where slug = 'david-domenici';
 
 insert into public.sessions (session_code, placeholder_code, final_title, title, slug, category, date, starts_at, ends_at, venue, room, short_description, description, live_updates, status, published, featured, is_placeholder) values
   ('d1s1', null, null, 'Registration & Continental Breakfast', 'registration-continental-breakfast', 'breakfast', '2026-04-01', '2026-04-01T08:30:00-04:00', '2026-04-01T09:15:00-04:00', 'National Union Building', 'Sixth Floor North', 'Arrival window with breakfast and time to settle in before programming begins.', 'Arrival window with breakfast and time to settle in before programming begins.', null, 'scheduled', true, false, false),
@@ -141,7 +145,7 @@ insert into public.session_speakers (session_id, speaker_id, session_role) value
   ((select id from public.sessions where slug = 'panel-1-from-silos-to-systems-change-aligning-education-youth-justice-and-community-safety'), (select id from public.speakers where slug = 'penelope-spain'), 'panelist'),
   ((select id from public.sessions where slug = 'panel-1-from-silos-to-systems-change-aligning-education-youth-justice-and-community-safety'), (select id from public.speakers where slug = 'liz-ryan'), 'panelist'),
   ((select id from public.sessions where slug = 'panel-1-from-silos-to-systems-change-aligning-education-youth-justice-and-community-safety'), (select id from public.speakers where slug = 'michael-umpierre'), 'panelist'),
-  ((select id from public.sessions where slug = 'panel-1-from-silos-to-systems-change-aligning-education-youth-justice-and-community-safety'), (select id from public.speakers where slug = 'senator-van-hollen'), 'panelist'),
+  ((select id from public.sessions where slug = 'panel-1-from-silos-to-systems-change-aligning-education-youth-justice-and-community-safety'), (select id from public.speakers where slug = 'david-domenici'), 'moderator'),
   ((select id from public.sessions where slug = 'panel-1-from-silos-to-systems-change-aligning-education-youth-justice-and-community-safety'), (select id from public.speakers where slug = 'dr-tiffany-simmons'), 'panelist'),
   ((select id from public.sessions where slug = 'healing-expression-and-advocacy-through-writing-e'), (select id from public.speakers where slug = 'tara-libert'), 'workshop_presenter'),
   ((select id from public.sessions where slug = 'healing-expression-and-advocacy-through-writing-e'), (select id from public.speakers where slug = 'sofia-dean'), 'workshop_presenter'),
