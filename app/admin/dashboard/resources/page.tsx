@@ -5,6 +5,7 @@ import {
   deletePortalDocument,
   deleteSpeakerPortalMessage,
   togglePortalDocumentPublish,
+  updatePortalDocumentAudience,
   uploadPortalDocument
 } from "@/lib/actions/admin";
 import {
@@ -172,6 +173,17 @@ export default async function AdminResourcesPage({
                 <div className="admin-actions">
                   <span className="muted">{document.file_name}</span>
                   <span className="muted">Uploaded {formatTimestamp(document.created_at)}</span>
+                  <form action={updatePortalDocumentAudience} className="admin-actions" style={{ gap: "0.5rem" }}>
+                    <input type="hidden" name="id" value={document.id} />
+                    <select name="audience" defaultValue={document.audience} aria-label="Portal visibility">
+                      <option value="attendee">Attendee Portal</option>
+                      <option value="speaker">Speaker/Presenter Portal</option>
+                      <option value="both">Both portals</option>
+                    </select>
+                    <button type="submit" className="button-secondary">
+                      Save visibility
+                    </button>
+                  </form>
                   <form action={togglePortalDocumentPublish}>
                     <input type="hidden" name="id" value={document.id} />
                     <input type="hidden" name="published" value={String(document.published)} />

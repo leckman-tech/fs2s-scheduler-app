@@ -110,6 +110,16 @@ export default async function PortalPage({
             />
           </div>
           <div className="field">
+            <label htmlFor="speaker-upload-audience">Who should see this file?</label>
+            <select id="speaker-upload-audience" name="audience" defaultValue="both">
+              <option value="both">Attendees and speakers</option>
+              <option value="speaker">Speaker/Presenter Portal only</option>
+            </select>
+            <p className="field-hint">
+              Session slides and handouts usually belong in both portals so attendees can open them too.
+            </p>
+          </div>
+          <div className="field">
             <label htmlFor="speaker-upload-description">Short note</label>
             <textarea
               id="speaker-upload-description"
@@ -158,6 +168,9 @@ export default async function PortalPage({
                       Open document
                     </a>
                   ) : null}
+                  <span className="muted">
+                    {document.audience === "both" ? "Visible to attendees and speakers" : "Visible to speakers only"}
+                  </span>
                   {document.uploaded_by === user.id ? (
                     <form action={deleteOwnSpeakerPortalDocument}>
                       <input type="hidden" name="id" value={document.id} />

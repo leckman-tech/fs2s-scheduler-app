@@ -895,9 +895,11 @@ export async function uploadSpeakerPortalDocument(formData: FormData) {
   const supabase = await createClient();
 
   const sessionId = String(formData.get("session_id") ?? "").trim();
+  const audienceRaw = String(formData.get("audience") ?? "both").trim();
   const title = String(formData.get("title") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
   const file = formData.get("file");
+  const audience = audienceRaw === "speaker" ? "speaker" : "both";
 
   if (!title || !(file instanceof File) || file.size === 0) {
     redirect("/portal?error=Please%20add%20a%20title%20and%20choose%20a%20file%20to%20upload.");
@@ -934,7 +936,7 @@ export async function uploadSpeakerPortalDocument(formData: FormData) {
 
   const { error: insertError } = await supabase.from("portal_documents").insert({
     session_id: sessionId || null,
-    audience: "speaker",
+    audience,
     title,
     description: description || null,
     file_name: file.name || fileName,
@@ -960,6 +962,36 @@ export async function uploadSpeakerPortalDocument(formData: FormData) {
   revalidatePath("/portal");
   revalidatePath("/admin/dashboard/resources");
   redirect("/portal?success=Your%20file%20is%20now%20available%20in%20the%20speaker%20library.");
+}
+
+export async function updatePortalDocumentAudience(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+
+  const id = String(formData.get("id") ?? "").trim();
+  const audienceRaw = String(formData.get("audience") ?? "").trim();
+  const audience =
+    audienceRaw === "speaker" || audienceRaw === "attendee" || audienceRaw === "both"
+      ? audienceRaw
+      : "attendee";
+
+  if (!id) {
+    redirect("/admin/dashboard/resources?error=We%20couldn't%20update%20that%20document%20yet.");
+  }
+
+  const { error } = await supabase.from("portal_documents").update({ audience }).eq("id", id);
+
+  if (error) {
+    redirect(
+      `/admin/dashboard/resources?error=${encodeURIComponent(
+        "We couldn't update the portal visibility for that file right now."
+      )}`
+    );
+  }
+
+  revalidatePath("/attendee");
+  revalidatePath("/portal");
+  revalidatePath("/admin/dashboard/resources");
 }
 
 export async function deleteOwnSpeakerPortalDocument(formData: FormData) {
