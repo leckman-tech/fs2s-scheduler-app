@@ -130,8 +130,17 @@ export default async function PortalPage({
           </div>
           <div className="field">
             <label htmlFor="speaker-upload-file">Choose file</label>
-            <input id="speaker-upload-file" name="file" type="file" required />
-            <p className="field-hint">PDF, PowerPoint, Keynote export, or handout files up to 50 MB.</p>
+            <input
+              id="speaker-upload-file"
+              name="file"
+              type="file"
+              accept=".pdf,.ppt,.pptx,.key,.odp,.doc,.docx"
+              required
+            />
+            <p className="field-hint">
+              PDF, PowerPoint (`.ppt` or `.pptx`), Keynote export, Word, and handout files up to
+              100 MB.
+            </p>
           </div>
           {params.success ? <div className="announcement">{params.success}</div> : null}
           {params.error ? <div className="empty-state">{params.error}</div> : null}

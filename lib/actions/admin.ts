@@ -34,7 +34,7 @@ function sanitizeFileName(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
-const PORTAL_UPLOAD_MAX_BYTES = 50 * 1024 * 1024;
+const PORTAL_UPLOAD_MAX_BYTES = 100 * 1024 * 1024;
 
 async function getCurrentRole() {
   const supabase = await createClient();
@@ -906,7 +906,7 @@ export async function uploadSpeakerPortalDocument(formData: FormData) {
   }
 
   if (file.size > PORTAL_UPLOAD_MAX_BYTES) {
-    redirect("/portal?error=Please%20upload%20a%20file%20smaller%20than%2050%20MB.");
+    redirect("/portal?error=Please%20upload%20a%20file%20smaller%20than%20100%20MB.");
   }
 
   const fileName = sanitizeFileName(file.name || `${title}.pdf`);

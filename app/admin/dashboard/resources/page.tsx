@@ -121,10 +121,16 @@ export default async function AdminResourcesPage({
           </div>
           <div className="field">
             <label htmlFor="file">File</label>
-            <input id="file" name="file" type="file" required />
+            <input
+              id="file"
+              name="file"
+              type="file"
+              accept=".pdf,.ppt,.pptx,.key,.odp,.doc,.docx"
+              required
+            />
             <p className="field-hint" style={{ marginTop: "0.45rem" }}>
-              Upload PDFs, slides, handouts, or other conference resources. Files up to 50 MB are
-              supported.
+              Upload PDFs, PowerPoints (`.ppt` or `.pptx`), slides, handouts, or other conference
+              resources. Files up to 100 MB are supported.
             </p>
           </div>
           <label className="field" style={{ gridAutoFlow: "column", justifyContent: "start", alignItems: "center" }}>
