@@ -120,6 +120,12 @@ export default async function AdminSystemCheckPage() {
       missingDetail:
         "Set ATTENDEE_ACCESS_CODE if you want attendee self-registration turned on for the portal."
     }),
+    createEnvCheck("Attendee instant signup", Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY), {
+      required: false,
+      configuredDetail: "New attendee accounts can open immediately without waiting on email confirmation.",
+      missingDetail:
+        "Add SUPABASE_SERVICE_ROLE_KEY in Vercel if you want attendee account creation to work instantly from the site."
+    }),
     {
       label: "Vercel Analytics",
       state: "pass" as CheckState,
@@ -199,6 +205,9 @@ export default async function AdminSystemCheckPage() {
       : null,
     !process.env.ATTENDEE_ACCESS_CODE
       ? "Add ATTENDEE_ACCESS_CODE in Vercel when you are ready to let attendees create their own portal accounts."
+      : null,
+    process.env.ATTENDEE_ACCESS_CODE && !process.env.SUPABASE_SERVICE_ROLE_KEY
+      ? "Attendee self-registration is live, but new accounts may still require an email-confirmation click before they can sign in. Add SUPABASE_SERVICE_ROLE_KEY in Vercel if you want instant attendee access."
       : null,
     process.env.ATTENDEE_ACCESS_CODE && (attendeeAccountCount ?? 0) === 0
       ? "If attendees are creating accounts but none appear in Admin, run 022_attendee_account_management.sql and 027_fix_admin_attendee_roster_signature.sql in Supabase so login creation and admin account visibility stay in sync."

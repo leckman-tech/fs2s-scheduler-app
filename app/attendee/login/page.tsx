@@ -18,6 +18,7 @@ export default async function AttendeeLoginPage({
 }) {
   const params = await searchParams;
   const selfServeEnabled = Boolean(process.env.ATTENDEE_ACCESS_CODE);
+  const instantSignupEnabled = Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);
 
   return (
     <div className="container stack" style={{ maxWidth: "980px" }}>
@@ -174,8 +175,9 @@ export default async function AttendeeLoginPage({
               : "Attendee self-registration is being finalized. If you need access right now, contact the conference team and they can help you get in quickly."}
           </p>
           <p className="field-hint" style={{ marginTop: "-0.15rem" }}>
-            Most accounts are ready right away. If the portal asks you to confirm your email first,
-            that usually takes less than a minute once you click the link in your inbox.
+            {instantSignupEnabled
+              ? "Accounts usually open right away after you create them."
+              : "If the portal asks you to confirm your email first, access usually opens within about a minute after you click the link in your inbox."}
           </p>
         </form>
       </section>

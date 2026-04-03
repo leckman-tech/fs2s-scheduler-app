@@ -15,6 +15,7 @@ import {
 } from "@/lib/constants";
 import { sendAttendeeAccountWelcomeEmail } from "@/lib/email";
 import { toPublicErrorMessage, toRedirectErrorParam } from "@/lib/public-errors";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin, requireAttendeePortalUser, requirePrivateScheduleUser } from "@/lib/queries";
 import { normalizeEmail, toSlug } from "@/lib/utils";
@@ -413,10 +414,17 @@ export async function loginAttendee(formData: FormData) {
     redirect(
       `/attendee/login?error=${toRedirectErrorParam(
         toPublicErrorMessage(error, {
-          fallback: "We couldn't sign you in with that email and password. Please try again.",
+          fallback:
+            "We couldn't sign you in with that email and password. Double-check your password, and if you just created your account, confirm the email in your inbox first.",
           setupMessage:
             "Your attendee account may still need email confirmation. Check your inbox, click the confirmation link, and try signing in again. That usually takes less than a minute.",
-          setupFragments: ["email not confirmed", "confirm your email", "email link is invalid or has expired"],
+          setupFragments: [
+            "email not confirmed",
+            "confirm your email",
+            "email link is invalid or has expired",
+            "signup requires a valid password",
+            "for security purposes, you can only request this after"
+          ],
           duplicateMessage: "That attendee account already exists. Sign in with your email and password instead.",
           duplicateFragments: ["user already registered", "already been registered"]
         })
@@ -458,6 +466,7 @@ export async function loginAttendee(formData: FormData) {
 
 export async function createAttendeeAccount(formData: FormData) {
   const supabase = await createClient();
+  const adminSupabase = createAdminClient();
   const fullName = String(formData.get("full_name") ?? "").trim();
   const email = normalizeEmail(formData.get("email") as string | null);
   const password = String(formData.get("password") ?? "");
@@ -483,17 +492,46 @@ export async function createAttendeeAccount(formData: FormData) {
     redirect("/attendee/login?error=That%20conference%20access%20code%20is%20not%20valid");
   }
 
-  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
+  let signUpData:
+    | Awaited<ReturnType<typeof supabase.auth.signUp>>["data"]
+    | { user: { id: string } | null; session: { access_token: string } | null }
+    | null = null;
+  let signUpError: Awaited<ReturnType<typeof supabase.auth.signUp>>["error"] | null = null;
+
+  if (adminSupabase) {
+    const { data, error } = await adminSupabase.auth.admin.createUser({
+      email,
+      password,
+      email_confirm: true,
+      user_metadata: {
         full_name: fullName,
         portal_type: "attendee",
         conference_role: "attendee"
       }
-    }
-  });
+    });
+
+    signUpData = {
+      user: data.user ? { id: data.user.id } : null,
+      session: null
+    };
+    signUpError = error;
+  } else {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${SITE_URL}/auth/callback?next=/attendee`,
+        data: {
+          full_name: fullName,
+          portal_type: "attendee",
+          conference_role: "attendee"
+        }
+      }
+    });
+
+    signUpData = data;
+    signUpError = error;
+  }
 
   if (signUpError) {
     redirect(
@@ -544,14 +582,9 @@ export async function createAttendeeAccount(formData: FormData) {
   }
 
   if (signUpData.user) {
-    if (
-      signInError &&
-      ["email not confirmed", "confirm your email", "email link is invalid or has expired"].some((fragment) =>
-        signInError.message.toLowerCase().includes(fragment)
-      )
-    ) {
+    if (!adminSupabase && !signUpData.session) {
       redirect(
-        "/attendee/login?success=Your%20account%20has%20been%20created.%20Please%20check%20your%20email%20to%20confirm%20the%20account%20before%20signing%20in.%20Once%20you%20click%20the%20link%2C%20access%20usually%20opens%20within%20about%20a%20minute."
+        "/attendee/login?success=Your%20account%20has%20been%20created.%20Please%20check%20your%20email%20to%20confirm%20the%20account.%20Once%20you%20click%20the%20link%2C%20you%20should%20be%20able%20to%20open%20the%20portal%20within%20about%20a%20minute."
       );
     }
 
@@ -560,7 +593,7 @@ export async function createAttendeeAccount(formData: FormData) {
       fullName
     });
     redirect(
-      "/attendee/login?success=Your%20account%20has%20been%20created.%20Sign%20in%20with%20your%20email%20and%20password%20to%20continue."
+      "/attendee/login?success=Your%20account%20has%20been%20created.%20You%20can%20sign%20in%20with%20your%20email%20and%20password%20now."
     );
   }
 
