@@ -47,6 +47,7 @@ export function SiteHeader() {
             <Link href="/lobby-day" aria-current={pathname === "/lobby-day" ? "page" : undefined}>Hill Day · Nov 18</Link>
             <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>FS2S 2027</Link>
             <Link href="/learn-more">About FS2S</Link>
+            <Link href="/attendee/login">Attendee Portal</Link>
           </nav>
           <div className="site-header__actions">
             <Link href="/lobby-day#register" className="site-nav__cta">Register for Hill Day</Link>
