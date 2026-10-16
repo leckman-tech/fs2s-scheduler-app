@@ -20,7 +20,7 @@ export function SiteHeader() {
           <Link href="/" className="site-title">
             From Silos to Solutions
           </Link>
-          <p className="site-brand__eyebrow">Power Through Partnerships</p>
+          <p className="site-brand__eyebrow">Power Through Partnerships: The Next Steps</p>
         </div>
 
         <button
