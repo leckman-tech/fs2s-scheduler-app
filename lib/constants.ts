@@ -105,9 +105,9 @@ export const SESSION_RESOURCE_BUCKET = "session-resources";
 export const ATTENDEE_BOARD_MEDIA_BUCKET = "attendee-board-media";
 
 export const SITE_URL = "https://fs2shub.com";
-export const SITE_NAME = "From Silos to Solutions 2026";
+export const SITE_NAME = "From Silos to Solutions";
 export const SITE_DESCRIPTION =
-  "From Silos to Solutions 2026 is a national convening in Washington, D.C. focused on coordinating supports for opportunity and justice-involved youth and young adults through partnership, advocacy, and scholar-centered practice.";
+  "From Silos to Solutions looks ahead to the 2027 convening while bringing scholar-centered education advocacy to Capitol Hill on November 18, 2026.";
 export const SEO_OG_IMAGE = "/fs2s/fs2s-room-wide.jpg";
 export const SEE_FOREVER_URL = "https://www.seeforever.org";
 export const CONVENING_DIRECTOR_NAME = "Levi W. Eckman, J.D.";
