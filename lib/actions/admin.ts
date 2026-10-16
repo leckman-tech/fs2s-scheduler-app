@@ -466,30 +466,20 @@ export async function loginAttendee(formData: FormData) {
 
 export async function createAttendeeAccount(formData: FormData) {
   const supabase = await createClient();
-  const adminSupabase = createAdminClient();
   const fullName = String(formData.get("full_name") ?? "").trim();
   const email = normalizeEmail(formData.get("email") as string | null);
   const password = String(formData.get("password") ?? "");
   const confirmPassword = String(formData.get("confirm_password") ?? "");
-  const accessCode = String(formData.get("access_code") ?? "").trim();
-  const expectedAccessCode = process.env.ATTENDEE_ACCESS_CODE?.trim();
 
-  if (!expectedAccessCode) {
-    redirect(
-      "/attendee/login?error=Attendee%20account%20creation%20is%20not%20enabled%20yet.%20Please%20contact%20the%20conference%20team."
-    );
+  if (!fullName || !email || !password || !confirmPassword) {
+    redirect("/attendee/login?error=Please%20complete%20all%20account%20fields");
   }
-
-  if (!fullName || !email || !password || !confirmPassword || !accessCode) {
-    redirect("/attendee/login?error=Complete%20every%20field%20to%20create%20your%20attendee%20account");
+  if (password.length < 8) {
+    redirect("/attendee/login?error=Password%20must%20contain%20at%20least%208%20characters");
   }
 
   if (password !== confirmPassword) {
     redirect("/attendee/login?error=The%20passwords%20you%20entered%20do%20not%20match");
-  }
-
-  if (accessCode !== expectedAccessCode) {
-    redirect("/attendee/login?error=That%20conference%20access%20code%20is%20not%20valid");
   }
 
   let signUpData:
@@ -498,40 +488,16 @@ export async function createAttendeeAccount(formData: FormData) {
     | null = null;
   let signUpError: Awaited<ReturnType<typeof supabase.auth.signUp>>["error"] | null = null;
 
-  if (adminSupabase) {
-    const { data, error } = await adminSupabase.auth.admin.createUser({
-      email,
-      password,
-      email_confirm: true,
-      user_metadata: {
-        full_name: fullName,
-        portal_type: "attendee",
-        conference_role: "attendee"
-      }
-    });
-
-    signUpData = {
-      user: data.user ? { id: data.user.id } : null,
-      session: null
-    };
-    signUpError = error;
-  } else {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${SITE_URL}/auth/callback?next=/attendee`,
-        data: {
-          full_name: fullName,
-          portal_type: "attendee",
-          conference_role: "attendee"
-        }
-      }
-    });
-
-    signUpData = data;
-    signUpError = error;
-  }
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: `${SITE_URL}/auth/callback?next=/attendee`,
+      data: { full_name: fullName, portal_type: "attendee", conference_role: "attendee" }
+    }
+  });
+  signUpData = data;
+  signUpError = error;
 
   if (signUpError) {
     redirect(
@@ -582,7 +548,7 @@ export async function createAttendeeAccount(formData: FormData) {
   }
 
   if (signUpData.user) {
-    if (!adminSupabase && !signUpData.session) {
+    if (!signUpData.session) {
       redirect(
         "/attendee/login?success=Your%20account%20has%20been%20created.%20Please%20check%20your%20email%20to%20confirm%20the%20account.%20Once%20you%20click%20the%20link%2C%20you%20should%20be%20able%20to%20open%20the%20portal%20within%20about%20a%20minute."
       );
