@@ -18,7 +18,8 @@
   --radius-lg: 22px;
   --radius-md: 16px;
   --radius-sm: 10px;
-  --photo-capitol: url("/fs2s/autumn-dc-background.svg");
+  --photo-capitol: url("https://commons.wikimedia.org/wiki/Special:FilePath/Flickr%20-%20USCapitol%20-%20Fall%20Foliage%20at%20the%20U.S.%20Capitol.jpg?width=1600");
+  --photo-hill-youth: url("https://commons.wikimedia.org/wiki/Special:FilePath/Kamala%20Harris%20speaks%20with%20HBCU%20students%20-%202019.jpg?width=1200");
   --photo-room-wide: url("/fs2s/fs2s-room-wide.jpg");
   --photo-speaker-podium: url("/fs2s/fs2s-speaker-podium.jpg");
   --photo-audience-question: url("/fs2s/fs2s-audience-question.jpg");
@@ -128,11 +129,12 @@ select {
   z-index: 0;
   background-image:
     linear-gradient(180deg, rgba(255,250,245,.22), rgba(255,255,255,.69)),
-    url("/fs2s/autumn-dc-background.svg");
+    var(--photo-capitol);
   background-size: cover;
   background-position: center center;
-  opacity: .84;
-  transform: scale(1.04);
+  opacity: .43;
+  filter: blur(2.5px) saturate(.80);
+  transform: scale(1.05);
   animation: blossom-pan 32s ease-in-out infinite alternate;
 }
 .spring-canvas__mist {
@@ -151,7 +153,7 @@ select {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: .52;
+  opacity: .25;
   filter: drop-shadow(0 5px 5px rgba(116,69,34,.14));
   animation: petal-fall 19s linear infinite;
 }
@@ -747,9 +749,9 @@ select {
   grid-row: 1 / span 2;
   background-image:
     linear-gradient(180deg, rgba(17, 17, 17, 0.1), rgba(17, 17, 17, 0.52)),
-    var(--photo-capitol);
+    var(--photo-hill-youth);
   background-size: cover;
-  background-position: center;
+  background-position: 50% 35%;
 }
 
 .hero-card--landing .hero-photo--dc {
@@ -3967,3 +3969,8 @@ th {
 @media (prefers-reduced-motion: reduce) {
  .hill-day-hero__title em { animation: none; }
 }
+
+/* Autumn 2026: photographic seasonal canvas and documentary youth advocacy */
+.spring-canvas__capitol { background-position: center 36%; }
+.spring-canvas__mist { background: linear-gradient(180deg, rgba(255,255,255,.46),rgba(255,255,255,.69)); }
+.hero-photo--dc { background-color: #655247; }
