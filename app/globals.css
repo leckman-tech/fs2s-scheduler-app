@@ -3968,3 +3968,26 @@ th {
 .site-nav > a[aria-current="page"]:hover {
   background: rgba(181,18,36,0.12);
 }
+
+/* Hill Day hero: deliberate line breaks and a restrained three-beat accent */
+.hill-day-hero .hero-card__grid { gap: clamp(1.5rem, 4vw, 4rem); align-items: center; }
+.hill-day-hero .hero-card__content { padding-block: clamp(1rem, 3vw, 2.25rem); }
+.hill-day-hero .hill-day-hero__title { max-width: 14ch; font-size: clamp(2.6rem, 4.3vw, 4.9rem); line-height: 1.07; letter-spacing: -.045em; margin-block: 1rem 1.35rem; }
+.hill-day-hero__title > span { display: block; white-space: nowrap; }
+.hill-day-hero__title em { font-style: normal; color: inherit; animation: hill-day-our 9s ease-in-out infinite; }
+.hill-day-hero__title > span:nth-child(2) em { animation-delay: 3s; }
+.hill-day-hero__title > span:nth-child(3) em { animation-delay: 6s; }
+@keyframes hill-day-our {
+  0%, 6%, 27%, 100% { color: inherit; text-shadow: none; }
+  11%, 19% { color: #b51224; text-shadow: 0 0 15px rgba(181,18,36,.14); }
+}
+.hill-day-hero .hero-kicker { margin-top: 0; line-height: 1.5; }
+.hill-day-hero .hero-actions { margin-top: 1.5rem; gap: .75rem; }
+.hill-day-hero .hero-meta { margin-top: 1.35rem; }
+@media (max-width: 700px) {
+ .hill-day-hero .hill-day-hero__title { font-size: clamp(2.1rem, 9vw, 3.45rem); max-width: none; }
+ .hill-day-hero__title > span { white-space: normal; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .hill-day-hero__title em { animation: none; }
+}
