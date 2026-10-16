@@ -3,247 +3,31 @@ import Link from "next/link";
 import { LobbyDaySignupForm } from "@/components/lobby-day-signup-form";
 import { getPublicLobbyDaySignupCount } from "@/lib/queries";
 import { buildMetadata } from "@/lib/seo";
-
-export const metadata: Metadata = buildMetadata({
-  title: "Lobby Day on Capitol Hill",
-  description:
-    "Learn about the planned FS2S Lobby Day in Washington, D.C., including training at the PAC, a provided lunch, bus transportation to the Capitol, afternoon advocacy, and a Zoom debrief.",
-  path: "/lobby-day"
-});
-
-const timeline = [
-  {
-    label: "Morning",
-    title: "Training at the PAC",
-    description:
-      "We will begin at the Performing Arts Center at the MAPCS high school campus with training, shared framing, and preparation for the day."
-  },
-  {
-    label: "Midday",
-    title: "Provided lunch",
-    description:
-      "Lunch will be provided before departure so participants can regroup, connect, and head into the afternoon together."
-  },
-  {
-    label: "Early afternoon",
-    title: "Bus to the Capitol",
-    description:
-      "Participants will travel together from campus to Capitol Hill rather than needing to coordinate on their own."
-  },
-  {
-    label: "Afternoon",
-    title: "Lobby visits and advocacy",
-    description:
-      "The day will focus on direct advocacy, relationship-building, and coordinated messages connected to opportunity and justice-involved youth and young adults."
-  },
-  {
-    label: "Later that day",
-    title: "Zoom debrief",
-    description:
-      "We will close with a virtual debrief to reflect on the day, share takeaways, and prepare next steps."
-  }
+export const metadata: Metadata = buildMetadata({title:"November 18, 2026 Advocacy Hill Day | FS2S",description:"Register your interest for the FS2S Advocacy Hill Day on November 18, 2026. Read the tentative itinerary and congressional outreach list.",path:"/lobby-day"});
+const offices = ["Tim Walberg","Bobby Scott","Chuck Grassley","Dick Durbin","Andy Biggs","Lucy McBath","Jamie Raskin","Eleanor Holmes Norton","Gary Peters","Elissa Slotkin","Patty Murray","Susan Collins","Bernie Sanders","Lisa Murkowski","Chris Van Hollen","Angela Alsobrooks","Chris Coons","Lisa Blunt Rochester","Brian Schatz","Mazie Hirono","Rosa DeLauro","Jahana Hayes","Sarah McBride","Glenn Ivey","Ayanna Pressley","Joe Courtney","Dale Strong","Gary Palmer","Shomari Figures","Terri Sewell","Katie Britt","Tommy Tuberville","Dan Sullivan","Bruce Westerman","Rick Crawford","Tom Cotton","Adelita Grijalva","Juan Ciscomani","Adam Gray"];
+const schedule = [
+ {time:"Morning",title:"Welcome, orientation and advocacy preparation",description:"Check-in, briefing, student voice, delegation expectations and safety guidance. Exact meeting point and time to follow."},
+ {time:"Late morning",title:"Congressional visits — first meeting window",description:"Small delegations meet with available congressional offices. Times, participants and buildings will be assigned after offices confirm."},
+ {time:"Midday",title:"Lunch and regrouping",description:"A supervised meal break near Capitol Hill. Venue, meal sponsorship and dietary arrangements are still being finalized."},
+ {time:"Afternoon",title:"Additional congressional conversations",description:"Continued scheduled meetings, advocacy conversations and student reflection, subject to congressional availability."},
+ {time:"Before departure",title:"Closing check-in",description:"Attendance reconciliation, takeaways and next steps for continued advocacy."}
 ];
-
-export default async function LobbyDayPage() {
-  const signupCount = await getPublicLobbyDaySignupCount();
-  const signupGoal = 300;
-  const signupBaseline = 25;
-  const visibleSignupCount = signupBaseline + signupCount;
-  const signupRemaining = Math.max(signupGoal - visibleSignupCount, 0);
-  const visibleSignupProgress = Math.min((visibleSignupCount / signupGoal) * 100, 100);
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    name: "From Silos to Solutions 2026 Lobby Day",
-    description:
-      "A planned advocacy day connected to From Silos to Solutions 2026, featuring training at the PAC, provided lunch, shared transportation to the Capitol, afternoon advocacy, and a Zoom debrief.",
-    startDate: "2026-10-21T08:30:00-04:00",
-    endDate: "2026-10-21T15:30:00-04:00",
-    eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
-    location: [
-      {
-        "@type": "Place",
-        name: "Maya Angelou Public Charter School High School Performing Arts Center",
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: "Washington",
-          addressRegion: "DC",
-          addressCountry: "US"
-        }
-      },
-      {
-        "@type": "Place",
-        name: "United States Capitol",
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: "Washington",
-          addressRegion: "DC",
-          addressCountry: "US"
-        }
-      }
-    ]
-  };
-
-  return (
-    <div className="container stack">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
-
-      <section className="hero-card hero-card--premium">
-        <div className="hero-card__grid">
-          <div className="hero-card__content">
-            <p className="eyebrow">FS2S 2026</p>
-            <h1>Lobby Day</h1>
-            <p className="hero-kicker">
-              Training, advocacy, and action on Capitol Hill, with preparation at the PAC, a
-              provided lunch, shared transportation, and a same-day Zoom debrief.
-            </p>
-            <p>
-              This Lobby Day is being planned as a connected extension of From Silos to Solutions.
-              The goal is to help attendees move from conversation to coordinated advocacy in a
-              way that is practical, well-supported, and grounded in the needs of opportunity and
-              justice-involved youth and young adults.
-            </p>
-            <div className="hero-meta">
-              <span className="hero-pill">Wednesday, October 21, 2026</span>
-              <span className="hero-pill">No additional cost</span>
-              <span className="hero-pill">PAC at MAPCS High School</span>
-              <span className="hero-pill">Capitol Hill</span>
-              <div
-                className="hero-progress"
-                role="img"
-                aria-label="Lobby Day sign-up momentum toward the Capitol Hill goal"
-              >
-                <span className="hero-progress__label">Capitol Hill goal</span>
-                <div className="hero-progress__track" aria-hidden="true">
-                  <div
-                    className="hero-progress__fill"
-                    style={{ width: `${visibleSignupProgress}%` }}
-                  />
-                </div>
-                <span className="hero-progress__caption">{signupRemaining} to go</span>
-              </div>
-            </div>
-            <div className="hero-actions">
-              <Link href="/" className="button button-link">
-                Return to schedule
-              </Link>
-              <Link href="/learn-more" className="button-secondary button-link">
-                Who We Are
-              </Link>
-            </div>
-          </div>
-
-          <div className="hero-card__visual">
-            <div className="hero-photo hero-photo--dc">
-              <span className="hero-photo__label">Washington, D.C.</span>
-            </div>
-            <div className="hero-photo hero-photo--conference">
-              <span className="hero-photo__label">Training together</span>
-            </div>
-            <div className="hero-photo hero-photo--lobby-meeting-video">
-              <video
-                className="hero-photo__video"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster="/fs2s/fs2s-partnership-activity.jpg"
-                aria-label="Advocacy and meeting footage"
-              >
-                <source src="/fs2s/lobby-day-advocacy.mp4" type="video/mp4" />
-              </video>
-              <span className="hero-photo__label">Shared advocacy</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <LobbyDaySignupForm totalCount={signupCount} />
-
-      <section className="context-grid">
-        <article className="panel story-panel">
-          <p className="eyebrow">What This Day Is For</p>
-          <h2>Built to move from convening conversation into public action</h2>
-          <p>
-            Lobby Day is being designed as a practical advocacy track for participants who want to
-            carry the themes of From Silos to Solutions directly into public leadership and policy
-            engagement.
-          </p>
-          <p>
-            Rather than asking people to navigate the day on their own, the plan is to prepare
-            together, travel together, engage together, and close the day with a shared debrief.
-          </p>
-        </article>
-
-        <article className="panel story-panel story-panel--accent">
-          <p className="eyebrow">What Is Included</p>
-          <h2>A clearer, supported experience from start to finish</h2>
-          <div className="story-list">
-            <div className="session-info-pill">
-              <strong>Training</strong>
-              <span>Morning preparation at the PAC before heading downtown</span>
-            </div>
-            <div className="session-info-pill">
-              <strong>Lunch</strong>
-              <span>Lunch will be provided before the group departs</span>
-            </div>
-            <div className="session-info-pill">
-              <strong>Transportation</strong>
-              <span>Bus transportation to the Capitol is part of the plan</span>
-            </div>
-            <div className="session-info-pill">
-              <strong>Debrief</strong>
-              <span>The day will end with a Zoom debrief that same afternoon</span>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section className="panel callout-panel">
-        <p className="eyebrow">Day At A Glance</p>
-        <h2>The current working outline for Lobby Day</h2>
-        <div className="timeline-grid">
-          {timeline.map((item) => (
-            <article key={item.title} className="timeline-card">
-              <p className="timeline-card__label">{item.label}</p>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="feature-story">
-        <div className="feature-story__image feature-story__image--foundation" aria-hidden="true" />
-        <div className="feature-story__content">
-          <p className="eyebrow">Why It Matters</p>
-          <h2>Advocacy works best when people arrive prepared, aligned, and supported</h2>
-          <p>
-            The purpose of this day is not to create a rushed Capitol Hill visit. It is to make
-            space for thoughtful preparation, stronger messaging, and a more coordinated presence
-            on behalf of young people and communities.
-          </p>
-          <p>
-            As planning continues, this page will hold the public details people need, including
-            timing updates, participation guidance, and any sign-up information tied to the day.
-          </p>
-        </div>
-      </section>
-
-      <section className="panel callout-panel">
-        <p className="eyebrow">Planning Notes</p>
-        <h2>This page will keep growing as the details are finalized</h2>
-        <p className="muted">
-          Right now, the public plan is simple: training at the PAC, a provided lunch, shared bus
-          transportation to the Capitol, afternoon advocacy, and a same-day Zoom debrief. Final
-          sign-up steps and day-of guidance will be added here as planning continues.
-        </p>
-      </section>
-    </div>
-  );
+export default async function LobbyDayPage(){
+ const count=await getPublicLobbyDaySignupCount();
+ return <div className="container stack">
+ <section className="hero-card hero-card--landing"><div className="hero-card__grid"><div className="hero-card__content">
+  <p className="eyebrow">FS2S ADVOCACY HILL DAY • WASHINGTON, D.C.</p>
+  <h1>Our Stories. Our Schools. Our Capitol.</h1>
+  <p className="hero-kicker">Wednesday, November 18, 2026 — moving from silos to solutions, together.</p>
+  <p>See Forever Foundation and Maya Angelou Schools are convening scholars, educators and partners to advocate for educational opportunity, continuity and stronger pathways for young people affected by the justice system. Our working goal is approximately 125 participants, including 50 Maya Angelou Scholars.</p>
+  <div className="hero-meta"><span className="hero-pill">November 18, 2026</span><span className="hero-pill">Capitol Hill, Washington, D.C.</span><span className="hero-pill">Meetings requested • schedule developing</span></div>
+  <div className="hero-actions"><a href="#register" className="button button-link">Register your interest</a><a href="#schedule" className="button-secondary button-link">See the tentative day</a></div>
+ </div><div className="hero-card__visual"><div className="hero-photo hero-photo--dc"><span className="hero-photo__label">The Hill, together</span></div><div className="hero-photo hero-photo--community"><span className="hero-photo__label">Students at the center</span></div><div className="hero-photo hero-photo--conference"><span className="hero-photo__label">Partners in action</span></div></div></div></section>
+ <section className="context-grid"><article className="panel story-panel story-panel--accent"><p className="eyebrow">WHY WE'RE GOING</p><h2>Education should not end at a system's doorway</h2><p>Our Hill Day invites lawmakers and their staff to hear directly about the educational realities of opportunity and justice-involved youth. We will center pathways back into learning, educational continuity, and what meaningful second chances require.</p></article>
+ <article className="panel story-panel"><p className="eyebrow">WHAT TO EXPECT</p><h2>Small groups. Serious conversations.</h2><p>Delegations will be assigned once offices confirm meeting times and capacity. Each group will prepare talking points and stories. Registration expresses interest; it is not a guaranteed meeting assignment or approval for student travel.</p></article></section>
+ <section id="register"><LobbyDaySignupForm totalCount={count}/><p className="muted" style={{fontSize:"0.87rem"}}>For Maya Angelou Scholars, parental permission, school approval and applicable supervision requirements will be managed separately. Do not share private student case information in this form. Registration is subject to final confirmation.</p></section>
+ <section id="schedule" className="panel callout-panel"><p className="eyebrow">TENTATIVE RUN OF SHOW</p><h2>What Wednesday could look like</h2><p className="muted">This is a planning outline, not a final schedule. Meeting times, training location, transportation, lunch, and departure logistics remain subject to confirmation.</p><div className="timeline-grid">{schedule.map(item=><article className="timeline-card" key={item.title}><p className="timeline-card__label">{item.time}</p><h3>{item.title}</h3><p>{item.description}</p></article>)}</div></section>
+ <section className="panel callout-panel"><p className="eyebrow">THE CONGRESSIONAL CONVERSATION</p><h2>Offices our team has approached</h2><p>Our outreach spans education and justice policy leadership, District of Columbia representation and offices from around the country. The list below reflects initial contacts and inquiries, <strong>not accepted invitations, endorsements or scheduled meetings</strong>. Several are being processed; others await a response. A further request to Rep. Greg Stanton's office encountered a delivery issue and is being rerouted.</p><div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(185px,1fr))",gap:"0.55rem",marginTop:"1.25rem"}}>{offices.map(name=><div key={name} className="session-info-pill"><span>{name}</span></div>)}</div><p className="muted" style={{marginTop:"1rem"}}>We've also sought meetings through Senate HELP committee leadership. Final office assignments will be shared only after appointments are confirmed.</p></section>
+ <section className="panel story-panel"><p className="eyebrow">QUESTIONS & PARTNERSHIPS</p><h2>Help us make the day meaningful</h2><p>Community partners interested in participating, helping with student preparation, or sponsoring lunch can contact the project lead. We welcome thoughtful collaboration and practical support.</p><div className="hero-actions"><a href="mailto:LEckman@SeeForever.org?subject=FS2S%20Advocacy%20Hill%20Day%20-%20November%2018" className="button button-link">Contact FS2S</a><Link href="/" className="button-secondary button-link">Discover FS2S 2027</Link></div></section>
+ </div>
 }
