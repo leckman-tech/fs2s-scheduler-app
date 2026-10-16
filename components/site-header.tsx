@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useId, useState } from "react";
 import { usePathname } from "next/navigation";
-import { EVENTBRITE_URL } from "@/lib/constants";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -19,7 +18,7 @@ export function SiteHeader() {
       <div className="site-header__inner">
         <div className="site-brand">
           <Link href="/" className="site-title">
-            From Silos to Solutions 2026
+            From Silos to Solutions
           </Link>
           <p className="site-brand__eyebrow">Power Through Partnerships</p>
         </div>
@@ -45,18 +44,17 @@ export function SiteHeader() {
           className={`site-header__nav-wrap${menuOpen ? " site-header__nav-wrap--open" : ""}`}
         >
           <nav className="site-nav" aria-label="Primary navigation">
-            <Link href="/">Schedule</Link>
-            <Link href="/speakers">Speakers</Link>
-            <Link href="/lobby-day">Fall 2026 Lobby Day</Link>
+            <Link href="/lobby-day">November 18 Hill Day</Link>
+            <Link href="/">FS2S 2027</Link>
+            
+            <Link href="/2026-archive">2026 Archive</Link>
             <Link href="/learn-more">Who We Are</Link>
             <Link href="/learn-more#faq">FAQ</Link>
             <Link href="/attendee/login">Attendee Portal</Link>
             <Link href="/portal/login">Speaker/Presenter Portal</Link>
           </nav>
           <div className="site-header__actions">
-            <a href={EVENTBRITE_URL} className="site-nav__cta" target="_blank" rel="noreferrer">
-              Purchase Tickets
-            </a>
+            <Link href="/lobby-day#register" className="site-nav__cta">Register for Hill Day</Link>
           </div>
         </div>
       </div>
