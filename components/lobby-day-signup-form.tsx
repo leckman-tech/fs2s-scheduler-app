@@ -19,8 +19,8 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
     message: "",
     totalCount
   });
-  const progressTarget = 300;
-  const progressBaseline = 25;
+  const progressTarget = 125;
+  const progressBaseline = 0;
   const visibleSignupCount = progressBaseline + state.totalCount;
   const visibleSignupProgress = Math.min((visibleSignupCount / progressTarget) * 100, 100);
   const remainingToGoal = Math.max(progressTarget - visibleSignupCount, 0);
@@ -69,15 +69,15 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
       status: "success",
       totalCount: data?.totalCount ?? totalCount,
       message: data?.confirmationEmailSent
-        ? "You're on the Lobby Day list. Check your inbox for a confirmation email."
-        : "You're on the Lobby Day list. We’ll use your contact information to share updates and next steps."
+        ? "Your interest has been recorded. Check your inbox for an acknowledgment. Your participation is not yet confirmed."
+        : "Your interest has been recorded. We will send further details as plans are confirmed; an acknowledgment email could not be sent."
     });
   }
 
   return (
     <section className="panel form-grid">
       <div className="section-heading">
-        <h2>Sign up for Lobby Day</h2>
+        <h2>Register your interest in November 18 Hill Day</h2>
         <div
           className="signup-progress"
           role="img"
@@ -95,7 +95,7 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
       </div>
 
       <p className="muted" style={{ marginTop: 0 }}>
-        Use this form to join the Lobby Day list. Please include a phone number so we can share
+        Register your interest for Wednesday, November 18, 2026. Signing up does not guarantee a place or a congressional meeting. Include a phone number so we can share
         day-of updates and Capitol Hill logistics if needed.
       </p>
 
@@ -129,7 +129,7 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
 
         <div className="admin-actions">
           <button className="button" type="submit" disabled={state.status === "saving"}>
-            {state.status === "saving" ? "Saving..." : "Join the Lobby Day list"}
+            {state.status === "saving" ? "Saving..." : "Register my interest"}
           </button>
           {state.message ? (
             <span className={state.status === "error" ? "status-pill status-cancelled" : "muted"}>
