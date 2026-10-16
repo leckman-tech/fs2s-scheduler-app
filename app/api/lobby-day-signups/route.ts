@@ -63,68 +63,30 @@ export async function POST(request: Request) {
       );
     }
 
-    const { count: existingCount, error: existingError } = await supabase
-      .from("lobby_day_signups")
-      .select("id", { count: "exact", head: true })
-      .eq("email", normalizedEmail);
-
-    if (existingError) {
-      return NextResponse.json(
-        {
-          error: toPublicErrorMessage(existingError, {
-            fallback: "We couldn't check the Lobby Day list right now. Please try again.",
-            setupMessage:
-              "Lobby Day sign-ups are not enabled in Supabase yet. Run the 012_lobby_day_signups.sql migration first.",
-            setupFragments: ["lobby_day_signups", "schema cache"],
-            duplicateMessage: "This email is already signed up for Lobby Day.",
-            duplicateFragments: ["already signed up", "duplicate key", "unique"]
-          })
-        },
-        { status: 400 }
-      );
-    }
-
-    if ((existingCount ?? 0) > 0) {
-      return NextResponse.json(
-        { error: "This email is already signed up for Lobby Day." },
-        { status: 400 }
-      );
-    }
-
-    const { error } = await supabase.from("lobby_day_signups").insert({
-      full_name: body.fullName.trim(),
-      email: normalizedEmail,
-      phone: body.phone.trim(),
-      organization: body.organization?.trim() || null
+    // Use the public signup RPC, which handles duplicate checks atomically.
+    // Anonymous visitors cannot SELECT private signup rows under RLS.
+    const { error: signupError } = await supabase.rpc("create_lobby_day_signup", {
+      p_full_name: body.fullName.trim(),
+      p_email: normalizedEmail,
+      p_phone: body.phone.trim(),
+      p_organization: body.organization?.trim() || null
     });
-
-    if (error) {
-      return NextResponse.json(
-        {
-          error: toPublicErrorMessage(error, {
-            fallback: "We couldn't save your Lobby Day sign-up just now. Please try again.",
-            setupMessage:
-              "Lobby Day sign-ups are not enabled in Supabase yet. Run the 012_lobby_day_signups.sql migration first.",
-            setupFragments: ["lobby_day_signups", "schema cache"],
-            duplicateMessage: "This email is already signed up for Lobby Day.",
-            duplicateFragments: ["already signed up", "duplicate key", "unique"]
-          })
-        },
-        { status: 400 }
-      );
+    if (signupError) {
+      return NextResponse.json({
+        error: toPublicErrorMessage(signupError, {
+          fallback: "We couldn't save your Hill Day registration just now. Please try again.",
+          duplicateMessage: "This email is already signed up for Hill Day.",
+          duplicateFragments: ["already signed up", "duplicate key", "unique"]
+        })
+      }, { status: 400 });
     }
 
-    const { count, error: summaryError } = await supabase
-      .from("lobby_day_signups")
-      .select("id", { count: "exact", head: true });
-
-    if (summaryError) {
-      console.error(summaryError);
-      return NextResponse.json(
-        { error: "Your Lobby Day sign-up was saved, but the live count could not refresh right away." },
-        { status: 500 }
-      );
-    }
+    // A count failure must not turn a successfully saved signup into a failed form submission.
+    const { data: summary, error: summaryError } = await supabase.rpc("get_public_lobby_day_signup_summary");
+    if (summaryError) console.error("Hill Day count refresh failed", summaryError);
+    const totalCount = Array.isArray(summary)
+      ? Number(summary[0]?.total_count ?? 0)
+      : Number(summary?.total_count ?? 0);
 
     const [emailResult, adminNotification] = await Promise.all([sendLobbyDayConfirmationEmail({
       to: normalizedEmail,
@@ -141,7 +103,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       ok: true,
-      totalCount: Number(count ?? 0),
+      totalCount,
       confirmationEmailSent: emailResult.sent,
       adminNotificationSent: adminNotification.sent
     });
