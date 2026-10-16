@@ -141,30 +141,27 @@ export async function sendSessionSignupConfirmationEmail(input: {
   });
 }
 
-export async function sendLobbyDayConfirmationEmail(input: {
-  to: string;
-  fullName: string;
-}) {
-  const title = "You’re on the Lobby Day list";
-  const content = wrapEmailContent(
-    title,
-    `Thanks, ${input.fullName}. Your Lobby Day sign-up has been recorded.`,
-    [
-      "Training will begin at the PAC at the MAPCS high school campus.",
-      "Lunch will be provided before the group heads to Capitol Hill.",
-      "Transportation, advocacy details, and the Zoom debrief will be shared as planning is finalized."
-    ],
-    {
-      href: `${SITE_URL}/lobby-day`,
-      label: "View Lobby Day details"
-    }
-  );
+export async function sendLobbyDayConfirmationEmail(input: { to: string; fullName: string; }) {
+  const title = "Your interest in November 18 Advocacy Hill Day is recorded";
+  const content = wrapEmailContent(title,
+    `Thank you, ${input.fullName}. We've recorded your interest in the FS2S Advocacy Hill Day on Wednesday, November 18, 2026.`,
+    ["Location: Capitol Hill, Washington, D.C. (exact meeting locations to be confirmed).",
+     "Meeting appointments, lunch arrangements, transportation and the detailed itinerary are not yet final.",
+     "This is an acknowledgment of interest, not confirmation of attendance or an assigned congressional meeting.",
+     "For student attendees, school approval and guardian permissions will be coordinated separately."],
+    {href:`${SITE_URL}/lobby-day`,label:"View tentative Hill Day details"});
+  return sendEmail({to:input.to,subject:title,html:content.html,text:content.text});
+}
 
+export async function sendLobbyDayAdminNotification(input: {fullName:string; email:string; phone:string; organization:string;}) {
+  const safe=(s:string)=>s.replace(/[&<>"']/g,(char)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]||char));
+  const subject="New FS2S Advocacy Hill Day registration of interest";
+  const lines=[`Name: ${input.fullName}`,`Email: ${input.email}`,`Phone: ${input.phone}`,`Organization: ${input.organization||"Not provided"}`, "Event: Wednesday, November 18, 2026", "Status: expression of interest, not confirmed participation."];
   return sendEmail({
-    to: input.to,
-    subject: title,
-    html: content.html,
-    text: content.text
+    to:"LEckman@SeeForever.org",
+    subject,
+    text:lines.join("\n"),
+    html:`<div style="font-family:Georgia,serif;line-height:1.6"><h2>New Hill Day registration of interest</h2><ul>${lines.map(s=>`<li>${safe(s)}</li>`).join("")}</ul><p><a href="${SITE_URL}/lobby-day">View Hill Day page</a></p></div>`
   });
 }
 
