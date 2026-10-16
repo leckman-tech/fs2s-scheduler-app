@@ -44,14 +44,9 @@ export function SiteHeader() {
           className={`site-header__nav-wrap${menuOpen ? " site-header__nav-wrap--open" : ""}`}
         >
           <nav className="site-nav" aria-label="Primary navigation">
-            <Link href="/lobby-day">November 18 Hill Day</Link>
-            <Link href="/">FS2S 2027</Link>
-            
-            <Link href="/2026-archive">2026 Archive</Link>
-            <Link href="/learn-more">Who We Are</Link>
-            <Link href="/learn-more#faq">FAQ</Link>
-            <Link href="/attendee/login">Attendee Portal</Link>
-            <Link href="/portal/login">Speaker/Presenter Portal</Link>
+            <Link href="/lobby-day" aria-current={pathname === "/lobby-day" ? "page" : undefined}>Hill Day · Nov 18</Link>
+            <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>FS2S 2027</Link>
+            <Link href="/learn-more">About FS2S</Link>
           </nav>
           <div className="site-header__actions">
             <Link href="/lobby-day#register" className="site-nav__cta">Register for Hill Day</Link>
