@@ -33,7 +33,14 @@ export default async function AttendeeLoginPage({
       </section>
 
       {params.error ? <div className="empty-state">{params.error}</div> : null}
-      {params.success ? <div className="announcement announcement--urgent">{params.success}</div> : null}
+      {params.success ? (
+        <section role="status" aria-live="polite" className="panel" style={{background:"#fff5f3",border:"2px solid #ad1329",padding:"1.75rem",marginBottom:"1.5rem"}}>
+          <p className="eyebrow" style={{color:"#a10c22",fontWeight:800,letterSpacing:"0.08em"}}>ACTION REQUIRED · VERIFY YOUR EMAIL</p>
+          <h2 style={{fontSize:"clamp(1.6rem,3vw,2.2rem)",margin:"0.45rem 0"}}>Check your inbox to activate your account.</h2>
+          <p style={{fontSize:"1.1rem",lineHeight:1.6}}>We sent a verification link to the email address you registered with. <strong>You must click “Verify My Email Address” in that email before you can sign in.</strong></p>
+          <p style={{marginBottom:0}}>Didn't see it? Check Spam or Promotions. Once verified, return here and sign in using your new password.</p>
+        </section>
+      ) : null}
 
       <section className="signup-choice-grid">
         <form action={loginAttendee} className="panel form-grid">
@@ -92,7 +99,7 @@ export default async function AttendeeLoginPage({
             <div>
               <h2>Create account</h2>
               <p className="muted" style={{ margin: "0.35rem 0 0" }}>
-                Anyone can create an account. We will email a verification link before you can sign in.
+                Anyone can register, but your account is NOT active until you click the verification link emailed to you.
               </p>
             </div>
           </div>
@@ -154,12 +161,11 @@ export default async function AttendeeLoginPage({
           <button type="submit" className="button" >
             Create attendee account
           </button>
-          <p className="muted" style={{ margin: 0 }}>
-            Your account will be ready after you confirm your email. The Hill Day planning page is available to everyone.
-          </p>
-          <p className="field-hint" style={{ marginTop: "-0.15rem" }}>
-            If you do not receive the verification link, check your spam folder or contact our team.
-          </p>
+          <div role="note" style={{background:"#fff4f2",borderLeft:"5px solid #a10c22",borderRadius:"8px",padding:"1rem 1.2rem"}}>
+            <strong style={{display:"block",color:"#971326",fontSize:"1.05rem",marginBottom:"0.4rem"}}>IMPORTANT: Check your email after registering.</strong>
+            <p style={{margin:"0 0 0.4rem"}}>We'll send a confirmation email. Open it and click <strong>Verify My Email Address</strong> to activate your account. You cannot sign in until verification is complete.</p>
+            <p style={{margin:0,fontSize:"0.9rem"}}>No email? Check your Spam or Promotions folder.</p>
+          </div>
         </form>
       </section>
     </div>
