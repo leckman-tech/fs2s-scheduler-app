@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="sky" x2="0" y2="1"><stop stop-color="#f7e8d5"/><stop offset=".6" stop-color="#f4e4d6"/><stop offset="1" stop-color="#f9f2e9"/></linearGradient>
+<linearGradient id="ground" x2="0" y2="1"><stop stop-color="#ba8c5b" stop-opacity=".25"/><stop offset="1" stop-color="#8a613f" stop-opacity=".06"/></linearGradient>
+<radialGradient id="canopy"><stop stop-color="#e1a442" stop-opacity=".5"/><stop offset="1" stop-color="#a83f24" stop-opacity=".12"/></radialGradient>
+</defs>
+<rect width="1600" height="1000" fill="url(#sky)"/>
+<path d="M0 795 Q220 690 420 775 T830 780 T1250 760 T1600 760 V1000 H0Z" fill="url(#ground)"/>
+<g fill="#a67d5d" opacity=".16"><path d="M1110 800h54v-185h-54zM1097 616h80l-40-130zM1250 805h270v-14h-270zM1280 790v-135h210v135z"/><path d="M1266 658q15-100 119-105 104 5 119 105z" /></g>
+<g stroke="#705039" stroke-linecap="round" fill="none" opacity=".22"><path stroke-width="27" d="M-40 1040Q130 690 164 360T200-60"/><path stroke-width="18" d="M94 730Q220 510 460 210"/><path stroke-width="13" d="M148 477Q300 295 565 135"/><path stroke-width="27" d="M1630 1050Q1480 730 1420 375T1370-50"/><path stroke-width="18" d="M1470 670Q1370 420 1130 185"/><path stroke-width="13" d="M1430 490Q1260 315 1000 130"/></g>
+<g opacity=".43"><ellipse cx="45" cy="90" rx="365" ry="275" fill="url(#canopy)"/><ellipse cx="330" cy="90" rx="265" ry="160" fill="#bd602c" opacity=".28"/><ellipse cx="1500" cy="108" rx="360" ry="290" fill="#aa482b" opacity=".23"/><ellipse cx="1240" cy="55" rx="290" ry="155" fill="#d99c3a" opacity=".2"/><ellipse cx="-25" cy="620" rx="180" ry="255" fill="#ce7d30" opacity=".17"/><ellipse cx="1640" cy="655" rx="195" ry="270" fill="#a93b25" opacity=".18"/></g>
+<g id="leaf" fill="#b94c2c" stroke="#8e452e" stroke-opacity=".25" stroke-width="1"><path d="M0-28L6-14 16-23 17-11 29-10 18 1 25 11 10 9 4 25 0 35-4 25-10 9-25 11-18 1-29-10-17-11-16-23-6-14Z"/></g>
+<g opacity=".46">
+<use href="#leaf" transform="translate(100 130) rotate(12) scale(1.55)"/><use href="#leaf" transform="translate(220 55) rotate(47) scale(1.2)" fill="#d58a33"/><use href="#leaf" transform="translate(366 152) rotate(-21) scale(1.3)" fill="#cd692b"/><use href="#leaf" transform="translate(34 320) rotate(58) scale(1.8)" fill="#c76c2e"/><use href="#leaf" transform="translate(502 63) rotate(9) scale(.92)" fill="#b9452a"/><use href="#leaf" transform="translate(1480 170) rotate(29) scale(1.9)" fill="#bd5927"/><use href="#leaf" transform="translate(1345 60) rotate(-22) scale(1.3)" fill="#d99937"/><use href="#leaf" transform="translate(1190 145) rotate(45) scale(1.15)" fill="#9c3c2b"/><use href="#leaf" transform="translate(1550 370) rotate(-29) scale(1.85)" fill="#c78633"/><use href="#leaf" transform="translate(1080 38) rotate(32) scale(.95)" fill="#bc6e2e"/>
+</g>
+<rect width="1600" height="1000" fill="#fffaf5" opacity=".18"/>
+</svg>
