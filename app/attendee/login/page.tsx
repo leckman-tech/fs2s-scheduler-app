@@ -17,22 +17,18 @@ export default async function AttendeeLoginPage({
   searchParams: Promise<{ error?: string; success?: string }>;
 }) {
   const params = await searchParams;
-  const selfServeEnabled = Boolean(process.env.ATTENDEE_ACCESS_CODE);
-  const instantSignupEnabled = Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);
 
   return (
     <div className="container stack" style={{ maxWidth: "980px" }}>
       <section className="hero-card">
         <h1>Attendee Portal</h1>
         <p>
-          Create your own attendee account, or sign in if you already have one. Once you are in,
-          your portal gives you access to conference documents, the attendee board, and your
-          attendee contact card.
+          Create an account with your own email address and password to follow November 18 Hill Day planning updates. Verify your email to activate the account. Historical 2026 convening materials require separate permission.
         </p>
         <div className="hero-meta">
           <span className="hero-pill">Individual accounts</span>
-          <span className="hero-pill">Conference access code</span>
-          <span className="hero-pill">Documents and community</span>
+          <span className="hero-pill">Email verification</span>
+          <span className="hero-pill">Hill Day planning</span>
         </div>
       </section>
 
@@ -96,8 +92,7 @@ export default async function AttendeeLoginPage({
             <div>
               <h2>Create account</h2>
               <p className="muted" style={{ margin: "0.35rem 0 0" }}>
-                New attendees can create an account with the conference access code and begin using
-                the portal right away.
+                Anyone can create an account. We will email a verification link before you can sign in.
               </p>
             </div>
           </div>
@@ -155,17 +150,7 @@ export default async function AttendeeLoginPage({
             symbol is recommended. Email capitalization does not matter, but your password is
             case-sensitive.
           </p>
-          <div className="field">
-            <label htmlFor="create-access-code">Conference access code</label>
-            <input
-              id="create-access-code"
-              name="access_code"
-              type="password"
-              required
-              placeholder="Provided by the conference team"
-              disabled={!selfServeEnabled}
-            />
-          </div>
+
           <button type="submit" className="button" disabled={!selfServeEnabled}>
             Create attendee account
           </button>
