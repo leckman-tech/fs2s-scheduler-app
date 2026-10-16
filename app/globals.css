@@ -3902,3 +3902,50 @@ th {
     animation: none;
   }
 }
+
+
+/* Distinct but restrained navigation items — October 2026 refresh */
+.site-nav {
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.site-nav > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  font-size: 0.89rem;
+  font-weight: 650;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+.site-nav > a + a {
+  border-left: 1px solid rgba(17,17,17,0.10);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: 0.1rem;
+}
+.site-nav > a:first-child {
+  color: var(--accent-deep);
+  background: rgba(181,18,36,0.075);
+  border: 1px solid rgba(181,18,36,0.13);
+  border-radius: 999px;
+  margin-right: 0.25rem;
+}
+.site-nav > a[aria-current="page"] {
+  color: var(--accent-deep);
+  background: rgba(181,18,36,0.085);
+}
+.site-nav > a:hover,
+.site-nav > a:focus-visible {
+  color: var(--accent-deep);
+  background: rgba(181,18,36,0.06);
+}
+@media (max-width: 900px) {
+  .site-nav > a { white-space: normal; }
+  .site-nav > a + a { border-left: 0; margin-left: 0; border-radius: 10px; }
+}
