@@ -2,13 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LogoutButton } from "@/components/logout-button";
 import { requireAttendeePortalUser } from "@/lib/queries";
+import { createClient } from "@/lib/supabase/server";
 import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata=buildMetadata({title:"FS2S Participant Portal",description:"Participant planning information for November 18, 2026 FS2S Advocacy Hill Day.",path:"/attendee",noIndex:true});
 export default async function AttendeePortalPage(){
- const {profile}=await requireAttendeePortalUser();
+ const {profile,user}=await requireAttendeePortalUser();
+ const supabase=await createClient();
+ const {data:grant}=await supabase.from("archive_access_grants").select("user_id").eq("user_id",user.id).maybeSingle();
  return <div className="container stack">
   <section className="hero-card"><p className="eyebrow">YOUR FS2S PORTAL</p><h1>Welcome{profile.full_name ? `, ${profile.full_name.split(" ")[0]}` : ""}.</h1><p>Thank you for joining the FS2S community. Your account gives you a home for planning November 18 Advocacy Hill Day. Information below is tentative until individual meeting assignments, transportation and other event details are confirmed.</p><div className="hero-meta"><span className="hero-pill">Wednesday, November 18, 2026</span><span className="hero-pill">Washington, D.C. · Capitol Hill</span><LogoutButton destination="attendee"/></div><div className="hero-actions"><Link href="/lobby-day" className="button button-link">View the Hill Day plan</Link><Link href="/lobby-day#register" className="button-secondary button-link">Register your interest</Link></div></section>
   <section className="context-grid"><article className="panel story-panel"><p className="eyebrow">PLAN YOUR DAY</p><h2>What to expect</h2><p>We're organizing a morning orientation, small-group congressional meetings, a supervised meal break, further afternoon advocacy and a closing headcount. The final timetable and locations will be shared after confirmation.</p><Link href="/lobby-day#schedule" className="button-secondary button-link">View tentative schedule</Link></article><article className="panel story-panel story-panel--accent"><p className="eyebrow">PARTICIPATION</p><h2>Know before you go</h2><p>Registering interest is not a confirmed congressional appointment. Students need separate school approval, family permissions and chaperone assignments. Please await official logistical guidance.</p><a className="button-secondary button-link" href="mailto:LEckman@SeeForever.org?subject=FS2S%20Hill%20Day%20Participant%20Question">Ask the organizing team</a></article></section>
-  <section className="panel callout-panel"><p className="eyebrow">HISTORICAL MATERIALS</p><h2>2026 convening archive</h2><p>Materials from the previous convening are limited to accounts that receive authorization from the organizing team. Creating an account does not automatically grant archive access.</p><p className="muted">To request historical access, email LEckman@SeeForever.org. Permissions are managed separately from registration.</p></section>
+  <section className="panel callout-panel"><p className="eyebrow">HISTORICAL MATERIALS</p><h2>2026 convening archive</h2><p>Materials from the previous convening are limited to accounts that receive authorization from the organizing team. Creating an account does not automatically grant archive access.</p>{grant || profile.role==="admin" ? <Link href="/2026-archive" className="button button-link">Open 2026 archive</Link> : <p className="muted">To request historical access, email LEckman@SeeForever.org. Permissions are managed separately from registration.</p>}</section>
  </div>
 }
