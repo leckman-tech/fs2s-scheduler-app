@@ -155,10 +155,10 @@ export default async function AttendeeLoginPage({
             Create attendee account
           </button>
           <p className="muted" style={{ margin: 0 }}>
-             "Your account will be ready after you confirm your email. The Hill Day planning page is available to everyone."
+            Your account will be ready after you confirm your email. The Hill Day planning page is available to everyone.
           </p>
           <p className="field-hint" style={{ marginTop: "-0.15rem" }}>
-             "If you do not receive the verification link, check your spam folder or contact our team."
+            If you do not receive the verification link, check your spam folder or contact our team.
           </p>
         </form>
       </section>
