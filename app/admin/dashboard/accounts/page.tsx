@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { deleteAttendeeAccount, updateAttendeeAccount } from "@/lib/actions/admin";
 import { getAdminAttendeeAccounts } from "@/lib/queries";
 import { formatTimestamp } from "@/lib/utils";
@@ -25,6 +26,7 @@ export default async function AdminAccountsPage({
 
       <section className="hero-card">
         <h1>Attendee accounts</h1>
+        <Link href="/admin/dashboard/archive-access" className="button button-link">Manage 2026 archive access</Link>
         <p>
           Review the attendee accounts that have been created, keep the planner-side roster tidy,
           and update public directory sharing preferences as needed.
