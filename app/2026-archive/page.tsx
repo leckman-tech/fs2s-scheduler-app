@@ -23,7 +23,8 @@ export default async function HomePage() {
   if (!user) redirect("/attendee/login?error=Sign%20in%20to%20request%20access%20to%20the%202026%20archive");
   const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
   if (profile?.role !== "admin") {
-    redirect("/attendee?error=The%202026%20archive%20requires%20explicit%20administrator%20permission");
+    const { data: grant } = await supabase.from("archive_access_grants").select("user_id").eq("user_id", user.id).maybeSingle();
+    if (!grant) redirect("/attendee?error=The%202026%20archive%20requires%20explicit%20administrator%20permission");
   }
   const [sessions, announcements, days] = await Promise.all([
     getPublicSessions(),
