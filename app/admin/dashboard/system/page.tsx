@@ -114,18 +114,11 @@ export default async function AdminSystemCheckPage() {
       configuredDetail: "Outgoing RSVP emails have a branded from address.",
       missingDetail: "Set RESEND_FROM_EMAIL so confirmations look polished."
     }),
-    createEnvCheck("Attendee access code", Boolean(process.env.ATTENDEE_ACCESS_CODE), {
-      required: false,
-      configuredDetail: "Attendees can create their own portal accounts with the conference access code.",
-      missingDetail:
-        "Set ATTENDEE_ACCESS_CODE if you want attendee self-registration turned on for the portal."
-    }),
-    createEnvCheck("Attendee instant signup", Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY), {
-      required: false,
-      configuredDetail: "New attendee accounts can open immediately without waiting on email confirmation.",
-      missingDetail:
-        "Add SUPABASE_SERVICE_ROLE_KEY in Vercel if you want attendee account creation to work instantly from the site."
-    }),
+    {
+      label: "Verified attendee signup",
+      state: "pass" as CheckState,
+      detail: "Public account registration uses Supabase email confirmation. A shared conference access code and instant auto-confirmation are not required."
+    },
     {
       label: "Vercel Analytics",
       state: "pass" as CheckState,
@@ -202,15 +195,6 @@ export default async function AdminSystemCheckPage() {
       : null,
     !process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL
       ? "Add Resend environment variables in Vercel if you want RSVP confirmation emails to go out automatically."
-      : null,
-    !process.env.ATTENDEE_ACCESS_CODE
-      ? "Add ATTENDEE_ACCESS_CODE in Vercel when you are ready to let attendees create their own portal accounts."
-      : null,
-    process.env.ATTENDEE_ACCESS_CODE && !process.env.SUPABASE_SERVICE_ROLE_KEY
-      ? "Attendee self-registration is live, but new accounts may still require an email-confirmation click before they can sign in. Add SUPABASE_SERVICE_ROLE_KEY in Vercel if you want instant attendee access."
-      : null,
-    process.env.ATTENDEE_ACCESS_CODE && (attendeeAccountCount ?? 0) === 0
-      ? "If attendees are creating accounts but none appear in Admin, run 022_attendee_account_management.sql and 027_fix_admin_attendee_roster_signature.sql in Supabase so login creation and admin account visibility stay in sync."
       : null,
     databaseChecks.some((check) => check.label === "Public form guard log" && check.state !== "pass")
       ? "Run 018_public_form_guard.sql in Supabase so the public signup forms have anti-spam protection."
