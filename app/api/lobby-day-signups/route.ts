@@ -6,7 +6,7 @@ import {
   guardPublicFormSubmission,
   validateHumanSubmission
 } from "@/lib/anti-spam";
-import { sendLobbyDayConfirmationEmail } from "@/lib/email";
+import { sendLobbyDayConfirmationEmail, sendLobbyDayAdminNotification } from "@/lib/email";
 import { toPublicErrorMessage } from "@/lib/public-errors";
 
 function getPublicSupabaseClient() {
@@ -126,19 +126,24 @@ export async function POST(request: Request) {
       );
     }
 
-    const emailResult = await sendLobbyDayConfirmationEmail({
+    const [emailResult, adminNotification] = await Promise.all([sendLobbyDayConfirmationEmail({
       to: normalizedEmail,
       fullName: body.fullName.trim()
-    });
+    }), sendLobbyDayAdminNotification({
+      fullName: body.fullName.trim(),
+      email: normalizedEmail,
+      phone: body.phone.trim(),
+      organization: body.organization?.trim() || ""
+    })]);
 
-    if (emailResult.error) {
-      console.error(emailResult.error);
-    }
+    if (emailResult.error) console.error("Hill Day attendee acknowledgment failed", emailResult.error);
+    if (!adminNotification.sent) console.error("Hill Day registration notification was not sent", adminNotification.error || "Email provider not configured");
 
     return NextResponse.json({
       ok: true,
       totalCount: Number(count ?? 0),
-      confirmationEmailSent: emailResult.sent
+      confirmationEmailSent: emailResult.sent,
+      adminNotificationSent: adminNotification.sent
     });
   } catch (error) {
     console.error(error);
