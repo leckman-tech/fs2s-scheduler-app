@@ -4295,3 +4295,33 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 .hill-day-hero .hill-day-hero__title > span:nth-child(2) .hill-day-word {animation-delay:3s!important;}
 .hill-day-hero .hill-day-hero__title > span:nth-child(3) em,
 .hill-day-hero .hill-day-hero__title > span:nth-child(3) .hill-day-word {animation-delay:6s!important;}
+
+
+/* Visible, continuous six-beat marquee. Negative offsets avoid delayed starts. */
+.hill-day-hero .hill-day-hero__title em,
+.hill-day-hero .hill-day-hero__title .hill-day-word {
+  animation-name:hill-day-six-beat-glow!important;
+  animation-duration:9s!important;
+  animation-timing-function:linear!important;
+  animation-iteration-count:infinite!important;
+  color:#fff;
+  text-shadow:none;
+  filter:none;
+}
+.hill-day-hero .hill-day-hero__title > span:nth-child(1) em {animation-delay:0s!important;--beat-color:#ff8398;--beat-halo:rgba(255,88,118,.95);}
+.hill-day-hero .hill-day-hero__title > span:nth-child(1) .hill-day-word {animation-delay:-7.5s!important;--beat-color:#ffd081;--beat-halo:rgba(255,173,55,.9);}
+.hill-day-hero .hill-day-hero__title > span:nth-child(2) em {animation-delay:-6s!important;--beat-color:#ff8398;--beat-halo:rgba(255,88,118,.95);}
+.hill-day-hero .hill-day-hero__title > span:nth-child(2) .hill-day-word {animation-delay:-4.5s!important;--beat-color:#79f5dd;--beat-halo:rgba(63,235,205,.9);}
+.hill-day-hero .hill-day-hero__title > span:nth-child(3) em {animation-delay:-3s!important;--beat-color:#ff8398;--beat-halo:rgba(255,88,118,.95);}
+.hill-day-hero .hill-day-hero__title > span:nth-child(3) .hill-day-word {animation-delay:-1.5s!important;--beat-color:#d3b2ff;--beat-halo:rgba(180,113,255,.95);}
+@keyframes hill-day-six-beat-glow {
+  0%,2%,16.5%,100% {color:#fff;text-shadow:0 0 0 transparent;filter:brightness(1);}
+  5%,12% {color:var(--beat-color);text-shadow:0 0 8px var(--beat-halo),0 0 22px var(--beat-halo),0 0 45px var(--beat-halo);filter:brightness(1.3);}
+}
+@media(prefers-reduced-motion:reduce){
+ .hill-day-hero .hill-day-hero__title em,
+ .hill-day-hero .hill-day-hero__title .hill-day-word {animation:none!important;filter:none;}
+ .hill-day-hero .hill-day-hero__title .hill-day-word--stories {color:#ffd081;}
+ .hill-day-hero .hill-day-hero__title .hill-day-word--schools {color:#79f5dd;}
+ .hill-day-hero .hill-day-hero__title .hill-day-word--capitol {color:#d3b2ff;}
+}
