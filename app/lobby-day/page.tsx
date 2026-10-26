@@ -28,7 +28,7 @@ export default async function LobbyDayPage(){
  return <div className="container stack">
  <section className="hero-card hero-card--landing hill-day-hero"><div className="hero-card__grid"><div className="hero-card__content">
   <p className="eyebrow">FS2S ADVOCACY HILL DAY • WASHINGTON, D.C.</p>
-  <h1 className="hill-day-hero__title"><span><em>Our</em> Stories.</span><span><em>Our</em> Schools.</span><span><em>Our</em> Capitol.</span></h1>
+  <h1 className="hill-day-hero__title"><span><em>Our</em> <strong className="hill-day-word hill-day-word--stories">Stories.</strong></span><span><em>Our</em> <strong className="hill-day-word hill-day-word--schools">Schools.</strong></span><span><em>Our</em> <strong className="hill-day-word hill-day-word--capitol">Capitol.</strong></span></h1>
   <p className="hero-kicker">Wednesday, November 18, 2026 — moving from silos to solutions, together.</p>
   <p>See Forever Foundation and Maya Angelou Schools are convening scholars, educators and partners to advocate for educational opportunity, continuity and stronger pathways for young people affected by the justice system. Our working goal is approximately 125 participants, including 50 Maya Angelou Scholars.</p>
   <div className="hero-meta"><span className="hero-pill">November 18, 2026</span><span className="hero-pill">Capitol Hill, Washington, D.C.</span><span className="hero-pill">Morning gathering ~10 AM • Lunch 11:30 AM • Advocacy from 12:30 PM</span></div>
