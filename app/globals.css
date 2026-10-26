@@ -4376,3 +4376,19 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
  .hill-day-hero .hill-day-hero__title {font-size:clamp(2rem,8vw,3.2rem);}
  .hill-day-hero .hill-day-hero__title > span:nth-child(2) {text-align:right;}
 }
+
+/* Registration milestone: compact, balanced, and accurate */
+.hill-day-hero .hill-day-momentum {padding:1.4rem 1.7rem;}
+.hill-day-hero .hill-day-momentum__headline {display:flex;align-items:center;justify-content:space-between;gap:2rem;margin:1rem 0 1.25rem;}
+.hill-day-hero .hill-day-momentum__headline .hill-day-momentum__stat {display:flex;align-items:baseline;gap:1rem;max-width:none;text-align:left;}
+.hill-day-hero .hill-day-momentum__stat strong {font-size:clamp(3.5rem,5vw,5.2rem);}
+.hill-day-hero .hill-day-momentum__stat > span {font-size:.9rem;white-space:nowrap;}
+.hill-day-hero .hill-day-momentum__headline .hill-day-momentum__message {display:grid;gap:.25rem;max-width:18rem;text-align:right;}
+.hill-day-hero .hill-day-momentum__track {height:18px;margin:1rem 0 .8rem;overflow:visible;}
+.hill-day-hero .hill-day-momentum__current {position:absolute;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:30px;height:30px;border:3px solid white;border-radius:50%;background:#b51224;color:white;font-size:1rem;box-shadow:0 3px 9px #0005;}
+.hill-day-hero .hill-day-momentum__footer {margin-top:.35rem;}
+@media(max-width:700px){
+ .hill-day-hero .hill-day-momentum__headline {flex-direction:column;align-items:flex-start;gap:.6rem;}
+ .hill-day-hero .hill-day-momentum__headline .hill-day-momentum__message {text-align:left;}
+ .hill-day-hero .hill-day-momentum__stat {flex-wrap:wrap;}
+}
