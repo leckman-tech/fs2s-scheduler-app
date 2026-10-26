@@ -4285,3 +4285,13 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
   .hill-day-hero .hill-day-hero__title .hill-day-word--schools {color:#a8f5e8;}
   .hill-day-hero .hill-day-hero__title .hill-day-word--capitol {color:#d0bdff;}
 }
+
+/* Slightly quicker six-beat headline cadence: 9 seconds total. */
+.hill-day-hero .hill-day-hero__title em,
+.hill-day-hero .hill-day-hero__title .hill-day-word { animation-duration:9s!important; }
+.hill-day-hero .hill-day-hero__title > span:nth-child(1) em,
+.hill-day-hero .hill-day-hero__title > span:nth-child(1) .hill-day-word {animation-delay:0s!important;}
+.hill-day-hero .hill-day-hero__title > span:nth-child(2) em,
+.hill-day-hero .hill-day-hero__title > span:nth-child(2) .hill-day-word {animation-delay:3s!important;}
+.hill-day-hero .hill-day-hero__title > span:nth-child(3) em,
+.hill-day-hero .hill-day-hero__title > span:nth-child(3) .hill-day-word {animation-delay:6s!important;}
