@@ -58,6 +58,7 @@ export async function GET(request: Request) {
       const { data, error } = await supabase
         .from("lobby_day_signups")
         .select("id,full_name,email,phone,organization,created_at")
+        .gte("created_at","2026-10-01T00:00:00Z")
         .order("created_at", { ascending: false });
 
       if (error) {
@@ -68,7 +69,7 @@ export async function GET(request: Request) {
         ["id", "event", "full_name", "email", "phone", "organization", "created_at"],
         ...(data ?? []).map((entry) => [
           entry.id,
-          "Fall 2026 Lobby Day",
+          "November 18, 2026 Advocacy Hill Day",
           entry.full_name,
           entry.email,
           entry.phone,
@@ -82,7 +83,7 @@ export async function GET(request: Request) {
       return new NextResponse(csv, {
         headers: {
           "Content-Type": "text/csv; charset=utf-8",
-          "Content-Disposition": 'attachment; filename="fs2s-lobby-day-signups.csv"'
+          "Content-Disposition": 'attachment; filename="fs2s-hill-day-nov-18-2026.csv"'
         }
       });
     }
