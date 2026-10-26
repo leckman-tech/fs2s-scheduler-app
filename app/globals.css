@@ -4325,3 +4325,20 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
  .hill-day-hero .hill-day-hero__title .hill-day-word--schools {color:#79f5dd;}
  .hill-day-hero .hill-day-hero__title .hill-day-word--capitol {color:#d3b2ff;}
 }
+
+
+/* Keep subject colors visible at rest; animate brightness/glow, not color disappearance. */
+.hill-day-hero .hill-day-hero__title .hill-day-word--stories {--rest-color:#ffd4a8;}
+.hill-day-hero .hill-day-hero__title .hill-day-word--schools {--rest-color:#a8e4de;}
+.hill-day-hero .hill-day-hero__title .hill-day-word--capitol {--rest-color:#c7c0ff;}
+.hill-day-hero .hill-day-hero__title .hill-day-word {
+  animation-name:hill-day-subject-persistent!important;
+  color:var(--rest-color)!important;
+}
+@keyframes hill-day-subject-persistent {
+  0%,2%,16.5%,100% {color:var(--rest-color);text-shadow:none;filter:brightness(1);}
+  5%,12% {color:var(--beat-color);text-shadow:0 0 8px var(--beat-halo),0 0 22px var(--beat-halo),0 0 45px var(--beat-halo);filter:brightness(1.35);}
+}
+@media(prefers-reduced-motion:reduce){
+  .hill-day-hero .hill-day-hero__title .hill-day-word {animation:none!important;filter:none;}
+}
