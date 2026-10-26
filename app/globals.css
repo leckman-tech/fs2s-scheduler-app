@@ -4243,3 +4243,10 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 @media(min-width:1440px){
  .spring-canvas::before,.spring-canvas::after {animation-duration:15s;}
 }
+
+
+/* Playful but cohesive three-color headline: Our retains sequential glow. */
+.hill-day-hero .hill-day-hero__title .hill-day-word {font:inherit;font-weight:inherit;letter-spacing:inherit;display:inline;color:inherit;}
+.hill-day-hero .hill-day-hero__title .hill-day-word--stories {color:#ffd4a8;}
+.hill-day-hero .hill-day-hero__title .hill-day-word--schools {color:#a8e4de;}
+.hill-day-hero .hill-day-hero__title .hill-day-word--capitol {color:#c7c0ff;}
