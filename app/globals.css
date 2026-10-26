@@ -4237,3 +4237,9 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 .lobby-signup-panel > form {width:100%;max-width:850px;margin:0 auto;}
 .lobby-signup-panel .field label {text-align:left;}
 @media(max-width:650px){.lobby-signup-panel .lobby-signup-description {text-align:left;}}
+
+
+/* More lively side-gallery cadence; avoid hard visual jumps. */
+@media(min-width:1440px){
+ .spring-canvas::before,.spring-canvas::after {animation-duration:15s;}
+}
