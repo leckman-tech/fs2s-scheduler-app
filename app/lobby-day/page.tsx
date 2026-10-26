@@ -32,10 +32,15 @@ export default async function LobbyDayPage(){
   <p className="hero-kicker">Wednesday, November 18, 2026 — moving from silos to solutions, together.</p>
   <p>See Forever Foundation and Maya Angelou Schools are convening scholars, educators and partners to advocate for educational opportunity, continuity and stronger pathways for young people affected by the justice system. Our working goal is approximately 125 participants, including 50 Maya Angelou Scholars.</p>
   <div className="hero-meta"><span className="hero-pill">November 18, 2026</span><span className="hero-pill">Capitol Hill, Washington, D.C.</span><span className="hero-pill">Morning gathering ~10 AM • Lunch 11:30 AM • Advocacy from 12:30 PM</span></div>
-  <div className="hill-day-momentum" aria-label={`${count} registrations of 125 participant goal`}>
-    <div className="hill-day-momentum__top"><div><span className="hill-day-momentum__eyebrow">REGISTRATION MOMENTUM</span><strong>{count} <small>/ 125</small></strong></div><p>People registered<br/><span>Interest submitted, participation pending confirmation</span></p></div>
-    <div className="hill-day-momentum__track" role="progressbar" aria-label="Registrations toward 125 participant goal" aria-valuemin={0} aria-valuemax={125} aria-valuenow={Math.min(count,125)}><div style={{width:`${Math.min((count/125)*100,100)}%`}} /></div>
-    <span className="hill-day-momentum__remaining">{Math.max(125-count,0)} more registrations to reach the goal</span>
+  <div className="hill-day-momentum" aria-label={`${count} people registered toward a goal of 125`}>
+    <div className="hill-day-momentum__header"><span className="hill-day-momentum__eyebrow">THE ROAD TO THE HILL</span><span className="hill-day-momentum__live"><span aria-hidden="true" />LIVE REGISTRATION COUNT</span></div>
+    <div className="hill-day-momentum__headline"><strong>{count}<small> / 125</small></strong><div><b>Voices joining the movement</b><span>Every registration brings us closer.</span></div></div>
+    <div className="hill-day-momentum__track" role="progressbar" aria-label="Registrations toward 125 participant goal" aria-valuemin={0} aria-valuemax={125} aria-valuenow={Math.min(count,125)}>
+      <div className="hill-day-momentum__fill" style={{width:`${Math.min((count/125)*100,100)}%`}} />
+      <span className="hill-day-momentum__finish" aria-hidden="true">★</span>
+    </div>
+    <div className="hill-day-momentum__footer"><span><b>{Math.round((count/125)*100)}%</b> of our goal</span><span><b>{Math.max(125-count,0)}</b> more voices to go</span></div>
+    <p className="hill-day-momentum__note">Registration expresses interest. Attendance and congressional meeting assignments are confirmed separately.</p>
   </div>
   <div className="hero-actions"><a href="#register" className="button button-link">Register your interest</a><a href="#schedule" className="button-secondary button-link">See the tentative day</a></div>
  </div><div className="hero-card__visual"><div className="hero-photo hero-photo--dc"><span className="hero-photo__label">The Hill, together</span></div><div className="hero-photo hero-photo--community"><span className="hero-photo__label">Students at the center</span></div><div className="hero-photo hero-photo--conference"><span className="hero-photo__label">Partners in action</span></div></div></div></section>
