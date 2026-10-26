@@ -3,6 +3,9 @@ import { deleteLobbyDaySignup, updateLobbyDaySignup } from "@/lib/actions/admin"
 import { getAdminLobbyDaySignups } from "@/lib/queries";
 import { formatTimestamp } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function AdminSignupsPage({ searchParams }: { searchParams: Promise<{error?:string}> }) {
  const params = await searchParams;
  const records = await getAdminLobbyDaySignups();
