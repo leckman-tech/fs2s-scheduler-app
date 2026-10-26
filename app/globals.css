@@ -4211,3 +4211,17 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 .lobby-signup-panel .signup-progress strong {font-size:clamp(1.35rem,2.3vw,1.9rem);}
 .lobby-signup-panel .signup-progress__caption {font-size:.87rem;}
 .lobby-signup-panel .lobby-signup-description {max-width:75ch;margin:0;}
+
+
+/* Fix inherited grid sizing: rows must size to content, not stretch to fill panel. */
+.lobby-signup-panel.panel.form-grid {
+  height:auto;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:1.1rem;
+}
+.lobby-signup-panel .lobby-signup-intro {display:flex;flex-direction:column;gap:1rem;flex:0 0 auto;}
+.lobby-signup-panel .signup-progress {flex:0 0 auto;}
+.lobby-signup-panel .lobby-signup-description {margin:0;max-width:none;}
+.lobby-signup-panel > form {margin:0;display:grid;gap:1rem;}
