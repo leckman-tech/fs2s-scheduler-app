@@ -4178,3 +4178,21 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 .lobby-signup-description {max-width:65ch;line-height:1.55;}
 .lobby-signup-panel > form {margin-top:.35rem;}
 @media(min-width:900px){.lobby-signup-panel {gap:1.4rem;}}
+
+
+/* Restore the signature sequential "Our" emphasis without distracting motion. */
+.hill-day-hero .hill-day-hero__title em {
+  display:inline-block;
+  font-style:normal;
+  color:#fff;
+  animation:hill-day-our-spotlight 9s ease-in-out infinite;
+}
+.hill-day-hero .hill-day-hero__title > span:nth-child(2) em {animation-delay:3s;}
+.hill-day-hero .hill-day-hero__title > span:nth-child(3) em {animation-delay:6s;}
+@keyframes hill-day-our-spotlight {
+  0%,7%,29%,100% {color:#fff;text-shadow:none;}
+  11%,22% {color:#ff7181;text-shadow:0 0 15px rgba(244,82,106,.46),0 0 30px rgba(244,82,106,.2);}
+}
+@media(prefers-reduced-motion:reduce){
+  .hill-day-hero .hill-day-hero__title em {animation:none;color:#fff;}
+}
