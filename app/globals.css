@@ -4225,3 +4225,15 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 .lobby-signup-panel .signup-progress {flex:0 0 auto;}
 .lobby-signup-panel .lobby-signup-description {margin:0;max-width:none;}
 .lobby-signup-panel > form {margin:0;display:grid;gap:1rem;}
+
+
+/* Registration composition: centered introduction, balanced measure, aligned form. */
+.lobby-signup-panel.panel.form-grid {max-width:100%;gap:1.3rem;}
+.lobby-signup-panel .lobby-signup-intro {align-items:center;text-align:center;gap:1.15rem;}
+.lobby-signup-panel .lobby-signup-intro h2 {width:100%;text-align:center;}
+.lobby-signup-panel .lobby-signup-intro .signup-progress {width:100%;text-align:center;}
+.lobby-signup-panel .signup-progress__label,.lobby-signup-panel .signup-progress strong,.lobby-signup-panel .signup-progress__caption {text-align:center;}
+.lobby-signup-panel .lobby-signup-description {max-width:68ch;margin:0 auto!important;text-align:center;}
+.lobby-signup-panel > form {width:100%;max-width:850px;margin:0 auto;}
+.lobby-signup-panel .field label {text-align:left;}
+@media(max-width:650px){.lobby-signup-panel .lobby-signup-description {text-align:left;}}
