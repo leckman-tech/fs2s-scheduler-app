@@ -4392,3 +4392,37 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
  .hill-day-hero .hill-day-momentum__headline .hill-day-momentum__message {text-align:left;}
  .hill-day-hero .hill-day-momentum__stat {flex-wrap:wrap;}
 }
+
+
+/* Compact, usable November 2026 registration manager */
+.hill-admin-page {gap:1.2rem;}
+.hill-admin-heading {display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.4rem 0;}
+.hill-admin-heading h1 {font-size:clamp(1.65rem,2.4vw,2.35rem);line-height:1.15;margin:.3rem 0;}
+.hill-admin-heading .muted {margin:0;}
+.hill-admin-metrics {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem;}
+.hill-admin-metrics>div {display:flex;flex-direction:column;gap:.25rem;background:#fff;border:1px solid #e4dfe0;border-radius:13px;padding:1rem 1.3rem;}
+.hill-admin-metrics span {font-size:.82rem;font-weight:700;color:#666;}
+.hill-admin-metrics strong {font-size:2rem;line-height:1.1;color:#a90d20;}
+.hill-admin-list {padding:1.2rem!important;}
+.hill-admin-toolbar {display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.1rem;}
+.hill-admin-toolbar h2 {margin:0 0 .25rem;font-size:1.3rem;}
+.hill-admin-toolbar p {margin:0;font-size:.83rem;}
+.hill-admin-controls {display:flex;gap:.5rem;align-items:center;}
+.hill-admin-controls input,.hill-admin-controls select {height:42px;border:1px solid #d7d5d5;border-radius:9px;background:#fff;padding:.55rem .7rem;font-size:.9rem;}
+.hill-admin-search input {width:min(29vw,300px);}
+.hill-admin-table-scroll {width:100%;overflow-x:auto;}
+.hill-admin-table {width:100%;border-collapse:collapse;font-size:.88rem;text-align:left;}
+.hill-admin-table th {font-size:.74rem;text-transform:uppercase;letter-spacing:.045em;color:#696365;background:#f8f6f6;}
+.hill-admin-table th,.hill-admin-table td {padding:.8rem .65rem;border-bottom:1px solid #e9e5e5;vertical-align:top;}
+.hill-admin-table tbody tr:hover {background:#fcf8f8;}
+.hill-admin-table td a {color:#9d1325;text-decoration:underline;text-underline-offset:2px;}
+.hill-admin-row-details summary {cursor:pointer;color:#a70c20;font-weight:700;white-space:nowrap;}
+.hill-admin-row-details[open] {min-width:230px;}
+.hill-admin-row-popover {margin-top:.7rem;padding:.85rem;border:1px solid #e7dfe0;background:#fff;border-radius:9px;min-width:220px;}
+.hill-admin-row-popover p {margin:0 0 .7rem;}
+.hill-admin-edit {display:grid;gap:.55rem;margin-bottom:.75rem;}
+.hill-admin-edit label {display:grid;gap:.2rem;font-size:.8rem;font-weight:700;}
+.hill-admin-edit input {width:100%;min-width:0;padding:.5rem;border:1px solid #ddd;border-radius:6px;font-size:.88rem;}
+.hill-admin-row-popover button {font-size:.8rem;}
+@media(max-width:850px){.hill-admin-heading,.hill-admin-toolbar {align-items:stretch;flex-direction:column;}.hill-admin-controls {flex-wrap:wrap;}.hill-admin-search input {width:min(80vw,320px);}}
+@media(max-width:480px){.hill-admin-metrics>div {padding:.8rem;}.hill-admin-metrics strong {font-size:1.5rem;}.hill-admin-table {min-width:660px;}}
