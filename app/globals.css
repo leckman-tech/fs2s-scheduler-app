@@ -4342,3 +4342,14 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 @media(prefers-reduced-motion:reduce){
   .hill-day-hero .hill-day-hero__title .hill-day-word {animation:none!important;filter:none;}
 }
+
+
+/* Faster six-step glow: 7.5-second loop, 1.25 seconds per word. */
+.hill-day-hero .hill-day-hero__title em,
+.hill-day-hero .hill-day-hero__title .hill-day-word {animation-duration:7.5s!important;}
+.hill-day-hero .hill-day-hero__title > span:nth-child(1) em {animation-delay:0s!important;}
+.hill-day-hero .hill-day-hero__title > span:nth-child(1) .hill-day-word {animation-delay:-6.25s!important;}
+.hill-day-hero .hill-day-hero__title > span:nth-child(2) em {animation-delay:-5s!important;}
+.hill-day-hero .hill-day-hero__title > span:nth-child(2) .hill-day-word {animation-delay:-3.75s!important;}
+.hill-day-hero .hill-day-hero__title > span:nth-child(3) em {animation-delay:-2.5s!important;}
+.hill-day-hero .hill-day-hero__title > span:nth-child(3) .hill-day-word {animation-delay:-1.25s!important;}
