@@ -3974,3 +3974,61 @@ th {
 .spring-canvas__capitol { background-position: center 36%; }
 .spring-canvas__mist { background: linear-gradient(180deg, rgba(255,255,255,.46),rgba(255,255,255,.69)); }
 .hero-photo--dc { background-color: #655247; }
+
+
+/* Advocacy Hill Day 2026: clear civic photography, editorial typography, and visible momentum */
+body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
+.spring-canvas { background: #f7f6f3; }
+.spring-canvas__capitol {
+  background-image: var(--photo-capitol);
+  background-size: cover;
+  background-position: center 43%;
+  opacity: .18;
+  filter: none;
+  transform: none;
+  animation: none;
+}
+.spring-canvas__mist { background: linear-gradient(180deg,rgba(248,248,247,.48),rgba(248,248,247,.85) 56%,#f7f6f3); }
+.petal { display: none; }
+.hill-day-hero .hill-day-hero__title {
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -.055em;
+  line-height: 1.03;
+  font-size: clamp(2.45rem, 4vw, 4.5rem);
+}
+.hill-day-hero__title em { animation: none; color: #fff; }
+.hill-day-hero .hero-card__visual { border-radius: 12px; box-shadow: none; padding: 0; gap: .65rem; }
+.hill-day-hero .hero-photo { border-radius: 10px; transform: none; }
+.hill-day-hero .hero-photo--dc {
+  background-image: linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.44)),var(--photo-capitol);
+  background-position: center 42%;
+}
+.hill-day-hero .hero-photo--community { background-position: center; }
+.hill-day-hero .hero-photo__label { border-radius: 4px; letter-spacing: .035em; }
+.hill-day-momentum {
+  margin-top: 1.5rem;
+  padding: 1.1rem 1.3rem 1.05rem;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 12px;
+  background: rgba(255,255,255,.095);
+  max-width: 37rem;
+}
+.hill-day-momentum__top { display:flex; align-items:end; justify-content:space-between; gap:1rem; }
+.hill-day-momentum__top > div { display:grid; gap:.3rem; }
+.hill-day-momentum__eyebrow { color:#ffb8bd; font-size:.68rem; letter-spacing:.13em; font-weight:800; }
+.hill-day-momentum__top strong { font-size:clamp(2rem,3.2vw,3rem); line-height:1; letter-spacing:-.05em; color:#fff; }
+.hill-day-momentum__top strong small { font-size:.5em; color:#e4d7d9; font-weight:500; }
+.hill-day-momentum__top p { margin:0; font-size:.88rem; color:#fff; line-height:1.4; text-align:right; }
+.hill-day-momentum__top p span { font-size:.72rem; color:#ded5d6; }
+.hill-day-momentum__track { height:11px; margin:.85rem 0 .5rem; overflow:hidden; border-radius:999px; background:rgba(255,255,255,.2); }
+.hill-day-momentum__track > div { height:100%; border-radius:inherit; background:#e94b5d; transition:width .35s ease; }
+.hill-day-momentum__remaining { color:#f3e4e6; font-size:.78rem; }
+.signup-progress { width:min(100%,26rem); padding:.9rem 1rem; background:#f8f7f5; border:1px solid rgba(17,17,17,.12); border-radius:10px; }
+.signup-progress__track { height:.75rem; }
+.signup-progress__caption { font-weight:700; }
+@media(max-width:700px){
+  .hill-day-momentum__top { align-items:start; }
+  .hill-day-momentum__top p { font-size:.76rem; }
+  .hill-day-hero .hero-card__visual { grid-template-rows:180px 125px; }
+}
