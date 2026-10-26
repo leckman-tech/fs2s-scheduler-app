@@ -4032,3 +4032,40 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
   .hill-day-momentum__top p { font-size:.76rem; }
   .hill-day-hero .hero-card__visual { grid-template-rows:180px 125px; }
 }
+
+
+/* Large, spirited registration milestone: restrained civic palette */
+.hill-day-momentum {
+  width:100%; max-width:none; margin-top:1.65rem; padding:1.65rem 1.8rem 1.4rem;
+  border:2px solid rgba(255,255,255,.28); border-radius:20px;
+  background:linear-gradient(135deg,rgba(181,18,36,.28),rgba(255,255,255,.095) 68%);
+  box-shadow:0 16px 36px rgba(0,0,0,.13);
+}
+.hill-day-momentum__header,.hill-day-momentum__headline,.hill-day-momentum__footer {
+  display:flex; justify-content:space-between; align-items:center; gap:1rem;
+}
+.hill-day-momentum__eyebrow {font-size:.78rem; color:#ffd1d6; letter-spacing:.15em;}
+.hill-day-momentum__live {display:inline-flex;align-items:center;gap:.45rem;color:#fff;font-size:.65rem;font-weight:800;letter-spacing:.08em;}
+.hill-day-momentum__live span {width:8px;height:8px;border-radius:50%;background:#ff7786;box-shadow:0 0 0 4px rgba(255,119,134,.16);}
+.hill-day-momentum__headline {align-items:end;margin:1.2rem 0 1.1rem;}
+.hill-day-momentum__headline strong {font-size:clamp(4.4rem,7vw,7.5rem);line-height:.85;font-weight:900;letter-spacing:-.08em;color:#fff;white-space:nowrap;}
+.hill-day-momentum__headline strong small {font-size:.32em;letter-spacing:-.04em;font-weight:600;color:#ffe5e8;}
+.hill-day-momentum__headline > div {display:grid;gap:.4rem;max-width:12rem;text-align:right;}
+.hill-day-momentum__headline b {font-size:1.1rem;line-height:1.2;color:#fff;}
+.hill-day-momentum__headline > div span {font-size:.85rem;color:#f5d9de;}
+.hill-day-momentum__track {position:relative;height:24px;margin:1.1rem 0 .85rem;background:rgba(255,255,255,.24);border:2px solid rgba(255,255,255,.22);overflow:visible;border-radius:999px;}
+.hill-day-momentum__fill {height:100%;border-radius:999px;background:repeating-linear-gradient(-45deg,#f36c7d 0,#f36c7d 14px,#e84459 14px,#e84459 28px);box-shadow:0 0 20px rgba(244,91,109,.35);transition:width .4s ease;}
+.hill-day-momentum__finish {position:absolute;right:-7px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#fff;color:#b51224;font-size:1.45rem;box-shadow:0 5px 16px rgba(0,0,0,.22);}
+.hill-day-momentum__footer {font-size:.91rem;color:#fff;font-weight:500;}
+.hill-day-momentum__footer b {font-size:1.1rem;}
+.hill-day-momentum .hill-day-momentum__note {font-size:.72rem;line-height:1.45;margin:.9rem 0 0;color:#f2d9dd;}
+@media(max-width:700px){
+  .hill-day-momentum {padding:1.25rem 1.1rem;}
+  .hill-day-momentum__header {align-items:start;flex-wrap:wrap;}
+  .hill-day-momentum__headline strong {font-size:clamp(3.6rem,13vw,5.6rem);}
+  .hill-day-momentum__headline > div {max-width:9rem;}
+  .hill-day-momentum__headline b {font-size:.9rem;}
+  .hill-day-momentum__headline > div span {font-size:.73rem;}
+  .hill-day-momentum__footer {font-size:.78rem;}
+}
+@media(prefers-reduced-motion:reduce){.hill-day-momentum__fill{transition:none;}}
