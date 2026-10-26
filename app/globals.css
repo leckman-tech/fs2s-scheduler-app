@@ -4069,3 +4069,30 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
   .hill-day-momentum__footer {font-size:.78rem;}
 }
 @media(prefers-reduced-motion:reduce){.hill-day-momentum__fill{transition:none;}}
+
+
+/* Documentary side galleries: leave the reading column clear. */
+.spring-canvas { background:#f5f4f1; }
+.spring-canvas__capitol { display:none; }
+.spring-canvas__mist { background:none; }
+@media(min-width:1440px){
+  .spring-canvas::before,.spring-canvas::after {
+    content:"";position:absolute;top:0;bottom:0;width:max(0px,calc((100vw - 1130px)/2));
+    background-repeat:no-repeat;background-size:cover;
+    opacity:.92;filter:none;pointer-events:none;
+  }
+  .spring-canvas::before {
+    left:0;
+    background-image:linear-gradient(90deg,rgba(12,18,25,.1) 0%,rgba(245,244,241,.12) 66%,#f5f4f1 100%),var(--photo-capitol);
+    background-position:center center,52% center;
+  }
+  .spring-canvas::after {
+    right:0;
+    background-image:linear-gradient(270deg,rgba(12,18,25,.12) 0%,rgba(245,244,241,.10) 66%,#f5f4f1 100%),var(--photo-hill-youth);
+    background-position:center center,45% center;
+  }
+  .page-shell .container {background:rgba(245,244,241,.92);padding-inline:1rem;}
+}
+@media(max-width:1439px){
+  .spring-canvas::before,.spring-canvas::after {display:none;}
+}
