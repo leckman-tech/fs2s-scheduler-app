@@ -35,12 +35,12 @@ export default async function LobbyDayPage(){
   <div className="hero-actions"><a href="#register" className="button button-link">Register your interest</a><a href="#schedule" className="button-secondary button-link">See the tentative day</a></div>
  </div><div className="hero-card__visual"><div className="hero-photo hero-photo--dc"><span className="hero-photo__label">The Hill, together</span></div><div className="hero-photo hero-photo--community"><span className="hero-photo__label">Students at the center</span></div><div className="hero-photo hero-photo--conference"><span className="hero-photo__label">Partners in action</span></div></div></div>  <div className="hill-day-momentum" aria-label={`${count} people registered toward a goal of 125`}>
     <div className="hill-day-momentum__header"><span className="hill-day-momentum__eyebrow">THE ROAD TO THE HILL</span><span className="hill-day-momentum__live"><span aria-hidden="true" />LIVE REGISTRATION COUNT</span></div>
-    <div className="hill-day-momentum__headline"><strong>{count}<small> / 125</small></strong><div><b>Voices joining the movement</b><span>Every registration brings us closer.</span></div></div>
+    <div className="hill-day-momentum__headline"><div className="hill-day-momentum__stat"><strong>{count}<small> / 125</small></strong><span>people registered</span></div><div className="hill-day-momentum__message"><b>Voices joining the movement</b><span>Every registration brings us closer.</span></div></div>
     <div className="hill-day-momentum__track" role="progressbar" aria-label="Registrations toward 125 participant goal" aria-valuemin={0} aria-valuemax={125} aria-valuenow={Math.min(count,125)}>
       <div className="hill-day-momentum__fill" style={{width:`${Math.min((count/125)*100,100)}%`}} />
-      <span className="hill-day-momentum__finish" aria-hidden="true">★</span>
+      <span className="hill-day-momentum__current" style={{left:`${Math.min((count/125)*100,100)}%`}} aria-hidden="true">★</span>
     </div>
-    <div className="hill-day-momentum__footer"><span><b>{Math.round((count/125)*100)}%</b> of our goal</span><span><b>{Math.max(125-count,0)}</b> more voices to go</span></div>
+    <div className="hill-day-momentum__footer"><span><b>{Math.round((count/125)*100)}%</b> of our goal</span><span><b>{Math.max(125-count,0)}</b> registrations to go · Goal: 125</span></div>
     <p className="hill-day-momentum__note">Registration expresses interest. Attendance and congressional meeting assignments are confirmed separately.</p>
   </div>
 </section>
