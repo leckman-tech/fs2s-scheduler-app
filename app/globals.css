@@ -4130,3 +4130,34 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
   .hill-day-hero .hill-day-momentum__headline {gap:1rem;justify-content:space-between;}
   .hill-day-hero .hill-day-momentum__headline > div {text-align:right;}
 }
+
+
+/* Slow crossfading photographic side panels. Keep faces within safe focal areas. */
+@media(min-width:1440px){
+  .spring-canvas::before,.spring-canvas::after {background-image:none;opacity:1;}
+  .spring-canvas::before {
+    background-image:linear-gradient(90deg,rgba(245,244,241,0) 55%,#f5f4f1 100%),var(--photo-capitol);
+    background-size:cover; background-position:center,center 45%;
+    animation:hill-day-left-gallery 28s ease-in-out infinite;
+  }
+  .spring-canvas::after {
+    background-image:linear-gradient(270deg,rgba(245,244,241,0) 55%,#f5f4f1 100%),var(--photo-hill-youth);
+    background-size:cover; background-position:center,center 30%;
+    animation:hill-day-right-gallery 28s ease-in-out infinite;
+  }
+}
+@keyframes hill-day-left-gallery {
+  0%,28% {background-image:linear-gradient(90deg,transparent 55%,#f5f4f1),var(--photo-capitol);}
+  36%,61% {background-image:linear-gradient(90deg,transparent 55%,#f5f4f1),var(--photo-room-wide);}
+  69%,94% {background-image:linear-gradient(90deg,transparent 55%,#f5f4f1),var(--photo-partnership-activity);}
+  100% {background-image:linear-gradient(90deg,transparent 55%,#f5f4f1),var(--photo-capitol);}
+}
+@keyframes hill-day-right-gallery {
+  0%,28% {background-image:linear-gradient(270deg,transparent 55%,#f5f4f1),var(--photo-hill-youth);}
+  36%,61% {background-image:linear-gradient(270deg,transparent 55%,#f5f4f1),var(--photo-table-conversation);}
+  69%,94% {background-image:linear-gradient(270deg,transparent 55%,#f5f4f1),var(--photo-audience-question);}
+  100% {background-image:linear-gradient(270deg,transparent 55%,#f5f4f1),var(--photo-hill-youth);}
+}
+@media(prefers-reduced-motion:reduce){
+  .spring-canvas::before,.spring-canvas::after {animation:none;}
+}
