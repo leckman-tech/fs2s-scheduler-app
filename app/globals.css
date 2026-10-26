@@ -4096,3 +4096,37 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 @media(max-width:1439px){
   .spring-canvas::before,.spring-canvas::after {display:none;}
 }
+
+
+/* Hill Day screenshot correction: balanced columns and full-bleed momentum section */
+.hill-day-hero {padding:clamp(1.3rem,2.5vw,2.3rem);}
+.hill-day-hero .hero-card__grid {
+  grid-template-columns:minmax(0,1.13fr) minmax(0,.87fr);
+  gap:clamp(1.5rem,3vw,2.8rem);
+  align-items:stretch;
+}
+.hill-day-hero .hero-card__content {padding:0;align-content:center;}
+.hill-day-hero .hero-card__visual {
+  display:grid;grid-template-columns:1.1fr .9fr;grid-template-rows:1fr 1fr;
+  min-height:440px;height:100%;align-self:stretch;
+  gap:.8rem;padding:0;background:none;box-shadow:none;
+}
+.hill-day-hero .hero-photo {min-height:0;transform:none;border-radius:12px;}
+.hill-day-hero .hero-photo--dc {grid-row:1 / 3;}
+.hill-day-hero .hero-photo--community {grid-column:2;grid-row:1;}
+.hill-day-hero .hero-photo--conference {grid-column:2;grid-row:2;}
+.hill-day-hero .hill-day-momentum {margin-top:2rem;padding:1.5rem 2rem;max-width:none;}
+.hill-day-hero .hill-day-momentum__headline {justify-content:flex-start;gap:clamp(2rem,7vw,7rem);}
+.hill-day-hero .hill-day-momentum__headline > div {max-width:22rem;text-align:left;}
+.hill-day-hero .hill-day-momentum__track {margin-top:1.35rem;}
+@media(max-width:900px){
+  .hill-day-hero .hero-card__grid {grid-template-columns:1fr;gap:1.5rem;}
+  .hill-day-hero .hero-card__visual {min-height:260px;height:300px;}
+  .hill-day-hero .hill-day-momentum {margin-top:1.5rem;}
+}
+@media(max-width:520px){
+  .hill-day-hero .hero-card__visual {height:240px;min-height:240px;gap:.5rem;}
+  .hill-day-hero .hill-day-momentum {padding:1.15rem;}
+  .hill-day-hero .hill-day-momentum__headline {gap:1rem;justify-content:space-between;}
+  .hill-day-hero .hill-day-momentum__headline > div {text-align:right;}
+}
