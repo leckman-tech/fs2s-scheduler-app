@@ -4353,3 +4353,26 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 .hill-day-hero .hill-day-hero__title > span:nth-child(2) .hill-day-word {animation-delay:-3.75s!important;}
 .hill-day-hero .hill-day-hero__title > span:nth-child(3) em {animation-delay:-2.5s!important;}
 .hill-day-hero .hill-day-hero__title > span:nth-child(3) .hill-day-word {animation-delay:-1.25s!important;}
+
+
+/* Editorial stagger: left / right / left, within the hero text column. */
+.hill-day-hero .hill-day-hero__title {
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  max-width:100%;
+  gap:.025em;
+}
+.hill-day-hero .hill-day-hero__title > span {
+  display:block;
+  width:100%;
+  box-sizing:border-box;
+  white-space:nowrap;
+}
+.hill-day-hero .hill-day-hero__title > span:nth-child(1),
+.hill-day-hero .hill-day-hero__title > span:nth-child(3) {text-align:left;}
+.hill-day-hero .hill-day-hero__title > span:nth-child(2) {text-align:right;}
+@media(max-width:650px){
+ .hill-day-hero .hill-day-hero__title {font-size:clamp(2rem,8vw,3.2rem);}
+ .hill-day-hero .hill-day-hero__title > span:nth-child(2) {text-align:right;}
+}
