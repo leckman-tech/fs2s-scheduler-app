@@ -1668,7 +1668,7 @@ export const getAdminLobbyDaySignups = cache(async () => {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("lobby_day_signups")
-      .select("id,account_id,full_name,email,phone,organization,created_at")
+      .select("id,full_name,email,phone,organization,created_at")
       .order("created_at", { ascending: false });
 
     if (error) {
