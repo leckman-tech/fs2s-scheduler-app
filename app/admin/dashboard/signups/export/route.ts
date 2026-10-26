@@ -58,7 +58,6 @@ export async function GET(request: Request) {
       const { data, error } = await supabase
         .from("lobby_day_signups")
         .select("id,full_name,email,phone,organization,created_at")
-        .gte("created_at","2026-10-01T00:00:00Z")
         .order("created_at", { ascending: false });
 
       if (error) {
