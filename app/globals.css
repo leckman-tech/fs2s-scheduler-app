@@ -4161,3 +4161,20 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 @media(prefers-reduced-motion:reduce){
   .spring-canvas::before,.spring-canvas::after {animation:none;}
 }
+
+
+/* Registration section: deliberate vertical rhythm and no floating columns */
+.lobby-signup-panel {gap:1.15rem;padding:clamp(1.35rem,3vw,2.5rem);}
+.lobby-signup-intro {display:flex;flex-direction:column;align-items:stretch;gap:1.15rem;}
+.lobby-signup-intro h2 {margin:0;font-size:clamp(1.6rem,2.5vw,2.4rem);line-height:1.16;letter-spacing:-.04em;}
+.lobby-signup-intro .signup-progress {
+  display:grid;gap:.65rem;width:100%;max-width:none;padding:1.25rem 1.5rem;
+  background:#faf5f5;border:1px solid rgba(181,18,36,.19);border-radius:14px;
+}
+.lobby-signup-intro .signup-progress__label {font-size:.8rem;letter-spacing:.075em;}
+.lobby-signup-intro .signup-progress strong {font-size:clamp(1.25rem,2.4vw,1.8rem);}
+.lobby-signup-intro .signup-progress__track {height:15px;}
+.lobby-signup-intro .signup-progress__caption {font-size:.86rem;line-height:1.4;font-weight:500;}
+.lobby-signup-description {max-width:65ch;line-height:1.55;}
+.lobby-signup-panel > form {margin-top:.35rem;}
+@media(min-width:900px){.lobby-signup-panel {gap:1.4rem;}}
