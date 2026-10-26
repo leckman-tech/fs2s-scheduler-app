@@ -75,9 +75,9 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
   }
 
   return (
-    <section className="panel form-grid">
-      <div className="section-heading">
-        <h2>Register your interest in November 18 Hill Day</h2>
+    <section className="panel form-grid lobby-signup-panel">
+      <div className="lobby-signup-intro">
+        <h2>Register for Advocacy Hill Day</h2>
         <div
           className="signup-progress"
           role="img"
@@ -95,7 +95,7 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
         </div>
       </div>
 
-      <p className="muted" style={{ marginTop: 0 }}>
+      <p className="muted lobby-signup-description" style={{ marginTop: 0 }}>
         Register your interest for Wednesday, November 18, 2026. Signing up does not guarantee a place or a congressional meeting. Include a phone number so we can share
         day-of updates and Capitol Hill logistics if needed.
       </p>
