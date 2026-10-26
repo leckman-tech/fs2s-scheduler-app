@@ -4196,3 +4196,18 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 @media(prefers-reduced-motion:reduce){
   .hill-day-hero .hill-day-hero__title em {animation:none;color:#fff;}
 }
+
+
+/* Final registration spacing: tracker is a centered feature, not a left-aligned sidebar */
+.lobby-signup-panel .lobby-signup-intro {display:grid;grid-template-columns:1fr;gap:1.35rem;}
+.lobby-signup-panel .lobby-signup-intro h2 {font-size:clamp(1.8rem,2.7vw,2.45rem);margin:0;}
+.lobby-signup-panel .lobby-signup-intro .signup-progress {
+  width:100%;max-width:none;box-sizing:border-box;
+  padding:1.45rem clamp(1.25rem,3vw,2.3rem);gap:.75rem;
+  background:linear-gradient(100deg,#fff8f8,#f9f5f3);
+}
+.lobby-signup-panel .signup-progress__track {width:100%;height:19px;}
+.lobby-signup-panel .signup-progress__label {font-size:.82rem;}
+.lobby-signup-panel .signup-progress strong {font-size:clamp(1.35rem,2.3vw,1.9rem);}
+.lobby-signup-panel .signup-progress__caption {font-size:.87rem;}
+.lobby-signup-panel .lobby-signup-description {max-width:75ch;margin:0;}
