@@ -83,14 +83,14 @@ export function LobbyDaySignupForm({ totalCount }: LobbyDaySignupFormProps) {
           role="img"
           aria-label="Lobby Day sign-up momentum toward the Capitol Hill goal"
         >
-          <span className="signup-progress__label">Capitol Hill goal</span>
+          <span className="signup-progress__label">Registration progress toward 125 participants</span>\n          <strong>{visibleSignupCount} registered <span className="muted">/ {progressTarget} goal</span></strong>
           <div className="signup-progress__track" aria-hidden="true">
             <div
               className="signup-progress__fill"
               style={{ width: `${visibleSignupProgress}%` }}
             />
           </div>
-          <span className="signup-progress__caption">{remainingToGoal} to go</span>
+          <span className="signup-progress__caption">{remainingToGoal} registrations to goal · Interest only, not confirmed attendance</span>
         </div>
       </div>
 
