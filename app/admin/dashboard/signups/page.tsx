@@ -3,18 +3,17 @@ import { deleteLobbyDaySignup, updateLobbyDaySignup } from "@/lib/actions/admin"
 import { getAdminLobbyDaySignups } from "@/lib/queries";
 import { formatTimestamp } from "@/lib/utils";
 
-const currentEventStart = "2026-10-01T00:00:00Z";
 export default async function AdminSignupsPage({ searchParams }: { searchParams: Promise<{error?:string}> }) {
  const params = await searchParams;
- const records = (await getAdminLobbyDaySignups()).filter(s => s.created_at >= currentEventStart);
+ const records = await getAdminLobbyDaySignups();
  return <div className="stack">
   {params.error ? <div className="empty-state">{params.error}</div> : null}
   <section className="hero-card">
    <p className="eyebrow">CURRENT EVENT · NOVEMBER 18, 2026</p>
    <h1>Advocacy Hill Day registrations</h1>
-   <p>View and manage registrations for the upcoming Hill Day. Previous conference registrations are excluded from this list but remain archived in the database.</p>
+   <p>View and manage registrations for the upcoming Hill Day. All 19 registrations are included, including those submitted earlier in 2026.</p>
    <div className="hero-meta">
-    <span className="hero-pill">{records.length} current registration{records.length===1?"":"s"}</span>
+    <span className="hero-pill">{records.length} registration{records.length===1?"":"s"}</span>
     <span className="hero-pill">{Math.max(125-records.length,0)} to 125-person target</span>
     <Link className="button-secondary button-link" href="/admin/dashboard/signups/export?type=lobby-day">Export November 18 registrations (CSV)</Link>
    </div>
