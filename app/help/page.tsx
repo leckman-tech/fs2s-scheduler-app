@@ -4,15 +4,14 @@ import {
   CONVENING_DIRECTOR_EMAIL,
   CONVENING_DIRECTOR_NAME,
   CONVENING_DIRECTOR_PHONE,
-  CONVENING_DIRECTOR_PHONE_LINK,
-  EVENTBRITE_URL
+  CONVENING_DIRECTOR_PHONE_LINK
 } from "@/lib/constants";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "Help and Contact",
   description:
-    "Conference help, accessibility support, and direct contact information for From Silos to Solutions 2026.",
+    "Help, accessibility information, and contact details for From Silos to Solutions and the November 18 Advocacy Hill Day.",
   path: "/help"
 });
 
@@ -20,7 +19,7 @@ const supportAreas = [
   {
     title: "Day-of help",
     body:
-      "If you are already on-site and something is unclear, check live updates first. For anything urgent, call or email the conference team directly."
+      "If you need help during Advocacy Hill Day, contact the organizing team using the information below."
   },
   {
     title: "Accessibility and accommodations",
@@ -30,12 +29,12 @@ const supportAreas = [
   {
     title: "Tickets and registration",
     body:
-      "If you are having trouble with Eventbrite, promo codes, or special-event sign-ups, contact the conference team rather than waiting until arrival."
+      "If you have trouble registering for Advocacy Hill Day, email the organizing team. We can help confirm whether your registration was received."
   },
   {
     title: "Portal and document access",
     body:
-      "If you cannot access the Attendee Portal, a document library, or a sign-up form, send the team a quick email with what page you were using and what happened."
+      "If you cannot sign in or access an event document, let us know which page you were using and what happened."
   }
 ];
 
@@ -46,7 +45,7 @@ const helpStructuredData = {
       "@type": "ContactPage",
       "@id": "https://fs2shub.com/help#contact",
       url: "https://fs2shub.com/help",
-      name: "From Silos to Solutions 2026 Help and Contact",
+      name: "From Silos to Solutions Help and Contact",
       description: "Direct conference support and attendee help information."
     },
     {
@@ -75,12 +74,10 @@ export default function HelpPage() {
             <p className="eyebrow">Help &amp; Contact</p>
             <h1>Get conference support quickly</h1>
             <p className="hero-kicker">
-              Use this page for day-of help, accessibility planning, ticketing questions, or any
-              issue that needs a real person.
+              Questions about Advocacy Hill Day, registration, accessibility, or your attendee account? We can help.
             </p>
             <p>
-              For the fastest response, reach out directly to the conference team instead of
-              waiting on a general update.
+              Contact the team directly using the information below.
             </p>
             <div className="hero-actions">
               <a href={`mailto:${CONVENING_DIRECTOR_EMAIL}`} className="button button-link">
@@ -135,13 +132,11 @@ export default function HelpPage() {
           <p className="eyebrow">Quick Actions</p>
           <h2>Before you reach out, these pages may answer it immediately</h2>
           <div className="support-links-list">
-            <Link href="/">Check the live schedule and announcements</Link>
+            <Link href="/">View Advocacy Hill Day details</Link>
             <Link href="/attendee/login">Open the Attendee Portal</Link>
-            <Link href="/learn-more#faq">Read attendee FAQ</Link>
-            <Link href="/learn-more#visit">Open travel and access notes</Link>
-            <a href={EVENTBRITE_URL} target="_blank" rel="noreferrer">
-              Open Eventbrite tickets
-            </a>
+            <Link href="/learn-more#faq">Read frequently asked questions</Link>
+            <Link href="/learn-more#visit">Read travel and accessibility information</Link>
+            <Link href="/lobby-day#register">Register for Advocacy Hill Day</Link>
           </div>
         </article>
       </section>
