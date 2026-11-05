@@ -4426,3 +4426,55 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 .hill-admin-row-popover button {font-size:.8rem;}
 @media(max-width:850px){.hill-admin-heading,.hill-admin-toolbar {align-items:stretch;flex-direction:column;}.hill-admin-controls {flex-wrap:wrap;}.hill-admin-search input {width:min(80vw,320px);}}
 @media(max-width:480px){.hill-admin-metrics>div {padding:.8rem;}.hill-admin-metrics strong {font-size:1.5rem;}.hill-admin-table {min-width:660px;}}
+
+
+/* Mobile registration progress: full-width, visible, and readable on narrow screens. */
+@media (max-width: 700px) {
+  .hill-day-hero .hill-day-momentum {
+    display: block;
+    visibility: visible;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    margin-top: 1.4rem;
+    padding: 1.15rem;
+    overflow: visible;
+  }
+  .hill-day-hero .hill-day-momentum__header,
+  .hill-day-hero .hill-day-momentum__footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: .45rem .8rem;
+  }
+  .hill-day-hero .hill-day-momentum__headline {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: .85rem;
+    margin: 1rem 0 1.2rem;
+  }
+  .hill-day-hero .hill-day-momentum__headline .hill-day-momentum__stat {
+    display: flex;
+    align-items: baseline;
+    gap: .6rem;
+    flex-wrap: wrap;
+    max-width: none;
+  }
+  .hill-day-hero .hill-day-momentum__stat strong {
+    font-size: clamp(3rem, 13vw, 4.5rem);
+    line-height: 1;
+  }
+  .hill-day-hero .hill-day-momentum__stat > span { white-space: normal; }
+  .hill-day-hero .hill-day-momentum__headline .hill-day-momentum__message {
+    text-align: left;
+    max-width: none;
+  }
+  .hill-day-hero .hill-day-momentum__track {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .hill-day-hero .hill-day-momentum__footer { font-size: .78rem; }
+}
