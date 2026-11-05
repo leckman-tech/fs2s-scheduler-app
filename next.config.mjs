@@ -12,6 +12,10 @@ const nextConfig = {
   },
   async headers() {
     return [
+      ...["/admin/:path*", "/portal/:path*", "/attendee/:path*", "/api/:path*"].map((source) => ({
+        source,
+        headers: [{ key: "Cache-Control", value: "private, no-store" }]
+      })),
       {
         source: "/:path*",
         headers: [
