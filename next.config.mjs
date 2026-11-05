@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const nextConfig = {
   experimental: {
     serverActions: {
-      bodySizeLimit: "100mb"
+      bodySizeLimit: "25mb"
     }
   },
   async headers() {
@@ -15,6 +15,18 @@ const nextConfig = {
       {
         source: "/:path*",
         headers: [
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000"
+          },
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin-allow-popups"
+          },
+          {
+            key: "Content-Security-Policy-Report-Only",
+            value: "object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+          },
           {
             key: "X-Content-Type-Options",
             value: "nosniff"
@@ -29,7 +41,7 @@ const nextConfig = {
           },
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=()"
+            value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
           }
         ]
       }
