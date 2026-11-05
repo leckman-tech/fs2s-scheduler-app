@@ -8,10 +8,10 @@ const confirmedMeetings = [
  { office: "Congresswoman Adelita S. Grijalva", detail: "Confirmed meeting with the Congresswoman" },
  { office: "Delegate Eleanor Holmes Norton’s office", detail: "Confirmed meeting with congressional staff" },
  { office: "Senator Brian Schatz’s office", detail: "Confirmed meeting with education policy staff" },
- { office: "Congresswoman Suzanne Bonamici’s office", detail: "Confirmed meeting with education policy staff" }
+ { office: "Congresswoman Suzanne Bonamici’s office", detail: "Confirmed meeting with education policy staff" },
+ { office: "Congressman Jim Jordan’s office", detail: "Confirmed meeting with congressional staff" }
 ];
 const meetingsInProgress = [
- "Congressman Jim Jordan’s office",
  "Congressman Juan Ciscomani’s office",
  "Senate HELP Committee staff",
  "Congressman Kevin Kiley’s office",
