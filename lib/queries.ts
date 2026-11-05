@@ -681,16 +681,17 @@ export const getPublicSessionSignupSummary = cache(async (sessionId: string) => 
 export const getPublicLobbyDaySignupCount = cache(async () => {
   try {
     const supabase = await createClient();
-    const { count, error } = await supabase
-      .from("lobby_day_signups")
-      .select("id", { count: "exact", head: true });
+    // Read only the public aggregate, not individual registration records.
+    // Anonymous visitors do not have SELECT permission on the private signup table.
+    const { data, error } = await supabase.rpc("get_public_lobby_day_signup_summary");
 
     if (error) {
       console.error(error);
       return 0;
     }
 
-    return Number(count ?? 0);
+    const row = Array.isArray(data) ? data[0] : data;
+    return Math.max(0, Number(row?.total_count ?? 0));
   } catch (error) {
     console.error(error);
     return 0;
