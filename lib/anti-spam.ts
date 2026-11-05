@@ -20,7 +20,6 @@ type GuardOptions = {
 type GuardResult = {
   allowed: boolean;
   reason?: string;
-  setupMissing?: boolean;
 };
 
 export function validateHumanSubmission({
@@ -45,7 +44,7 @@ export function validateHumanSubmission({
     return { allowed: true };
   }
 
-  if (Date.now() - parsed < 1200) {
+  if (parsed > Date.now() + 60_000 || Date.now() - parsed < 1200) {
     return {
       allowed: false,
       reason: "Please wait a moment and try again."
@@ -99,7 +98,7 @@ export async function guardPublicFormSubmission(
 
   if (error) {
     if (isGuardSetupError(error)) {
-      return { allowed: true, setupMissing: true };
+      console.error("Public form rate limiter unavailable");
     }
 
     return {
