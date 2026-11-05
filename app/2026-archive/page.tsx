@@ -5,8 +5,6 @@ import Link from "next/link";
 import { AnnouncementsBanner } from "@/components/announcements-banner";
 import { LiveUpdatesTicker } from "@/components/live-updates-ticker";
 import { ScheduleExplorer } from "@/components/schedule-explorer";
-import { TicketPromoModal } from "@/components/ticket-promo-modal";
-import { EVENTBRITE_URL, TICKET_PROMO_CODE } from "@/lib/constants";
 import { getConferenceDays, getPublicAnnouncements, getPublicSessions } from "@/lib/queries";
 import { buildMetadata, getEventStructuredData } from "@/lib/seo";
 
@@ -111,7 +109,7 @@ export default async function HomePage() {
           <article className="hero-metric">
             <p className="hero-metric__eyebrow">Program</p>
             <strong>{days.length}</strong>
-            <span>days of live programming</span>
+            <span>days of programming</span>
           </article>
         </div>
 
@@ -132,10 +130,9 @@ export default async function HomePage() {
 
           <section className="panel sidebar-story-panel sidebar-story-panel--accent">
             <p className="eyebrow">Plan Your Visit</p>
-            <h2>Register and plan your time at FS2S</h2>
+            <h2>Explore the 2026 convening program</h2>
             <p className="muted">
-              Use this site to purchase tickets, review the agenda, and get ready for three days
-              of conversation, learning, and connection in Washington, D.C.
+              This is a record of the April 1–3, 2026 convening. Ticket sales and event registration have closed.
             </p>
             <div className="story-stat-grid story-stat-grid--compact">
               <article className="story-stat">
@@ -144,7 +141,7 @@ export default async function HomePage() {
               </article>
               <article className="story-stat">
                 <strong>{workshopCount}</strong>
-                <span>workshop sessions currently on the agenda</span>
+                <span>workshops in the 2026 program</span>
               </article>
               <article className="story-stat">
                 <strong>{featuredCount}</strong>
