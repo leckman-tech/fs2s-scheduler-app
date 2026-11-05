@@ -6,7 +6,6 @@ import {
   CONVENING_DIRECTOR_NAME,
   CONVENING_DIRECTOR_PHONE,
   CONVENING_DIRECTOR_PHONE_LINK,
-  EVENTBRITE_URL,
   SEE_FOREVER_URL
 } from "@/lib/constants";
 import { buildMetadata, getLeadershipStructuredData } from "@/lib/seo";
@@ -14,7 +13,7 @@ import { buildMetadata, getLeadershipStructuredData } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "Plan Your Visit, Leadership, and Convening Background",
   description:
-    "Attendee planning information, travel notes, accessibility guidance, leadership profiles, and convening background for From Silos to Solutions 2026.",
+    "About From Silos to Solutions, our leadership, and planning information for Advocacy Hill Day.",
   path: "/learn-more"
 });
 
@@ -46,32 +45,32 @@ const attendeeFaqs = [
   {
     question: "Do I need a login to use the schedule?",
     answer:
-      "No. The public schedule, speaker directory, and session detail pages are open to everyone. The Attendee Portal is only needed for shared documents, the attendee board, and the opt-in contact directory."
+      "No. You can view Advocacy Hill Day information and register without signing in. The Attendee Portal is available for additional participant resources."
   },
   {
     question: "Where should I look first if something changes?",
     answer:
-      "Watch the live updates ribbon and announcements on the homepage. That is where room changes, timing changes, and day-of reminders will appear first."
+      "Check the Advocacy Hill Day page for public updates. Registered participants will receive any important changes to arrival instructions and meeting assignments directly."
   },
   {
     question: "How do limited-capacity events work?",
     answer:
-      "Activities such as the Big Bus Tour, Happy Hour, Lobby Day, and other special excursions use separate sign-up forms. If a capacity limit is reached, the site will move new names to a waitlist automatically."
+      "Use the registration form on the Advocacy Hill Day page. The organizing team will follow up as event details and participation are finalized."
   },
   {
     question: "What should I wear?",
     answer:
-      "Business casual is a safe choice for most of the convening. Comfortable shoes are strongly recommended, especially for campus-based programming, walking in downtown D.C., and Capitol Hill activities."
+      "Business or business-casual clothing is appropriate for congressional meetings. Wear comfortable shoes; you may walk between several office buildings."
   },
   {
     question: "Will food be provided?",
     answer:
-      "Food and reception details are listed on the schedule itself. Use each session page as the source of truth for what is provided, whether RSVP is required, and whether space is limited."
+      "Lunch arrangements for November 18 are being finalized. Registered participants will receive details before the event."
   },
   {
     question: "Where do I find session materials and shared documents?",
     answer:
-      "Use the Attendee Portal for shared files, handouts, and materials that the conference team chooses to post. Speakers and presenters use their own private portal for logistics and presenter resources."
+      "Registered participants can use the Attendee Portal for available planning materials. The organizing team will send meeting assignments and practical instructions directly."
   },
   {
     question: "How do I request accessibility or accommodation support?",
@@ -81,7 +80,7 @@ const attendeeFaqs = [
   {
     question: "What if I need help during the event?",
     answer:
-      "Use the Help & Contact page for the fastest conference support information. For urgent day-of issues, call or email the conference team directly rather than waiting for a portal response."
+      "Use the Help & Contact page to reach our team by email or phone."
   }
 ];
 
@@ -90,7 +89,7 @@ const planningCards = [
     eyebrow: "Days One and Two",
     title: "National Union Building",
     body:
-      "The main convening venue is National Union Building, 918 F Street NW, Washington, DC 20004. The venue's official directions page places it one block from Gallery Place and two blocks from Metro Center, which makes Metro one of the easiest ways to arrive.",
+      "The April 2026 convening was held at the National Union Building, 918 F Street NW, Washington, DC 20004. This historical location should not be used as the November Advocacy Hill Day meeting point.",
     links: [
       {
         label: "Venue directions",
@@ -103,10 +102,10 @@ const planningCards = [
     ]
   },
   {
-    eyebrow: "Day Three and Lobby Day Training",
+    eyebrow: "Maya Angelou Schools",
     title: "MAPCS High School Campus / PAC",
     body:
-      "Campus-based programming will use the Maya Angelou Public Charter School High School campus at 5600 East Capitol Street NE, Washington, DC 20019. Final arrival notes for campus programming and Lobby Day transportation will be shared directly with attendees as those details are finalized.",
+      "Maya Angelou Public Charter School is based at 5600 East Capitol Street NE, Washington, DC 20019. This is not the confirmed gathering location for Advocacy Hill Day; registrants will receive arrival instructions separately.",
     links: [
       {
         label: "Maya Angelou Schools",
@@ -140,7 +139,7 @@ const venueNotes = [
   {
     title: "Parking",
     body:
-      "If you are driving to National Union Building, use the venue's official Getting Here page for garage options closest to the site. For campus-based days, watch conference communications for final arrival guidance."
+      "If driving to Capitol Hill, check parking options in advance. Registered Advocacy Hill Day participants will receive the confirmed meeting point and arrival instructions."
   },
   {
     title: "Accessibility",
@@ -150,7 +149,7 @@ const venueNotes = [
   {
     title: "Day-of movement",
     body:
-      "Some parts of the convening involve moving between rooms, between venues, or onto buses. Give yourself a little transition time and check the live updates ribbon before you head out."
+      "Congressional meetings may require walking between House and Senate office buildings. Allow time for security screening and follow the instructions provided to your delegation."
   }
 ];
 
@@ -185,26 +184,21 @@ export default function LearnMorePage() {
         <div className="hero-card__grid">
           <div className="hero-card__content">
             <p className="eyebrow">Who We Are</p>
-            <h1>Plan your visit and understand the work behind the convening</h1>
+            <h1>About FS2S and planning your visit</h1>
             <p className="hero-kicker">
-              This page is built for attendees who want the practical details as well as the
-              bigger story behind From Silos to Solutions.
+              Learn about From Silos to Solutions, the people behind it, and what to expect at our next event.
             </p>
             <p>
-              Use it for travel notes, FAQ, leadership context, and day-of planning. If you need
-              direct support, use the Help &amp; Contact page for the fastest route to the
-              conference team.
+              Find answers to common questions, learn about our work, and contact the organizing team.
             </p>
             <div className="hero-actions">
               <Link href="/" className="button button-link">
-                Return to schedule
+                Back to home
               </Link>
               <Link href="/help" className="button-secondary button-link">
                 Help &amp; contact
               </Link>
-              <a href={EVENTBRITE_URL} className="button-tertiary button-link" target="_blank" rel="noreferrer">
-                Purchase tickets
-              </a>
+              <Link href="/lobby-day#register" className="button-tertiary button-link">Register for Hill Day</Link>
             </div>
             <div className="learn-more-anchor-links">
               <a href="#visit">Travel &amp; access</a>
@@ -419,8 +413,7 @@ export default function LearnMorePage() {
           <p className="eyebrow">Need Help?</p>
           <h2>Go straight to conference support</h2>
           <p className="muted">
-            Use the Help &amp; Contact page for day-of questions, accessibility requests, ticketing
-            help, or planning support. You can also reach the conference team directly:
+            For questions about Advocacy Hill Day, accessibility, registration, or planning, contact our team. You can also reach the conference team directly:
           </p>
           <div className="help-inline-list">
             <a href={`mailto:${CONVENING_DIRECTOR_EMAIL}`}>{CONVENING_DIRECTOR_EMAIL}</a>
@@ -431,9 +424,7 @@ export default function LearnMorePage() {
           <Link href="/help" className="button button-link">
             Open Help &amp; Contact
           </Link>
-          <a href={EVENTBRITE_URL} className="button-secondary button-link" target="_blank" rel="noreferrer">
-            Purchase tickets
-          </a>
+          <Link href="/lobby-day#register" className="button-secondary button-link">Register for Hill Day</Link>
         </div>
       </section>
     </div>
