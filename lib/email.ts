@@ -10,6 +10,7 @@ type EmailPayload = {
   subject: string;
   html: string;
   text: string;
+  idempotencyKey?: string;
 };
 
 type EmailResult = {
@@ -39,38 +40,45 @@ async function sendEmail(payload: EmailPayload): Promise<EmailResult> {
   const { apiKey, fromEmail, replyTo, configured } = getEmailConfig();
 
   if (!configured || !apiKey || !fromEmail) {
-    return { sent: false, skipped: true };
+    return { sent: false, skipped: true, error: "Email provider not configured" };
   }
 
-  try {
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        from: fromEmail,
-        to: [payload.to],
-        reply_to: replyTo,
-        subject: payload.subject,
-        html: payload.html,
-        text: payload.text
-      })
-    });
+  const requestBody = JSON.stringify({
+    from: fromEmail,
+    to: [payload.to],
+    reply_to: replyTo,
+    subject: payload.subject,
+    html: payload.html,
+    text: payload.text
+  });
+  let lastError = "Email provider unavailable";
 
-    if (!response.ok) {
-      const detail = await response.text().catch(() => "");
-      return { sent: false, error: detail || "Email provider rejected the request." };
+  // The same key is reused for retries so Resend doesn't send duplicates.
+  // Retries cover temporary rate limits and provider/network outages.
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const response = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+          ...(payload.idempotencyKey ? { "Idempotency-Key": payload.idempotencyKey } : {})
+        },
+        body: requestBody
+      });
+
+      if (response.ok) return { sent: true };
+      lastError = (await response.text().catch(() => "")) || `Email provider returned ${response.status}`;
+      const temporaryFailure = response.status === 429 || response.status === 409 || response.status >= 500;
+      if (!temporaryFailure || attempt === 2) break;
+    } catch (error) {
+      lastError = error instanceof Error ? error.message : "Unexpected email error";
+      if (attempt === 2) break;
     }
-
-    return { sent: true };
-  } catch (error) {
-    return {
-      sent: false,
-      error: error instanceof Error ? error.message : "Unexpected email error"
-    };
+    await new Promise((resolve) => setTimeout(resolve, 450 * (2 ** attempt)));
   }
+
+  return { sent: false, error: lastError };
 }
 
 function wrapEmailContent(title: string, intro: string, lines: string[], cta?: { href: string; label: string }) {
@@ -150,7 +158,10 @@ export async function sendLobbyDayConfirmationEmail(input: { to: string; fullNam
      "This is an acknowledgment of interest, not confirmation of attendance or an assigned congressional meeting.",
      "For student attendees, school approval and guardian permissions will be coordinated separately."],
     {href:`${SITE_URL}/lobby-day`,label:"View tentative Hill Day details"});
-  return sendEmail({to:input.to,subject:title,html:content.html,text:content.text});
+  return sendEmail({
+    to:input.to,subject:title,html:content.html,text:content.text,
+    idempotencyKey:`lobby-attendee-${input.to.trim().toLowerCase()}`
+  });
 }
 
 export async function sendLobbyDayAdminNotification(input: {fullName:string; email:string; phone:string; organization:string;}) {
@@ -160,6 +171,7 @@ export async function sendLobbyDayAdminNotification(input: {fullName:string; ema
   return sendEmail({
     to:"LEckman@SeeForever.org",
     subject,
+    idempotencyKey:`lobby-admin-${input.email.trim().toLowerCase()}`,
     text:lines.join("\n"),
     html:`<div style="font-family:Georgia,serif;line-height:1.6"><h2>New Hill Day registration of interest</h2><ul>${lines.map(s=>`<li>${safe(s)}</li>`).join("")}</ul><p><a href="${SITE_URL}/lobby-day">View Hill Day page</a></p></div>`
   });
