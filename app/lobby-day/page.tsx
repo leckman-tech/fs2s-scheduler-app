@@ -18,10 +18,10 @@ const meetingsAcceptedPendingFinalDetails = [
  "Senator Dick Durbin’s / Senate Judiciary staff — 1:00 p.m. accepted; final acknowledgment pending (Hart 711)",
  "House Education and Workforce Committee staff — 1:30 p.m. with Eli Mitchell accepted November 12; final acknowledgment pending (Rayburn 2257)",
  "Congressman Kevin Kiley’s office — 1:00 p.m. with Carson Cameron accepted November 12; calendar invitation and acknowledgment pending (Rayburn 2445)",
- "Congressman Juan Ciscomani’s office — 1:30 p.m. with Cameron Fox accepted and reconfirmed November 12; final office and room acknowledgment pending (461 Cannon)"
+ "Congressman Juan Ciscomani’s office — 1:30 p.m. with Cameron Fox accepted and reconfirmed November 12; final office and room acknowledgment pending (461 Cannon)",
+ "Senator Patty Murray’s office — 1:30 p.m. on November 18 confirmed by scheduler Abby Laver on November 12; meeting room still to be provided"
 ];
 const meetingsInProgress = [
- "Senator Patty Murray’s office — group size supplied; scheduling team will confirm time and room",
  "Senator Gary Peters’s office — staff introductions followed up; time pending",
  "Senate HELP Committee Republican staff — Brianna Tibbetts offered to meet; time not verified in correspondence",
  "Congresswoman Jahana Hayes’s office — 10:00 a.m. offered; seeking an afternoon alternative",
