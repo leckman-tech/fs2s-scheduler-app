@@ -17,7 +17,7 @@ return <div className="container stack">
     <div className="hero-card__visual"><div className="hero-photo hero-photo--dc"><span className="hero-photo__label">Washington, D.C.</span></div><div className="hero-photo hero-photo--conference"><span className="hero-photo__label">Ideas into action</span></div><div className="hero-photo hero-photo--community"><span className="hero-photo__label">Our shared future</span></div></div>
   </div></section>
   <section className="fs2s-event-spotlight" aria-labelledby="next-event-title">
-    <div><p className="eyebrow">NEXT UP · WEDNESDAY, NOVEMBER 18, 2026</p><h2 id="next-event-title">Join us on Capitol Hill.</h2><p>Our Advocacy Hill Day brings Maya Angelou Scholars and community partners to Capitol Hill to discuss educational access, second chances, and lasting opportunity. Five congressional meetings are confirmed, with additional meetings being coordinated. Final event logistics will be sent to participants.</p></div>
+    <div><p className="eyebrow">NEXT UP · WEDNESDAY, NOVEMBER 18, 2026</p><h2 id="next-event-title">Join us on Capitol Hill.</h2><p>Our Advocacy Hill Day brings Maya Angelou Scholars and community partners to Capitol Hill to discuss educational access, second chances, and lasting opportunity. Seven congressional or committee staff meetings are confirmed, with other appointments accepted and additional meetings being coordinated. Final event logistics will be sent to participants.</p></div>
     <Link href="/lobby-day#register" className="button button-link">Register your interest →</Link>
   </section>
   <section className="context-grid" id="2027">
