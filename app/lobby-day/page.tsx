@@ -5,28 +5,30 @@ import { getPublicLobbyDaySignupCount } from "@/lib/queries";
 import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({title:"November 18, 2026 Advocacy Hill Day | FS2S",description:"Join the FS2S Advocacy Hill Day on November 18, 2026, featuring Maya Angelou Scholars, community partners, and congressional conversations.",path:"/lobby-day"});
 const confirmedMeetings = [
- { office: "Congresswoman Adelita S. Grijalva", detail: "Confirmed meeting with the Congresswoman" },
- { office: "Delegate Eleanor Holmes Norton’s office", detail: "Confirmed meeting with congressional staff" },
- { office: "Senator Brian Schatz’s office", detail: "Confirmed meeting with education policy staff" },
- { office: "Congresswoman Suzanne Bonamici’s office", detail: "Confirmed meeting with education policy staff" },
- { office: "Congressman Jim Jordan’s office", detail: "Confirmed meeting with congressional staff" },
- { office: "Senate HELP Committee Democratic staff", detail: "Confirmed meeting with committee staff" }
+ { office: "Congresswoman Adelita S. Grijalva", detail: "November 18, 3:00–3:30 p.m. • Longworth 1203 • meeting with the Congresswoman" },
+ { office: "Delegate Eleanor Holmes Norton’s office", detail: "November 18, 2:00–2:30 p.m. • Rayburn 2136 • meeting with congressional staff" },
+ { office: "Senator Brian Schatz’s office", detail: "November 18, 2:30 p.m. • Hart 722 • education policy staff meeting" },
+ { office: "Congresswoman Suzanne Bonamici’s office", detail: "November 18, 2:00 p.m. • Rayburn 2231 • education policy staff meeting" },
+ { office: "Congressman Jim Jordan’s office", detail: "November 18, 1:00 p.m. • Rayburn 2056 • confirmed staff meeting" },
+ { office: "Senate HELP Committee Democratic staff", detail: "November 18, 1:00–1:30 p.m. • Hart 632 • confirmed committee staff meeting" },
+ { office: "Senator Chris Van Hollen’s office", detail: "November 18, 3:00 p.m. • Hart 730 • meeting with Brendan Flynn; day-of contact supplied" }
 ];
 const meetingsAcceptedPendingFinalDetails = [
- "Congresswoman Terri Sewell’s office — 12:30 p.m. accepted; final office acknowledgment pending",
- "Senator Dick Durbin’s / Senate Judiciary staff — 1:00 p.m. accepted; final office acknowledgment pending",
- "Senator Chris Van Hollen’s office — 3:00 p.m. offered; final reply pending"
+ "Congresswoman Terri Sewell’s office — 12:30 p.m. accepted; final acknowledgment pending (1035 Longworth)",
+ "Senator Dick Durbin’s / Senate Judiciary staff — 1:00 p.m. accepted; final acknowledgment pending (Hart 711)",
+ "House Education and Workforce Committee staff — 1:30 p.m. with Eli Mitchell accepted November 12; final acknowledgment pending (Rayburn 2257)",
+ "Congressman Kevin Kiley’s office — 1:00 p.m. with Carson Cameron accepted November 12; calendar invitation and acknowledgment pending (Rayburn 2445)",
+ "Congressman Juan Ciscomani’s office — 1:30 p.m. with Cameron Fox accepted and reconfirmed November 12; final office and room acknowledgment pending (461 Cannon)"
 ];
 const meetingsInProgress = [
- "Congressman Juan Ciscomani’s office",
- "Senate HELP Committee Republican staff",
- "Congressman Kevin Kiley’s office",
- "Senator Patty Murray’s office",
- "Congresswoman Jahana Hayes’s office",
- "Senator Gary Peters’s office",
- "House Education and Workforce Committee staff",
+ "Senator Patty Murray’s office — group size supplied; scheduling team will confirm time and room",
+ "Senator Gary Peters’s office — staff introductions followed up; time pending",
+ "Senate HELP Committee Republican staff — Brianna Tibbetts offered to meet; time not verified in correspondence",
+ "Congresswoman Jahana Hayes’s office — 10:00 a.m. offered; seeking an afternoon alternative",
  "Senator Josh Hawley’s office",
- "Congressman Gary Palmer’s office",
+ "Congressman Gary Palmer’s office — policy staff referral",
+ "Congresswoman Lucy McBath’s office — staff referral",
+ "Senator Angela Alsobrooks’s office — policy staff referral",
  "Senator Elissa Slotkin’s office",
  "Congressman Adam Gray’s office"
 ];
