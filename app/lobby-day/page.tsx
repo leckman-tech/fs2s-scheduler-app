@@ -11,7 +11,8 @@ const confirmedMeetings = [
  { office: "Congresswoman Suzanne Bonamici’s office", detail: "November 18, 2:00 p.m. • Rayburn 2231 • education policy staff meeting" },
  { office: "Congressman Jim Jordan’s office", detail: "November 18, 1:00 p.m. • Rayburn 2056 • confirmed staff meeting" },
  { office: "Senate HELP Committee Democratic staff", detail: "November 18, 1:00–1:30 p.m. • Hart 632 • confirmed committee staff meeting" },
- { office: "Senator Chris Van Hollen’s office", detail: "November 18, 3:00 p.m. • Hart 730 • meeting with Brendan Flynn; day-of contact supplied" }
+ { office: "Senator Chris Van Hollen’s office", detail: "November 18, 3:00 p.m. • Hart 730 • meeting with Brendan Flynn; day-of contact supplied" },
+ { office: "Senator Patty Murray’s office", detail: "November 18, 1:30 p.m. • Russell 154 • education policy staff meeting; delegation asked to arrive by 1:15 p.m. for security" }
 ];
 const meetingsAcceptedPendingFinalDetails = [
  "Congresswoman Terri Sewell’s office — 12:30 p.m. accepted; final acknowledgment pending (1035 Longworth)",
@@ -19,18 +20,18 @@ const meetingsAcceptedPendingFinalDetails = [
  "House Education and Workforce Committee staff — 1:30 p.m. with Eli Mitchell accepted November 12; final acknowledgment pending (Rayburn 2257)",
  "Congressman Kevin Kiley’s office — 1:00 p.m. with Carson Cameron accepted November 12; calendar invitation and acknowledgment pending (Rayburn 2445)",
  "Congressman Juan Ciscomani’s office — 1:30 p.m. with Cameron Fox accepted and reconfirmed November 12; final office and room acknowledgment pending (461 Cannon)",
- "Senator Patty Murray’s office — 1:30 p.m. on November 18 confirmed by scheduler Abby Laver on November 12; meeting room still to be provided"
+
 ];
 const meetingsInProgress = [
  "Senator Gary Peters’s office — staff introductions followed up; time pending",
- "Senate HELP Committee Republican staff — Brianna Tibbetts offered to meet; time not verified in correspondence",
- "Congresswoman Jahana Hayes’s office — 10:00 a.m. offered; seeking an afternoon alternative",
- "Senator Josh Hawley’s office",
- "Congressman Gary Palmer’s office — policy staff referral",
- "Congresswoman Lucy McBath’s office — staff referral",
+ "Senate HELP Committee Republican staff — availability requested again November 12; appointment time pending",
+ "Congresswoman Jahana Hayes’s office — morning time offered; afternoon alternative requested November 12",
+ "Senator Josh Hawley’s office — staff follow-up sent November 12",
+ "Congressman Gary Palmer’s office — policy staff follow-up sent November 12",
+ "Congresswoman Lucy McBath’s office — policy staff follow-up sent November 12",
  "Senator Angela Alsobrooks’s office — policy staff referral",
  "Senator Elissa Slotkin’s office",
- "Congressman Adam Gray’s office"
+ "Congressman Adam Gray’s office — additional scheduling follow-up sent November 12"
 ];
 const schedule = [
  {time:"Around 10:00 a.m.",title:"Morning gathering and advocacy preparation",description:"Target arrival and opening programming, including check-in, student voice, briefings and delegation preparation. Exact venue and final arrival instructions will follow."},
