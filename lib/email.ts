@@ -281,3 +281,73 @@ export async function sendHillDayPilotAccountEmail(input: {
       body.map(line=>'<p>' + escape(line) + '</p>').join("") + '</div>'
   });
 }
+
+
+/** Individual November 18 credentials, sent only after an admin explicitly chooses email delivery. */
+export async function sendHillDayIndividualInvitation(input: {
+  to: string;
+  name: string;
+  delegation: string | null;
+  accountStatus: "created" | "existing";
+  temporaryPassword?: string;
+  verificationUrl?: string;
+  pdfReady: boolean;
+}): Promise<EmailResult> {
+  const email=input.to.trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return {sent:false,error:"Invalid recipient email"};
+  }
+  if (email === "levi.eckman+fs2s-test@gmail.com") {
+    return {sent:false,skipped:true,error:"Test alias excluded from participant broadcast"};
+  }
+  const isNew=input.accountStatus==="created";
+  if (isNew && (!input.temporaryPassword || 
+      !input.verificationUrl?.startsWith(SITE_URL+"/auth/confirm?type=signup&token_hash="))) {
+    return {sent:false,error:"Activation details missing; no email sent."};
+  }
+  const firstName=input.name.trim().split(/\s+/)[0] || "there";
+  const contingent=input.delegation==="D03"
+    ? "If you are a Black Swan Academy young person, attendance still depends on parental consent. Your account is not final attendance approval."
+    : null;
+  const pdfMessage=input.pdfReady
+    ? "Your congressional briefing is available in your attendee portal under 'My Congressional Briefings.' This is the briefing for your delegation, not the entire event's briefing book."
+    : "Your delegation information is being prepared, but your PDF requires separate delivery. Contact the organizing team if you cannot see the briefing after signing in.";
+  const greeting="Hi "+firstName+",";
+  const lines=[
+    greeting,
+    "We're preparing for the FS2S Advocacy Hill Day on Wednesday, November 18. Please review your briefing before arriving so the morning training can focus on practicing with your group.",
+    isNew
+      ? "We've created a private attendee login for you. Complete these steps in order:"
+      : "You already have an attendee account. We've kept your password unchanged.",
+    isNew
+      ? "1. Open your individual verification link: "+input.verificationUrl
+      : "1. Visit "+SITE_URL+"/attendee/login",
+    isNew
+      ? "2. Sign in with email "+email+" and temporary password: "+input.temporaryPassword
+      : "2. Sign in with your usual email and password. If needed, select 'Forgot password' or visit "+SITE_URL+"/attendee/forgot-password",
+    isNew
+      ? "3. When prompted, choose a new password of at least 12 characters, including letters and numbers. The temporary password will no longer work after you change it."
+      : "3. Open 'My Congressional Briefings' in your attendee portal.",
+    isNew
+      ? "4. Open 'My Congressional Briefings' and review the PDF specifically assigned to your delegation."
+      : "",
+    input.delegation ? "Your working delegation: "+input.delegation+"." : "",
+    pdfMessage,
+    contingent ?? "",
+    "Wednesday schedule: Meet at Maya Angelou Public Charter School at 9:45–10:00 a.m. Training and group practice are 10:00–10:45 a.m., lunch begins at 10:45, and buses are scheduled to leave at 11:15 a.m. Hill meetings follow after arrival and security screening.",
+    "Please do not share your password or individual verification link. If you cannot sign in, reply directly to this email.",
+    "Thank you,",
+    "Levi W. Eckman",
+    "FS2S Convening Director"
+  ].filter(Boolean);
+  const safe=(s:string)=>s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]||c));
+  const html='<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.55;max-width:660px;margin:auto;color:#222;">'+
+    '<h2 style="font-size:21px;margin-bottom:14px;color:#9b1225;">Your November 18 attendee portal</h2>'+
+    lines.map(line=>'<p style="margin:0 0 12px;overflow-wrap:anywhere;">'+safe(line)+'</p>').join("")+'</div>';
+  return sendEmail({
+    to:email,
+    subject:"November 18 FS2S Advocacy Hill Day | Your Attendee Portal",
+    html,
+    text:lines.join("\n\n")
+  });
+}
