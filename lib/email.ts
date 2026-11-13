@@ -309,6 +309,8 @@ export async function sendHillDayIndividualInvitation(input: {
   const contingent=input.delegation==="D03"
     ? "If you are a Black Swan Academy young person, attendance still depends on parental consent. Your account is not final attendance approval."
     : null;
+  const coordinator=input.name.toLowerCase().includes("coordinator") ||
+    input.name.toLowerCase().includes("emily daly");
   const pdfMessage=input.pdfReady
     ? "Your congressional briefing is available in your attendee portal under 'My Congressional Briefings.' This is the briefing for your delegation, not the entire event's briefing book."
     : "Your delegation information is being prepared, but your PDF requires separate delivery. Contact the organizing team if you cannot see the briefing after signing in.";
@@ -331,9 +333,12 @@ export async function sendHillDayIndividualInvitation(input: {
     isNew
       ? "4. Open 'My Congressional Briefings' and review the PDF specifically assigned to your delegation."
       : "",
-    input.delegation ? "Your working delegation: "+input.delegation+"." : "",
+    input.delegation ? (coordinator
+      ? "Your organization’s briefing access is for delegation "+input.delegation+". You are listed as a coordinating contact, not as an additional attendee."
+      : "Your working delegation: "+input.delegation+".") : "",
     pdfMessage,
     contingent ?? "",
+    "Please note: receiving portal access does not replace school approvals, parental consent where applicable, or final group-leader confirmation.",
     "Wednesday schedule: Meet at Maya Angelou Public Charter School at 9:45–10:00 a.m. Training and group practice are 10:00–10:45 a.m., lunch begins at 10:45, and buses are scheduled to leave at 11:15 a.m. Hill meetings follow after arrival and security screening.",
     "Please do not share your password or individual verification link. If you cannot sign in, reply directly to this email.",
     "Thank you,",
