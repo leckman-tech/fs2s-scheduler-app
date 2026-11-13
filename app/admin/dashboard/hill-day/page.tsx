@@ -29,6 +29,7 @@ export default async function HillDayPlannerPage(){
   <h1>Advocacy Hill Day — Delegations</h1>
   <p>Wednesday, November 18, 2026. Nine groups, fourteen agreed congressional appointments, 31 Maya Scholars and 21 partner participants. One adult lead remains to be named.</p>
   <div className="hero-meta"><span className="hero-pill">14 appointments</span><span className="hero-pill">9 delegations</span><span className="hero-pill">Second activities TBD</span></div>
+  <p className="muted">Individual delegation PDFs are stored in a private Drive folder. The attendee portal matches people by verified email; assignments are never inferred from a shared account or organization name. Black Swan Academy's remaining eight interested youth are provisionally grouped under Kierstin Oliver and Germaine Williams, subject to consent and new office assignments.</p>
   <div className="hero-actions">
    <a className="button button-link" href="https://docs.google.com/spreadsheets/d/1nppyiBGkzXqS4qY4SL3L1WdwFzq9VSMMislvFKMNp9A/edit#gid=1976111802" target="_blank" rel="noopener noreferrer">Private participant roster →</a>
    <a className="button-secondary button-link" href="https://docs.google.com/spreadsheets/d/1nppyiBGkzXqS4qY4SL3L1WdwFzq9VSMMislvFKMNp9A/edit#gid=604468507" target="_blank" rel="noopener noreferrer">Detailed time plan →</a>
