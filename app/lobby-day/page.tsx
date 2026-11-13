@@ -14,7 +14,7 @@ const scheduledMeetings = [
  { time: "1:30 p.m.", office: "Sen. Patty Murray's office", location: "154 Russell", detail: "Staff conversation; delegation to arrive by 1:15 p.m." },
  { time: "2:00–2:30 p.m.", office: "Del. Eleanor Holmes Norton's office", location: "2136 Rayburn", detail: "Meeting with congressional staff" },
  { time: "2:00 p.m.", office: "Rep. Suzanne Bonamici's office", location: "2231 Rayburn", detail: "Education policy staff conversation" },
- { time: "2:00 p.m.", office: "Sen. Gary Peters's office", location: "Senate office (exact room pending)", detail: "Meeting with staff member Ava Kelsey; offered and accepted in writing November 13" },
+ { time: "2:00 p.m.", office: "Sen. Gary Peters's office", location: "724 Hart (South entrance on Constitution Ave.)", detail: "Meeting with staff member Ava Kelsey; office confirmed November 13. Metal-detector screening at Senate building entry." },
  { time: "2:30 p.m.", office: "Sen. Brian Schatz's office", location: "722 Hart", detail: "Education policy staff conversation" },
  { time: "2:30–3:00 p.m.", office: "Rep. Gary Palmer's office", location: "170 Cannon (office address)", detail: "In-person meeting booked with Legislative Aide Hampton Neugent; exact room to verify" },
  { time: "3:00–3:30 p.m.", office: "Rep. Adelita S. Grijalva", location: "1203 Longworth", detail: "Meeting scheduled with the Congresswoman" },
