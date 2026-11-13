@@ -31,6 +31,7 @@ export default async function HillDayPlannerPage(){
   <div className="hero-meta"><span className="hero-pill">14 appointments</span><span className="hero-pill">9 delegations</span><span className="hero-pill">Second activities TBD</span></div>
   <p className="muted">Individual delegation PDFs are stored in a private Drive folder. The attendee portal matches people by verified email; assignments are never inferred from a shared account or organization name. Black Swan Academy's remaining eight interested youth are provisionally grouped under Kierstin Oliver and Germaine Williams, subject to consent and new office assignments.</p>
   <div className="hero-actions">
+   <Link className="button button-link" href="/admin/dashboard/hill-day/accounts">Prepare private attendee logins →</Link>
    <a className="button button-link" href="https://docs.google.com/spreadsheets/d/1nppyiBGkzXqS4qY4SL3L1WdwFzq9VSMMislvFKMNp9A/edit#gid=1976111802" target="_blank" rel="noopener noreferrer">Private participant roster →</a>
    <a className="button-secondary button-link" href="https://docs.google.com/spreadsheets/d/1nppyiBGkzXqS4qY4SL3L1WdwFzq9VSMMislvFKMNp9A/edit#gid=604468507" target="_blank" rel="noopener noreferrer">Detailed time plan →</a>
    <a className="button-secondary button-link" href="https://drive.google.com/file/d/1X8cmoge4IrtnT0GMBTp1IkowiUsQjBX_/view" target="_blank" rel="noopener noreferrer">Congressional briefing book →</a>
