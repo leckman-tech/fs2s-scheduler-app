@@ -13,13 +13,14 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const schedule = [
-  { time: "Around 10:00 a.m.", title: "Morning gathering and advocacy preparation", description: "Check-in, student voice, advocacy briefings and delegation preparation. Final venue and arrival instructions will follow." },
-  { time: "11:30 a.m.", title: "Lunch", description: "Lunch details will be shared with registered participants when arrangements are finalized." },
-  { time: "12:30 p.m.", title: "Congressional advocacy begins", description: "Delegations begin afternoon Hill visits. Each office appointment and delegation assignment will be confirmed separately." },
-  { time: "Afternoon", title: "Congressional meetings", description: "Small groups discuss education, juvenile justice, reentry and opportunity. Exact times and locations vary by office." },
-  { time: "Before departure", title: "Wrap-up and next steps", description: "Delegations reconnect, share takeaways and discuss next steps." }
+ { time: "9:45–10:00 a.m.", title: "Arrival and delegation check-in at Maya", description: "Meet your fellow participants and delegation leader. Final transportation details will be provided separately." },
+ { time: "10:00–10:45 a.m.", title: "Advocacy training and group practice", description: "Please read your office briefing materials beforehand so we can spend this time practicing together." },
+ { time: "10:45–11:05 a.m.", title: "Lunch at Maya", description: "Lunch is planned before bus loading." },
+ { time: "11:05–11:15 a.m.", title: "Bus loading and headcount", description: "Stay with your assigned group and staff lead." },
+ { time: "11:15 a.m. (target)", title: "Depart Maya by bus", description: "Exact bus arrival, drop-off and security-screening time will be confirmed with transportation staff." },
+ { time: "12:30–3:30 p.m.", title: "Congressional meetings, movement and reflection", description: "Group meeting times vary. Partner delegations have two appointments; Maya-only groups have one plus a second activity to be selected. No unconfirmed activity should be treated as booked." },
+ { time: "3:30–4:00 p.m. (target)", title: "Debrief and accountability", description: "Group leaders coordinate final headcounts and supervised return arrangements." }
 ];
-
 export default async function AttendeePortalPage({
   searchParams
 }: {
@@ -67,7 +68,7 @@ export default async function AttendeePortalPage({
         <article className="panel story-panel" style={{borderTop:"4px solid #b51224"}}>
           <p className="eyebrow">YOUR CONGRESSIONAL MEETINGS</p>
           <h2>My Congressional Briefings</h2>
-          <p>The updated 41-page congressional briefing book covering all 13 scheduled office conversations is available now. Your delegation-specific office materials and meeting instructions will appear in the separate briefing space once assigned.</p>
+          <p>The updated 44-page congressional briefing book covering all 14 scheduled office conversations is available now. Your delegation-specific office materials and meeting instructions will appear in the separate briefing space once assigned.</p>
           <div className="hero-actions" style={{alignItems:"center"}}>
             <Link href="/attendee/briefings" className="button button-link">Open my briefing space →</Link>
             <a href="https://drive.google.com/file/d/1X8cmoge4IrtnT0GMBTp1IkowiUsQjBX_/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" className="button-secondary button-link">Open complete briefing PDF</a>
