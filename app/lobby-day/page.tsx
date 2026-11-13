@@ -14,13 +14,14 @@ const scheduledMeetings = [
  { time: "1:30 p.m.", office: "Sen. Patty Murray's office", location: "154 Russell", detail: "Staff conversation; delegation to arrive by 1:15 p.m." },
  { time: "2:00–2:30 p.m.", office: "Del. Eleanor Holmes Norton's office", location: "2136 Rayburn", detail: "Meeting with congressional staff" },
  { time: "2:00 p.m.", office: "Rep. Suzanne Bonamici's office", location: "2231 Rayburn", detail: "Education policy staff conversation" },
+ { time: "2:00 p.m.", office: "Sen. Gary Peters's office", location: "Senate office (exact room pending)", detail: "Meeting with staff member Ava Kelsey; offered and accepted in writing November 13" },
  { time: "2:30 p.m.", office: "Sen. Brian Schatz's office", location: "722 Hart", detail: "Education policy staff conversation" },
  { time: "2:30–3:00 p.m.", office: "Rep. Gary Palmer's office", location: "170 Cannon (office address)", detail: "In-person meeting booked with Legislative Aide Hampton Neugent; exact room to verify" },
  { time: "3:00–3:30 p.m.", office: "Rep. Adelita S. Grijalva", location: "1203 Longworth", detail: "Meeting scheduled with the Congresswoman" },
  { time: "3:00 p.m.", office: "Sen. Chris Van Hollen's office", location: "730 Hart", detail: "Meeting with staff member Brendan Flynn" }
 ];
 const meetingsInProgress = [
- "Sen. Gary Peters's office — staff referral; time pending",
+
  "Senate HELP Republican staff — willing to meet; an afternoon time has been requested",
  "Rep. Jahana Hayes's office — 10:00 a.m. was offered but conflicts with the morning gathering; afternoon alternative requested",
  "Sen. Josh Hawley's office — policy staff follow-up sent",
@@ -30,11 +31,13 @@ const meetingsInProgress = [
  "Rep. Adam Gray's office — additional scheduling follow-up"
 ];
 const schedule = [
- {time:"Around 10:00 a.m.",title:"Morning gathering and advocacy preparation",description:"Target arrival and opening programming, including check-in, student voice, briefings and delegation preparation. Exact venue and final arrival instructions will follow."},
- {time:"11:30 a.m.",title:"Lunch break",description:"Lunch arrangements are being finalized. We will share details with registered participants."},
- {time:"12:30 p.m.",title:"Congressional advocacy begins",description:"Scholar and partner delegations begin afternoon lobbying visits. Each office appointment and delegation assignment will be confirmed separately."},
- {time:"Afternoon",title:"Congressional meetings and advocacy conversations",description:"Small groups visit congressional offices to discuss education, juvenile justice, reentry and opportunity. Exact meeting times vary by office."},
- {time:"Before departure",title:"Wrap-up and next steps",description:"Delegations will reconnect, share takeaways, and discuss next steps."}
+ {time:"9:45–10:00 a.m.",title:"Arrival at Maya",description:"Participants meet at Maya Angelou Public Charter High School for check-in and delegation introductions."},
+ {time:"10:00–10:45 a.m.",title:"Advocacy training and practice",description:"Review the congressional briefings distributed in advance, meet your delegation, rehearse openings and questions, and get ready for the afternoon."},
+ {time:"10:45–11:05 a.m.",title:"Lunch at Maya",description:"Lunch is planned for participants before travel."},
+ {time:"11:05–11:15 a.m.",title:"Bus loading and headcount",description:"Join your assigned bus and stay with your delegation leader."},
+ {time:"11:15 a.m. (target)",title:"Buses depart for Capitol Hill",description:"Travel, unloading, building entry and security screening are being coordinated. Exact arrival times will be shared after transportation is confirmed."},
+ {time:"12:30–3:30 p.m.",title:"Congressional visits and group reflection",description:"Fourteen office and committee appointments are agreed across nine delegations. Activity choices, room capacities and individual arrangements are still being finalized."},
+ {time:"3:30–4:00 p.m. (target)",title:"Wrap-up and accountability",description:"Delegations report key takeaways, check in with staff and follow their supervised return instructions."}
 ];
 export default async function LobbyDayPage(){
  const count=await getPublicLobbyDaySignupCount();
@@ -44,7 +47,7 @@ export default async function LobbyDayPage(){
   <h1 className="hill-day-hero__title"><span><em>Our</em> <strong className="hill-day-word hill-day-word--stories">Stories.</strong></span><span><em>Our</em> <strong className="hill-day-word hill-day-word--schools">Schools.</strong></span><span><em>Our</em> <strong className="hill-day-word hill-day-word--capitol">Capitol.</strong></span></h1>
   <p className="hero-kicker">Wednesday, November 18, 2026 — moving from silos to solutions, together.</p>
   <p>See Forever Foundation and Maya Angelou Schools are convening scholars, educators and partners to advocate for educational opportunity, continuity and stronger pathways for young people affected by the justice system. We hope to bring together 125 participants, including approximately 50 Maya Angelou Scholars.</p>
-  <div className="hero-meta"><span className="hero-pill">November 18, 2026</span><span className="hero-pill">Capitol Hill, Washington, D.C.</span><span className="hero-pill">Morning gathering ~10 AM • Lunch 11:30 AM • Advocacy from 12:30 PM</span></div>
+  <div className="hero-meta"><span className="hero-pill">November 18, 2026</span><span className="hero-pill">Capitol Hill, Washington, D.C.</span><span className="hero-pill">At Maya 9:45 AM • Training 10–10:45 AM • Lunch 10:45 AM • Buses 11:15 AM</span></div>
   <div className="hero-actions"><a href="#register" className="button button-link">Register your interest</a><a href="#schedule" className="button-secondary button-link">View the day's schedule</a></div>
  </div><div className="hero-card__visual"><div className="hero-photo hero-photo--dc"><span className="hero-photo__label">The Hill, together</span></div><div className="hero-photo hero-photo--community"><span className="hero-photo__label">Students at the center</span></div><div className="hero-photo hero-photo--conference"><span className="hero-photo__label">Partners in action</span></div></div></div>  <div className="hill-day-momentum" aria-label={`${count} people registered toward a goal of 125`}>
     <div className="hill-day-momentum__header"><span className="hill-day-momentum__eyebrow">THE ROAD TO THE HILL</span><span className="hill-day-momentum__live"><span aria-hidden="true" />LIVE REGISTRATION COUNT</span></div>
