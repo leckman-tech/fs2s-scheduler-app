@@ -99,7 +99,7 @@ export function AdminHillDayAccountProvisioner() {
       "Email Verification Link","Login Page","Reset Existing Password","Individual Email Subject",
       "Individual Email Body","Private Handling Note"];
     const data=merged.map(row=>{
-      const firstName=row.name.trim().split(/\\s+/)[0]||"there";
+      const firstName=row.name.trim().split(/\s+/)[0]||"there";
       const created=row.status==="created";
       const subject="Your FS2S Advocacy Hill Day attendee portal";
       const emailBody=created
