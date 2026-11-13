@@ -243,3 +243,41 @@ export async function sendAttendeeAccountWelcomeEmail(input: {
     text: content.text
   });
 }
+
+
+/** One-time participant onboarding QA. This sender cannot address anyone else. */
+export async function sendHillDayPilotAccountEmail(input: {
+  to: string;
+  temporaryPassword: string;
+  verificationUrl: string;
+}): Promise<EmailResult> {
+  const allowed = "levi.eckman+fs2s-test@gmail.com";
+  if (input.to.trim().toLowerCase() !== allowed) {
+    return { sent: false, error: "Test invitation destination is restricted." };
+  }
+  if (!input.temporaryPassword || !input.verificationUrl.startsWith(
+    SITE_URL + "/auth/confirm?type=signup&token_hash="
+  )) return { sent: false, error: "Incomplete or invalid test activation link." };
+
+  const escape = (s: string) => s.replace(/[&<>"']/g,
+    c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] ?? c));
+  const title = "FS2S Test Account — Complete Your First Login";
+  const body = [
+    "This is the requested test for the November 18 FS2S attendee portal. It is not an event invitation.",
+    "TEST ACCOUNT EMAIL: " + allowed,
+    "TEMPORARY PASSWORD: " + input.temporaryPassword,
+    "1. Open this single-use email verification link: " + input.verificationUrl,
+    "2. Choose your own new password when prompted (at least 12 characters).",
+    "3. Open https://fs2shub.com/attendee/briefings and confirm you see D05 Youth Justice Partners: Senator Durbin and Senator Peters (Hart 724).",
+    "4. Check that there are no briefings for unrelated delegations.",
+    "Only use this test alias, not your school administrator account. Keep this message private."
+  ];
+  return sendEmail({
+    to: allowed,
+    subject: title,
+    text: body.join("\n\n"),
+    html: '<div style="font:16px/1.6 Arial,sans-serif;max-width:660px;margin:24px auto;">' +
+      '<h2>' + escape(title) + '</h2>' +
+      body.map(line=>'<p>' + escape(line) + '</p>').join("") + '</div>'
+  });
+}
