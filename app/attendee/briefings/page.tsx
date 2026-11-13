@@ -33,8 +33,10 @@ export default async function CongressionalBriefingsPage() {
         <p className="eyebrow">NOW AVAILABLE · COMPLETE BRIEFING BOOK</p>
         <h2 id="shared-briefing-title">Congressional Meeting Briefings</h2>
         <p>
-          Read the complete 41-page FS2S Congressional Briefing Book prepared for
-          November 18. The original PDF is provided without changes to its layout or wording.
+          Read the updated 44-page FS2S Congressional Briefing Book for November 18, covering
+          all 14 scheduled congressional office and committee meetings. The November 13 revision adds
+          the 2:30 p.m. meeting with Hampton Neugent in Rep. Gary Palmer's office,
+          corrects the appointment directory, and preserves the original office briefings.
         </p>
         <div className="hero-actions">
           <a href="https://drive.google.com/file/d/1X8cmoge4IrtnT0GMBTp1IkowiUsQjBX_/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" className="button button-link">
@@ -51,7 +53,7 @@ export default async function CongressionalBriefingsPage() {
       <section className="panel callout-panel" aria-labelledby="briefings-status">
         <p className="eyebrow">INDIVIDUAL ASSIGNMENTS · COMING SOON</p>
         <h2 id="briefings-status">Your assigned delegation briefings will appear here.</h2>
-        <p>The complete briefing book is available above. No individual delegation-specific packets have been released here yet. When materials are ready for your delegation, you'll be able to find them in this space. You don't need to create another account.</p>
+        <p>The updated 14-meeting briefing book is available above. No individual delegation-specific packets have been released here yet. When materials are ready for your delegation, you'll be able to find them in this space. You don't need to create another account.</p>
         <p className="muted">An attendee account does not confirm a congressional appointment. The organizing team will provide final delegation assignments separately.</p>
       </section>
 
