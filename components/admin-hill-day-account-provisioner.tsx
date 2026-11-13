@@ -19,6 +19,7 @@ type Preview = {
 };
 const LOGIN = "https://fs2shub.com/attendee/login";
 const RESET = "https://fs2shub.com/attendee/forgot-password";
+const TEST_EMAIL = "levi.eckman+fs2s-test@gmail.com";
 
 function csvEscape(value: string) {
   // Keep paragraph breaks inside quoted CSV cells, for copy-ready emails.
@@ -35,8 +36,9 @@ export function AdminHillDayAccountProvisioner() {
   const [progress,setProgress] = useState(0);
   const [problem,setProblem] = useState<string|null>(null);
   const [filter,setFilter] = useState("");
-  const [includeExisting,setIncludeExisting] = useState(true);
-  const [pilotEmail,setPilotEmail] = useState("");
+  const [includeExisting,setIncludeExisting] = useState(false);
+  const [pilotMessage,setPilotMessage] = useState<string|null>(null);
+  const [pilotEmail,setPilotEmail] = useState(TEST_EMAIL);
 
   async function loadPreview() {
     const r=await fetch("/api/admin/hill-day/provision", {cache:"no-store"});
@@ -71,9 +73,9 @@ export function AdminHillDayAccountProvisioner() {
 
   async function provisionPilot(){
     if(!preview||busy) return;
-    const candidate=preview.people.find(p=>p.email===pilotEmail&&!p.accountExists);
+    const candidate=preview.people.find(p=>p.email===TEST_EMAIL&&!p.accountExists);
     if(!candidate){setProblem("Select an eligible participant without an existing login.");return;}
-    setProblem(null);setBusy(true);
+    setProblem(null);setPilotMessage(null);setBusy(true);
     try{
       const response=await fetch("/api/admin/hill-day/provision",{
         method:"POST",headers:{"Content-Type":"application/json"},
@@ -86,7 +88,11 @@ export function AdminHillDayAccountProvisioner() {
       const outcome=body.results[0] as Credential;
       setReady(prior=>[...prior.filter(p=>p.email!==outcome.email),outcome]);
       await loadPreview();
-      setPilotEmail("");
+      if(outcome.status==="created") {
+        setPilotMessage(body.testEmailSent === true
+          ? "Test login created and invitation emailed to the Gmail alias. Check your Gmail inbox, verify the address and choose a new password. Refresh this page afterward."
+          : "Test login created, but automatic email delivery was not confirmed. Download the private credential CSV and send only the test row to your own Gmail.");
+      }
       if(outcome.status==="error")setProblem("Pilot account needs review. Do not send its invitation.");
     }catch(error){
       setProblem(error instanceof Error?error.message:"Pilot account setup failed.");
@@ -99,7 +105,7 @@ export function AdminHillDayAccountProvisioner() {
     const created: Credential[] = [...ready];
     try {
       const latest=await loadPreview();
-      const remaining=latest.people.filter(x=>!x.accountExists);
+      const remaining=latest.people.filter(x=>!x.accountExists&&x.email!==TEST_EMAIL);
       for(let i=0;i<remaining.length;i+=8) {
         const chunk=remaining.slice(i,i+8);
         const response=await fetch("/api/admin/hill-day/provision",{
@@ -203,6 +209,9 @@ FS2S Convening Director`;
 
   const totalNew=ready.filter(x=>x.status==="created").length;
   const failed=ready.filter(x=>x.status==="error");
+  const testAccount=preview?.people.find(p=>p.email===TEST_EMAIL);
+  const pilotComplete=Boolean(testAccount?.accountExists && testAccount.emailVerified &&
+    !testAccount.requiresPasswordChange && testAccount.driveReady);
 
   return <div className="stack">
     <section className="panel" style={{borderTop:"4px solid #aa1e35"}}>
@@ -219,21 +228,24 @@ FS2S Convening Director`;
         <span className="hero-pill">{preview.counts.excludedUnassignedRegistrations??0} older/unassigned emails excluded</span>
       </div> : <p>Loading the current roster…</p>}
       <div className="field" style={{marginTop:"1.1rem",maxWidth:"640px"}}>
-        <label htmlFor="hill-day-pilot-email"><strong>Step 1: Test with one participant</strong></label>
+        <label htmlFor="hill-day-pilot-email"><strong>Step 1: Test the new-account process with your Gmail alias</strong></label>
         <select id="hill-day-pilot-email" value={pilotEmail}
           onChange={event=>setPilotEmail(event.target.value)} disabled={busy}>
-          <option value="">Select a new participant account to test</option>
-          {(preview?.people??[]).filter(p=>!p.accountExists).map(p=>(
-            <option key={p.email} value={p.email}>{p.name} — {p.delegation}</option>
-          ))}
+          <option value={TEST_EMAIL}>{TEST_EMAIL} — D05 test-only</option>
         </select>
-        <p className="muted">Select someone you can contact for a real sign-in test. Generate only their credentials first, export their private instructions, and confirm they can change their password and open the correct PDF.</p>
+        <p className="muted">This creates only the test account and emails its verification link and temporary password to your own Gmail address. It does not create or contact real participants. The test account is not counted as an attendee.</p>
         <button type="button" className="button-secondary"
-          disabled={!pilotEmail||busy} onClick={provisionPilot}>Create pilot credentials</button>
+          disabled={busy||!!testAccount?.accountExists} onClick={provisionPilot}>Create and email my test login</button>
+        <button type="button" className="button-secondary" disabled={busy} onClick={async()=>{
+          try{await loadPreview();setProblem(null);}catch(e){setProblem(e instanceof Error?e.message:"Could not refresh test status.");}
+        }}>Refresh test status</button>
+        {pilotMessage ? <p role="status">{pilotMessage}</p> : null}
+        <p role="status"><strong>Test status:</strong> {!testAccount?.accountExists?"Account not created":!testAccount.emailVerified?"Verify the test email":testAccount.requiresPasswordChange?"Complete first-login password change":!testAccount.driveReady?"Resolve test PDF permission":"Email verified, password changed and PDF permission granted"}</p>
       </div>
       <div className="hero-actions" style={{marginTop:"1rem"}}>
+        {!pilotComplete ? <p className="muted">Bulk provisioning is locked until the test email is verified and its required password change is completed. Test a D05 briefing before sending real invitations.</p> : null}
         <button type="button" className="button" onClick={provision}
-          disabled={busy || !preview || preview.counts.toProvision===0}>
+          disabled={busy || !preview || preview.counts.toProvision===0 || !pilotComplete}>
           {busy ? "Preparing accounts…" : "Step 2: Create credentials for everyone else"}
         </button>
         <button type="button" className="button-secondary" onClick={download}
