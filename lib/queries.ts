@@ -794,6 +794,12 @@ export const requireAttendeePortalUser = cache(async () => {
     redirect("/attendee/login");
   }
 
+  // New provisioned accounts must replace their unique temporary password
+  // before opening any attendee content, including congressional briefings.
+  if (user.app_metadata?.fs2s_change_password_required === true) {
+    redirect("/attendee/first-login");
+  }
+
   let { data: profile } = await supabase
     .from("profiles")
     .select("role,full_name")
