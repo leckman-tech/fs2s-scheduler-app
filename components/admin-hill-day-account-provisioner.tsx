@@ -21,7 +21,10 @@ const LOGIN = "https://fs2shub.com/attendee/login";
 const RESET = "https://fs2shub.com/attendee/forgot-password";
 
 function csvEscape(value: string) {
-  const clean = value.replace(/^[=\-+@\t\r]/, "'const clean = value.replace(/^[=\-+@\t\r]/, "'$&").replace(/\r?\n/g, " ");").replace(/\r\n?/g, "\n");
+  // Keep paragraph breaks inside quoted CSV cells, for copy-ready emails.
+  // Prefix spreadsheet formula-like values without invoking replacement $ expressions.
+  const clean = value.replace(/^[=\-+@\t\r]/, first => "'" + first)
+    .replace(/\r\n?/g, "\n");
   return '"' + clean.replace(/"/g, '""') + '"';
 }
 
