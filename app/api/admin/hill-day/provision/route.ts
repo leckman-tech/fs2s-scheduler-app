@@ -144,7 +144,7 @@ export async function POST(request: NextRequest) {
         data:{full_name:person.name,portal_type:"attendee",conference_role:"attendee"}
       }
     });
-    if (error || !data?.user?.id || !data?.properties?.action_link) {
+    if (error || !data?.user?.id || !data?.properties?.hashed_token) {
       outcomes.push({email,name:person.name,delegation:person.delegation,
         status:"error",message:"Could not generate initial credentials; retry through the admin page."});
       continue;
@@ -159,7 +159,9 @@ export async function POST(request: NextRequest) {
       continue;
     }
     outcomes.push({email,name:person.name,delegation:person.delegation,
-      status:"created",temporaryPassword,verificationUrl:data.properties.action_link});
+      status:"created",temporaryPassword,
+      verificationUrl: SITE_URL + "/auth/confirm?type=signup&token_hash=" +
+        encodeURIComponent(data.properties.hashed_token)});
   }
   return noCache({results:outcomes});
 }
