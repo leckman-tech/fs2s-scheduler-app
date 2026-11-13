@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { sendHillDayPilotAccountEmail } from "@/lib/email";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -79,6 +80,27 @@ async function proxy(request: NextRequest, method: "GET" | "POST") {
         error: typeof data.error === "string" ? data.error :
           "Could not load registration records. Please try again."
       },response.status);
+    }
+    if (method === "POST") {
+      const sentTo = JSON.parse(body ?? "{}").emails as string[] | undefined;
+      const pilot = "levi.eckman+fs2s-test@gmail.com";
+      if (sentTo?.length === 1 && sentTo[0].trim().toLowerCase() === pilot) {
+        const outcomes = data.results as Array<{
+          status:string;temporaryPassword?:string;verificationUrl?:string
+        }> | undefined;
+        const outcome = outcomes?.[0];
+        if (outcome?.status === "created" &&
+            outcome.temporaryPassword && outcome.verificationUrl) {
+          const delivery = await sendHillDayPilotAccountEmail({
+            to:pilot,temporaryPassword:outcome.temporaryPassword,
+            verificationUrl:outcome.verificationUrl
+          });
+          data.testEmailSent = delivery.sent;
+          if (!delivery.sent) {
+            data.testEmailError = "Automatic test email was not sent. Save the credentials from this admin page and send the test invitation manually.";
+          }
+        }
+      }
     }
     return respond(data);
   } catch (error) {
