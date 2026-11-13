@@ -11,6 +11,7 @@ type Credential = {
   email: string; name: string; delegation: string | null;
   status: "created" | "existing" | "error";
   temporaryPassword?: string; verificationUrl?: string; message?: string;
+  emailDelivery?: "sent" | "failed" | "skipped" | "not_sent"; emailError?: string;
 };
 type Preview = {
   people: Candidate[];
@@ -100,7 +101,8 @@ export function AdminHillDayAccountProvisioner() {
   }
 
   async function provision() {
-    if (!preview || busy) return;
+    if (!preview || busy || !pilotComplete) return;
+    if (!window.confirm("Create accounts and EMAIL individual portal instructions to ALL eligible November 18 participants now? This sends real emails, not drafts. Existing verified accounts will receive login instructions; passwords won't change.")) return;
     setBusy(true);setProblem(null);setProgress(0);
     const created: Credential[] = [...ready];
     try {
@@ -110,7 +112,7 @@ export function AdminHillDayAccountProvisioner() {
         const chunk=remaining.slice(i,i+8);
         const response=await fetch("/api/admin/hill-day/provision",{
           method:"POST",headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({emails:chunk.map(p=>p.email)})
+          body:JSON.stringify({emails:chunk.map(p=>p.email),sendInvitations:true})
         });
         const body=await response.json().catch(()=>null);
         if (!response.ok || !Array.isArray(body?.results)) {
@@ -126,6 +128,21 @@ export function AdminHillDayAccountProvisioner() {
         setReady([...created]);
         setProgress(Math.min(i+chunk.length,remaining.length));
       }
+      const existing=latest.people.filter(x=>x.accountExists&&x.email!==TEST_EMAIL);
+      for(let i=0;i<existing.length;i+=8){
+        const chunk=existing.slice(i,i+8);
+        const response=await fetch("/api/admin/hill-day/provision",{
+          method:"POST",headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({emails:chunk.map(p=>p.email),sendInvitations:true})
+        });
+        const body=await response.json().catch(()=>null);
+        if(!response.ok||!Array.isArray(body?.results))throw new Error(body?.error||"Existing account emails could not be completed.");
+        for(const outcome of body.results as Credential[]){
+          const index=created.findIndex(x=>x.email===outcome.email);
+          if(index>=0)created[index]=outcome;else created.push(outcome);
+        }
+        setReady([...created]);
+      }
       await loadPreview();
     } catch(e) {
       setProblem(e instanceof Error ? e.message : "Provisioning did not finish.");
@@ -140,7 +157,7 @@ export function AdminHillDayAccountProvisioner() {
         message:"Existing login preserved. Send login URL and forgot-password link, not a new password."}))
       : [];
     const merged=[...ready,...existing].sort((a,b)=>a.name.localeCompare(b.name));
-    const headers=["Person","Email","Delegation","Account Status","Private PDF access","One-Time Temporary Password",
+    const headers=["Person","Email","Delegation","Account Status","Email Delivery","Private PDF access","One-Time Temporary Password",
       "Email Verification Link","Login Page","Reset Existing Password","Individual Email Subject",
       "Individual Email Body","Private Handling Note"];
     const data=merged.map(row=>{
@@ -187,7 +204,7 @@ Thanks!
 Levi W. Eckman
 FS2S Convening Director`;
       return [
-        row.name,row.email,row.delegation||"Not yet assigned",row.status,pdfStatus,
+        row.name,row.email,row.delegation||"Not yet assigned",row.status,row.emailDelivery||"not sent",pdfStatus,
         created ? row.temporaryPassword||"" : "",
         created ? row.verificationUrl||"" : "",
         LOGIN,RESET,subject,
@@ -209,6 +226,8 @@ FS2S Convening Director`;
 
   const totalNew=ready.filter(x=>x.status==="created").length;
   const failed=ready.filter(x=>x.status==="error");
+  const emailed=ready.filter(x=>x.emailDelivery==="sent"&&x.email!==TEST_EMAIL).length;
+  const undelivered=ready.filter(x=>x.emailDelivery==="failed"||x.status==="error");
   const testAccount=preview?.people.find(p=>p.email===TEST_EMAIL);
   const pilotComplete=Boolean(testAccount?.accountExists && testAccount.emailVerified &&
     !testAccount.requiresPasswordChange && testAccount.driveReady);
@@ -246,7 +265,7 @@ FS2S Convening Director`;
         {!pilotComplete ? <p className="muted">Bulk provisioning is locked until the test email is verified and its required password change is completed. Test a D05 briefing before sending real invitations.</p> : null}
         <button type="button" className="button" onClick={provision}
           disabled={busy || !preview || preview.counts.toProvision===0 || !pilotComplete}>
-          {busy ? "Preparing accounts…" : "Step 2: Create credentials for everyone else"}
+          {busy ? "Creating accounts and sending emails…" : "Step 2: Create accounts and email participants"}
         </button>
         <button type="button" className="button-secondary" onClick={download}
           disabled={!ready.length || busy}>
@@ -255,7 +274,7 @@ FS2S Convening Director`;
       </div>
       {busy ? <p role="status">Processed {progress} of {preview?.counts.toProvision ?? 0} new addresses. Keep this page open.</p> : null}
       {ready.length ? <p role="status">
-        {totalNew} new accounts provisioned. {failed.length} need individual review.
+        {totalNew} new accounts provisioned. {emailed} individual emails sent. {undelivered.length} delivery/account issues.
         <strong> Download the CSV before leaving this page: passwords and activation links are shown only once.</strong>
       </p> : null}
       {problem ? <div className="empty-state" role="alert">
@@ -271,8 +290,7 @@ FS2S Convening Director`;
         Include existing accounts in the CSV (no password changes)
       </label>
       <p className="muted" style={{fontSize:"0.88rem"}}>
-        Nothing is emailed automatically. This CSV contains sensitive login details: keep it private,
-        send each recipient only their own row, and delete the downloaded CSV when invitations are sent.
+        No participant email is sent until you explicitly click Step 2 and confirm. The CSV is a private backup if an individual delivery fails. Never distribute the whole file or resend credentials unnecessarily. Delete the CSV after resolving any exceptions.
         Verification links can expire; if one does, use the account reset flow rather than reusing an old link.
       </p>
     </section>
