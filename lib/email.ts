@@ -340,10 +340,14 @@ export async function sendHillDayIndividualInvitation(input: {
     contingent ?? "",
     "Please note: receiving portal access does not replace school approvals, parental consent where applicable, or final group-leader confirmation.",
     "Wednesday schedule: Meet at Maya Angelou Public Charter School at 9:45–10:00 a.m. Training and group practice are 10:00–10:45 a.m., lunch begins at 10:45, and buses are scheduled to leave at 11:15 a.m. Hill meetings follow after arrival and security screening.",
+    "On Monday, November 16, we'll send more preparation activities tailored to your delegation, including discussion prompts and questions to practice before Wednesday's meetings.",
     "Please do not share your password or individual verification link. If you cannot sign in, reply directly to this email.",
     "Thank you,",
-    "Levi W. Eckman",
-    "FS2S Convening Director"
+    "Levi W. Eckman, J.D. | (202)-838-7879",
+    "LEckman@SeeForever.org | Washington, D.C.",
+    "The See Forever Foundation & Maya Angelou Schools",
+    "Vice-Chair, District of Columbia Out-of-School Time Commission 2026–2027",
+    "Want to talk more? Book with me on Calendly: https://calendly.com/leckman-seeforever"
   ].filter(Boolean);
   const safe=(s:string)=>s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]||c));
   const html='<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.55;max-width:660px;margin:auto;color:#222;">'+
