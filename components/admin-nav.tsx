@@ -8,6 +8,7 @@ export function AdminNav() {
         <h2>Admin Portal</h2>
       </div>
       <nav className="admin-nav" aria-label="Admin navigation">
+        <Link href="/admin/dashboard/hill-day" className="button-secondary button-link">Hill Day Planner</Link>
         <Link href="/admin/dashboard/system" className="button-secondary button-link">
           System Check
         </Link>
