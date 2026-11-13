@@ -34,9 +34,11 @@ export function AdminHillDayAccountProvisioner() {
 
   async function loadPreview() {
     const r=await fetch("/api/admin/hill-day/provision", {cache:"no-store"});
-    if (!r.ok) throw new Error("Could not retrieve registration list");
-    const data = await r.json() as Preview;
-    if (!Array.isArray(data.people)) throw new Error("Invalid registration response");
+    const data = await r.json().catch(() => null) as (Preview & {error?:string}) | null;
+    if (!r.ok) {
+      throw new Error(data?.error || "The registration service is unavailable. Please retry.");
+    }
+    if (!data || !Array.isArray(data.people)) throw new Error("Unexpected registration response. Please retry.");
     setPreview(data);
     return data;
   }
@@ -45,11 +47,15 @@ export function AdminHillDayAccountProvisioner() {
     let ignore=false;
     fetch("/api/admin/hill-day/provision", {cache:"no-store"})
       .then(async r => {
-        if (!r.ok) throw new Error("Please sign into the admin portal");
-        return r.json() as Promise<Preview>;
+        const data = await r.json().catch(() => null) as (Preview & {error?: string}) | null;
+        if (!r.ok) throw new Error(data?.error || "Couldn't load the registration list.");
+        if (!data || !Array.isArray(data.people)) throw new Error("Unexpected registration response.");
+        return data;
       })
-      .then(data => {if (!ignore) setPreview(data);})
-      .catch(() => {if (!ignore) setProblem("We couldn't retrieve the registration list. Refresh the page or sign in again.");});
+      .then(data => {if (!ignore) {setPreview(data);setProblem(null);}})
+      .catch(error => {
+        if (!ignore) setProblem(error instanceof Error?error.message:"Couldn't retrieve the registration list.");
+      });
     return ()=>{ignore=true;};
   },[]);
 
@@ -182,7 +188,13 @@ FS2S Convening Director`;
         {totalNew} new accounts provisioned. {failed.length} need individual review.
         <strong> Download the CSV before leaving this page: passwords and activation links are shown only once.</strong>
       </p> : null}
-      {problem ? <p className="empty-state" role="alert">{problem}</p> : null}
+      {problem ? <div className="empty-state" role="alert">
+        <p>{problem}</p>
+        <button type="button" className="button-secondary" disabled={busy}
+          onClick={async()=>{setProblem(null);try{await loadPreview();}catch(err){
+            setProblem(err instanceof Error?err.message:"Couldn't retrieve registration list.");
+          }}}>Retry loading roster</button>
+      </div> : null}
       <label style={{display:"flex",gap:"0.6rem",alignItems:"center",marginTop:"0.7rem"}}>
         <input type="checkbox" checked={includeExisting}
           onChange={e=>setIncludeExisting(e.target.checked)}/>
