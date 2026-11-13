@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { createAttendeeAccount, loginAttendee } from "@/lib/actions/admin";
+import { createAttendeeAccount, loginAttendee, resendAttendeeVerification } from "@/lib/actions/admin";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -35,7 +35,7 @@ export default async function AttendeeLoginPage({
       {params.error ? <div className="empty-state">{params.error}</div> : null}
       {params.success ? (
         <section role="status" aria-live="polite" className="panel" style={{padding:"1rem 1.25rem"}}>
-          <p style={{margin:0}}><strong>Almost done.</strong> Check your inbox and click the verification link to activate your account. Check Spam or Promotions if needed.</p>
+          <p style={{margin:0}}><strong>Almost done.</strong> If you just registered, check your email for an activation link. Check Spam or Promotions too. If it does not arrive, use the resend form below. You do not need to register again.</p>
         </section>
       ) : null}
 
@@ -85,6 +85,7 @@ export default async function AttendeeLoginPage({
           <Link href="/attendee/forgot-password" className="button-secondary button-link">
             Forgot password?
           </Link>
+          <p className="field-hint">If your account was created but you cannot sign in because your email is not confirmed, request a new verification link below.</p>
           <p className="muted" style={{ margin: 0 }}>
             Your account keeps your attendee access professional, personal, and easier to manage
             than a shared conference login.
@@ -163,6 +164,26 @@ export default async function AttendeeLoginPage({
             If you don't see it, check Spam or Promotions.
           </p>
         </form>
+      </section>
+      <section className="panel form-grid" aria-labelledby="verification-help-heading" style={{ marginTop: "1rem" }}>
+        <div className="section-heading"><div>
+          <h2 id="verification-help-heading">Didn't get a verification email?</h2>
+          <p className="muted" style={{margin:"0.35rem 0 0"}}>
+            If you already created an account, don't create another. Enter the same email address and request a new activation link.
+            Check your school inbox, Spam, and any email quarantine. Wait at least a minute between requests.
+          </p>
+        </div></div>
+        <form action={resendAttendeeVerification} className="form-grid">
+          <div className="field">
+            <label htmlFor="resend-verification-email">Email used to register</label>
+            <input id="resend-verification-email" name="email" type="email" required autoCapitalize="none" autoCorrect="off" autoComplete="email" spellCheck={false} />
+          </div>
+          <button type="submit" className="button">Resend verification link</button>
+        </form>
+        <p className="muted" style={{margin:0,fontSize:"0.9rem"}}>
+          Still no email? Contact the Hill Day team and explain that you registered but never received the activation message.
+          Do not send anyone your password.
+        </p>
       </section>
     </div>
   );
