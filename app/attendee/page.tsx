@@ -34,6 +34,18 @@ export default async function AttendeePortalPage({
     .select("user_id")
     .eq("user_id", user.id)
     .maybeSingle();
+  const verifiedEmail = user.email_confirmed_at && user.email ? user.email.trim().toLowerCase() : null;
+  const { data: myDelegation } = verifiedEmail
+    ? await supabase.from("delegation_assignments")
+        .select("delegation_id,status")
+        .eq("email", verifiedEmail).maybeSingle()
+    : { data: null };
+  const { data: releasedBriefing } = myDelegation && myDelegation.status !== "held"
+    ? await supabase.from("delegation_briefings")
+        .select("group_name")
+        .eq("delegation_id", myDelegation.delegation_id)
+        .eq("released", true).maybeSingle()
+    : { data: null };
   const hasArchive = profile.role === "admin" || Boolean(grant);
   const firstName = profile.full_name?.trim().split(/\s+/)[0];
 
@@ -68,11 +80,16 @@ export default async function AttendeePortalPage({
         <article className="panel story-panel" style={{borderTop:"4px solid #b51224"}}>
           <p className="eyebrow">YOUR CONGRESSIONAL MEETINGS</p>
           <h2>My Congressional Briefings</h2>
-          <p>The updated 44-page congressional briefing book covering all 14 scheduled office conversations is available now. Your delegation-specific office materials and meeting instructions will appear in the separate briefing space once assigned.</p>
-          <div className="hero-actions" style={{alignItems:"center"}}>
-            <Link href="/attendee/briefings" className="button button-link">Open my briefing space →</Link>
-            <a href="https://drive.google.com/file/d/1X8cmoge4IrtnT0GMBTp1IkowiUsQjBX_/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" className="button-secondary button-link">Open complete briefing PDF</a>
-            <span className="muted" style={{fontSize:"0.86rem"}}>Individual delegation packets will follow</span>
+
+          {releasedBriefing && myDelegation ? (
+            <p><strong>{myDelegation.delegation_id} · {releasedBriefing.group_name}</strong> — your delegation's assigned congressional briefings are ready. Please review them before November 18.</p>
+          ) : (
+            <p>Your group briefing will appear here once your verified registration email is matched and the packet is released. You do not need another account.</p>
+          )}
+          <div className="hero-actions">
+            <Link href="/attendee/briefings" className="button button-link">
+              {releasedBriefing ? "Open my assigned briefings →" : "Check my briefing assignment →"}
+            </Link>
           </div>
         </article>
         <article className="panel story-panel">
