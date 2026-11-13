@@ -21,7 +21,7 @@ const LOGIN = "https://fs2shub.com/attendee/login";
 const RESET = "https://fs2shub.com/attendee/forgot-password";
 
 function csvEscape(value: string) {
-  const clean = value.replace(/^[=\-+@\t\r]/, "'$&").replace(/\r?\n/g, " ");
+  const clean = value.replace(/^[=\-+@\t\r]/, "'const clean = value.replace(/^[=\-+@\t\r]/, "'$&").replace(/\r?\n/g, " ");").replace(/\r\n?/g, "\n");
   return '"' + clean.replace(/"/g, '""') + '"';
 }
 
@@ -103,17 +103,25 @@ export function AdminHillDayAccountProvisioner() {
         message:"Existing login preserved. Send login URL and forgot-password link, not a new password."}))
       : [];
     const merged=[...ready,...existing].sort((a,b)=>a.name.localeCompare(b.name));
-    const headers=["Person","Email","Delegation","Account Status","One-Time Temporary Password",
+    const headers=["Person","Email","Delegation","Account Status","Private PDF access","One-Time Temporary Password",
       "Email Verification Link","Login Page","Reset Existing Password","Individual Email Subject",
       "Individual Email Body","Private Handling Note"];
     const data=merged.map(row=>{
       const firstName=row.name.trim().split(/\s+/)[0]||"there";
       const created=row.status==="created";
-      const subject="Your FS2S Advocacy Hill Day attendee portal";
+      const candidate=preview.people.find(person=>person.email===row.email);
+      const pdfStatus=!candidate?.isAssigned ? "Unassigned" :
+        candidate.driveReady ? "Shared privately" : "Manual PDF delivery needed";
+      const consentNotice=row.delegation==="D03"
+        ? "\n\nFor Black Swan Academy youth, attendance is still subject to parental consent. Your portal login is not confirmation of approval." : "";
+      const materialsNotice=pdfStatus==="Manual PDF delivery needed"
+        ? "Your delegation schedule is available, but the organizers will provide your private briefing PDF separately."
+        : "Your delegation's assigned congressional briefing is available through your verified attendee portal.";
+      const subject=row.status==="error" ? "HOLD — account needs review" : "Your FS2S Advocacy Hill Day attendee portal";
       const emailBody=created
         ? `Hi ${firstName},
 
-We've set up your FS2S attendee portal for our November 18 Advocacy Hill Day. Please review your group's congressional briefings before Wednesday's training at Maya.
+We've set up your FS2S attendee portal for our November 18 Advocacy Hill Day. ${materialsNotice}${consentNotice}
 
 First, verify your email using your individual link:
 ${row.verificationUrl||"[Verification link unavailable — contact the organizer]"}
@@ -134,7 +142,7 @@ Your FS2S attendee account is already set up, so you can continue using your exi
 
 Sign in at ${LOGIN}. If you can't remember your password, you can reset it here: ${RESET}.
 
-If you're assigned to a congressional delegation, your group-specific briefings will appear once you sign in with your verified email.
+${materialsNotice}${consentNotice}
 
 Please review your materials before Wednesday. We'll gather at Maya at 9:45–10:00 AM and begin training at 10:00.
 
@@ -142,10 +150,12 @@ Thanks!
 Levi W. Eckman
 FS2S Convening Director`;
       return [
-        row.name,row.email,row.delegation||"Not yet assigned",row.status,
+        row.name,row.email,row.delegation||"Not yet assigned",row.status,pdfStatus,
         created ? row.temporaryPassword||"" : "",
         created ? row.verificationUrl||"" : "",
-        LOGIN,RESET,subject,emailBody,
+        LOGIN,RESET,subject,
+        row.status==="error" ? "" : emailBody,
+        row.status==="error" ? "DO NOT SEND — account setup failed; individual follow-up required." :
         created
           ? "Send only to this person. Change required on first login; never share the whole CSV."
           : row.message||"Existing account; credentials not changed."
@@ -222,6 +232,7 @@ FS2S Convening Director`;
           <thead><tr>
             <th style={{textAlign:"left"}}>Name</th><th style={{textAlign:"left"}}>Email</th>
             <th style={{textAlign:"left"}}>Delegation</th><th style={{textAlign:"left"}}>Account</th>
+            <th style={{textAlign:"left"}}>Activation</th>
             <th style={{textAlign:"left"}}>PDF access</th>
           </tr></thead>
           <tbody>
@@ -230,7 +241,8 @@ FS2S Convening Director`;
             <td style={{padding:"0.7rem 0.4rem",wordBreak:"break-word"}}>{row.email}</td>
             <td style={{padding:"0.7rem 0.4rem"}}>{row.delegation || "Pending"}</td>
             <td style={{padding:"0.7rem 0.4rem"}}>{row.accountExists?"Existing":"Not yet created"}</td>
-            <td style={{padding:"0.7rem 0.4rem"}}>{!row.isAssigned?"No assignment":row.driveReady?"Granted":"Needs review"}</td>
+            <td style={{padding:"0.7rem 0.4rem"}}>{!row.accountExists?"Not started":!row.emailVerified?"Verify email":row.requiresPasswordChange?"Change temporary password":"Verified"}</td>
+            <td style={{padding:"0.7rem 0.4rem"}}>{!row.isAssigned?"No assignment":row.driveReady?"Granted":"Send PDF separately"}</td>
           </tr>)}
           </tbody>
         </table>
