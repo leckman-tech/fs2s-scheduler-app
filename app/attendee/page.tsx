@@ -67,11 +67,11 @@ export default async function AttendeePortalPage({
         <article className="panel story-panel" style={{borderTop:"4px solid #b51224"}}>
           <p className="eyebrow">YOUR CONGRESSIONAL MEETINGS</p>
           <h2>My Congressional Briefings</h2>
-          <p>The complete 41-page congressional briefing book is available now. Your delegation-specific office materials and meeting instructions will appear in the separate briefing space once assigned.</p>
+          <p>The updated 44-page congressional briefing book covering all 14 scheduled office conversations is available now. Your delegation-specific office materials and meeting instructions will appear in the separate briefing space once assigned.</p>
           <div className="hero-actions" style={{alignItems:"center"}}>
             <Link href="/attendee/briefings" className="button button-link">Open my briefing space →</Link>
             <a href="https://drive.google.com/file/d/1X8cmoge4IrtnT0GMBTp1IkowiUsQjBX_/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" className="button-secondary button-link">Open complete briefing PDF</a>
-            <span className="muted" style={{fontSize:"0.86rem"}}>Materials coming soon</span>
+            <span className="muted" style={{fontSize:"0.86rem"}}>Individual delegation packets will follow</span>
           </div>
         </article>
         <article className="panel story-panel">
