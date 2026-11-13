@@ -29,10 +29,29 @@ export default async function CongressionalBriefingsPage() {
         </div>
       </section>
 
+      <section className="panel callout-panel" aria-labelledby="shared-briefing-title" style={{borderLeft:"5px solid #b51224"}}>
+        <p className="eyebrow">NOW AVAILABLE · COMPLETE BRIEFING BOOK</p>
+        <h2 id="shared-briefing-title">Congressional Meeting Briefings</h2>
+        <p>
+          Read the complete 41-page FS2S Congressional Briefing Book prepared for
+          November 18. The original PDF is provided without changes to its layout or wording.
+        </p>
+        <div className="hero-actions">
+          <a href="https://drive.google.com/file/d/1X8cmoge4IrtnT0GMBTp1IkowiUsQjBX_/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" className="button button-link">
+            Open complete briefing book (PDF) →
+          </a>
+        </div>
+        <p className="muted" style={{fontSize:"0.88rem"}}>
+          This document is currently shared with Maya Angelou Schools and See Forever Foundation
+          Google accounts. If you use another email, Google may ask you to request access.
+          Please contact the organizing team if you need help opening it.
+        </p>
+      </section>
+
       <section className="panel callout-panel" aria-labelledby="briefings-status">
-        <p className="eyebrow">MATERIALS COMING SOON</p>
-        <h2 id="briefings-status">Your briefing space is ready.</h2>
-        <p>No individual congressional briefing packets have been released here yet. When materials are ready for your delegation, you'll be able to find them in this space. You don't need to create another account.</p>
+        <p className="eyebrow">INDIVIDUAL ASSIGNMENTS · COMING SOON</p>
+        <h2 id="briefings-status">Your assigned delegation briefings will appear here.</h2>
+        <p>The complete briefing book is available above. No individual delegation-specific packets have been released here yet. When materials are ready for your delegation, you'll be able to find them in this space. You don't need to create another account.</p>
         <p className="muted">An attendee account does not confirm a congressional appointment. The organizing team will provide final delegation assignments separately.</p>
       </section>
 
