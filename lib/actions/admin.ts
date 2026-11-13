@@ -503,7 +503,7 @@ export async function createAttendeeAccount(formData: FormData) {
     redirect(
       `/attendee/login?error=${toRedirectErrorParam(
         toPublicErrorMessage(signUpError, {
-          fallback: "We couldn't create your attendee account right now. Please try again.",
+          fallback: "We couldn't complete signup. If you already tried registering, use Resend verification below instead of creating another account.",
           duplicateMessage:
             "That email is already connected to an attendee account. Sign in instead of creating a new one.",
           duplicateFragments: ["user already registered", "already been registered", "already exists"]
@@ -564,6 +564,28 @@ export async function createAttendeeAccount(formData: FormData) {
   }
 
   redirect("/attendee/login?error=We%20couldn%27t%20finish%20creating%20your%20account.%20Please%20try%20again.");
+}
+
+export async function resendAttendeeVerification(formData: FormData) {
+  const supabase = await createClient();
+  const email = normalizeEmail(formData.get("email") as string | null);
+  if (!email || !/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(email)) {
+    redirect("/attendee/login?error=Enter%20a%20valid%20email%20address%20to%20request%20a%20verification%20link");
+  }
+
+  const { error } = await supabase.auth.resend({
+    type: "signup",
+    email,
+    options: { emailRedirectTo: `${SITE_URL}/auth/callback?next=/attendee` }
+  });
+  if (error) {
+    const rateLimited = error.status === 429 || /rate limit|after [0-9]+ seconds|too many/i.test(error.message);
+    redirect(rateLimited
+      ? "/attendee/login?error=Please%20wait%20a%20minute%20before%20requesting%20another%20verification%20email"
+      : "/attendee/login?error=We%20could%20not%20send%20the%20verification%20email.%20Please%20try%20again%20later%20or%20contact%20the%20Hill%20Day%20team");
+  }
+  // Keep the response neutral so account existence is not exposed.
+  redirect("/attendee/login?success=If%20this%20email%20has%20an%20unverified%20account%2C%20a%20new%20verification%20link%20has%20been%20requested.%20Check%20Inbox%2C%20Spam%2C%20and%20your%20school%20email%20quarantine");
 }
 
 export async function requestAttendeePasswordReset(formData: FormData) {
