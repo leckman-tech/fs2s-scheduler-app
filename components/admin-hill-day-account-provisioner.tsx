@@ -96,15 +96,53 @@ export function AdminHillDayAccountProvisioner() {
       : [];
     const merged=[...ready,...existing].sort((a,b)=>a.name.localeCompare(b.name));
     const headers=["Person","Email","Delegation","Account Status","One-Time Temporary Password",
-      "Email Verification Link","Login Page","Reset Existing Password","Private Handling Note"];
-    const data=merged.map(row=>[
-      row.name,row.email,row.delegation||"Not yet assigned",row.status,
-      row.status==="created" ? row.temporaryPassword||"" : "",
-      row.status==="created" ? row.verificationUrl||"" : "",
-      LOGIN,RESET,row.status==="created"
-        ? "Send only to this person's email. They must verify email and change the password before viewing briefings."
-        : row.message||"Existing account; credentials not changed."
-    ]);
+      "Email Verification Link","Login Page","Reset Existing Password","Individual Email Subject",
+      "Individual Email Body","Private Handling Note"];
+    const data=merged.map(row=>{
+      const firstName=row.name.trim().split(/\\s+/)[0]||"there";
+      const created=row.status==="created";
+      const subject="Your FS2S Advocacy Hill Day attendee portal";
+      const emailBody=created
+        ? `Hi ${firstName},
+
+We've set up your FS2S attendee portal for our November 18 Advocacy Hill Day. Please review your group's congressional briefings before Wednesday's training at Maya.
+
+First, verify your email using your individual link:
+${row.verificationUrl||"[Verification link unavailable — contact the organizer]"}
+
+Your login email: ${row.email}
+Your temporary password: ${row.temporaryPassword||"[Password unavailable]"}
+
+After verifying your email, sign in at ${LOGIN}. You'll be asked to choose a new password before you can see your group's materials.
+
+Please keep your login details to yourself. Our morning program begins at Maya at 9:45–10:00 AM, with training at 10:00, lunch at 10:45, and buses scheduled to depart at 11:15.
+
+Looking forward to seeing you on November 18!
+Levi W. Eckman
+FS2S Convening Director`
+        : `Hi ${firstName},
+
+Your FS2S attendee account is already set up, so you can continue using your existing password for November 18 Advocacy Hill Day.
+
+Sign in at ${LOGIN}. If you can't remember your password, you can reset it here: ${RESET}.
+
+If you're assigned to a congressional delegation, your group-specific briefings will appear once you sign in with your verified email.
+
+Please review your materials before Wednesday. We'll gather at Maya at 9:45–10:00 AM and begin training at 10:00.
+
+Thanks!
+Levi W. Eckman
+FS2S Convening Director`;
+      return [
+        row.name,row.email,row.delegation||"Not yet assigned",row.status,
+        created ? row.temporaryPassword||"" : "",
+        created ? row.verificationUrl||"" : "",
+        LOGIN,RESET,subject,emailBody,
+        created
+          ? "Send only to this person. Change required on first login; never share the whole CSV."
+          : row.message||"Existing account; credentials not changed."
+      ];
+    });
     const csv=[headers,...data].map(row=>row.map(v=>csvEscape(String(v))).join(",")).join("\r\n");
     const blob=new Blob(["\uFEFF",csv],{type:"text/csv;charset=utf-8"});
     const url=URL.createObjectURL(blob);
