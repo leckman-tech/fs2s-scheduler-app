@@ -569,7 +569,7 @@ export async function createAttendeeAccount(formData: FormData) {
 export async function resendAttendeeVerification(formData: FormData) {
   const supabase = await createClient();
   const email = normalizeEmail(formData.get("email") as string | null);
-  if (!email || !/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(email)) {
+  if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     redirect("/attendee/login?error=Enter%20a%20valid%20email%20address%20to%20request%20a%20verification%20link");
   }
 
