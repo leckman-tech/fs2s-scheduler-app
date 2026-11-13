@@ -1,0 +1,186 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+
+type Candidate = {
+  email: string; name: string; delegation: string | null;
+  accountExists: boolean; isAssigned: boolean; driveReady: boolean;
+};
+type Credential = {
+  email: string; name: string; delegation: string | null;
+  status: "created" | "existing" | "error";
+  temporaryPassword?: string; verificationUrl?: string; message?: string;
+};
+type Preview = {
+  people: Candidate[];
+  counts: {eligible:number;existing:number;toProvision:number;assigned:number};
+};
+const LOGIN = "https://fs2shub.com/attendee/login";
+const RESET = "https://fs2shub.com/attendee/forgot-password";
+
+function csvEscape(value: string) {
+  const clean = value.replace(/^[=\-+@\t\r]/, "'$&").replace(/\r?\n/g, " ");
+  return '"' + clean.replace(/"/g, '""') + '"';
+}
+
+export function AdminHillDayAccountProvisioner() {
+  const [preview,setPreview] = useState<Preview|null>(null);
+  const [busy,setBusy] = useState(false);
+  const [ready,setReady] = useState<Credential[]>([]);
+  const [progress,setProgress] = useState(0);
+  const [problem,setProblem] = useState<string|null>(null);
+  const [filter,setFilter] = useState("");
+  const [includeExisting,setIncludeExisting] = useState(true);
+
+  async function loadPreview() {
+    const r=await fetch("/api/admin/hill-day/provision", {cache:"no-store"});
+    if (!r.ok) throw new Error("Could not retrieve registration list");
+    const data = await r.json() as Preview;
+    if (!Array.isArray(data.people)) throw new Error("Invalid registration response");
+    setPreview(data);
+    return data;
+  }
+
+  useEffect(() => {
+    let ignore=false;
+    fetch("/api/admin/hill-day/provision", {cache:"no-store"})
+      .then(async r => {
+        if (!r.ok) throw new Error("Please sign into the admin portal");
+        return r.json() as Promise<Preview>;
+      })
+      .then(data => {if (!ignore) setPreview(data);})
+      .catch(() => {if (!ignore) setProblem("We couldn't retrieve the registration list. Refresh the page or sign in again.");});
+    return ()=>{ignore=true;};
+  },[]);
+
+  const filtered = useMemo(() => (preview?.people ?? [])
+    .filter(p=>(p.name+" "+p.email+" "+(p.delegation??"")).toLowerCase()
+      .includes(filter.toLowerCase())),[preview,filter]);
+
+  async function provision() {
+    if (!preview || busy) return;
+    if (ready.length && !window.confirm(
+      "You have already generated credentials in this tab. Download the existing CSV first. Start a fresh run?"
+    )) return;
+    const remaining = preview.people.filter(x=>!x.accountExists);
+    setBusy(true);setProblem(null);setProgress(0);setReady([]);
+    const created: Credential[] = [];
+    try {
+      for(let i=0;i<remaining.length;i+=8) {
+        const chunk=remaining.slice(i,i+8);
+        const response=await fetch("/api/admin/hill-day/provision",{
+          method:"POST",headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({emails:chunk.map(p=>p.email)})
+        });
+        const body=await response.json();
+        if (!response.ok || !Array.isArray(body.results)) {
+          throw new Error("A batch could not be processed. Download the credentials already generated before attempting any further run.");
+        }
+        created.push(...body.results as Credential[]);
+        setReady([...created]);
+        setProgress(Math.min(i+chunk.length,remaining.length));
+      }
+      // Refresh account status only after the entire run, without clearing the one-time credentials.
+      await loadPreview();
+    } catch(e) {
+      setProblem(e instanceof Error ? e.message : "Provisioning did not finish.");
+    } finally { setBusy(false); }
+  }
+
+  function download() {
+    if (!preview || !ready.length) return;
+    const existing: Credential[]=includeExisting ? preview.people
+      .filter(x=>x.accountExists && !ready.some(y=>y.email===x.email))
+      .map(x=>({email:x.email,name:x.name,delegation:x.delegation,status:"existing",
+        message:"Existing login preserved. Send login URL and forgot-password link, not a new password."}))
+      : [];
+    const merged=[...ready,...existing].sort((a,b)=>a.name.localeCompare(b.name));
+    const headers=["Person","Email","Delegation","Account Status","One-Time Temporary Password",
+      "Email Verification Link","Login Page","Reset Existing Password","Private Handling Note"];
+    const data=merged.map(row=>[
+      row.name,row.email,row.delegation||"Not yet assigned",row.status,
+      row.status==="created" ? row.temporaryPassword||"" : "",
+      row.status==="created" ? row.verificationUrl||"" : "",
+      LOGIN,RESET,row.status==="created"
+        ? "Send only to this person's email. They must verify email and change the password before viewing briefings."
+        : row.message||"Existing account; credentials not changed."
+    ]);
+    const csv=[headers,...data].map(row=>row.map(v=>csvEscape(String(v))).join(",")).join("\r\n");
+    const blob=new Blob(["\uFEFF",csv],{type:"text/csv;charset=utf-8"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");a.href=url;
+    a.download="FS2S_Hill_Day_Private_Account_Credentials_2026-11-13.csv";
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+
+  const totalNew=ready.filter(x=>x.status==="created").length;
+  const failed=ready.filter(x=>x.status==="error");
+
+  return <div className="stack">
+    <section className="panel" style={{borderTop:"4px solid #aa1e35"}}>
+      <p className="eyebrow">PRIVATE · ADMIN ONLY</p>
+      <h2>Prepare participant accounts</h2>
+      <p>Eligible addresses come from November 18 registrations and the private delegation roster. Every new account gets its own strong temporary password, plus a single-use email verification link. On first sign-in, the participant must create a new password before accessing their assigned briefing.</p>
+      <p><strong>Existing accounts are left untouched.</strong> Do not reset someone else's password. Their instructions will use the existing login and password-reset pages.</p>
+      {preview ? <div className="hero-meta">
+        <span className="hero-pill">{preview.counts.eligible} eligible emails</span>
+        <span className="hero-pill">{preview.counts.existing} existing accounts</span>
+        <span className="hero-pill">{preview.counts.toProvision} eligible new accounts</span>
+        <span className="hero-pill">{preview.counts.assigned} assigned delegations</span>
+      </div> : <p>Loading the current roster…</p>}
+      <div className="hero-actions" style={{marginTop:"1rem"}}>
+        <button type="button" className="button" onClick={provision}
+          disabled={busy || !preview || preview.counts.toProvision===0}>
+          {busy ? "Preparing accounts…" : "Create unique temporary credentials"}
+        </button>
+        <button type="button" className="button-secondary" onClick={download}
+          disabled={!ready.length || busy}>
+          Download private credential CSV
+        </button>
+      </div>
+      {busy ? <p role="status">Processed {progress} of {preview?.counts.toProvision ?? 0} new addresses. Keep this page open.</p> : null}
+      {ready.length ? <p role="status">
+        {totalNew} new accounts provisioned. {failed.length} need individual review.
+        <strong> Download the CSV before leaving this page: passwords and activation links are shown only once.</strong>
+      </p> : null}
+      {problem ? <p className="empty-state" role="alert">{problem}</p> : null}
+      <label style={{display:"flex",gap:"0.6rem",alignItems:"center",marginTop:"0.7rem"}}>
+        <input type="checkbox" checked={includeExisting}
+          onChange={e=>setIncludeExisting(e.target.checked)}/>
+        Include existing accounts in the CSV (no password changes)
+      </label>
+      <p className="muted" style={{fontSize:"0.88rem"}}>
+        Nothing is emailed automatically. This CSV contains sensitive login details: keep it private,
+        send each recipient only their own row, and delete the downloaded CSV when invitations are sent.
+        Verification links can expire; if one does, use the account reset flow rather than reusing an old link.
+      </p>
+    </section>
+    <section className="panel">
+      <h2>Review who is eligible</h2>
+      <p className="muted">A portal account is not permission to attend. Unconfirmed Black Swan Academy youth with no email on file are not included. Delegation briefings appear only when an exact verified-email match exists and that PDF has been released.</p>
+      <div className="field" style={{maxWidth:"480px"}}>
+        <label htmlFor="account-filter">Search names, emails, or group IDs</label>
+        <input id="account-filter" value={filter} onChange={e=>setFilter(e.target.value)} placeholder="Filter participants…" />
+      </div>
+      <div style={{overflowX:"auto"}}>
+        <table style={{width:"100%",borderCollapse:"collapse"}}>
+          <thead><tr>
+            <th style={{textAlign:"left"}}>Name</th><th style={{textAlign:"left"}}>Email</th>
+            <th style={{textAlign:"left"}}>Delegation</th><th style={{textAlign:"left"}}>Account</th>
+            <th style={{textAlign:"left"}}>PDF access</th>
+          </tr></thead>
+          <tbody>
+          {filtered.map(row=><tr key={row.email}>
+            <td style={{padding:"0.7rem 0.4rem"}}>{row.name}</td>
+            <td style={{padding:"0.7rem 0.4rem",wordBreak:"break-word"}}>{row.email}</td>
+            <td style={{padding:"0.7rem 0.4rem"}}>{row.delegation || "Pending"}</td>
+            <td style={{padding:"0.7rem 0.4rem"}}>{row.accountExists?"Existing":"Not yet created"}</td>
+            <td style={{padding:"0.7rem 0.4rem"}}>{!row.isAssigned?"No assignment":row.driveReady?"Granted":"Needs review"}</td>
+          </tr>)}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>;
+}
