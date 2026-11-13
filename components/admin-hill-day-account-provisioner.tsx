@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 type Candidate = {
   email: string; name: string; delegation: string | null;
   accountExists: boolean; isAssigned: boolean; driveReady: boolean;
+  emailVerified?:boolean; requiresPasswordChange?:boolean;
 };
 type Credential = {
   email: string; name: string; delegation: string | null;
@@ -13,7 +14,8 @@ type Credential = {
 };
 type Preview = {
   people: Candidate[];
-  counts: {eligible:number;existing:number;toProvision:number;assigned:number};
+  counts: {eligible:number;existing:number;toProvision:number;assigned:number;
+    verified?:number; firstLoginPending?:number; excludedUnassignedRegistrations?:number;};
 };
 const LOGIN = "https://fs2shub.com/attendee/login";
 const RESET = "https://fs2shub.com/attendee/forgot-password";
@@ -165,13 +167,15 @@ FS2S Convening Director`;
     <section className="panel" style={{borderTop:"4px solid #aa1e35"}}>
       <p className="eyebrow">PRIVATE · ADMIN ONLY</p>
       <h2>Prepare participant accounts</h2>
-      <p>Eligible addresses come from November 18 registrations and the private delegation roster. Every new account gets its own strong temporary password, plus a single-use email verification link. On first sign-in, the participant must create a new password before accessing their assigned briefing.</p>
+      <p>This list contains only currently assigned November 18 participants and authorized coordinating contacts. April registrations, removed Scholars, and people awaiting group placement are excluded from the invitation batch. Each new account receives a unique temporary password and email verification link, then must change its password before opening its assigned briefing.</p>
       <p><strong>Existing accounts are left untouched.</strong> Do not reset someone else's password. Their instructions will use the existing login and password-reset pages.</p>
       {preview ? <div className="hero-meta">
         <span className="hero-pill">{preview.counts.eligible} eligible emails</span>
         <span className="hero-pill">{preview.counts.existing} existing accounts</span>
         <span className="hero-pill">{preview.counts.toProvision} eligible new accounts</span>
-        <span className="hero-pill">{preview.counts.assigned} assigned delegations</span>
+        <span className="hero-pill">{preview.counts.assigned} delegated email records</span>
+        <span className="hero-pill">{preview.counts.verified??0} verified accounts</span>
+        <span className="hero-pill">{preview.counts.excludedUnassignedRegistrations??0} older/unassigned emails excluded</span>
       </div> : <p>Loading the current roster…</p>}
       <div className="hero-actions" style={{marginTop:"1rem"}}>
         <button type="button" className="button" onClick={provision}
@@ -208,7 +212,7 @@ FS2S Convening Director`;
     </section>
     <section className="panel">
       <h2>Review who is eligible</h2>
-      <p className="muted">A portal account is not permission to attend. Unconfirmed Black Swan Academy youth with no email on file are not included. Delegation briefings appear only when an exact verified-email match exists and that PDF has been released.</p>
+      <p className="muted">An account is not attendance approval. The four interested Black Swan Academy youth in the current D03 roster still need parental consent; eight more are provisionally grouped but have no personal email/office assignment. Emily Daly is included as a Free Minds coordinating contact for Keonte Lewis, not as an extra attendee. Briefings appear after exact email matching and access permission checks.</p>
       <div className="field" style={{maxWidth:"480px"}}>
         <label htmlFor="account-filter">Search names, emails, or group IDs</label>
         <input id="account-filter" value={filter} onChange={e=>setFilter(e.target.value)} placeholder="Filter participants…" />
