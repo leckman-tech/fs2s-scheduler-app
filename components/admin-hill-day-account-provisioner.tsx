@@ -36,6 +36,7 @@ export function AdminHillDayAccountProvisioner() {
   const [problem,setProblem] = useState<string|null>(null);
   const [filter,setFilter] = useState("");
   const [includeExisting,setIncludeExisting] = useState(true);
+  const [pilotEmail,setPilotEmail] = useState("");
 
   async function loadPreview() {
     const r=await fetch("/api/admin/hill-day/provision", {cache:"no-store"});
@@ -68,30 +69,57 @@ export function AdminHillDayAccountProvisioner() {
     .filter(p=>(p.name+" "+p.email+" "+(p.delegation??"")).toLowerCase()
       .includes(filter.toLowerCase())),[preview,filter]);
 
+  async function provisionPilot(){
+    if(!preview||busy) return;
+    const candidate=preview.people.find(p=>p.email===pilotEmail&&!p.accountExists);
+    if(!candidate){setProblem("Select an eligible participant without an existing login.");return;}
+    setProblem(null);setBusy(true);
+    try{
+      const response=await fetch("/api/admin/hill-day/provision",{
+        method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({emails:[candidate.email]})
+      });
+      const body=await response.json().catch(()=>null);
+      if(!response.ok||!Array.isArray(body?.results)||body.results.length!==1){
+        throw new Error(body?.error||"Could not create the pilot account.");
+      }
+      const outcome=body.results[0] as Credential;
+      setReady(prior=>[...prior.filter(p=>p.email!==outcome.email),outcome]);
+      await loadPreview();
+      setPilotEmail("");
+      if(outcome.status==="error")setProblem("Pilot account needs review. Do not send its invitation.");
+    }catch(error){
+      setProblem(error instanceof Error?error.message:"Pilot account setup failed.");
+    }finally{setBusy(false);}
+  }
+
   async function provision() {
     if (!preview || busy) return;
-    if (ready.length && !window.confirm(
-      "You have already generated credentials in this tab. Download the existing CSV first. Start a fresh run?"
-    )) return;
-    const remaining = preview.people.filter(x=>!x.accountExists);
-    setBusy(true);setProblem(null);setProgress(0);setReady([]);
-    const created: Credential[] = [];
+    setBusy(true);setProblem(null);setProgress(0);
+    const created: Credential[] = [...ready];
     try {
+      const latest=await loadPreview();
+      const remaining=latest.people.filter(x=>!x.accountExists);
       for(let i=0;i<remaining.length;i+=8) {
         const chunk=remaining.slice(i,i+8);
         const response=await fetch("/api/admin/hill-day/provision",{
           method:"POST",headers:{"Content-Type":"application/json"},
           body:JSON.stringify({emails:chunk.map(p=>p.email)})
         });
-        const body=await response.json();
-        if (!response.ok || !Array.isArray(body.results)) {
-          throw new Error("A batch could not be processed. Download the credentials already generated before attempting any further run.");
+        const body=await response.json().catch(()=>null);
+        if (!response.ok || !Array.isArray(body?.results)) {
+          throw new Error(body?.error||
+            "A batch failed. Download the credentials already generated before retrying.");
         }
-        created.push(...body.results as Credential[]);
+        const updated=body.results as Credential[];
+        for(const outcome of updated){
+          const index=created.findIndex(p=>p.email===outcome.email);
+          if(index>=0)created[index]=outcome;
+          else created.push(outcome);
+        }
         setReady([...created]);
         setProgress(Math.min(i+chunk.length,remaining.length));
       }
-      // Refresh account status only after the entire run, without clearing the one-time credentials.
       await loadPreview();
     } catch(e) {
       setProblem(e instanceof Error ? e.message : "Provisioning did not finish.");
@@ -190,10 +218,23 @@ FS2S Convening Director`;
         <span className="hero-pill">{preview.counts.verified??0} verified accounts</span>
         <span className="hero-pill">{preview.counts.excludedUnassignedRegistrations??0} older/unassigned emails excluded</span>
       </div> : <p>Loading the current roster…</p>}
+      <div className="field" style={{marginTop:"1.1rem",maxWidth:"640px"}}>
+        <label htmlFor="hill-day-pilot-email"><strong>Step 1: Test with one participant</strong></label>
+        <select id="hill-day-pilot-email" value={pilotEmail}
+          onChange={event=>setPilotEmail(event.target.value)} disabled={busy}>
+          <option value="">Select a new participant account to test</option>
+          {(preview?.people??[]).filter(p=>!p.accountExists).map(p=>(
+            <option key={p.email} value={p.email}>{p.name} — {p.delegation}</option>
+          ))}
+        </select>
+        <p className="muted">Select someone you can contact for a real sign-in test. Generate only their credentials first, export their private instructions, and confirm they can change their password and open the correct PDF.</p>
+        <button type="button" className="button-secondary"
+          disabled={!pilotEmail||busy} onClick={provisionPilot}>Create pilot credentials</button>
+      </div>
       <div className="hero-actions" style={{marginTop:"1rem"}}>
         <button type="button" className="button" onClick={provision}
           disabled={busy || !preview || preview.counts.toProvision===0}>
-          {busy ? "Preparing accounts…" : "Create unique temporary credentials"}
+          {busy ? "Preparing accounts…" : "Step 2: Create credentials for everyone else"}
         </button>
         <button type="button" className="button-secondary" onClick={download}
           disabled={!ready.length || busy}>
