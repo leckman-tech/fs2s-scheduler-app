@@ -5,14 +5,15 @@ import Link from "next/link";
 import { AnnouncementsBanner } from "@/components/announcements-banner";
 import { LiveUpdatesTicker } from "@/components/live-updates-ticker";
 import { ScheduleExplorer } from "@/components/schedule-explorer";
-import { getConferenceDays, getPublicAnnouncements, getPublicSessions } from "@/lib/queries";
+import { getAttendeePortalResources, getConferenceDays, getPublicAnnouncements, getPublicSessions } from "@/lib/queries";
 import { buildMetadata, getEventStructuredData } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "2026 Convening Archive | From Silos to Solutions",
   description:
     "From Silos to Solutions 2026 (FS2S), also known as Silos to Solutions, is a Washington, D.C. convening focused on improving coordination, support, and opportunity for justice-involved youth and young adults. The convening is hosted by the See Forever Foundation and Maya Angelou Schools and led by Convening Director Levi W. Eckman, J.D.",
-  path: "/2026-archive"
+  path: "/2026-archive",
+  noIndex: true
 });
 
 export default async function HomePage() {
@@ -22,12 +23,13 @@ export default async function HomePage() {
   const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
   if (profile?.role !== "admin") {
     const { data: grant } = await supabase.from("archive_access_grants").select("user_id").eq("user_id", user.id).maybeSingle();
-    if (!grant) redirect("/attendee?error=The%202026%20archive%20requires%20explicit%20administrator%20permission");
+    if (!grant) redirect("/attendee?archive=restricted");
   }
-  const [sessions, announcements, days] = await Promise.all([
+  const [sessions, announcements, days, documents] = await Promise.all([
     getPublicSessions(),
     getPublicAnnouncements(),
-    getConferenceDays()
+    getConferenceDays(),
+    getAttendeePortalResources()
   ]);
   const featuredCount = sessions.filter((session) => session.featured).length;
   const workshopCount = sessions.filter((session) => session.category === "workshop").length;
@@ -124,6 +126,51 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <section
+        id="archive-documents"
+        className="panel detail-side-panel"
+        style={{margin:"1.3rem 0", scrollMarginTop:"6.5rem"}}
+        aria-labelledby="archive-documents-heading"
+      >
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">AUTHORIZED ATTENDEES</p>
+            <h2 id="archive-documents-heading">2026 attendee document library</h2>
+            <p className="muted">Browse the available handouts and archived learning materials from the April 2026 convening.</p>
+          </div>
+        </div>
+        {documents.length ? (
+          <div className="resource-list">
+            {documents.map((document) => (
+              <article className="announcement" key={document.id}>
+                <strong>{document.title}</strong>
+                {document.description ? <p className="muted">{document.description}</p> : null}
+                <div className="admin-actions">
+                  {document.signed_url ? (
+                    <a
+                      href={document.signed_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="button button-link"
+                    >
+                      Open document
+                    </a>
+                  ) : (
+                    <span className="muted">File temporarily unavailable. Please contact the organizing team.</span>
+                  )}
+                  <span className="muted">{document.file_name}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">There are no attendee documents to display yet.</div>
+        )}
+        <div className="hero-actions" style={{marginTop:"1.1rem"}}>
+          <Link href="/attendee" className="button-secondary button-link">← Back to my attendee portal</Link>
+        </div>
+      </section>
+
       <div className="schedule-layout" id="schedule">
         <aside className="schedule-sidebar stack">
           <AnnouncementsBanner announcements={announcements} />
@@ -150,9 +197,9 @@ export default async function HomePage() {
             </div>
             <div className="hero-actions">
               <Link href="/" className="button button-link">Explore 2027</Link>
-              <Link href="/attendee/login" className="button-secondary button-link">
+              <a href="#archive-documents" className="button-secondary button-link">
                 Attendee documents
-              </Link>
+              </a>
             </div>
           </section>
 
