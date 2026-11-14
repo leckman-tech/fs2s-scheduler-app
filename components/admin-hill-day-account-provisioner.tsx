@@ -149,6 +149,29 @@ export function AdminHillDayAccountProvisioner() {
     } finally { setBusy(false); }
   }
 
+  async function sendRecovery(email:string) {
+    if(busy) return;
+    setBusy(true);setProblem(null);
+    try {
+      const response=await fetch("/api/admin/hill-day/provision",{
+        method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({emails:[email],mode:"recover"})
+      });
+      const data=await response.json().catch(()=>null);
+      if(!response.ok || !Array.isArray(data?.results)) {
+        throw new Error(data?.error||"Couldn't request an alternate verification email.");
+      }
+      const result=data.results[0];
+      if(result?.emailDelivery!=="accepted_by_sender") {
+        throw new Error(result?.message||"The alternate email could not be sent.");
+      }
+      setPilotMessage("Recovery email accepted for "+email+". Ask the student to check the inbox and click the one-time link. Delivery is not guaranteed.");
+      await loadPreview();
+    }catch(e) {
+      setProblem(e instanceof Error?e.message:"Verification recovery failed.");
+    }finally{setBusy(false);}
+  }
+
   function download() {
     if (!preview || !ready.length) return;
     const existing: Credential[]=includeExisting ? preview.people
@@ -260,6 +283,20 @@ FS2S Convening Director`;
         }}>Refresh test status</button>
         {pilotMessage ? <p role="status">{pilotMessage}</p> : null}
         <p role="status"><strong>Test status:</strong> {!testAccount?.accountExists?"Account not created":!testAccount.emailVerified?"Verify the test email":testAccount.requiresPasswordChange?"Complete first-login password change":!testAccount.driveReady?"Resolve test PDF permission":"Email verified, password changed and PDF permission granted"}</p>
+      </div>
+      <div className="panel form-grid" style={{marginTop:"1rem"}}>
+        <h3>Help students whose emails are unverified</h3>
+        <p className="muted">Use the alternate event-email sender to send a one-time verification link. This does not change any password, bypass verification, or email anyone outside the assigned Hill Day roster. Delivery must still be confirmed by the student.</p>
+        {(preview?.people??[]).filter(p=>p.accountExists&&!p.emailVerified).map(p=>
+          <div key={p.email} style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"0.75rem",flexWrap:"wrap"}}>
+            <span>{p.name} — {p.email}</span>
+            <button type="button" className="button-secondary" disabled={busy}
+              onClick={()=>sendRecovery(p.email)}>Send verification link</button>
+          </div>
+        )}
+        {(preview?.people??[]).filter(p=>p.accountExists&&!p.emailVerified).length===0
+          ? <p className="muted">No unverified assigned accounts currently appear on the roster.</p>:null}
+        {pilotMessage?<p role="status">{pilotMessage}</p>:null}
       </div>
       <div className="hero-actions" style={{marginTop:"1rem"}}>
         {!pilotComplete ? <p className="muted">Bulk provisioning is locked until the test email is verified and its required password change is completed. Test a D05 briefing before sending real invitations.</p> : null}
