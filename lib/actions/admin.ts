@@ -512,6 +512,13 @@ export async function createAttendeeAccount(formData: FormData) {
     );
   }
 
+  // Email confirmation is enabled. If signup returned no session, do not
+  // immediately attempt a password login: it is guaranteed to fail with
+  // email_not_confirmed, creating misleading authentication errors.
+  if (signUpData.user && !signUpData.session) {
+    redirect("/attendee/login?success=Your%20account%20was%20created.%20You%20must%20verify%20your%20email%20before%20signing%20in.%20If%20you%20cannot%20find%20the%20message%2C%20use%20the%20resend%20form%20below");
+  }
+
   const { error: signInError } = await supabase.auth.signInWithPassword({
     email,
     password
