@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { sendHillDayPilotAccountEmail, sendHillDayIndividualInvitation } from "@/lib/email";
+import { sendHillDayPilotAccountEmail, sendHillDayIndividualInvitation, sendHillDayVerificationRecoveryEmail } from "@/lib/email";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -46,6 +46,7 @@ async function proxy(request: NextRequest, method: "GET" | "POST") {
 
   let body: string | undefined;
   let mailParticipants = false;
+  let recoverUnverified = false;
   if (method === "POST") {
     try {
       const data = await request.json();
@@ -54,7 +55,8 @@ async function proxy(request: NextRequest, method: "GET" | "POST") {
         return respond({error:"Select between one and eight registered participants."},400);
       }
       mailParticipants = data?.sendInvitations === true;
-      body = JSON.stringify({emails});
+      recoverUnverified = data?.mode === "recover";
+      body = JSON.stringify({emails,...(recoverUnverified?{mode:"recover"}:{})});
     } catch {
       return respond({error:"Invalid account request. Refresh the page."},400);
     }
@@ -82,6 +84,25 @@ async function proxy(request: NextRequest, method: "GET" | "POST") {
         error: typeof data.error === "string" ? data.error :
           "Could not load registration records. Please try again."
       },response.status);
+    }
+    if (method === "POST" && recoverUnverified) {
+      const results = Array.isArray(data.results) ? data.results as Array<{
+        email:string;name:string;status:string;verificationUrl?:string;
+        emailDelivery?:string;message?:string
+      }> : [];
+      for (const item of results) {
+        if (item.status !== "recovery" || !item.verificationUrl) continue;
+        const delivery = await sendHillDayVerificationRecoveryEmail({
+          to:item.email,name:item.name,verificationUrl:item.verificationUrl
+        });
+        item.emailDelivery = delivery.sent ? "accepted_by_sender" : "failed";
+        item.message = delivery.sent
+          ? "A secure link was accepted by the event email provider. Inbox delivery still needs confirmation."
+          : "Event email service did not accept the verification message.";
+        // Never return login tokens to the browser or log them.
+        delete item.verificationUrl;
+      }
+      return respond({results});
     }
     if (method === "POST") {
       const sentTo = JSON.parse(body ?? "{}").emails as string[] | undefined;
