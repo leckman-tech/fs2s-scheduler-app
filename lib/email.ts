@@ -292,12 +292,12 @@ export async function sendHillDayVerificationRecoveryEmail(input: {
   to: string; name: string; verificationUrl: string;
 }): Promise<EmailResult> {
   const email=input.to.trim().toLowerCase();
-  if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) ||
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
      !input.verificationUrl.startsWith(SITE_URL+"/auth/confirm?type=magiclink&token_hash=")) {
     return {sent:false,error:"Invalid recovery destination or token"};
   }
   const title="FS2S Hill Day — verify your attendee email";
-  const firstName=input.name.trim().split(/\\s+/)[0]||"there";
+  const firstName=input.name.trim().split(/\s+/)[0]||"there";
   const content=wrapEmailContent(title,
     `Hi ${firstName}, your FS2S attendee account is already created, but the email address still needs verification. Use this one-time link to confirm your email and open your account.`,
     [
