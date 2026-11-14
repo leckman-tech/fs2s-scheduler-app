@@ -284,6 +284,32 @@ export async function sendHillDayPilotAccountEmail(input: {
 
 
 /** Individual November 18 credentials, sent only after an admin explicitly chooses email delivery. */
+
+/** Admin-triggered recovery for a rostered but unverified Hill Day attendee.
+ * The one-time link is only sent to the mailbox that owns the existing account.
+ */
+export async function sendHillDayVerificationRecoveryEmail(input: {
+  to: string; name: string; verificationUrl: string;
+}): Promise<EmailResult> {
+  const email=input.to.trim().toLowerCase();
+  if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) ||
+     !input.verificationUrl.startsWith(SITE_URL+"/auth/confirm?type=magiclink&token_hash=")) {
+    return {sent:false,error:"Invalid recovery destination or token"};
+  }
+  const title="FS2S Hill Day — verify your attendee email";
+  const firstName=input.name.trim().split(/\\s+/)[0]||"there";
+  const content=wrapEmailContent(title,
+    `Hi ${firstName}, your FS2S attendee account is already created, but the email address still needs verification. Use this one-time link to confirm your email and open your account.`,
+    [
+      "This link works once and expires. Do not share it with anyone.",
+      "Use your own email address to sign in. Your password has not been changed.",
+      "If you did not request attendee access, you can ignore this message."
+    ],
+    {href:input.verificationUrl,label:"Verify email and open attendee portal"}
+  );
+  return sendEmail({to:email,subject:title,html:content.html,text:content.text});
+}
+
 export async function sendHillDayIndividualInvitation(input: {
   to: string;
   name: string;
