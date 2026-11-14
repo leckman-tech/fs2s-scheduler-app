@@ -7,8 +7,8 @@ export async function GET(request: NextRequest) {
   const tokenHash = request.nextUrl.searchParams.get("token_hash");
   const type = request.nextUrl.searchParams.get("type");
 
-  // Only one-time signup links generated for this event are accepted.
-  if (!tokenHash || type !== "signup" || tokenHash.length > 1024) {
+  // Allow only the two one-use verification flows issued by our account service.
+  if (!tokenHash || (type !== "signup" && type !== "magiclink") || tokenHash.length > 1024) {
     return NextResponse.redirect(new URL(
       "/attendee/login?error=This%20setup%20link%20is%20invalid", request.url
     ));
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
   const supabase = await createClient();
   const { error } = await supabase.auth.verifyOtp({
     token_hash: tokenHash,
-    type: "signup"
+    type: type as "signup" | "magiclink"
   });
 
   if (error) {
@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
       request.url
     ));
   }
-  const response = NextResponse.redirect(new URL("/attendee/first-login", request.url));
+  const response = NextResponse.redirect(new URL(type === "magiclink" ? "/attendee" : "/attendee/first-login", request.url));
   response.headers.set("Cache-Control", "no-store");
   response.headers.set("Referrer-Policy", "no-referrer");
   return response;
