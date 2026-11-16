@@ -4714,3 +4714,69 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
  .hill-day-celebration__parade{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
  .hill-day-celebration__parade-set[aria-hidden="true"]{display:none}
 }
+
+
+/* Stylized congressional campus: public-facing, interactive, not a wayfinding map. */
+.fs2s-hill-campus{padding:clamp(1.25rem,3vw,2.5rem)!important;overflow:hidden}
+.fs2s-hill-campus__intro{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;padding-bottom:1.1rem}
+.fs2s-hill-campus__intro>div:first-child{max-width:52rem}
+.fs2s-hill-campus__intro h2{font-size:clamp(1.7rem,3vw,2.75rem);letter-spacing:-.045em;margin:.3rem 0 .65rem}
+.fs2s-hill-campus__intro p:last-child{max-width:58ch;line-height:1.55;margin:0;color:#4e4b49}
+.fs2s-hill-campus__count{display:flex;align-items:center;gap:.8rem;flex-shrink:0}
+.fs2s-hill-campus__count strong{font-size:clamp(2.8rem,5vw,4.7rem);font-weight:760;line-height:1;letter-spacing:-.07em;color:#b51224}
+.fs2s-hill-campus__count span{font-size:.72rem;font-weight:750;line-height:1.35;letter-spacing:.03em;text-transform:uppercase;color:#55504e}
+.fs2s-hill-campus__hint{font-size:.76rem;color:#615e5b;line-height:1.5;margin:0 0 1rem}
+.fs2s-hill-campus__diagram{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,.62fr) minmax(0,1fr);gap:clamp(.7rem,1.4vw,1.4rem);align-items:stretch;min-width:0;border:1px solid rgba(27,29,32,.1);border-radius:12px;padding:clamp(.65rem,1.2vw,1.1rem);background:#f5f4f1}
+.fs2s-hill-campus__wing{min-width:0;position:relative;padding:clamp(.65rem,1.3vw,1.1rem);border:1px solid #e2ded9;border-radius:9px;background:#fff;box-shadow:0 6px 20px rgba(24,27,31,.035)}
+.fs2s-hill-campus__wing-heading{display:flex;flex-direction:column;gap:.15rem;min-height:5.15rem;border-bottom:1px solid #e8e4e0;padding-bottom:.75rem;margin-bottom:.85rem}
+.fs2s-hill-campus__wing-index{font-size:.61rem;letter-spacing:.15em;font-weight:850;color:#b51224}
+.fs2s-hill-campus__wing-heading h3{font-size:clamp(1.15rem,1.65vw,1.45rem);line-height:1.2;letter-spacing:-.035em;margin:.1rem 0}
+.fs2s-hill-campus__wing-heading>span:last-child{font-size:.68rem;line-height:1.3;color:#77716c}
+.fs2s-hill-campus__office-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:.48rem}
+.fs2s-hill-campus__office{display:flex;align-items:center;justify-content:space-between;gap:.55rem;min-height:43px;padding:.66rem .76rem;color:#25272b!important;background:#f9f7f5;border:1px solid #e9e4df;border-radius:6px;text-decoration:none!important;font-size:clamp(.78rem,1vw,.9rem);font-weight:680;line-height:1.25;overflow-wrap:anywhere;transition:background .18s,border-color .18s,box-shadow .18s,transform .18s}
+.fs2s-hill-campus__office:hover,.fs2s-hill-campus__office:focus-visible{background:#fff4f3;border-color:#bd4b55;box-shadow:0 4px 12px rgba(120,29,43,.1);transform:translateY(-1px);outline:none}
+.fs2s-hill-campus__office:focus-visible{outline:2px solid #a20f23;outline-offset:2px}
+.fs2s-hill-campus__office-arrow{color:#b51224;font-size:1.05rem;flex:0 0 auto;font-weight:700}
+.fs2s-hill-campus__landmark{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;position:relative;isolation:isolate;text-align:center;padding:1rem .2rem;background:linear-gradient(180deg,#f7f5f1,#ede9e4);border-radius:9px;overflow:hidden}
+.fs2s-hill-campus__landmark:before{content:"";position:absolute;inset:8% -24%;z-index:-1;border:1px solid rgba(140,130,118,.18);border-radius:50%;box-shadow:0 0 0 25px rgba(140,130,118,.035),0 0 0 50px rgba(140,130,118,.028)}
+.fs2s-hill-campus__dome{position:relative;width:76%;max-width:175px;height:90px;margin-top:-5px}
+.fs2s-hill-campus__dome:before{content:"";position:absolute;width:7px;height:19px;background:#888178;top:0;left:calc(50% - 3px);border-radius:5px 5px 0 0}
+.fs2s-hill-campus__dome:after{content:"";position:absolute;bottom:0;left:11%;width:78%;height:65px;border:5px solid #8d8881;border-bottom:0;border-radius:75% 75% 0 0;background:repeating-linear-gradient(90deg,transparent 0,transparent 13px,rgba(115,106,98,.17) 14px,transparent 15px)}
+.fs2s-hill-campus__dome span:first-child{position:absolute;bottom:0;left:0;width:100%;height:7px;background:#8d8881}
+.fs2s-hill-campus__building{width:93%;max-width:195px;margin-top:-1px}
+.fs2s-hill-campus__building-roof{height:12px;background:#7b776f;clip-path:polygon(50% 0,100% 65%,100% 100%,0 100%,0 65%)}
+.fs2s-hill-campus__columns{display:flex;justify-content:space-evenly;background:#d6d1c9;border-inline:6px solid #8d8881;padding:3px 0 0;height:65px}
+.fs2s-hill-campus__columns i{width:8%;background:#858079;border-radius:2px 2px 0 0}
+.fs2s-hill-campus__building-base{height:12px;background:#8d8881;border-bottom:5px solid #77736b}
+.fs2s-hill-campus__landmark-title{margin-top:1.25rem;color:#4d4944;font-size:clamp(.75rem,1vw,.93rem);font-weight:850;letter-spacing:.14em;line-height:1.5}
+.fs2s-hill-campus__landmark-subtitle{margin-top:.7rem;color:#ad293b;font-size:.58rem;letter-spacing:.13em;font-weight:800;line-height:1.4}
+.fs2s-hill-campus__privacy{font-size:.78rem;color:#66615d;line-height:1.5;margin:1rem 0 0}
+@media(max-width:1060px){
+ .fs2s-hill-campus__diagram{grid-template-columns:minmax(0,1fr) minmax(130px,.45fr) minmax(0,1fr);gap:.55rem}
+ .fs2s-hill-campus__wing{padding:.7rem}
+ .fs2s-hill-campus__office{padding:.58rem .55rem;font-size:.78rem}
+}
+@media(max-width:790px){
+ .fs2s-hill-campus__diagram{grid-template-columns:repeat(2,minmax(0,1fr));padding:.8rem}
+ .fs2s-hill-campus__landmark{grid-column:1/-1;grid-row:1;min-height:155px}
+ .fs2s-hill-campus__dome{height:48px;width:90px}
+ .fs2s-hill-campus__dome:after{height:36px;border-width:3px}
+ .fs2s-hill-campus__building{max-width:112px}
+ .fs2s-hill-campus__columns{height:29px;border-inline-width:3px}
+ .fs2s-hill-campus__building-base{height:8px;border-bottom-width:3px}
+ .fs2s-hill-campus__landmark-title{margin-top:.5rem;font-size:.71rem}
+ .fs2s-hill-campus__landmark-subtitle{margin-top:.3rem}
+ .fs2s-hill-campus__office{font-size:.82rem}
+}
+@media(max-width:570px){
+ .fs2s-hill-campus__intro{align-items:flex-start}
+ .fs2s-hill-campus__intro h2{font-size:1.7rem}
+ .fs2s-hill-campus__count{gap:.35rem}
+ .fs2s-hill-campus__count strong{font-size:2.7rem}
+ .fs2s-hill-campus__count span{font-size:.55rem}
+ .fs2s-hill-campus__diagram{grid-template-columns:minmax(0,1fr);gap:.7rem}
+ .fs2s-hill-campus__landmark{grid-column:1;grid-row:1}
+ .fs2s-hill-campus__office-grid{grid-template-columns:minmax(0,1fr)}
+ .fs2s-hill-campus__office{min-height:45px;font-size:.88rem}
+ .fs2s-hill-campus__wing-heading{min-height:0}
+}
