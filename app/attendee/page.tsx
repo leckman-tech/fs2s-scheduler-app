@@ -13,8 +13,8 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const delegationLeads: Record<string,string> = {
- D01:"Chief Leah Lamb", D02:"Dr. Clarisse Mendoza-Davis", D03:"Chief Azalia Speight",
- D04:"Principal Wright-Cunningham", D05:"Levi Eckman (additional afternoon advisor pending)",
+ D01:"Chief Leah Lamb", D02:"Dr. Cheryl Chun", D03:"Chief Azalia Speight",
+ D04:"Principal Wright-Cunningham", D05:"Dr. Mendoza-Davis (1 PM); Chief Aaron Cannon (2 PM); Levi Eckman (event lead)",
  D06:"Mekhi Love", D07:"Ciara Norfleet", D08:"De'Asyia Barner", D09:"Deputy Chief Nora Shetty"
 };
 const schedule = [
