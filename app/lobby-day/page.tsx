@@ -50,11 +50,11 @@ export default async function LobbyDayPage(){
   <div className="hero-meta"><span className="hero-pill">November 18, 2026</span><span className="hero-pill">Capitol Hill, Washington, D.C.</span><span className="hero-pill">At Maya 9:45 AM • Training 10–10:45 AM • Lunch 10:45 AM • Buses 11:15 AM</span></div>
   <div className="hero-actions"><a href="#celebrate" className="button button-link">Meet the Hill Day community</a><a href="#schedule" className="button-secondary button-link">View Wednesday’s schedule</a></div>
  </div><div className="hero-card__visual"><div className="hero-photo hero-photo--dc"><span className="hero-photo__label">The Hill, together</span></div><div className="hero-photo hero-photo--community"><span className="hero-photo__label">Students at the center</span></div><div className="hero-photo hero-photo--conference"><span className="hero-photo__label">Partners in action</span></div></div></div>  <div id="celebrate" className="hill-day-celebration" aria-label="Advocacy Hill Day community by the numbers">
-    <div className="hill-day-celebration__intro"><span className="hill-day-celebration__flag"><span aria-hidden="true">✦</span> REGISTRATION IS NOW CLOSED</span><span className="hill-day-celebration__date">SEE YOU WEDNESDAY, NOVEMBER 18</span></div>
-    <div className="hill-day-celebration__lead"><div><p className="hill-day-celebration__kicker">A community ready to make its voice heard</p><strong className="hill-day-celebration__number">{count}</strong><span className="hill-day-celebration__number-label">people registered</span></div><div className="hill-day-celebration__note"><span className="hill-day-celebration__sparkle" aria-hidden="true">✳</span><h2>Many voices.<br/>One Capitol.</h2><p>Scholars, educators, advocates, and partners are coming together for a day of conversations that matter.</p></div></div>
+    <div className="hill-day-celebration__intro"><span className="hill-day-celebration__flag">REGISTRATION CLOSED</span><span className="hill-day-celebration__date">SEE YOU WEDNESDAY, NOVEMBER 18</span></div>
+    <div className="hill-day-celebration__lead"><div><p className="hill-day-celebration__kicker">A community ready to make its voice heard</p><strong className="hill-day-celebration__number">{count}</strong><span className="hill-day-celebration__number-label">people registered</span></div><div className="hill-day-celebration__note"><h2>Many voices.<br/>One Capitol.</h2><p>Scholars, educators, advocates, and partners are coming together for a day of conversations that matter.</p></div></div>
     <div className="hill-day-celebration__stats"><div><strong>9</strong><span>delegation groups</span></div><div><strong>15</strong><span>congressional appointments</span></div><div><strong>5</strong><span>partner-led delegations</span></div></div>
     <div className="hill-day-celebration__groups">
-      <div className="hill-day-celebration__groups-head"><p className="hill-day-celebration__groups-label">NINE DELEGATIONS. ONE SHARED PURPOSE.</p><span className="hill-day-celebration__groups-hint">THE PEOPLE BEHIND THE PROGRESS <span aria-hidden="true">✳</span></span></div>
+      <div className="hill-day-celebration__groups-head"><p className="hill-day-celebration__groups-label">NINE DELEGATIONS. ONE SHARED PURPOSE.</p><span className="hill-day-celebration__groups-hint">THE PEOPLE BEHIND THE DAY</span></div>
       <div className="hill-day-celebration__parade" aria-label="Participating delegations">
         <div className="hill-day-celebration__parade-track">
           <div className="hill-day-celebration__parade-set">
@@ -65,7 +65,7 @@ export default async function LobbyDayPage(){
           </div>
         </div>
       </div>
-    </div><div className="hill-day-celebration__footer"><span aria-hidden="true">✦</span> FROM SILOS TO SOLUTIONS <span aria-hidden="true">✦</span> POWER THROUGH PARTNERSHIPS <span aria-hidden="true">✦</span></div>
+    </div><div className="hill-day-celebration__footer"><span>FROM SILOS TO SOLUTIONS</span><span>POWER THROUGH PARTNERSHIPS</span></div>
     <p className="hill-day-celebration__fineprint">Registration total reflects sign-ups, not a final attendance headcount. Student permissions and individual delegation assignments are managed separately.</p>
   </div>
 </section>
