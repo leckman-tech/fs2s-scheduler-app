@@ -4514,3 +4514,36 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 @media(hover:hover){
   .attendee-app__nav > a:hover,.attendee-app .hero-actions > a:hover {transform:translateY(-1px);}
 }
+
+
+/* Hill Day 2026: personal, uncluttered dashboard on mobile and desktop. */
+.attendee-app__quote {margin:1.1rem 0 0;max-width:690px;padding:1rem 1.2rem;border-left:3px solid #f0a8ae;background:rgba(255,255,255,.08);border-radius:0 12px 12px 0;}
+.attendee-app__quote p {margin:0 0 .4rem;font-family:Georgia,serif;font-size:clamp(1rem,2.3vw,1.25rem);line-height:1.55;}
+.attendee-app__quote cite {font-size:.8rem;font-style:normal;opacity:.8;line-height:1.4;}
+.attendee-app__mygroup {display:grid;gap:.7rem;border-top:5px solid #ac1d32;padding:clamp(1.25rem,3vw,2rem);}
+.attendee-app__mygroup h2 {margin:0;font-size:clamp(1.55rem,3vw,2.25rem);line-height:1.2;}
+.attendee-app__mygroup p {margin:.2rem 0;line-height:1.5;}
+.attendee-app__meeting-list {display:grid;gap:.6rem;margin:.2rem 0 1rem;padding-left:1.4rem;}
+.attendee-app__meeting-list li {line-height:1.5;padding-left:.15rem;overflow-wrap:anywhere;}
+.attendee-app__big-cta {display:inline-flex;align-items:center;justify-content:center;width:fit-content;min-height:52px;padding:.8rem 1.35rem;text-align:center;}
+.attendee-app__readiness {padding:clamp(1.25rem,3vw,2rem);}
+.attendee-app__readiness h2 {margin:0 0 .8rem;font-size:clamp(1.35rem,3vw,1.7rem);}
+.attendee-app__readiness ul {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;list-style:none;padding:0;margin:0 0 .9rem;}
+.attendee-app__readiness li {display:flex;gap:.6rem;align-items:flex-start;padding:.85rem;border:1px solid rgba(85,85,85,.16);border-radius:12px;min-width:0;background:rgba(255,255,255,.66);}
+.attendee-app__readiness li > span:first-child {width:25px;height:25px;flex:none;display:grid;place-items:center;border-radius:50%;background:#f2eded;color:#9e1527;font-weight:800;}
+.attendee-app__readiness li > span:last-child {display:grid;gap:.25rem;min-width:0;}
+.attendee-app__readiness small {font-size:.78rem;line-height:1.42;color:#625c5c;}
+.attendee-app__readiness p {margin:.35rem 0 0;font-size:.88rem;}
+.attendee-app__actions {margin-top:0;}
+.attendee-app__actions > article:nth-child(1) {border-top:none!important;}
+@media(max-width:760px) {
+  .attendee-app__nav {grid-template-columns:repeat(3,minmax(0,1fr));}
+  .attendee-app__readiness ul {grid-template-columns:1fr;}
+  .attendee-app__readiness li {padding:.75rem .8rem;}
+  .attendee-app__mygroup,.attendee-app__readiness {padding:1.15rem;}
+  .attendee-app__big-cta {display:flex;width:100%;}
+  .attendee-app__quote {padding:.85rem 1rem;margin-top:.9rem;}
+}
+@media(max-width:370px) {
+  .attendee-app__nav {grid-template-columns:1fr;}
+}
