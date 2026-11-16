@@ -70,8 +70,8 @@ export default async function AttendeePortalPage({
           <figcaption>Washington, D.C. · Our Capitol, our conversations.</figcaption>
         </figure>
         <blockquote className="attendee-app__quote">
-          <p>“The more that people are engaged with our institutions, I think, the better.”</p>
-          <cite>— Justice Ketanji Brown Jackson, 2025 ESSENCE Festival · <a href="https://www.essence.com/news/justice-ketanji-brown-jackson-essence-fest-2025/" target="_blank" rel="noopener noreferrer">Source</a></cite>
+          <p>“Don’t be turned away because you all are the next generation.”</p>
+          <cite>— Justice Ketanji Brown Jackson, speaking with students in 2026 · <a href="https://www.opb.org/article/2026/03/12/ketanji-brown-jackson/" target="_blank" rel="noopener noreferrer">Source</a></cite>
         </blockquote>
         <div className="hero-meta">
           <span className="hero-pill">Wednesday, November 18, 2026</span>
