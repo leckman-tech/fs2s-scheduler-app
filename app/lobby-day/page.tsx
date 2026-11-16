@@ -49,24 +49,29 @@ export default async function LobbyDayPage(){
   <p>See Forever Foundation and Maya Angelou Schools are convening scholars, educators and partners to advocate for educational opportunity, continuity and stronger pathways for young people affected by the justice system. Registration has closed, and 75 people have signed up to take part in the day.</p>
   <div className="hero-meta"><span className="hero-pill">November 18, 2026</span><span className="hero-pill">Capitol Hill, Washington, D.C.</span><span className="hero-pill">At Maya 9:45 AM • Training 10–10:45 AM • Lunch 10:45 AM • Buses 11:15 AM</span></div>
   <div className="hero-actions"><a href="#celebrate" className="button button-link">Meet the Hill Day community</a><a href="#schedule" className="button-secondary button-link">View Wednesday’s schedule</a></div>
- </div><div className="hero-card__visual"><div className="hero-photo hero-photo--dc"><span className="hero-photo__label">The Hill, together</span></div><div className="hero-photo hero-photo--community"><span className="hero-photo__label">Students at the center</span></div><div className="hero-photo hero-photo--conference"><span className="hero-photo__label">Partners in action</span></div></div></div>  <div id="celebrate" className="hill-day-celebration" aria-label="Advocacy Hill Day community by the numbers">
-    <div className="hill-day-celebration__intro"><span className="hill-day-celebration__flag">REGISTRATION CLOSED</span><span className="hill-day-celebration__date">SEE YOU WEDNESDAY, NOVEMBER 18</span></div>
-    <div className="hill-day-celebration__lead"><div><p className="hill-day-celebration__kicker">A community ready to make its voice heard</p><strong className="hill-day-celebration__number">{count}</strong><span className="hill-day-celebration__number-label">people registered</span></div><div className="hill-day-celebration__note"><h2>Many voices.<br/>One Capitol.</h2><p>Scholars, educators, advocates, and partners are coming together for a day of conversations that matter.</p></div></div>
-    <div className="hill-day-celebration__stats"><div><strong>9</strong><span>delegation groups</span></div><div><strong>15</strong><span>congressional appointments</span></div><div><strong>5</strong><span>partner-led delegations</span></div></div>
-    <div className="hill-day-celebration__groups">
-      <div className="hill-day-celebration__groups-head"><p className="hill-day-celebration__groups-label">NINE DELEGATIONS. ONE SHARED PURPOSE.</p><span className="hill-day-celebration__groups-hint">THE PEOPLE BEHIND THE DAY</span></div>
+ </div><div className="hero-card__visual"><div className="hero-photo hero-photo--dc"><span className="hero-photo__label">The Hill, together</span></div><div className="hero-photo hero-photo--community"><span className="hero-photo__label">Students at the center</span></div><div className="hero-photo hero-photo--conference"><span className="hero-photo__label">Partners in action</span></div></div></div>  <div id="celebrate" className="hill-day-celebration" aria-label="Advocacy Hill Day registration celebration">
+    <div className="hill-day-celebration__topline"><span><span className="hill-day-celebration__status-dot" aria-hidden="true"/>REGISTRATION CLOSED</span><span>WEDNESDAY, NOVEMBER 18, 2026</span></div>
+    <div className="hill-day-celebration__main">
+      <div className="hill-day-celebration__primary"><div className="hill-day-celebration__count">{count}</div><div className="hill-day-celebration__count-caption">people registered</div></div>
+      <div className="hill-day-celebration__story"><p className="hill-day-celebration__story-overline">FROM SILOS TO SOLUTIONS</p><h2>One day.<br/><em>Many voices.</em></h2><p>Scholars, educators, and community partners are heading to Capitol Hill with a shared purpose.</p></div>
+    </div>
+    <div className="hill-day-celebration__feature" aria-label="Advocacy Day by the numbers">
+      <div className="hill-day-celebration__feature-heading"><span>THE DAY BY THE NUMBERS</span><span className="hill-day-celebration__feature-pips" aria-hidden="true"><i/><i/><i/></span></div>
+      <div className="hill-day-celebration__feature-stage">
+        <div className="hill-day-celebration__feature-slide"><strong>9</strong><span><b>Delegation groups</b><small>Students and partners, united in advocacy.</small></span></div>
+        <div className="hill-day-celebration__feature-slide"><strong>15</strong><span><b>Congressional appointments</b><small>Real conversations with congressional offices.</small></span></div>
+        <div className="hill-day-celebration__feature-slide"><strong>5</strong><span><b>Partner-led delegations</b><small>Community organizations bringing their voices to the Hill.</small></span></div>
+      </div>
+    </div>
+    <div className="hill-day-celebration__groups"><span className="hill-day-celebration__groups-title">THE PEOPLE MAKING IT HAPPEN</span>
       <div className="hill-day-celebration__parade" aria-label="Participating delegations">
         <div className="hill-day-celebration__parade-track">
-          <div className="hill-day-celebration__parade-set">
-            <span>Maya Scholars A</span><span>Maya Scholars B</span><span>Maya Scholars C</span><span>Maya Scholars D</span><span>Tutoring Café A</span><span>Tutoring Café B</span><span>Black Swan Academy</span><span>Georgetown / Sasha Bruce</span><span>Youth Justice Partners</span>
-          </div>
-          <div className="hill-day-celebration__parade-set" aria-hidden="true">
-            <span>Maya Scholars A</span><span>Maya Scholars B</span><span>Maya Scholars C</span><span>Maya Scholars D</span><span>Tutoring Café A</span><span>Tutoring Café B</span><span>Black Swan Academy</span><span>Georgetown / Sasha Bruce</span><span>Youth Justice Partners</span>
-          </div>
+          <div className="hill-day-celebration__parade-set"><span>Maya Scholars A</span><span>Maya Scholars B</span><span>Maya Scholars C</span><span>Maya Scholars D</span><span>Tutoring Café A</span><span>Tutoring Café B</span><span>Black Swan Academy</span><span>Georgetown / Sasha Bruce</span><span>Youth Justice Partners</span></div>
+          <div className="hill-day-celebration__parade-set" aria-hidden="true"><span>Maya Scholars A</span><span>Maya Scholars B</span><span>Maya Scholars C</span><span>Maya Scholars D</span><span>Tutoring Café A</span><span>Tutoring Café B</span><span>Black Swan Academy</span><span>Georgetown / Sasha Bruce</span><span>Youth Justice Partners</span></div>
         </div>
       </div>
-    </div><div className="hill-day-celebration__footer"><span>FROM SILOS TO SOLUTIONS</span><span>POWER THROUGH PARTNERSHIPS</span></div>
-    <p className="hill-day-celebration__fineprint">Registration total reflects sign-ups, not a final attendance headcount. Student permissions and individual delegation assignments are managed separately.</p>
+    </div>
+    <p className="hill-day-celebration__fineprint">Registration total reflects sign-ups, not final attendance. Student permissions and delegation assignments are confirmed separately.</p>
   </div>
 </section>
  <section className="context-grid"><article className="panel story-panel story-panel--accent"><p className="eyebrow">WHY WE'RE GOING</p><h2>Every young person deserves a path through education</h2><p>Scholars will talk with congressional offices about education, justice-system involvement, and the support young people need to stay in school or return to learning.</p></article>
