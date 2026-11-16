@@ -127,7 +127,7 @@ export default async function AttendeePortalPage({
         <div className="hero-actions">
           <a className="button-secondary button-link" href="https://drive.google.com/file/d/1X8cmoge4IrtnT0GMBTp1IkowiUsQjBX_/view" target="_blank" rel="noopener noreferrer">Open master briefing book ↗</a>
         </div>
-        <p className="muted">Google Drive may require separate access for this master copy. If access is denied, email LEckman@SeeForever.org. Do not use the master book to assume you are assigned to another meeting.</p>
+        <p className="muted">The master copy opens in Google Drive and is viewable by anyone with its link. Do not treat another group's meeting as your own. If anything appears incorrect, email LEckman@SeeForever.org.</p>
       </section>
 
       <section id="archive" className="panel callout-panel" style={{scrollMarginTop:"6.5rem"}}>
