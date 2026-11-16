@@ -3,23 +3,27 @@ import Link from "next/link";
 import { getPublicLobbyDaySignupCount } from "@/lib/queries";
 import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({title:"November 18, 2026 Advocacy Hill Day | FS2S",description:"Join the FS2S Advocacy Hill Day on November 18, 2026, featuring Maya Angelou Scholars, community partners, and congressional conversations.",path:"/lobby-day"});
-const scheduledMeetings = [
- { time: "12:30 p.m.", office: "Rep. Terri Sewell's office", location: "1035 Longworth", detail: "Meeting with Legislative Assistant Brandan Belser" },
- { time: "1:00 p.m.", office: "Rep. Jim Jordan's office", location: "2056 Rayburn", detail: "Meeting with congressional staff" },
- { time: "1:00–1:30 p.m.", office: "Senate HELP Democratic staff", location: "632 Hart", detail: "Committee staff conversation" },
- { time: "1:00 p.m.", office: "Sen. Dick Durbin / Senate Judiciary staff", location: "711 Hart", detail: "Meeting with Annie Powell and Eileen DeGuire" },
- { time: "1:00 p.m.", office: "Rep. Kevin Kiley's office", location: "2445 Rayburn (office address)", detail: "Meeting with Carson Cameron; calendar invitation sent, room to verify" },
- { time: "1:30 p.m.", office: "House Education and Workforce Committee staff", location: "2257 Rayburn", detail: "Meeting with Eli Mitchell" },
- { time: "1:30 p.m.", office: "Sen. Patty Murray's office", location: "154 Russell", detail: "Staff conversation; delegation to arrive by 1:15 p.m." },
- { time: "2:00–2:30 p.m.", office: "Del. Eleanor Holmes Norton's office", location: "2136 Rayburn", detail: "Meeting with congressional staff" },
- { time: "2:00 p.m.", office: "Rep. Suzanne Bonamici's office", location: "2231 Rayburn", detail: "Education policy staff conversation" },
- { time: "2:00 p.m.", office: "Sen. Gary Peters's office", location: "724 Hart (South entrance on Constitution Ave.)", detail: "Meeting with staff member Ava Kelsey; office confirmed November 13. Metal-detector screening at Senate building entry." },
- { time: "2:30 p.m.", office: "Sen. Brian Schatz's office", location: "722 Hart", detail: "Education policy staff conversation" },
- { time: "2:30–3:00 p.m.", office: "Rep. Gary Palmer's office", location: "170 Cannon (office address)", detail: "In-person meeting booked with Legislative Aide Hampton Neugent; exact room to verify" },
- { time: "2:30 p.m.", office: "Sen. Mazie Hirono’s office", location: "109 Hart", detail: "D07 staff meeting with Ben Strand; group capacity confirmed" },
- { time: "3:00–3:30 p.m.", office: "Rep. Adelita S. Grijalva", location: "1203 Longworth", detail: "Meeting scheduled with the Congresswoman" },
- { time: "3:00 p.m.", office: "Sen. Chris Van Hollen's office", location: "730 Hart", detail: "Meeting with staff member Brendan Flynn" }
-];
+const congressionalOffices = {
+  senate: [
+    { name: "Senate HELP Committee", url: "https://www.help.senate.gov/", building: "Hart" },
+    { name: "Sen. Dick Durbin", url: "https://www.durbin.senate.gov/contact/", building: "Hart" },
+    { name: "Sen. Brian Schatz", url: "https://www.schatz.senate.gov/services", building: "Hart" },
+    { name: "Sen. Gary Peters", url: "https://www.peters.senate.gov/contact", building: "Hart" },
+    { name: "Sen. Mazie Hirono", url: "https://www.hirono.senate.gov/contact", building: "Hart" },
+    { name: "Sen. Chris Van Hollen", url: "https://www.vanhollen.senate.gov/contact/", building: "Hart" },
+    { name: "Sen. Patty Murray", url: "https://www.murray.senate.gov/write-to-patty/", building: "Russell" }
+  ],
+  house: [
+    { name: "Rep. Terri Sewell", url: "https://sewell.house.gov/contact-me", building: "Longworth" },
+    { name: "Rep. Adelita Grijalva", url: "https://grijalva.house.gov/contact", building: "Longworth" },
+    { name: "Rep. Jim Jordan", url: "https://jordan.house.gov/contact", building: "Rayburn" },
+    { name: "Rep. Kevin Kiley", url: "https://kiley.house.gov/contact", building: "Rayburn" },
+    { name: "Del. Eleanor Holmes Norton", url: "https://norton.house.gov/contact-congresswoman-norton", building: "Rayburn" },
+    { name: "Rep. Suzanne Bonamici", url: "https://bonamici.house.gov/contact", building: "Rayburn" },
+    { name: "House Education & Workforce", url: "https://edworkforce.house.gov/contact/", building: "Rayburn" },
+    { name: "Rep. Gary Palmer", url: "https://palmer.house.gov/contact/offices", building: "Cannon" }
+  ]
+};
 const meetingsInProgress = [
 
  "Senate HELP Republican staff — willing to meet; an afternoon time has been requested",
@@ -78,12 +82,26 @@ export default async function LobbyDayPage(){
  <article className="panel story-panel"><p className="eyebrow">WHAT TO EXPECT</p><h2>Conversations led by student experience</h2><p>Nine delegations are preparing for their congressional conversations. Registered attendees should review their group materials and follow their designated adult lead; student permissions and final travel approval remain separate.</p></article></section>
  <section className="panel hill-day-closed-notice" aria-label="Registration status"><p className="eyebrow">REGISTRATION CLOSED</p><h2>We're grateful you're part of this.</h2><p>Registration for the November 18 Advocacy Hill Day has ended. If you're already participating, please use the <Link href="/attendee/briefings">attendee briefing portal</Link> and coordinate directly with your delegation lead. Questions? <a href="mailto:LEckman@SeeForever.org?subject=FS2S%20Advocacy%20Hill%20Day%20Question">Contact the organizing team</a>.</p></section>
  <section id="schedule" className="panel callout-panel"><p className="eyebrow">EVENT SCHEDULE</p><h2>Our plan for November 18</h2><p className="muted">Check in at Maya Angelou Public Charter High School, 5600 East Capitol Street NE, between 9:45 and 10:00 a.m. Training begins at 10:00 a.m., lunch is at 10:45 a.m., and Sprinter transportation is planned to depart beginning at 11:15 a.m. Congressional meetings start from 12:30 p.m. after security screening.</p><div className="timeline-grid">{schedule.map(item=><article className="timeline-card" key={item.title}><p className="timeline-card__label">{item.time}</p><h3>{item.title}</h3><p>{item.description}</p></article>)}</div></section>
- <section className="panel callout-panel"><p className="eyebrow">CONGRESSIONAL ENGAGEMENT</p><h2>Congressional conversations on November 18</h2>
- <p>On November 18, nine student and community delegations will meet with congressional offices and committee staff about educational opportunity, juvenile justice, and reentry. The 15 agreed appointments include Senator Hirono’s office at 2:30 p.m. A separate, brief photo opportunity with Representative Glenn Ivey is not counted as a formal meeting.</p>
- <p className="muted">Some offices still have room-capacity or arrival details to confirm. Final individual delegation assignments, attendee names, and any changes will be provided privately to participating groups.</p>
- <div className="timeline-grid">{scheduledMeetings.map(item=><article className="timeline-card" key={item.office}><p className="timeline-card__label">{item.time} · {item.location}</p><h3>{item.office}</h3><p>{item.detail}</p></article>)}</div>
- <p className="muted">Additional meeting requests remain under discussion. Only confirmed appointments appear above. Participants should use their private portal for their own group documents and any updated instructions.</p>
- <p className="muted" style={{marginTop:"1rem"}}>A meeting with congressional staff does not mean a Member of Congress will personally attend or endorse FS2S recommendations. Meeting details may change due to congressional business.</p>
+ <section className="panel fs2s-hill-campus" id="congressional-offices" aria-labelledby="fs2s-hill-campus-title">
+    <div className="fs2s-hill-campus__intro"><div><p className="eyebrow">CONGRESSIONAL ENGAGEMENT</p><h2 id="fs2s-hill-campus-title">Across the Hill, together.</h2><p>Our nine delegations will engage 15 congressional offices and committees on November 18. Explore the offices taking part by selecting a name below.</p></div><div className="fs2s-hill-campus__count"><strong>15</strong><span>Congressional<br/>engagements</span></div></div>
+    <p className="fs2s-hill-campus__hint">A stylized view of the Capitol campus, grouped by building—not a navigation map. Each office name opens its official congressional contact page.</p>
+    <div className="fs2s-hill-campus__diagram">
+      <div className="fs2s-hill-campus__wing fs2s-hill-campus__wing--senate">
+        <div className="fs2s-hill-campus__wing-heading"><span className="fs2s-hill-campus__wing-index">01 / SENATE</span><h3>Senate offices</h3><span>Hart &amp; Russell</span></div>
+        <div className="fs2s-hill-campus__office-grid">{congressionalOffices.senate.map(office=><a key={office.name} href={office.url} target="_blank" rel="noopener noreferrer" className="fs2s-hill-campus__office" aria-label={`${office.name}, opens official contact page in a new tab`}><span>{office.name}</span><span className="fs2s-hill-campus__office-arrow" aria-hidden="true">↗</span></a>)}</div>
+      </div>
+      <div className="fs2s-hill-campus__landmark" aria-hidden="true">
+        <div className="fs2s-hill-campus__dome"><span/><span/><span/></div>
+        <div className="fs2s-hill-campus__building"><div className="fs2s-hill-campus__building-roof"/><div className="fs2s-hill-campus__columns">{Array.from({length:8},(_,i)=><i key={i}/>)}</div><div className="fs2s-hill-campus__building-base"/></div>
+        <span className="fs2s-hill-campus__landmark-title">UNITED STATES<br/>CAPITOL</span>
+        <span className="fs2s-hill-campus__landmark-subtitle">ONE HILL · MANY VOICES</span>
+      </div>
+      <div className="fs2s-hill-campus__wing fs2s-hill-campus__wing--house">
+        <div className="fs2s-hill-campus__wing-heading"><span className="fs2s-hill-campus__wing-index">02 / HOUSE</span><h3>House offices</h3><span>Rayburn, Longworth &amp; Cannon</span></div>
+        <div className="fs2s-hill-campus__office-grid">{congressionalOffices.house.map(office=><a key={office.name} href={office.url} target="_blank" rel="noopener noreferrer" className="fs2s-hill-campus__office" aria-label={`${office.name}, opens official contact page in a new tab`}><span>{office.name}</span><span className="fs2s-hill-campus__office-arrow" aria-hidden="true">↗</span></a>)}</div>
+      </div>
+    </div>
+    <p className="fs2s-hill-campus__privacy">Appointment times, room assignments, staff contacts and individual delegation schedules are shared privately with participants through the attendee portal.</p>
  </section>
  <section className="panel callout-panel" id="participation"><p className="eyebrow">COMMUNITY PARTICIPATION</p><h2>Students, educators, and community partners</h2><p>Seventy-five participants have registered from schools, youth organizations, and community partners working to expand opportunity for young people. Nine delegations will bring distinct perspectives to Capitol Hill.</p><p>We celebrate <strong>Maya Angelou Scholars A, B, C, and D</strong>, <strong>Tutoring Café A and B</strong>, <strong>Black Swan Academy</strong>, <strong>Georgetown / Sasha Bruce</strong>, and <strong>Youth Justice Partners</strong>—alongside the educators, advocates, and community members helping their voices reach Congress.</p><p className="muted">Individual participation and student arrangements will be confirmed by the organizing team.</p></section>
  <section className="panel callout-panel" id="sponsor"><p className="eyebrow">SPONSOR ADVOCACY HILL DAY</p><h2>Help provide lunch for 100 participants</h2><p>We are seeking a <strong>$2,000 lunch sponsorship</strong> or an in-kind contribution of approximately 100 meals for students, educators and community partners on November 18. The See Forever Foundation can accept a charitable contribution directly. A smaller contribution or an introduction to a potential catering partner is also welcome.</p><p>Sponsors may be recognized at the event and on this website. Please contact our team to discuss details.</p><div className="hero-actions"><a className="button button-link" href="mailto:LEckman@SeeForever.org?subject=FS2S%20Advocacy%20Hill%20Day%20Lunch%20Sponsorship">Discuss sponsorship</a><a className="button-secondary button-link" href="mailto:LEckman@SeeForever.org?subject=FS2S%20In-Kind%20Lunch%20Donation">Offer meals or an introduction</a></div></section>
