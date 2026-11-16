@@ -100,7 +100,7 @@ export default async function CongressionalBriefingsPage() {
               </a>
             </div>
             <p className="muted" style={{fontSize:"0.87rem"}}>
-              This private PDF is shared only with the email address assigned to your delegation. Google Drive may ask you to sign in with that same email. If you cannot open it, please contact the organizing team—do not use someone else's account.
+              This document opens in Google Drive. Please use your assigned group briefing, not a different delegation's schedule. Some documents allow anyone with the link to view them, so do not forward the link beyond your group. If you cannot open it, contact LEckman@SeeForever.org.
             </p>
           </section>
           {offices.length === 1 ? (
