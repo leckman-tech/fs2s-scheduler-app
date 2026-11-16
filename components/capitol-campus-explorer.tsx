@@ -42,13 +42,13 @@ function CampusDrawing({ active }: { active: string }) {
   {id:"cannon",x:738,y:521,w:130,h:83}
  ];
  const contextBuildings = [
-  {name:"DIRKSEN",x:525,y:100,w:115,h:102,size:11},
-  {name:"SUPREME COURT",x:749,y:265,w:152,h:68,size:9},
-  {name:"JEFFERSON LIBRARY",x:722,y:362,w:135,h:75,size:8.8},
-  {name:"ADAMS LIBRARY",x:868,y:361,w:115,h:76,size:8.5},
-  {name:"MADISON LIBRARY",x:920,y:522,w:65,h:81,size:7.5},
-  {name:"FORD",x:35,y:518,w:108,h:37,size:9},
-  {name:"O’NEILL",x:35,y:566,w:108,h:37,size:9}
+  {name:"DIRKSEN",x:532,y:112,w:102,h:78,size:9.2},
+  {name:"SUPREME COURT",x:765,y:281,w:124,h:46,size:8.2},
+  {name:"JEFFERSON LIBRARY",x:727,y:380,w:118,h:52,size:7.7},
+  {name:"ADAMS LIBRARY",x:877,y:375,w:97,h:55,size:7.7},
+  {name:"MADISON LIBRARY",x:930,y:535,w:50,h:63,size:7.2},
+  {name:"FORD",x:50,y:528,w:87,h:29,size:7.8},
+  {name:"O’NEILL",x:50,y:573,w:87,h:29,size:7.8}
  ];
  return <svg className="capitol-explore__drawing" viewBox="0 0 1000 660" role="img" aria-label="Stylized Capitol Hill campus overview showing Senate buildings Russell, Dirksen and Hart; the Capitol; Supreme Court and Library of Congress; and House buildings Rayburn, Longworth and Cannon. Roads are simplified. Use the official Capitol map for routes.">
  <defs>
@@ -84,20 +84,21 @@ function CampusDrawing({ active }: { active: string }) {
  {/* Background landmarks are deliberately muted and have no appointment markers. */}
  <g>
   {contextBuildings.map(b=><g key={b.name}>
-   <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="4" fill="#d3d8d0" stroke="#a5afa5" strokeWidth="1.6"/>
-   <rect x={b.x+4} y={b.y+4} width={b.w-8} height={b.h-8} rx="3" fill="url(#buildingHatch)" opacity=".6"/>
-   {b.name==="MADISON LIBRARY" ? <text x={b.x+b.w/2} y={b.y+b.h/2-1} textAnchor="middle" fontFamily="Arial,Helvetica,sans-serif" fontSize={b.size} fontWeight="700" fill="#5c675f"><tspan x={b.x+b.w/2}>MADISON</tspan><tspan x={b.x+b.w/2} dy="10">LIBRARY</tspan></text> : <text x={b.x+b.w/2} y={b.y+b.h/2+3} textAnchor="middle" fontFamily="Arial,Helvetica,sans-serif" fontSize={b.size} fontWeight="700" fill="#5c675f" letterSpacing=".4">{b.name}</text>}
+   <title>{b.name} — nearby landmark, no FS2S appointment</title>
+   <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="3" fill="#cfd9d0" stroke="#aab7ac" strokeWidth="1.25"/>
+   <rect x={b.x+4} y={b.y+4} width={b.w-8} height={b.h-8} rx="2" fill="#dce3d9" opacity=".65"/>
+   {b.name==="MADISON LIBRARY" ? <text x={b.x+b.w/2} y={b.y+b.h/2-2} textAnchor="middle" fontFamily="Arial,Helvetica,sans-serif" fontSize={b.size} fontWeight="600" fill="#65746a"><tspan x={b.x+b.w/2}>MADISON</tspan><tspan x={b.x+b.w/2} dy="9">LIBRARY</tspan></text> : <text x={b.x+b.w/2} y={b.y+b.h/2+3} textAnchor="middle" fontFamily="Arial,Helvetica,sans-serif" fontSize={b.size} fontWeight="600" fill="#65746a" letterSpacing=".1">{b.name}</text>}
   </g>)}
  </g>
  {/* Other important landmarks */}
  <g>
-  <rect x="60" y="318" width="145" height="104" rx="35" fill="#c4d7bd" stroke="#a4b89b" strokeWidth="2"/>
-  <ellipse cx="132" cy="371" rx="49" ry="29" fill="#b4cfae"/>
-  <text x="132" y="366" fontFamily="Arial,Helvetica,sans-serif" fontWeight="700" textAnchor="middle" fontSize="9.5" fill="#4c694c">U.S. BOTANIC</text>
-  <text x="132" y="379" fontFamily="Arial,Helvetica,sans-serif" fontWeight="700" textAnchor="middle" fontSize="9.5" fill="#4c694c">GARDEN</text>
-  <rect x="605" y="333" width="90" height="43" rx="5" fill="#dddcd4" stroke="#a1a098" strokeWidth="1.7"/>
-  <text x="650" y="351" textAnchor="middle" fontSize="9" fontWeight="700" fontFamily="Arial,sans-serif" fill="#64655f">CAPITOL</text>
-  <text x="650" y="364" textAnchor="middle" fontSize="9" fontWeight="700" fontFamily="Arial,sans-serif" fill="#64655f">VISITOR CTR</text>
+  <rect x="80" y="332" width="108" height="74" rx="24" fill="#c4d7bd" stroke="#a4b89b" strokeWidth="2"/>
+  <ellipse cx="134" cy="369" rx="35" ry="22" fill="#b4cfae"/>
+  <text x="134" y="366" fontFamily="Arial,Helvetica,sans-serif" fontWeight="700" textAnchor="middle" fontSize="9.5" fill="#4c694c">U.S. BOTANIC</text>
+  <text x="134" y="377" fontFamily="Arial,Helvetica,sans-serif" fontWeight="700" textAnchor="middle" fontSize="9.5" fill="#4c694c">GARDEN</text>
+  <rect x="599" y="330" width="82" height="41" rx="5" fill="#dddcd4" stroke="#a1a098" strokeWidth="1.7"/>
+  <text x="640" y="347" textAnchor="middle" fontSize="9" fontWeight="700" fontFamily="Arial,sans-serif" fill="#64655f">CAPITOL</text>
+  <text x="640" y="360" textAnchor="middle" fontSize="9" fontWeight="700" fontFamily="Arial,sans-serif" fill="#64655f">VISITOR CTR</text>
  </g>
  <g fill="#d8d0c2" stroke="#a59a89" strokeWidth="2">
   {meetingBuildings.map(b=><rect key={b.id} x={b.x} y={b.y} width={b.w} height={b.h} rx="5"/>)}
@@ -119,7 +120,7 @@ function CampusDrawing({ active }: { active: string }) {
   <circle r="24" fill="#c6baa9" stroke="#9a9083" strokeWidth="2"/>
   <circle r="9" fill="#faf7ef" stroke="#898073" strokeWidth="1.8"/>
  </g>
- <text x="448" y="432" textAnchor="middle" fontSize="11.5" fontWeight="800" letterSpacing="1.5" fontFamily="Arial,sans-serif" fill="#4e544e">U.S. CAPITOL</text>
+ <text x="448" y="434" textAnchor="middle" fontSize="11.5" fontWeight="800" letterSpacing="1.5" fontFamily="Arial,sans-serif" fill="#4e544e">U.S. CAPITOL</text>
  <g transform="translate(955 92)" fontFamily="Arial,sans-serif" fontWeight="700" fill="#44504a"><text textAnchor="middle" y="-14" fontSize="12">N</text><path d="M0 -9L-7 9L0 5L7 9Z" fill="#b22339"/><path d="M0 7V23" stroke="#b22339" strokeWidth="2"/></g>
  </svg>;
 }
