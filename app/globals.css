@@ -4623,3 +4623,14 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
  .attendee-app__quote-rotator .attendee-app__quote-count {font-size:.68rem;}
 }
 @media(max-width:360px) {.attendee-app__quote-rotator {min-height:235px;}}
+
+/* Staff-only floater view: separate, readable briefing cards for all nine groups. */
+.attendee-all-briefings {height:auto!important;}
+.attendee-all-briefings__grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;}
+.attendee-all-briefings__card {height:auto!important;display:flex;flex-direction:column;gap:.65rem;padding:1.2rem;min-width:0;}
+.attendee-all-briefings__card .eyebrow,.attendee-all-briefings__card h3 {margin:0;}
+.attendee-all-briefings__card h3 {font-size:1.15rem;line-height:1.25;overflow-wrap:anywhere;}
+.attendee-all-briefings__card ul {margin:.2rem 0 1rem;padding-left:1.3rem;display:grid;gap:.45rem;}
+.attendee-all-briefings__card li {line-height:1.45;overflow-wrap:anywhere;}
+.attendee-all-briefings__card > a {display:flex;align-items:center;justify-content:center;min-height:48px;text-align:center;margin-top:auto;}
+@media(max-width:720px) {.attendee-all-briefings__grid {grid-template-columns:1fr;gap:.7rem;}.attendee-all-briefings__card {padding:1rem;}}
