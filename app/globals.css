@@ -4887,3 +4887,56 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
  .capitol-explore__map{aspect-ratio:1000/660;min-height:0}
  .capitol-explore__map-source{padding:.75rem .85rem;font-size:.71rem}
 }
+
+
+/* 2026-11-16 Hill Day layout QA: remove desktop stretch/empty footer and protect mobile spacing.
+   The editorial panel must size to its own contents, never to a taller photo column. */
+.hill-day-hero {
+  height: auto !important;
+  min-height: 0 !important;
+  padding-bottom: clamp(1.25rem, 2.5vw, 2rem);
+}
+.hill-day-hero .hero-card__grid {
+  height: auto;
+  min-height: 0;
+  align-items: start;
+}
+.hill-day-hero .hero-card__content {
+  align-content: start;
+  min-height: 0;
+  height: auto;
+}
+.hill-day-hero .hero-card__visual {
+  align-self: start;
+  height: clamp(280px, 33vw, 440px);
+  min-height: 0;
+}
+.hill-day-hero .hill-day-celebration {
+  display: block;
+  height: auto !important;
+  min-height: 0 !important;
+  margin-bottom: 0;
+  padding-bottom: clamp(1.15rem, 2.2vw, 1.8rem);
+}
+.hill-day-hero .hill-day-celebration__groups,
+.hill-day-hero .hill-day-celebration__fineprint {
+  margin-bottom: 0;
+}
+.hill-day-hero .hill-day-celebration__parade {
+  max-width: 100%;
+}
+@media (max-width: 900px) {
+  .hill-day-hero .hero-card__grid { grid-template-columns: minmax(0, 1fr); }
+  .hill-day-hero .hero-card__visual { height: 280px; }
+}
+@media (max-width: 600px) {
+  .hill-day-hero .hero-card__visual { height: 210px; min-height: 0; }
+  .hill-day-hero .hill-day-celebration { padding: 1rem; }
+  .hill-day-celebration__feature-slide {
+    gap: .65rem;
+    text-align: left;
+  }
+  .hill-day-celebration__feature-slide strong { font-size: 2.3rem; }
+  .hill-day-celebration__feature-slide b { font-size: .87rem; }
+  .hill-day-celebration__feature-slide small { font-size: .72rem; }
+}
