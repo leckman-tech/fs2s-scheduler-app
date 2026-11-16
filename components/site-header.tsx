@@ -50,7 +50,7 @@ export function SiteHeader() {
             <Link href="/attendee" aria-current={pathname.startsWith("/attendee") ? "page" : undefined}>Attendee Portal</Link>
           </nav>
           <div className="site-header__actions">
-            <Link href="/lobby-day#register" className="site-nav__cta">Register for Hill Day</Link>
+            <Link href="/lobby-day#celebrate" className="site-nav__cta">Hill Day · Registration Closed</Link>
           </div>
         </div>
       </div>
