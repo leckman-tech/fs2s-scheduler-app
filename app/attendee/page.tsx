@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LogoutButton } from "@/components/logout-button";
+import { CivicQuotes } from "@/components/civic-quotes";
 import { requireAttendeePortalUser } from "@/lib/queries";
 import { createClient } from "@/lib/supabase/server";
 import { buildMetadata } from "@/lib/seo";
@@ -69,10 +70,7 @@ export default async function AttendeePortalPage({
           <div className="attendee-app__welcome-photo-image" role="img" aria-label="United States Capitol building with autumn trees" />
           <figcaption>Washington, D.C. · Our Capitol, our conversations.</figcaption>
         </figure>
-        <blockquote className="attendee-app__quote">
-          <p>“Everything that you care about comes through government.”</p>
-          <cite>— Georgia Governor-elect Keisha Lance Bottoms, November 2026 · <a href="https://www.iheart.com/podcast/51-the-breakfast-club-24992238/episode/interview-keisha-lance-bottoms-speaks-on-349112999/" target="_blank" rel="noopener noreferrer">Source</a></cite>
-        </blockquote>
+        <CivicQuotes />
         <div className="hero-meta">
           <span className="hero-pill">Wednesday, November 18, 2026</span>
           <span className="hero-pill">Washington, D.C.</span>
