@@ -44,6 +44,14 @@ export default async function CongressionalBriefingsPage() {
         .maybeSingle()
     : { data: null, error: null };
 
+  const { data: allBriefings, error: allBriefingsError } = profile.role === "admin"
+    ? await supabase
+        .from("delegation_briefings")
+        .select("delegation_id,group_name,briefing_name,drive_file_id,office_summary,released")
+        .eq("released", true)
+        .order("delegation_id")
+    : { data: null, error: null };
+
   const packet = briefing as BriefingRecord | null;
   const offices = packet && Array.isArray(packet.office_summary)
     ? packet.office_summary.filter((entry): entry is string => typeof entry === "string")
@@ -64,7 +72,29 @@ export default async function CongressionalBriefingsPage() {
         </div>
       </section>
 
-      {assignmentError || briefingError ? (
+      {profile.role === "admin" ? (
+        <section className="panel attendee-all-briefings">
+          <p className="eyebrow">EVENT-WIDE FLOATER ACCESS • ADMIN ONLY</p>
+          <h2>All nine congressional delegations</h2>
+          <p>You are not assigned to a specific delegation. As the Hill Day floater and organizer, you can review each group's released briefing, appointments, and materials here. Other participants see only their assigned group's briefing.</p>
+          {allBriefingsError ? <p role="alert">We couldn't load all delegation briefings. Please refresh or contact support.</p> : null}
+          <div className="attendee-all-briefings__grid">
+            {(allBriefings ?? []).map((group) => {
+              const appointments = Array.isArray(group.office_summary)
+                ? group.office_summary.filter((entry): entry is string => typeof entry === "string")
+                : [];
+              return <article className="panel attendee-all-briefings__card" key={group.delegation_id}>
+                <p className="eyebrow">{group.delegation_id}</p>
+                <h3>{group.group_name}</h3>
+                <ul>{appointments.map(office => <li key={office}>{office}</li>)}</ul>
+                <a className="button button-link" href={"https://drive.google.com/file/d/" + group.drive_file_id + "/view"} target="_blank" rel="noopener noreferrer">
+                  Open {group.delegation_id} briefing
+                </a>
+              </article>;
+            })}
+          </div>
+        </section>
+      ) : assignmentError || briefingError ? (
         <section className="panel" role="status">
           <h2>We couldn't load your briefing assignment.</h2>
           <p>Your materials have not been changed. Please try again or contact the organizing team.</p>
