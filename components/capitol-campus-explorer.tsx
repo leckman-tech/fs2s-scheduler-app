@@ -61,10 +61,10 @@ function CampusDrawing({ active }: { active: string }) {
   </g>
   {/* Street labels deliberately sit in the roadway gaps. */}
   <g fontFamily="Arial, sans-serif" fontWeight="700" letterSpacing="1.5" fill="#777e77" fontSize="10">
-   <text x="25" y="40">C STREET NE</text>
+   <text x="25" y="40">C STREET · NORTH</text>
    <text x="35" y="208">CONSTITUTION AVENUE</text>
    <text x="35" y="398">INDEPENDENCE AVENUE</text>
-   <text x="25" y="533">C STREET SW / SE</text>
+   <text x="25" y="533">C STREET · SOUTH</text>
    <text transform="translate(128 166) rotate(-90)" textAnchor="start" fontSize="9">DELAWARE AVE NE</text>
    <text transform="translate(503 164) rotate(-90)" textAnchor="start" fontSize="9">FIRST STREET NE</text>
    <text transform="translate(888 163) rotate(-90)" textAnchor="start" fontSize="9">SECOND STREET NE</text>
@@ -95,7 +95,14 @@ function CampusDrawing({ active }: { active: string }) {
    <circle r="24" fill="#c6baa9" stroke="#9a9083" strokeWidth="2"/>
    <circle r="9" fill="#faf7ef" stroke="#898073" strokeWidth="1.8"/>
   </g>
-  <text x="500" y="376" textAnchor="middle" fontSize="11" fontWeight="800" letterSpacing="2.2" fontFamily="Arial,sans-serif" fill="#514f48">U.S. CAPITOL</text>
+  {/* A separate left-side callout keeps the title clear of the rotunda and both avenues. */}
+  <g aria-hidden="true">
+   <path d="M312 307H357L380 293" fill="none" stroke="#6c7169" strokeWidth="1.5" strokeLinecap="round"/>
+   <circle cx="380" cy="293" r="3" fill="#a92337"/>
+   <rect x="193" y="288" width="120" height="38" rx="6" fill="#fffdf8" fillOpacity=".94" stroke="#c9cec4" strokeWidth="1"/>
+   <text x="253" y="303" textAnchor="middle" fontSize="10.5" fontWeight="800" letterSpacing="1.2" fontFamily="Arial,sans-serif" fill="#424742">U.S. CAPITOL</text>
+   <text x="253" y="316" textAnchor="middle" fontSize="8" fontWeight="600" letterSpacing=".8" fontFamily="Arial,sans-serif" fill="#71746b">CAPITOL GROUNDS</text>
+  </g>
   <g transform="translate(940 85)" fontFamily="Arial,sans-serif" fontSize="13" fontWeight="700" fill="#454d47"><text textAnchor="middle" y="-12">N</text><path d="M0 -7L-7 10L0 6L7 10Z" fill="#ae273b"/><path d="M0 8V24" stroke="#ae273b" strokeWidth="2"/></g>
  </svg>;
 }
@@ -109,7 +116,7 @@ export function CapitolCampusExplorer() {
     {buildings.map(b=><button type="button" key={b.id} className={`capitol-explore__pin capitol-explore__pin--${b.chamber.toLowerCase()}${active===b.id?" capitol-explore__pin--active":""}`} style={{left:`${b.x}%`,top:`${b.y}%`}} onClick={()=>setActive(b.id)} aria-pressed={active===b.id} aria-label={`Show ${b.offices.length} participating offices in ${b.name} ${b.chamber} Office Building`}>
       <span className="capitol-explore__pin-count">{b.offices.length}</span><span className="capitol-explore__pin-label">{b.name}<small>{b.chamber}</small></span>
      </button>)}
-    <div className="capitol-explore__map-caption"><span>CAPITOL HILL CAMPUS · ILLUSTRATIVE OVERVIEW</span><span>SELECT A BUILDING TO EXPLORE</span></div>
+    <div className="capitol-explore__map-caption"><span>CAPITOL HILL · SCHEMATIC, NOT FOR WAYFINDING</span><span>SELECT A BUILDING TO EXPLORE</span></div>
    </div>
    <div className="capitol-explore__mobile-buildings" role="group" aria-label="Select office building">
     {buildings.map(b=><button key={b.id} type="button" aria-pressed={active===b.id} onClick={()=>setActive(b.id)} className={active===b.id?"capitol-explore__mobile-active":""}>{b.name}<small>{b.offices.length}</small></button>)}
