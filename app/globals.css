@@ -4642,65 +4642,65 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 /* FS2S Hill Day: compact editorial celebration / measured motion */
 .hill-day-hero .hill-day-celebration{
   position:relative;isolation:isolate;overflow:hidden;width:100%;
-  margin-top:clamp(1.4rem,2.4vw,2rem);padding:clamp(1.3rem,3vw,2.5rem);
+  margin-top:1.2rem;padding:clamp(1.1rem,2.2vw,1.8rem);
   border:0;border-radius:10px;background:#191c21;color:#fbf8f4;
   box-shadow:0 14px 36px rgba(15,16,18,.16);
 }
 .hill-day-hero .hill-day-celebration:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:#b51224;z-index:0;pointer-events:none}
 .hill-day-hero .hill-day-celebration:after{content:"";position:absolute;z-index:0;width:27rem;height:27rem;right:-12rem;top:-19rem;border-radius:50%;border:1px solid rgba(255,255,255,.07);box-shadow:0 0 0 5rem rgba(255,255,255,.01);pointer-events:none}
 .hill-day-celebration__topline,.hill-day-celebration__main,.hill-day-celebration__feature,.hill-day-celebration__groups,.hill-day-hero .hill-day-celebration__fineprint{position:relative;z-index:1}
-.hill-day-celebration__topline{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem 1.5rem;color:#cfcaca;font-size:.66rem;line-height:1.5;font-weight:750;letter-spacing:.11em}
+.hill-day-celebration__topline{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem 1rem;color:#cfcaca;font-size:.66rem;line-height:1.5;font-weight:750;letter-spacing:.11em}
 .hill-day-celebration__topline>span:first-child{display:inline-flex;align-items:center;gap:.65rem;color:#ed9da6}
 .hill-day-celebration__status-dot{display:block;width:6px;height:6px;background:#d84255;border-radius:50%}
-.hill-day-celebration__main{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:center;gap:clamp(1rem,3vw,3rem);padding:clamp(1.35rem,2.5vw,2.25rem) 0}
-.hill-day-celebration__primary{display:flex;flex-direction:column;align-items:flex-start;min-width:0;padding-right:.3rem}
-.hill-day-celebration__count{font-family:inherit;font-size:clamp(5.8rem,10vw,9rem);font-weight:720;letter-spacing:-.085em;line-height:1.1;font-variant-numeric:tabular-nums lining-nums;color:#fff;white-space:nowrap}
-.hill-day-celebration__count-caption{font-size:clamp(.8rem,1vw,.92rem);line-height:1.5;font-weight:650;letter-spacing:.06em;color:#e7dcdb;text-transform:uppercase;margin-top:.2rem}
-.hill-day-celebration__story{min-width:0;padding-left:clamp(1rem,2.5vw,2.5rem);border-left:1px solid rgba(255,255,255,.18)}
-.hill-day-hero .hill-day-celebration__story-overline{font-size:.65rem!important;font-weight:800;letter-spacing:.14em;color:#e3a3a9!important;margin:0 0 .8rem!important}
-.hill-day-hero .hill-day-celebration__story h2{font-family:inherit!important;font-size:clamp(2.2rem,3.8vw,4rem)!important;line-height:1.03!important;font-weight:680!important;letter-spacing:-.055em;color:#fff!important;margin:0 0 .85rem!important}
+.hill-day-celebration__main{display:grid;grid-template-columns:minmax(0,.76fr) minmax(0,1fr);align-items:center;justify-content:center;max-width:780px;margin:0 auto;gap:clamp(1.2rem,3vw,2.7rem);padding:clamp(1.2rem,2vw,1.8rem) 0}
+.hill-day-celebration__primary{display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0;padding:0}
+.hill-day-celebration__count{font-family:inherit;font-size:clamp(5rem,7.8vw,7rem);font-weight:720;letter-spacing:-.085em;line-height:1.06;font-variant-numeric:tabular-nums lining-nums;color:#fff;white-space:nowrap}
+.hill-day-celebration__count-caption{font-size:clamp(.75rem,1vw,.87rem);line-height:1.4;font-weight:650;letter-spacing:.06em;color:#e7dcdb;text-transform:uppercase;margin-top:.2rem}
+.hill-day-celebration__story{min-width:0;padding-left:clamp(1.25rem,2.6vw,2rem);border-left:1px solid rgba(255,255,255,.18)}
+.hill-day-hero .hill-day-celebration__story-overline{font-size:.64rem!important;font-weight:800;letter-spacing:.12em;color:#e3a3a9!important;margin:0 0 .55rem!important}
+.hill-day-hero .hill-day-celebration__story h2{font-family:inherit!important;font-size:clamp(2rem,3.1vw,3.15rem)!important;line-height:1.06!important;font-weight:680!important;letter-spacing:-.055em;color:#fff!important;margin:0 0 .55rem!important}
 .hill-day-celebration__story h2 em{font-style:normal;color:#ed9ca6}
-.hill-day-hero .hill-day-celebration__story>p:last-child{font-size:clamp(.88rem,1.1vw,1.02rem);line-height:1.55;max-width:38ch;color:#ded8d7;margin:0}
-.hill-day-celebration__feature{display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:clamp(1rem,3vw,2.7rem);align-items:center;padding:1.15rem 0;border-top:1px solid rgba(255,255,255,.19);border-bottom:1px solid rgba(255,255,255,.19)}
-.hill-day-celebration__feature-heading{display:flex;flex-direction:column;align-items:flex-start;gap:.65rem;color:#f0aeb6;font-size:.68rem;font-weight:750;line-height:1.45;letter-spacing:.11em}
+.hill-day-hero .hill-day-celebration__story>p:last-child{font-size:clamp(.88rem,1.1vw,1.02rem);line-height:1.55;max-width:35ch;color:#ded8d7;margin:0}
+.hill-day-celebration__feature{display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;gap:.4rem;padding:.9rem 0;border-top:1px solid rgba(255,255,255,.19);border-bottom:1px solid rgba(255,255,255,.19)}
+.hill-day-celebration__feature-heading{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:1rem;color:#f0aeb6;font-size:.66rem;font-weight:750;line-height:1.45;letter-spacing:.11em}
 .hill-day-celebration__feature-pips{display:flex;gap:.35rem}
 .hill-day-celebration__feature-pips i{width:16px;height:3px;background:#6c6468;border-radius:5px;animation:hill-day-pip 15s infinite}
 .hill-day-celebration__feature-pips i:nth-child(2){animation-delay:5s}
 .hill-day-celebration__feature-pips i:nth-child(3){animation-delay:10s}
 @keyframes hill-day-pip{0%,30%{background:#dd6f7a}33%,100%{background:#6c6468}}
-.hill-day-celebration__feature-stage{position:relative;height:4.75rem;min-width:0;overflow:hidden}
-.hill-day-celebration__feature-slide{position:absolute;inset:0;display:flex;align-items:center;gap:1.25rem;opacity:0;transform:translateY(10px);animation:hill-day-swap 15s infinite}
+.hill-day-celebration__feature-stage{position:relative;height:4.25rem;min-width:0;width:min(100%,510px);overflow:hidden}
+.hill-day-celebration__feature-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:left;gap:1.1rem;opacity:0;transform:translateY(10px);animation:hill-day-swap 15s infinite}
 .hill-day-celebration__feature-slide:nth-child(2){animation-delay:5s}
 .hill-day-celebration__feature-slide:nth-child(3){animation-delay:10s}
 @keyframes hill-day-swap{0%{opacity:0;transform:translateY(10px)}4%,29%{opacity:1;transform:translateY(0)}33%,100%{opacity:0;transform:translateY(-9px)}}
-.hill-day-celebration__feature-slide strong{font-size:clamp(2.7rem,4vw,4rem);font-weight:680;letter-spacing:-.07em;line-height:1;min-width:2.2ch;color:#fff;font-variant-numeric:tabular-nums}
+.hill-day-celebration__feature-slide strong{font-size:clamp(2.4rem,3.3vw,3.2rem);font-weight:680;letter-spacing:-.07em;line-height:1;min-width:2.2ch;color:#fff;font-variant-numeric:tabular-nums}
 .hill-day-celebration__feature-slide>span{display:flex;flex-direction:column;gap:.22rem;min-width:0}
 .hill-day-celebration__feature-slide b{font-size:clamp(.95rem,1.3vw,1.12rem);font-weight:680;line-height:1.2;color:#fff}
 .hill-day-celebration__feature-slide small{font-size:clamp(.76rem,1vw,.85rem);font-weight:450;line-height:1.35;color:#d3cdcc}
-.hill-day-celebration__groups{padding-top:1.15rem}
+.hill-day-celebration__groups{padding-top:.95rem;text-align:center}
 .hill-day-celebration__groups-title{font-size:.67rem;line-height:1.5;letter-spacing:.1em;font-weight:800;color:#d9c8c9}
-.hill-day-celebration__parade{position:relative;overflow:hidden;margin-top:.6rem;padding:.65rem 0;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1);-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.hill-day-celebration__parade{position:relative;overflow:hidden;margin-top:.4rem;padding:.52rem 0;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1);-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
 .hill-day-celebration__parade-track{display:flex;width:max-content;align-items:center;animation:hill-day-parade 48s linear infinite;will-change:transform}
 .hill-day-celebration__parade-set{display:flex;flex:0 0 auto;align-items:center;gap:0;padding:0}
-.hill-day-celebration__parade-set span{display:inline-flex;align-items:center;white-space:nowrap;padding:.18rem 1.1rem .18rem .3rem;font-size:.83rem;line-height:1.45;font-weight:600;color:#f3eeee}
+.hill-day-celebration__parade-set span{display:inline-flex;align-items:center;white-space:nowrap;padding:.18rem 1.1rem .18rem .3rem;font-size:.8rem;line-height:1.45;font-weight:600;color:#f3eeee}
 .hill-day-celebration__parade-set span:before{content:"";height:4px;width:4px;margin-right:.9rem;flex-shrink:0;background:#d87581;border-radius:50%}
 @keyframes hill-day-parade{to{transform:translateX(-50%)}}
 .hill-day-celebration__parade:hover .hill-day-celebration__parade-track{animation-play-state:paused}
-.hill-day-hero .hill-day-celebration__fineprint{font-size:.69rem;line-height:1.45;color:#afa9a9;margin:.7rem 0 0}
+.hill-day-hero .hill-day-celebration__fineprint{font-size:.67rem;line-height:1.45;color:#afa9a9;margin:.5rem auto 0;text-align:center}
 @media(max-width:760px){
  .hill-day-hero .hill-day-celebration{padding:1.4rem}
- .hill-day-celebration__main{grid-template-columns:minmax(0,1fr);gap:1.3rem;padding:1.5rem 0}
- .hill-day-celebration__count{font-size:clamp(5.8rem,20vw,8rem)}
- .hill-day-celebration__story{padding:1.25rem 0 0;border-left:0;border-top:1px solid rgba(255,255,255,.16)}
- .hill-day-hero .hill-day-celebration__story h2{font-size:clamp(2.2rem,8vw,3.3rem)!important}
- .hill-day-celebration__feature{grid-template-columns:minmax(0,1fr);gap:.7rem}
- .hill-day-celebration__feature-heading{flex-direction:row;align-items:center;justify-content:space-between}
- .hill-day-celebration__feature-stage{height:5rem}
+ .hill-day-celebration__main{grid-template-columns:minmax(0,1fr);gap:1rem;padding:1.25rem 0;max-width:440px}
+ .hill-day-celebration__count{font-size:clamp(5rem,18vw,6.6rem)}
+ .hill-day-celebration__story{padding:1rem 0 0;border-left:0;border-top:1px solid rgba(255,255,255,.16);text-align:center}
+ .hill-day-hero .hill-day-celebration__story h2{font-size:clamp(1.9rem,7vw,2.7rem)!important}
+ .hill-day-celebration__feature{gap:.35rem}
+ .hill-day-celebration__feature-heading{flex-direction:row;align-items:center;justify-content:center}
+ .hill-day-celebration__feature-stage{height:4.65rem}
 }
 @media(max-width:420px){
  .hill-day-hero .hill-day-celebration{padding:1.15rem}
  .hill-day-celebration__topline{font-size:.59rem}
- .hill-day-celebration__count{font-size:clamp(5.2rem,23vw,7rem)}
+ .hill-day-celebration__count{font-size:clamp(4.7rem,20vw,6rem)}
  .hill-day-celebration__feature-slide{gap:.75rem}
  .hill-day-celebration__feature-slide strong{font-size:2.8rem}
  .hill-day-celebration__feature-slide b{font-size:.9rem}
