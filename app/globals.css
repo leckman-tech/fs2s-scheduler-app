@@ -4610,3 +4610,16 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 @keyframes attendee-quote-arrive {from {opacity:0;transform:translateY(5px);} to {opacity:1;transform:translateY(0);}}
 @media(max-width:760px){.attendee-app__quote-rotator {min-height:195px;}}
 @media(prefers-reduced-motion:reduce){.attendee-app__quote-rotator blockquote {animation:none;}}
+
+/* Quote carousel: predictable mobile wrapping with no sideways scroll. */
+.attendee-app__quote-rotator {max-width:100%;overflow-wrap:anywhere;overflow-x:clip;}
+.attendee-app__quote-rotator blockquote {max-width:100%;min-width:0;}
+.attendee-app__quote-rotator blockquote p {text-wrap:balance;overflow-wrap:break-word;}
+.attendee-app__quote-rotator blockquote footer {overflow-wrap:break-word;}
+@media(max-width:600px) {
+ .attendee-app__quote-rotator {min-height:210px;gap:.55rem;}
+ .attendee-app__welcome .attendee-app__quote-rotator blockquote p {font-size:1.04rem;line-height:1.48;}
+ .attendee-app__quote-rotator blockquote footer {font-size:.76rem;}
+ .attendee-app__quote-rotator .attendee-app__quote-count {font-size:.68rem;}
+}
+@media(max-width:360px) {.attendee-app__quote-rotator {min-height:235px;}}
