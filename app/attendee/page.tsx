@@ -16,7 +16,7 @@ export const metadata: Metadata = buildMetadata({
 const delegationLeads: Record<string,string> = {
  D01:"Chief Leah Lamb", D02:"Dr. Cheryl Chun", D03:"Chief Azalia Speight",
  D04:"Principal Wright-Cunningham", D05:"Dr. Mendoza-Davis (1 PM); Chief Aaron Cannon (2 PM)",
- D06:"Mekhi Love", D07:"Ciara Norfleet", D08:"De'Asyia Barner", D09:"Deputy Chief Nora Shetty"
+ D06:"Mekhi Love", D07:"Ciara Norfleet", D08:"De'Asyia Barner", D09:"Nora Shetty and Surya Srirangarajan"
 };
 const schedule = [
  { time: "9:45–10:00 a.m.", title: "Check in at Maya Angelou Public Charter High School", description: "5600 East Capitol Street NE, Washington, DC 20019. Meet your delegation leader and check in." },
@@ -24,7 +24,7 @@ const schedule = [
  { time: "10:45–11:05 a.m.", title: "Lunch at Maya", description: "Lunch is planned before bus loading." },
  { time: "11:05–11:15 a.m.", title: "Bus loading and headcount", description: "Stay with your assigned group and staff lead." },
  { time: "11:15 a.m. (target)", title: "Depart Maya by bus", description: "Exact bus arrival, drop-off and security-screening time will be confirmed with transportation staff." },
- { time: "12:30–3:30 p.m.", title: "Congressional meetings, movement and reflection", description: "Group meeting times vary. Several groups have two agreed appointments, including Maya Scholars B (D07). Other Most Maya-only groups have one meeting plus a supervised activity to be selected. No unconfirmed activity should be treated as booked." },
+ { time: "12:30–3:30 p.m.", title: "Congressional meetings, movement and reflection", description: "Group meeting times vary. Several groups have two agreed appointments, including Maya Scholars B (D07). D08 and D09 currently have one confirmed appointment each; additional requests remain pending. Do not treat an unconfirmed activity as booked." },
  { time: "3:30–4:00 p.m. (target)", title: "Debrief and accountability", description: "Group leaders coordinate final headcounts and supervised return arrangements." }
 ];
 export default async function AttendeePortalPage({
@@ -86,12 +86,15 @@ export default async function AttendeePortalPage({
       ) : null}
 
       <nav className="attendee-app__nav" aria-label="Attendee portal navigation">
-        <Link href="/attendee/briefings" className="button button-link">My briefing</Link>
+        <a href="#mygroup" className="button-secondary button-link">My delegation</a>
+        <Link href="/attendee/briefings" className="button button-link">My congressional briefings</Link>
         <a href="#schedule" className="button-secondary button-link">Day-of schedule</a>
+        <a href="#reference-book" className="button-secondary button-link">Full reference book</a>
+        {hasArchive ? <a href="#archive" className="button-secondary button-link">2026 archive</a> : null}
         <a href="#help" className="button-secondary button-link">Get help</a>
       </nav>
 
-      <section className="panel attendee-app__mygroup" aria-label="Your Hill Day role and delegation">
+      <section id="mygroup" className="panel attendee-app__mygroup" aria-label="Your Hill Day role and delegation">
         <p className="eyebrow">{profile.role === "admin" ? "EVENT-WIDE ORGANIZER ACCESS" : "YOUR HILL DAY GROUP"}</p>
         {profile.role === "admin" ? (
           <>
