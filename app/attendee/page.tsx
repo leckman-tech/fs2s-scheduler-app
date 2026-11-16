@@ -13,7 +13,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const schedule = [
- { time: "9:45–10:00 a.m.", title: "Arrival and delegation check-in at Maya", description: "Meet your fellow participants and delegation leader. Final transportation details will be provided separately." },
+ { time: "9:45–10:00 a.m.", title: "Check in at Maya Angelou Public Charter High School", description: "5600 East Capitol Street NE, Washington, DC 20019. Meet your delegation leader and check in." },
  { time: "10:00–10:45 a.m.", title: "Advocacy training and group practice", description: "Please read your office briefing materials beforehand so we can spend this time practicing together." },
  { time: "10:45–11:05 a.m.", title: "Lunch at Maya", description: "Lunch is planned before bus loading." },
  { time: "11:05–11:15 a.m.", title: "Bus loading and headcount", description: "Stay with your assigned group and staff lead." },
@@ -54,7 +54,7 @@ export default async function AttendeePortalPage({
       <section className="hero-card">
         <p className="eyebrow">YOUR FS2S PORTAL</p>
         <h1>Welcome{firstName ? ", " + firstName : ""}.</h1>
-        <p>Welcome to your home for November 18 Advocacy Hill Day. Your schedule, congressional briefing space and any authorized historical materials are easy to find below.</p>
+        <p>Welcome to your November 18 Advocacy Hill Day home. Start with your private congressional briefing, then review the schedule and arrival details. If something is missing, we can help.</p>
         <div className="hero-meta">
           <span className="hero-pill">Wednesday, November 18, 2026</span>
           <span className="hero-pill">Washington, D.C.</span>
@@ -70,8 +70,8 @@ export default async function AttendeePortalPage({
       ) : null}
 
       <nav className="hero-actions" aria-label="Attendee portal navigation" style={{margin:"0.35rem 0"}}>
-        <a href="#schedule" className="button-secondary button-link">Tentative schedule</a>
-        <Link href="/attendee/briefings" className="button-secondary button-link">Congressional briefings</Link>
+        <a href="#schedule" className="button-secondary button-link">Day-of schedule</a>
+        <Link href="/attendee/briefings" className="button button-link">My congressional briefings</Link>
         <a href="#archive" className="button-secondary button-link">2026 archive</a>
         <a href="#help" className="button-secondary button-link">Help</a>
       </nav>
@@ -139,7 +139,7 @@ export default async function AttendeePortalPage({
       <section id="help" className="panel story-panel" style={{scrollMarginTop:"6.5rem"}}>
         <p className="eyebrow">QUESTIONS &amp; HELP</p>
         <h2>We're here to help.</h2>
-        <p>If you need assistance with your account, a briefing assignment, the tentative schedule or historical archive permission, reach out directly.</p>
+        <p>If you cannot sign in or open your briefing, email us the address you registered with and a description of the problem. Never share your password. For day-of questions, call or text <a href="tel:+13606002612">360-600-2612</a>.</p>
         <a href="mailto:LEckman@SeeForever.org?subject=FS2S%20Attendee%20Portal%20Question" className="button-secondary button-link">Contact the organizing team</a>
       </section>
     </div>
