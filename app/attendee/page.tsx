@@ -15,7 +15,7 @@ export const metadata: Metadata = buildMetadata({
 
 const delegationLeads: Record<string,string> = {
  D01:"Chief Leah Lamb", D02:"Dr. Cheryl Chun", D03:"Chief Azalia Speight",
- D04:"Principal Wright-Cunningham", D05:"Dr. Mendoza-Davis (1 PM); Chief Aaron Cannon (2 PM); Levi Eckman (event lead)",
+ D04:"Principal Wright-Cunningham", D05:"Dr. Mendoza-Davis (1 PM); Chief Aaron Cannon (2 PM)",
  D06:"Mekhi Love", D07:"Ciara Norfleet", D08:"De'Asyia Barner", D09:"Deputy Chief Nora Shetty"
 };
 const schedule = [
@@ -91,9 +91,15 @@ export default async function AttendeePortalPage({
         <a href="#help" className="button-secondary button-link">Get help</a>
       </nav>
 
-      <section className="panel attendee-app__mygroup" aria-label="Your personal delegation">
-        <p className="eyebrow">YOUR HILL DAY GROUP</p>
-        {myDelegation && releasedBriefing ? (
+      <section className="panel attendee-app__mygroup" aria-label="Your Hill Day role and delegation">
+        <p className="eyebrow">{profile.role === "admin" ? "EVENT-WIDE ORGANIZER ACCESS" : "YOUR HILL DAY GROUP"}</p>
+        {profile.role === "admin" ? (
+          <>
+            <h2>Event-wide floater · All nine delegations</h2>
+            <p>You are not assigned to any single group. Use the briefing library to review each delegation's confirmed appointments and preparation materials.</p>
+            <Link href="/attendee/briefings" className="button button-link attendee-app__big-cta">View all nine delegation briefings</Link>
+          </>
+        ) : myDelegation && releasedBriefing ? (
           <>
             <h2>{myDelegation.delegation_id} — {releasedBriefing.group_name}</h2>
             {groupLead ? <p><strong>Your group leader:</strong> {groupLead}</p> : null}
@@ -115,8 +121,8 @@ export default async function AttendeePortalPage({
         <h2>Before Wednesday</h2>
         <ul>
           <li><span aria-hidden="true">{verifiedEmail ? "✓" : "○"}</span><span><strong>Email verified</strong><small>{verifiedEmail ? "You're signed in with a verified email." : "Please verify your email to access private materials."}</small></span></li>
-          <li><span aria-hidden="true">{myDelegation ? "✓" : "○"}</span><span><strong>Delegation assigned</strong><small>{myDelegation ? myDelegation.delegation_id + " — Your group is listed above." : "Your group is still being matched."}</small></span></li>
-          <li><span aria-hidden="true">{groupReady ? "✓" : "○"}</span><span><strong>Briefing available</strong><small>{groupReady ? "Open and read your PDF before Wednesday. Reading completion is not tracked." : "Contact us if you cannot see your documents."}</small></span></li>
+          <li><span aria-hidden="true">{profile.role === "admin" || myDelegation ? "✓" : "○"}</span><span><strong>{profile.role === "admin" ? "Floater access" : "Delegation assigned"}</strong><small>{profile.role === "admin" ? "You can open all nine delegation briefings." : myDelegation ? myDelegation.delegation_id + " — Your group is listed above." : "Your group is still being matched."}</small></span></li>
+          <li><span aria-hidden="true">{profile.role === "admin" || groupReady ? "✓" : "○"}</span><span><strong>Briefing available</strong><small>{profile.role === "admin" ? "Your staff library includes all released groups." : groupReady ? "Open and read your PDF before Wednesday. Reading completion is not tracked." : "Contact us if you cannot see your documents."}</small></span></li>
         </ul>
         <p className="muted">Please reply to your invitation to confirm attendance by Tuesday at 4:30 PM. School permission slips and other approvals are handled separately.</p>
       </section>
