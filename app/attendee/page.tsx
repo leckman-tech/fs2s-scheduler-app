@@ -24,7 +24,7 @@ const schedule = [
  { time: "10:45–11:05 a.m.", title: "Lunch at Maya", description: "Lunch is planned before bus loading." },
  { time: "11:05–11:15 a.m.", title: "Bus loading and headcount", description: "Stay with your assigned group and staff lead." },
  { time: "11:15 a.m. (target)", title: "Depart Maya by bus", description: "Exact bus arrival, drop-off and security-screening time will be confirmed with transportation staff." },
- { time: "12:30–3:30 p.m.", title: "Congressional meetings, movement and reflection", description: "Group meeting times vary. Partner delegations have two appointments; Maya-only groups have one plus a second activity to be selected. No unconfirmed activity should be treated as booked." },
+ { time: "12:30–3:30 p.m.", title: "Congressional meetings, movement and reflection", description: "Group meeting times vary. Several groups have two agreed appointments, including Maya Scholars B (D07). Other Most Maya-only groups have one meeting plus a supervised activity to be selected. No unconfirmed activity should be treated as booked." },
  { time: "3:30–4:00 p.m. (target)", title: "Debrief and accountability", description: "Group leaders coordinate final headcounts and supervised return arrangements." }
 ];
 export default async function AttendeePortalPage({
