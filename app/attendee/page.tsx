@@ -67,7 +67,7 @@ export default async function AttendeePortalPage({
         <p>We're glad you're joining us for Advocacy Hill Day. Your voice and perspective matter. On Wednesday, you'll meet fellow Scholars and community partners, prepare together, and take part in conversations about the issues affecting young people. We're looking forward to seeing you!</p>
         <blockquote className="attendee-app__quote">
           <p>“The more that people are engaged with our institutions, I think, the better.”</p>
-          <cite>— Justice Ketanji Brown Jackson, 2025 ESSENCE Festival</cite>
+          <cite>— Justice Ketanji Brown Jackson, 2025 ESSENCE Festival · <a href="https://www.essence.com/news/justice-ketanji-brown-jackson-essence-fest-2025/" target="_blank" rel="noopener noreferrer">Source</a></cite>
         </blockquote>
         <div className="hero-meta">
           <span className="hero-pill">Wednesday, November 18, 2026</span>
@@ -118,33 +118,9 @@ export default async function AttendeePortalPage({
         </ul>
         <p className="muted">Please reply to your invitation to confirm attendance by Tuesday at 4:30 PM. School permission slips and other approvals are handled separately.</p>
       </section>
-      <section className="context-grid attendee-app__actions" aria-label="Your attendee tools">
-        <article className="panel story-panel" style={{borderTop:"4px solid #b51224"}}>
-          <p className="eyebrow">YOUR CONGRESSIONAL MEETINGS</p>
-          <h2>Get prepared</h2>
-
-          {releasedBriefing && myDelegation ? (
-            <p><strong>{myDelegation.delegation_id} · {releasedBriefing.group_name}</strong> — your delegation's assigned congressional briefings are ready. Please review them before November 18.</p>
-          ) : (
-            <p>Your group documents will appear here when your verified email is matched. You do not need to register again. Contact us if you need help.</p>
-          )}
-          <div className="hero-actions">
-            <Link href="/attendee/briefings" className="button button-link">
-              {releasedBriefing ? "Open my group briefing →" : "Check my briefing access →"}
-            </Link>
-          </div>
-        </article>
-        <article className="panel story-panel">
-          <p className="eyebrow">WEDNESDAY, NOVEMBER 18</p>
-          <h2>Arrival and transportation</h2>
-          <p><strong>Check in 9:45–10:00 AM</strong> at MAPCS-HS, 5600 East Capitol Street NE, Washington, DC 20019. Lunch is at 10:45 AM; bus departures begin at 11:15 AM.</p>
-          <a href="#schedule" className="button-secondary button-link">See the day-of schedule ↓</a>
-        </article>
-      </section>
-
       <section id="schedule" className="panel callout-panel" style={{scrollMarginTop:"6.5rem"}}>
         <p className="eyebrow">PLAN YOUR DAY</p>
-        <h2>Tentative schedule for November 18</h2>
+        <h2>Your Wednesday schedule</h2>
         <p>Here's what we currently have planned. Check this section for the broad timeline; individual congressional appointments and arrival details will be confirmed separately.</p>
         <div className="timeline-grid">
           {schedule.map((item) => (
