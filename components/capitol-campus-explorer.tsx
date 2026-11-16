@@ -51,8 +51,8 @@ function CampusDrawing({ active }: { active: string }) {
   <path d="M0 481H1000" stroke="#c9cec7" strokeWidth="1.2"/>
   <path d="M160 0V560M840 0V560" stroke="#f7f6f2" strokeWidth="24"/>
   <path d="M160 0V560M840 0V560" stroke="#c9cec7" strokeWidth="1.2" strokeDasharray="3 9"/>
-  <path d="M500 34V525M110 285H890" stroke="#e5ddcf" strokeWidth="16" strokeLinecap="round"/>
-  <path d="M500 34V525M110 285H890" stroke="#fffdf6" strokeWidth="3" strokeLinecap="round"/>
+  <path d="M500 34V188M110 285H342M658 285H890" stroke="#e5ddcf" strokeWidth="12" strokeLinecap="round"/>
+  <path d="M500 34V188M110 285H342M658 285H890" stroke="#fffdf6" strokeWidth="2.5" strokeLinecap="round"/>
   {[[390,77],[590,77],[346,159],[656,159],[320,364],[688,363],[400,495],[600,492],[113,359],[885,366]].map(([x,y],i)=><g key={i}><circle cx={x} cy={y} r="19" fill="#c2d2ba"/><circle cx={x} cy={y} r="13" fill="#a7c3a1" opacity=".78"/><circle cx={x-3} cy={y-3} r="4" fill="#d8e3d2"/></g>)}
   <g fill="#d4cebf" stroke="#a8a092" strokeWidth="2">
    <rect x="175" y="57" width="205" height="112" rx="5"/>
@@ -72,7 +72,7 @@ function CampusDrawing({ active }: { active: string }) {
       {id:"rayburn",x:90,y:367,w:254,h:78},
       {id:"longworth",x:431,y:410,w:237,h:67},
       {id:"cannon",x:740,y:360,w:199,h:86}
-    ].filter(b=>b.id===active).map(b=><rect key={b.id} x={b.x-5} y={b.y-5} width={b.w+10} height={b.h+10} rx="8" fill="none" stroke="#ad273a" strokeWidth="4" strokeDasharray="8 5" opacity=".88"/>)}
+    ].filter(b=>b.id===active).map(b=><rect key={b.id} x={b.x-5} y={b.y-5} width={b.w+10} height={b.h+10} rx="8" fill="none" stroke="#ad273a" strokeWidth="3" opacity=".88"/>)}
   </g>
   <g transform="translate(500 313)">
    <rect x="-119" y="-53" width="238" height="106" rx="7" fill="#e8e2d6" stroke="#9a9285" strokeWidth="3"/>
@@ -83,12 +83,12 @@ function CampusDrawing({ active }: { active: string }) {
    <circle r="40" fill="#f4efe4" stroke="#877f72" strokeWidth="5"/>
    <circle r="25" fill="#c1b4a2" stroke="#9c9180" strokeWidth="2"/>
    <circle r="9" fill="#f8f4eb" stroke="#8d8579" strokeWidth="2"/>
-   <path d="M-139 0H139M0 -72V72" stroke="#9c9386" strokeWidth="2" opacity=".55"/>
+   <path d="M-139 0H-66M66 0H139" stroke="#9c9386" strokeWidth="1.5" opacity=".38"/>
   </g>
   <g fontFamily="Arial, sans-serif" fontWeight="700" fill="#8a8b82" letterSpacing="2">
    <text x="50" y="275" fontSize="10">CONSTITUTION AVE</text>
    <text x="52" y="474" fontSize="10">INDEPENDENCE AVE</text>
-   <text x="500" y="388" textAnchor="middle" fontSize="11" fill="#504d47">U.S. CAPITOL</text>
+   <text x="500" y="216" textAnchor="middle" fontSize="11" fill="#504d47" letterSpacing="2.2">U.S. CAPITOL</text>
   </g>
   <g transform="translate(943 49)" fontFamily="Arial,sans-serif" fontSize="13" fontWeight="700" fill="#4d504a"><text textAnchor="middle" y="-12">N</text><path d="M0 -7L-7 10L0 6L7 10Z" fill="#a72236"/><path d="M0 8V25" stroke="#a72236" strokeWidth="2"/></g>
  </svg>);
