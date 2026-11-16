@@ -4876,3 +4876,14 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
  .capitol-explore__details{padding:1rem}
  .capitol-explore__map-caption{font-size:.43rem;bottom:5px}
 }
+
+
+/* Capitol campus with contextual landmarks and clearly separated roads */
+.capitol-explore__map{aspect-ratio:1000/660;min-height:0;}
+.capitol-explore__map-source{display:flex;align-items:center;justify-content:space-between;gap:.75rem 1.5rem;flex-wrap:wrap;padding:.67rem 1.2rem;background:#f1f3ef;border-top:1px solid #d3d9d1;color:#59645b;font-size:.74rem;line-height:1.4}
+.capitol-explore__map-source a{color:#922335;font-weight:750;text-decoration:underline;text-underline-offset:3px}
+.capitol-explore__map-source a:hover{color:#64182b}
+@media(max-width:700px){
+ .capitol-explore__map{aspect-ratio:1000/660;min-height:0}
+ .capitol-explore__map-source{padding:.75rem .85rem;font-size:.71rem}
+}
