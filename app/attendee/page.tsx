@@ -65,6 +65,10 @@ export default async function AttendeePortalPage({
         <p className="eyebrow">YOUR FS2S PORTAL • WEDNESDAY, NOVEMBER 18</p>
         <h1>Welcome{firstName ? ", " + firstName : ""}!</h1>
         <p>We're glad you're joining us for Advocacy Hill Day. Your voice and perspective matter. On Wednesday, you'll meet fellow Scholars and community partners, prepare together, and take part in conversations about the issues affecting young people. We're looking forward to seeing you!</p>
+        <figure className="attendee-app__welcome-photo">
+          <div className="attendee-app__welcome-photo-image" role="img" aria-label="United States Capitol building with autumn trees" />
+          <figcaption>Washington, D.C. · Our Capitol, our conversations.</figcaption>
+        </figure>
         <blockquote className="attendee-app__quote">
           <p>“The more that people are engaged with our institutions, I think, the better.”</p>
           <cite>— Justice Ketanji Brown Jackson, 2025 ESSENCE Festival · <a href="https://www.essence.com/news/justice-ketanji-brown-jackson-essence-fest-2025/" target="_blank" rel="noopener noreferrer">Source</a></cite>
