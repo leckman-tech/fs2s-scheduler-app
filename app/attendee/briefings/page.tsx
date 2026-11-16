@@ -30,7 +30,7 @@ export default async function CongressionalBriefingsPage() {
   const { data: assignment, error: assignmentError } = verifiedEmail
     ? await supabase
         .from("delegation_assignments")
-        .select("participant_name,delegation_id,status")
+        .select("participant_name,delegation_id,status,drive_access_granted")
         .eq("email", verifiedEmail)
         .maybeSingle()
     : { data: null, error: null };
@@ -79,6 +79,12 @@ export default async function CongressionalBriefingsPage() {
           <h2>Your materials are being finalized.</h2>
           <p>We're checking the final group and consent details before publishing your individual briefing. Please contact the organizing team if you need help.</p>
         </section>
+      ) : assignment && !assignment.drive_access_granted ? (
+        <section className="panel" role="status">
+          <h2>Your delegation is assigned, but PDF access needs a check.</h2>
+          <p>You do not need another account. Your private briefing may still need Google Drive access for the email you registered with. Contact LEckman@SeeForever.org with your group code and registered email so we can resolve it.</p>
+          <a className="button-secondary button-link" href="mailto:LEckman@SeeForever.org?subject=FS2S%20PDF%20Permission%20Help">Request briefing access</a>
+        </section>
       ) : packet && assignment ? (
         <>
           <section className="panel" style={{borderTop:"4px solid #a71930"}}>
@@ -90,7 +96,7 @@ export default async function CongressionalBriefingsPage() {
             </div>
             <div className="hero-actions" style={{marginTop:"1rem"}}>
               <a className="button button-link" href={`https://drive.google.com/file/d/${packet.drive_file_id}/view`} target="_blank" rel="noopener noreferrer">
-                Open my assigned briefing PDF →
+                Open my private briefing PDF →
               </a>
             </div>
             <p className="muted" style={{fontSize:"0.87rem"}}>
@@ -121,7 +127,7 @@ export default async function CongressionalBriefingsPage() {
           <Link href="/attendee#schedule" className="button-secondary button-link">Day-of schedule →</Link>
           <a className="button-secondary button-link" href="mailto:LEckman@SeeForever.org?subject=FS2S%20My%20Delegation%20Briefing">Request help with my briefing</a>
         </div>
-        <p className="muted">Questions about a student's approval or missing consent must be resolved with the organizing team. Having portal access is not proof that a student is cleared to attend.</p>
+        <p className="muted">Questions about a student's approval or missing consent must be resolved with the organizing team. Having portal access is not proof that a student is cleared to attend. For day-of questions, call or text <a href="tel:+13606002612">360-600-2612</a>.</p>
       </section>
       {profile.role === "admin" ? (
         <section className="panel">
