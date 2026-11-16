@@ -7,7 +7,8 @@ type Building = { id: string; name: string; chamber: "Senate" | "House"; x: numb
 
 const buildings: Building[] = [
   { id:"russell", name:"Russell", chamber:"Senate", x:27, y:23, offices:[
-    { name:"Sen. Patty Murray",short:"Murray",initials:"PM",url:"https://www.murray.senate.gov/write-to-patty/" }
+    { name:"Sen. Patty Murray",short:"Murray",initials:"PM",url:"https://www.murray.senate.gov/write-to-patty/" },
+    { name:"Sen. Elissa Slotkin",short:"Slotkin",initials:"ES",url:"https://www.slotkin.senate.gov/contact/" }
   ]},
   { id:"hart", name:"Hart", chamber:"Senate", x:74, y:23, offices:[
     { name:"Senate HELP Committee",short:"HELP Committee",initials:"HC",url:"https://www.help.senate.gov/" },
