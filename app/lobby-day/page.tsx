@@ -53,14 +53,14 @@ export default async function LobbyDayPage(){
     <div className="hill-day-celebration__topline"><span><span className="hill-day-celebration__status-dot" aria-hidden="true"/>REGISTRATION CLOSED</span><span>WEDNESDAY, NOVEMBER 18, 2026</span></div>
     <div className="hill-day-celebration__main">
       <div className="hill-day-celebration__primary"><div className="hill-day-celebration__count">{count}</div><div className="hill-day-celebration__count-caption">people registered</div></div>
-      <div className="hill-day-celebration__story"><p className="hill-day-celebration__story-overline">FROM SILOS TO SOLUTIONS</p><h2>One day.<br/><em>Many voices.</em></h2><p>Scholars, educators, and community partners are heading to Capitol Hill with a shared purpose.</p></div>
+      <div className="hill-day-celebration__story"><p className="hill-day-celebration__story-overline">FROM SILOS TO SOLUTIONS</p><h2>One day.<br/><em>Many voices.</em></h2><p>Scholars and partners, united on Capitol Hill.</p></div>
     </div>
     <div className="hill-day-celebration__feature" aria-label="Advocacy Day by the numbers">
       <div className="hill-day-celebration__feature-heading"><span>THE DAY BY THE NUMBERS</span><span className="hill-day-celebration__feature-pips" aria-hidden="true"><i/><i/><i/></span></div>
       <div className="hill-day-celebration__feature-stage">
-        <div className="hill-day-celebration__feature-slide"><strong>9</strong><span><b>Delegation groups</b><small>Students and partners, united in advocacy.</small></span></div>
-        <div className="hill-day-celebration__feature-slide"><strong>15</strong><span><b>Congressional appointments</b><small>Real conversations with congressional offices.</small></span></div>
-        <div className="hill-day-celebration__feature-slide"><strong>5</strong><span><b>Partner-led delegations</b><small>Community organizations bringing their voices to the Hill.</small></span></div>
+        <div className="hill-day-celebration__feature-slide"><strong>9</strong><span><b>Delegation groups</b><small>Nine groups, one shared purpose.</small></span></div>
+        <div className="hill-day-celebration__feature-slide"><strong>15</strong><span><b>Congressional appointments</b><small>Speaking directly with congressional offices.</small></span></div>
+        <div className="hill-day-celebration__feature-slide"><strong>5</strong><span><b>Partner-led delegations</b><small>Community voices joining Maya Scholars.</small></span></div>
       </div>
     </div>
     <div className="hill-day-celebration__groups"><span className="hill-day-celebration__groups-title">THE PEOPLE MAKING IT HAPPEN</span>
@@ -71,7 +71,7 @@ export default async function LobbyDayPage(){
         </div>
       </div>
     </div>
-    <p className="hill-day-celebration__fineprint">Registration total reflects sign-ups, not final attendance. Student permissions and delegation assignments are confirmed separately.</p>
+    <p className="hill-day-celebration__fineprint">Sign-ups shown; final attendance and student permissions are confirmed separately.</p>
   </div>
 </section>
  <section className="context-grid"><article className="panel story-panel story-panel--accent"><p className="eyebrow">WHY WE'RE GOING</p><h2>Every young person deserves a path through education</h2><p>Scholars will talk with congressional offices about education, justice-system involvement, and the support young people need to stay in school or return to learning.</p></article>
