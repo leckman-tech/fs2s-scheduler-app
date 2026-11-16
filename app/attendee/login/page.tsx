@@ -23,12 +23,12 @@ export default async function AttendeeLoginPage({
       <section className="hero-card">
         <h1>Attendee Portal</h1>
         <p>
-          Create an account with your own email address and password to follow November 18 Hill Day planning updates. Verify your email to activate the account. Historical 2026 convening materials require separate permission.
+          Joining us on November 18? Use the email address that received your Hill Day invitation. Create your account, verify your email, then open your private congressional briefing. Already registered? Sign in instead.
         </p>
         <div className="hero-meta">
           <span className="hero-pill">Individual accounts</span>
           <span className="hero-pill">Email verification</span>
-          <span className="hero-pill">Hill Day planning</span>
+          <span className="hero-pill">Private congressional briefings</span>
         </div>
       </section>
 
@@ -39,6 +39,14 @@ export default async function AttendeeLoginPage({
         </section>
       ) : null}
 
+      <section className="panel" aria-label="Getting started" style={{ marginBottom: "1rem" }}>
+        <h2>Three steps before Wednesday</h2>
+        <ol style={{ paddingLeft: "1.4rem", lineHeight: 1.85, marginBottom: 0 }}>
+          <li><strong>Sign in or create an account</strong> using the exact email address that received your invitation.</li>
+          <li><strong>Verify your email.</strong> Open the link in your inbox, or use the resend form below if needed.</li>
+          <li><strong>Review your documents</strong> in <Link href="/attendee/briefings">My Congressional Briefings</Link>.</li>
+        </ol>
+      </section>
       <section className="signup-choice-grid">
         <form action={loginAttendee} className="panel form-grid">
           <div className="section-heading">
@@ -97,7 +105,7 @@ export default async function AttendeeLoginPage({
             <div>
               <h2>Create account</h2>
               <p className="muted" style={{ margin: "0.35rem 0 0" }}>
-                Anyone can register, but your account is NOT active until you click the verification link emailed to you.
+                Use your own invited email address. Your account is not active until you click the verification link sent to that inbox.
               </p>
             </div>
           </div>
@@ -181,8 +189,7 @@ export default async function AttendeeLoginPage({
           <button type="submit" className="button">Resend verification link</button>
         </form>
         <p className="muted" style={{margin:0,fontSize:"0.9rem"}}>
-          Still no email? Contact the Hill Day team and explain that you registered but never received the activation message.
-          Do not send anyone your password.
+          Still no email? <a href="mailto:LEckman@SeeForever.org?subject=FS2S%20Verification%20Help">Email LEckman@SeeForever.org</a> and explain that you registered but never received the link. For day-of questions, call 360-600-2612. Never share your password.
         </p>
       </section>
     </div>
