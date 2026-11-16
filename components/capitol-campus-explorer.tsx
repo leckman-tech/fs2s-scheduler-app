@@ -46,7 +46,7 @@ function CampusDrawing({ active }: { active: string }) {
   {name:"SUPREME COURT",x:749,y:265,w:152,h:68,size:9},
   {name:"JEFFERSON LIBRARY",x:722,y:362,w:135,h:75,size:8.8},
   {name:"ADAMS LIBRARY",x:868,y:361,w:115,h:76,size:8.5},
-  {name:"MADISON LIBRARY",x:880,y:522,w:99,h:81,size:8},
+  {name:"MADISON LIBRARY",x:920,y:522,w:65,h:81,size:7.5},
   {name:"FORD",x:35,y:518,w:108,h:37,size:9},
   {name:"O’NEILL",x:35,y:566,w:108,h:37,size:9}
  ];
@@ -61,12 +61,12 @@ function CampusDrawing({ active }: { active: string }) {
  {/* Major roads and the gaps between blocks, not superimposed on any building. */}
  <g fill="none" stroke="#fffefa" strokeWidth="23">
   <path d="M0 45H1000M0 234H1000M0 475H1000M0 634H1000"/>
-  <path d="M133 0V234M480 0V234M858 0V234M403 475V660M691 475V660M918 475V660"/>
+  <path d="M133 0V234M480 0V234M858 0V234M403 475V660M691 475V660M898 475V660"/>
  </g>
  <g fill="none" stroke="#cbd3c9" strokeWidth="1.1">
   <path d="M0 32H1000M0 58H1000M0 221H1000M0 247H1000M0 462H1000M0 488H1000M0 621H1000M0 647H1000"/>
   <path d="M119 0V221M147 0V221M466 0V221M494 0V221M844 0V221M872 0V221"/>
-  <path d="M389 488V660M417 488V660M677 488V660M705 488V660M904 488V660M932 488V660"/>
+  <path d="M389 488V660M417 488V660M677 488V660M705 488V660M884 488V660M912 488V660"/>
  </g>
  <g fontFamily="Arial,Helvetica,sans-serif" fontWeight="700" fill="#6a756e" letterSpacing="1.1" fontSize="10.5">
   <text x="25" y="48">C STREET NE</text>
@@ -78,7 +78,7 @@ function CampusDrawing({ active }: { active: string }) {
   <text transform="translate(861 202) rotate(-90)">SECOND STREET NE</text>
   <text transform="translate(406 607) rotate(-90)">SOUTH CAPITOL ST</text>
   <text transform="translate(694 608) rotate(-90)">NEW JERSEY AVE SE</text>
-  <text transform="translate(921 605) rotate(-90)">FIRST STREET SE</text>
+  <text transform="translate(901 605) rotate(-90)">FIRST STREET SE</text>
  </g>
  {[[395,135],[649,149],[302,288],[625,274],[270,417],[650,414],[981,300],[42,310],[420,64],[700,73]].map(([x,y],i)=><g key={i} opacity=".75"><circle cx={x} cy={y} r="15" fill="#b8cfb5"/><circle cx={x} cy={y} r="9" fill="#9fbe9e"/><circle cx={x-2} cy={y-3} r="3" fill="#e6eee2"/></g>)}
  {/* Background landmarks are deliberately muted and have no appointment markers. */}
@@ -86,7 +86,7 @@ function CampusDrawing({ active }: { active: string }) {
   {contextBuildings.map(b=><g key={b.name}>
    <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="4" fill="#d3d8d0" stroke="#a5afa5" strokeWidth="1.6"/>
    <rect x={b.x+4} y={b.y+4} width={b.w-8} height={b.h-8} rx="3" fill="url(#buildingHatch)" opacity=".6"/>
-   <text x={b.x+b.w/2} y={b.y+b.h/2+3} textAnchor="middle" fontFamily="Arial,Helvetica,sans-serif" fontSize={b.size} fontWeight="700" fill="#5c675f" letterSpacing=".4">{b.name}</text>
+   {b.name==="MADISON LIBRARY" ? <text x={b.x+b.w/2} y={b.y+b.h/2-1} textAnchor="middle" fontFamily="Arial,Helvetica,sans-serif" fontSize={b.size} fontWeight="700" fill="#5c675f"><tspan x={b.x+b.w/2}>MADISON</tspan><tspan x={b.x+b.w/2} dy="10">LIBRARY</tspan></text> : <text x={b.x+b.w/2} y={b.y+b.h/2+3} textAnchor="middle" fontFamily="Arial,Helvetica,sans-serif" fontSize={b.size} fontWeight="700" fill="#5c675f" letterSpacing=".4">{b.name}</text>}
   </g>)}
  </g>
  {/* Other important landmarks */}
