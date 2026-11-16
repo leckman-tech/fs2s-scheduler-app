@@ -4547,3 +4547,56 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 @media(max-width:370px) {
   .attendee-app__nav {grid-template-columns:1fr;}
 }
+
+
+/* Consistent spacing for every attendee, regardless of delegation and text length. */
+.attendee-app {display:flex;flex-direction:column;gap:1.15rem;}
+.attendee-app > .panel,.attendee-app > .hero-card {height:auto;min-height:0;width:100%;box-sizing:border-box;}
+.attendee-app__welcome {display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;text-align:center;padding:clamp(1.35rem,3.5vw,2.35rem)!important;}
+.attendee-app__welcome > .eyebrow {margin:0 0 .7rem;max-width:100%;text-align:center;}
+.attendee-app__welcome h1 {width:100%;margin:0 0 .8rem;max-width:100%;text-align:center;line-height:1.17;}
+.attendee-app__welcome > p:not(.eyebrow) {margin:0 auto!important;max-width:63ch;text-align:center;line-height:1.65;}
+.attendee-app__welcome-photo {margin:1.25rem auto 0;width:100%;max-width:690px;display:block;}
+.attendee-app__welcome-photo-image {display:block;width:100%;height:clamp(155px,23vw,245px);border-radius:13px;background-image:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.2)),var(--photo-capitol);background-position:center 47%;background-size:cover;border:1px solid rgba(255,255,255,.17);}
+.attendee-app__welcome-photo figcaption {margin:.42rem auto 0;text-align:center;font-size:.76rem;color:rgba(255,255,255,.69);}
+.attendee-app__welcome .attendee-app__quote {max-width:690px;width:100%;margin:1.2rem auto 0;padding:1rem 1.25rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:12px;text-align:center;box-sizing:border-box;}
+.attendee-app__welcome .attendee-app__quote p {max-width:none;margin:0 0 .45rem!important;color:#fff;font-size:clamp(1rem,2.1vw,1.2rem);line-height:1.5;text-align:center;}
+.attendee-app__welcome .attendee-app__quote cite {display:block;color:rgba(255,255,255,.77);line-height:1.5;}
+.attendee-app__welcome .attendee-app__quote a {color:#fff;text-decoration:underline;}
+.attendee-app__welcome .hero-meta {width:100%;max-width:690px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.55rem;margin:1.2rem auto 0;}
+.attendee-app__welcome .hero-meta form {margin:0;}
+.attendee-app__nav {width:100%;justify-content:center;margin:0;gap:.65rem;}
+.attendee-app__nav > a {flex:0 1 195px;}
+.attendee-app__mygroup {display:flex;flex-direction:column;align-items:stretch;gap:.75rem;}
+.attendee-app__mygroup > * {margin-top:0!important;margin-bottom:0!important;}
+.attendee-app__mygroup > .eyebrow {line-height:1.35;}
+.attendee-app__mygroup h2 {overflow-wrap:anywhere;line-height:1.2;}
+.attendee-app__mygroup .attendee-app__meeting-list {width:100%;margin:0 0 .4rem!important;padding-left:1.35rem;}
+.attendee-app__mygroup .attendee-app__big-cta {align-self:flex-start;margin-top:.55rem!important;}
+.attendee-app__readiness {display:flex;flex-direction:column;gap:.9rem;height:auto;}
+.attendee-app__readiness h2,.attendee-app__readiness p {margin:0;}
+.attendee-app__readiness ul {width:100%;margin:0;}
+.attendee-app__readiness li {height:auto;min-height:82px;box-sizing:border-box;}
+.attendee-app__readiness li strong,.attendee-app__readiness li small {overflow-wrap:anywhere;}
+.attendee-app > #schedule,.attendee-app > #reference-book,.attendee-app > #help {display:flex;flex-direction:column;align-items:stretch;gap:.8rem;}
+.attendee-app > #schedule > *,.attendee-app > #reference-book > *,.attendee-app > #help > * {margin-top:0;margin-bottom:0;}
+.attendee-app .timeline-grid {margin-top:.2rem;}
+.attendee-app .timeline-card {height:auto;}
+.attendee-app .hero-actions {margin-top:.45rem;}
+@media(max-width:760px) {
+  .attendee-app {gap:.85rem;}
+  .attendee-app__welcome {padding:1.25rem 1rem!important;}
+  .attendee-app__welcome-photo {margin-top:1rem;}
+  .attendee-app__welcome-photo-image {height:clamp(145px,43vw,225px);}
+  .attendee-app__welcome .attendee-app__quote {padding:.95rem 1rem;margin-top:.95rem;}
+  .attendee-app__welcome .hero-meta {margin-top:.95rem;}
+  .attendee-app__nav {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem;}
+  .attendee-app__nav > a {min-width:0;padding:.8rem .35rem;font-size:.85rem;line-height:1.3;}
+  .attendee-app__mygroup .attendee-app__big-cta {align-self:stretch;width:100%;margin-top:.55rem!important;}
+  .attendee-app__readiness li {min-height:0;}
+  .attendee-app #help .hero-actions {grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:370px) {
+  .attendee-app__nav {grid-template-columns:1fr;}
+  .attendee-app #help .hero-actions {grid-template-columns:1fr;}
+}
