@@ -9,7 +9,7 @@ const groups = [{id:"D01",name:"Tutoring Café A",lead:"Chief Leah Lamb",size:7,
 {id:"D04",name:"Georgetown / Sasha Bruce",lead:"Dr. Kamal Wright-Cunningham",size:8,people:"4 partners + 3 Maya Scholars",visits:[["12:30 p.m.","Rep. Terri Sewell staff","Longworth 1035"],["3:00–3:30 p.m.","Rep. Adelita Grijalva","Longworth 1203"]],gap:"Extended supervised downtime for debrief and practice; return early for 3:00 appointment."},
 {id:"D05",name:"Youth Justice Partners",lead:"Dr. Mendoza-Davis (1 PM) / Chief Cannon (2 PM)",size:6,people:"3 partners + 2 Maya Scholars",visits:[["1:00 p.m.","Sen. Dick Durbin / Judiciary staff","Hart 711"],["2:00 p.m.","Sen. Gary Peters staff — Ava Kelsey","Hart 724"]],gap:"Allow 10–15 minutes to decompress and travel. Peters confirmed Hart 724, South entrance via Constitution Avenue (metal detector screening); CMD covers the 1 PM Durbin meeting; Chief Cannon takes over for the 2 PM Peters meeting. Verify office capacity and handoff."},
 {id:"D06",name:"Maya Scholars A",lead:"Mekhi Love",size:7,people:"6 Maya Scholars",visits:[["1:30 p.m.","House Education & Workforce staff","Rayburn 2257"]],gap:"Debrief after meeting; second supervised learning activity TBD. Additional office only if surplus time and approval."},
-{id:"D07",name:"Maya Scholars B",lead:"Ciara Norfleet",size:7,people:"6 Maya Scholars",visits:[["1:30 p.m.","Sen. Patty Murray staff","Russell 154"]],gap:"Office requires arrival by 1:15 p.m. Debrief after meeting; supervised activity TBD."},
+{id:"D07",name:"Maya Scholars B",lead:"Ciara Norfleet",size:7,people:"6 Maya Scholars",visits:[["1:30 p.m.","Sen. Patty Murray staff","Russell 154"],["2:30 p.m.","Sen. Mazie Hirono staff — Ben Strand","Hart 109; seven-person capacity confirmation pending"]],gap:"Arrive for Murray by 1:15 p.m. Transfer from Russell 154 to Hart 109 for Hirono at 2:30 p.m. Group capacity of seven is awaiting office confirmation."},
 {id:"D08",name:"Maya Scholars C",lead:"De'Asyia Barner",size:6,people:"5 Maya Scholars",visits:[["2:30–3:00 p.m.","Rep. Gary Palmer staff — Hampton Neugent","170 Cannon (room TBD)"]],gap:"Second supervised activity before the office meeting TBD; be ready for office check-in around 2:15."},
 {id:"D09",name:"Maya Scholars D",lead:"Deputy Chief Nora Shetty",size:5,people:"4 Maya Scholars",visits:[["3:00 p.m.","Sen. Chris Van Hollen staff","Hart 730"]],gap:"Deputy Chief Shetty is assigned. Second supervised activity TBD before 3:00; office cap is six."}];
 const morning = [
@@ -18,7 +18,7 @@ const morning = [
 ["10:45–11:05 a.m.","Provided lunch at Maya"],
 ["11:05–11:15 a.m.","Bus loading, headcount and final instructions"],
 ["11:15 a.m. target","Buses depart Maya for Capitol Hill; arrival/drop-off TBD"],
-["12:30–3:30 p.m.","Fourteen congressional meetings, travel, reflection, and future activities"],
+["12:30–3:30 p.m.","Fifteen congressional meetings, travel, reflection, and future activities"],
 ["3:30–4:00 p.m. target","Debrief, final headcount and supervised return arrangements"]
 ];
 export default async function HillDayPlannerPage(){
@@ -27,8 +27,8 @@ export default async function HillDayPlannerPage(){
  <section className="hero-card">
   <p className="eyebrow">INTERNAL / STAFF PLANNING DRAFT</p>
   <h1>Advocacy Hill Day — Delegations</h1>
-  <p>Wednesday, November 18, 2026. Nine groups and fourteen agreed congressional appointments. Levi W. Eckman is the event-wide floater and is not counted as a delegation member. D05 is co-led by Dr. Mendoza-Davis and Chief Cannon; final group headcounts and capacity still require verification.</p>
-  <div className="hero-meta"><span className="hero-pill">14 appointments</span><span className="hero-pill">9 delegations</span><span className="hero-pill">Second activities TBD</span></div>
+  <p>Wednesday, November 18, 2026. Nine groups and fifteen agreed congressional appointments. Levi W. Eckman is the event-wide floater and is not counted as a delegation member. D05 is co-led by Dr. Mendoza-Davis and Chief Cannon; final group headcounts and capacity still require verification.</p>
+  <div className="hero-meta"><span className="hero-pill">15 appointments</span><span className="hero-pill">9 delegations</span><span className="hero-pill">Second activities TBD</span></div>
   <p className="muted">Individual delegation PDFs are stored in a private Drive folder. The attendee portal matches people by verified email; assignments are never inferred from a shared account or organization name. Black Swan Academy's remaining eight interested youth are provisionally grouped under Kierstin Oliver and Germaine Williams, subject to consent and new office assignments.</p>
   <div className="hero-actions">
    <Link className="button button-link" href="/admin/dashboard/hill-day/accounts">Prepare private attendee logins →</Link>
@@ -43,7 +43,7 @@ export default async function HillDayPlannerPage(){
  <p className="muted">All participants should receive their office briefings before November 18 so the 10:00–10:45 training can focus on meeting one another and practicing. Bus times are targets until transportation confirms drop-off and travel.</p>
  </section>
  <section className="panel">
- <div className="section-heading"><div><p className="eyebrow">WHERE EACH GROUP GOES</p><h2>Nine delegation schedules</h2><p className="muted">Partner groups are prioritized for two congressional visits. Maya-only delegations have one confirmed visit and a supervised activity slot to be selected. Maya Scholars embedded with partners may join a second visit only if room size and adult supervision allow.</p></div></div>
+ <div className="section-heading"><div><p className="eyebrow">WHERE EACH GROUP GOES</p><h2>Nine delegation schedules</h2><p className="muted">Partner groups are prioritized for two congressional visits. D07 now has two agreed visits. Other Maya-only delegations have one agreed visit and a supervised activity slot to be selected. Maya Scholars embedded with partners may join a second visit only if room size and adult supervision allow.</p></div></div>
  <div className="timeline-grid">
  {groups.map(g=><article className="timeline-card" key={g.id}>
    <p className="timeline-card__label">{g.id} · {g.people} · {g.size} planned</p>
