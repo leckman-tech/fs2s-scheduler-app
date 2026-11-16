@@ -11,14 +11,14 @@ return <div className="container stack">
       <p className="hero-kicker">Power Through Partnerships: A Common Cause.</p>
       <p>One conversation can open a door. A coalition can change what happens on the other side. From Silos to Solutions connects young people, educators, advocates, and policymakers to build opportunity beyond traditional systems.</p>
       <div className="hero-meta"><span className="hero-pill">Looking ahead to 2027</span><span className="hero-pill">Washington, D.C.</span></div>
-      <div className="hero-actions"><Link href="/lobby-day" className="button button-link">Join us on Capitol Hill →</Link><a href="#2027" className="button-secondary button-link">Explore what comes next</a></div>
+      <div className="hero-actions"><Link href="/lobby-day" className="button button-link">See our Hill Day community →</Link><a href="#2027" className="button-secondary button-link">Explore what comes next</a></div>
       <p className="fs2s-next-hero__note">Presented by the See Forever Foundation &amp; Maya Angelou Schools</p>
     </div>
     <div className="hero-card__visual"><div className="hero-photo hero-photo--dc"><span className="hero-photo__label">Washington, D.C.</span></div><div className="hero-photo hero-photo--conference"><span className="hero-photo__label">Ideas into action</span></div><div className="hero-photo hero-photo--community"><span className="hero-photo__label">Our shared future</span></div></div>
   </div></section>
   <section className="fs2s-event-spotlight" aria-labelledby="next-event-title">
-    <div><p className="eyebrow">NEXT UP · WEDNESDAY, NOVEMBER 18, 2026</p><h2 id="next-event-title">Join us on Capitol Hill.</h2><p>Our Advocacy Hill Day brings Maya Angelou Scholars and community partners to Capitol Hill to discuss educational access, second chances, and lasting opportunity. Seven congressional or committee staff meetings are confirmed, with other appointments accepted and additional meetings being coordinated. Final event logistics will be sent to participants.</p></div>
-    <Link href="/lobby-day#register" className="button button-link">Register your interest →</Link>
+    <div><p className="eyebrow">NEXT UP · WEDNESDAY, NOVEMBER 18, 2026</p><h2 id="next-event-title">Ready for Capitol Hill.</h2><p>Our Advocacy Hill Day brings Maya Angelou Scholars and community partners to Capitol Hill to discuss educational access, second chances, and lasting opportunity. Registration is now closed with 75 people registered, nine delegations preparing for 15 agreed congressional appointments, and a special Capitol Hill photo opportunity. Registered attendees should consult their group briefing portal for final logistics.</p></div>
+    <Link href="/lobby-day#celebrate" className="button button-link">See the Hill Day celebration →</Link>
   </section>
   <section className="context-grid" id="2027">
     <article className="panel story-panel"><p className="eyebrow">COMING IN 2027</p><h2>Different experiences. One common cause.</h2><p>We're developing our next convening around scholar voice, practical partnerships, and shared accountability. Dates, programming, speakers, venue, and registration will be announced as they are confirmed.</p><Link href="/learn-more" className="button-secondary button-link">Discover our mission</Link></article>
