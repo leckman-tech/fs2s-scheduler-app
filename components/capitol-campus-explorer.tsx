@@ -95,7 +95,7 @@ function CampusDrawing({ active }: { active: string }) {
    <circle r="24" fill="#c6baa9" stroke="#9a9083" strokeWidth="2"/>
    <circle r="9" fill="#faf7ef" stroke="#898073" strokeWidth="1.8"/>
   </g>
-  <text x="500" y="232" textAnchor="middle" fontSize="11" fontWeight="800" letterSpacing="2.2" fontFamily="Arial,sans-serif" fill="#514f48">U.S. CAPITOL</text>
+  <text x="500" y="376" textAnchor="middle" fontSize="11" fontWeight="800" letterSpacing="2.2" fontFamily="Arial,sans-serif" fill="#514f48">U.S. CAPITOL</text>
   <g transform="translate(940 85)" fontFamily="Arial,sans-serif" fontSize="13" fontWeight="700" fill="#454d47"><text textAnchor="middle" y="-12">N</text><path d="M0 -7L-7 10L0 6L7 10Z" fill="#ae273b"/><path d="M0 8V24" stroke="#ae273b" strokeWidth="2"/></g>
  </svg>;
 }
