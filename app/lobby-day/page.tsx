@@ -53,7 +53,19 @@ export default async function LobbyDayPage(){
     <div className="hill-day-celebration__intro"><span className="hill-day-celebration__flag"><span aria-hidden="true">✦</span> REGISTRATION IS NOW CLOSED</span><span className="hill-day-celebration__date">SEE YOU WEDNESDAY, NOVEMBER 18</span></div>
     <div className="hill-day-celebration__lead"><div><p className="hill-day-celebration__kicker">A community ready to make its voice heard</p><strong className="hill-day-celebration__number">{count}</strong><span className="hill-day-celebration__number-label">people registered</span></div><div className="hill-day-celebration__note"><span className="hill-day-celebration__sparkle" aria-hidden="true">✳</span><h2>Many voices.<br/>One Capitol.</h2><p>Scholars, educators, advocates, and partners are coming together for a day of conversations that matter.</p></div></div>
     <div className="hill-day-celebration__stats"><div><strong>9</strong><span>delegation groups</span></div><div><strong>15</strong><span>congressional appointments</span></div><div><strong>5</strong><span>partner-led delegations</span></div></div>
-    <div className="hill-day-celebration__groups"><p className="hill-day-celebration__groups-label">THE DELEGATIONS MAKING IT HAPPEN</p><div className="hill-day-celebration__group-list"><span>Maya Scholars A–D</span><span>Tutoring Café A &amp; B</span><span>Black Swan Academy</span><span>Georgetown / Sasha Bruce</span><span>Youth Justice Partners</span></div></div><div className="hill-day-celebration__footer"><span aria-hidden="true">✦</span> FROM SILOS TO SOLUTIONS <span aria-hidden="true">✦</span> POWER THROUGH PARTNERSHIPS <span aria-hidden="true">✦</span></div>
+    <div className="hill-day-celebration__groups">
+      <div className="hill-day-celebration__groups-head"><p className="hill-day-celebration__groups-label">NINE DELEGATIONS. ONE SHARED PURPOSE.</p><span className="hill-day-celebration__groups-hint">THE PEOPLE BEHIND THE PROGRESS <span aria-hidden="true">✳</span></span></div>
+      <div className="hill-day-celebration__parade" aria-label="Participating delegations">
+        <div className="hill-day-celebration__parade-track">
+          <div className="hill-day-celebration__parade-set">
+            <span>Maya Scholars A</span><span>Maya Scholars B</span><span>Maya Scholars C</span><span>Maya Scholars D</span><span>Tutoring Café A</span><span>Tutoring Café B</span><span>Black Swan Academy</span><span>Georgetown / Sasha Bruce</span><span>Youth Justice Partners</span>
+          </div>
+          <div className="hill-day-celebration__parade-set" aria-hidden="true">
+            <span>Maya Scholars A</span><span>Maya Scholars B</span><span>Maya Scholars C</span><span>Maya Scholars D</span><span>Tutoring Café A</span><span>Tutoring Café B</span><span>Black Swan Academy</span><span>Georgetown / Sasha Bruce</span><span>Youth Justice Partners</span>
+          </div>
+        </div>
+      </div>
+    </div><div className="hill-day-celebration__footer"><span aria-hidden="true">✦</span> FROM SILOS TO SOLUTIONS <span aria-hidden="true">✦</span> POWER THROUGH PARTNERSHIPS <span aria-hidden="true">✦</span></div>
     <p className="hill-day-celebration__fineprint">Registration total reflects sign-ups, not a final attendance headcount. Student permissions and individual delegation assignments are managed separately.</p>
   </div>
 </section>
