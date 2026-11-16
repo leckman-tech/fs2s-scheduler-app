@@ -33,7 +33,7 @@ const buildings: Building[] = [
   ]}
 ];
 
-function CampusDrawing() {
+function CampusDrawing({ active }: { active: string }) {
  return (
  <svg className="capitol-explore__drawing" viewBox="0 0 1000 560" role="img" aria-label="Illustrated overhead view of Capitol Hill with north toward the top, Senate buildings to the north and House buildings to the south.">
   <defs>
@@ -65,6 +65,15 @@ function CampusDrawing() {
    <rect x="181" y="63" width="193" height="100" rx="3"/><rect x="629" y="63" width="203" height="100" rx="3"/>
    <rect x="96" y="373" width="242" height="66" rx="3"/><rect x="437" y="416" width="225" height="55" rx="3"/><rect x="746" y="366" width="187" height="74" rx="3"/>
   </g>
+  <g aria-hidden="true">
+    {[
+      {id:"russell",x:175,y:57,w:205,h:112},
+      {id:"hart",x:623,y:57,w:215,h:112},
+      {id:"rayburn",x:90,y:367,w:254,h:78},
+      {id:"longworth",x:431,y:410,w:237,h:67},
+      {id:"cannon",x:740,y:360,w:199,h:86}
+    ].filter(b=>b.id===active).map(b=><rect key={b.id} x={b.x-5} y={b.y-5} width={b.w+10} height={b.h+10} rx="8" fill="none" stroke="#ad273a" strokeWidth="4" strokeDasharray="8 5" opacity=".88"/>)}
+  </g>
   <g transform="translate(500 313)">
    <rect x="-119" y="-53" width="238" height="106" rx="7" fill="#e8e2d6" stroke="#9a9285" strokeWidth="3"/>
    <rect x="-101" y="-44" width="202" height="90" rx="5" fill="#d5ccbb"/>
@@ -90,7 +99,7 @@ export function CapitolCampusExplorer() {
  const selected = buildings.find(b=>b.id===active) ?? buildings[1];
  return <div className="capitol-explore">
    <div className="capitol-explore__map">
-    <CampusDrawing/>
+    <CampusDrawing active={active}/>
     {buildings.map(b=><button type="button" key={b.id} className={`capitol-explore__pin capitol-explore__pin--${b.chamber.toLowerCase()}${active===b.id?" capitol-explore__pin--active":""}`} style={{left:`${b.x}%`,top:`${b.y}%`}} onClick={()=>setActive(b.id)} aria-pressed={active===b.id} aria-label={`Show ${b.offices.length} participating offices in ${b.name} ${b.chamber} Office Building`}>
       <span className="capitol-explore__pin-count">{b.offices.length}</span><span className="capitol-explore__pin-label">{b.name}<small>{b.chamber}</small></span>
      </button>)}
@@ -100,7 +109,7 @@ export function CapitolCampusExplorer() {
     {buildings.map(b=><button key={b.id} type="button" aria-pressed={active===b.id} onClick={()=>setActive(b.id)} className={active===b.id?"capitol-explore__mobile-active":""}>{b.name}<small>{b.offices.length}</small></button>)}
    </div>
    <div className="capitol-explore__details" aria-live="polite">
-    <div className="capitol-explore__details-header"><div><span className="capitol-explore__eyebrow">{selected.chamber.toUpperCase()} OFFICE BUILDING</span><h3>{selected.name}</h3></div><span className="capitol-explore__detail-count">{selected.offices.length} {selected.offices.length===1?"OFFICE":"OFFICES"}</span></div>
+    <div className="capitol-explore__details-header"><div><span className="capitol-explore__eyebrow">{selected.chamber.toUpperCase()} OFFICE BUILDING · SELECTED</span><h3>{selected.name}</h3></div><span className="capitol-explore__detail-count">{selected.offices.length} {selected.offices.length===1?"PARTICIPATING OFFICE":"PARTICIPATING OFFICES"}</span></div>
     <div className="capitol-explore__contacts">
      {selected.offices.map(o=><a key={o.name} className="capitol-explore__person" href={o.url} target="_blank" rel="noopener noreferrer" aria-label={`Open official contact page for ${o.name} in a new tab`}><span className="capitol-explore__avatar">{o.initials}</span><span className="capitol-explore__person-name"><strong>{o.name}</strong><small>Official contact page</small></span><span className="capitol-explore__external" aria-hidden="true">↗</span></a>)}
     </div>
