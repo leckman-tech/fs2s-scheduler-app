@@ -56,7 +56,7 @@ export default async function HillDayPlannerPage(){
  </section>
  <section className="panel callout-panel">
  <p className="eyebrow">BEFORE YOU EMAIL DELEGATIONS</p><h2>Items requiring confirmation</h2>
- <p>Palmer's exact meeting room; D09's adult lead; school permissions and office capacities (especially eight-person partner groups); additional escorts if Maya students cannot enter a partner group's second meeting; transportation, Hill arrival and return logistics.</p>
+ <p>Palmer's exact meeting room; D05 backup afternoon advisor; school permissions and office capacities (especially eight-person partner groups); additional escorts if Maya students cannot enter a partner group's second meeting; transportation, Hill arrival and return logistics.</p>
  <p className="muted">This staff-only view deliberately contains no individual student names. Use the private Google Sheets roster for person-level information; do not paste minors' information into public pages or emails to unrelated recipients.</p>
  <Link href="/admin/dashboard/signups" className="button-secondary button-link">Review registrations →</Link>
  </section>
