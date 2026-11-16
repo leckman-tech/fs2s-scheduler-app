@@ -4780,3 +4780,72 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
  .fs2s-hill-campus__office{min-height:45px;font-size:.88rem}
  .fs2s-hill-campus__wing-heading{min-height:0}
 }
+
+
+/* FS2S interactive Capitol Hill campus explorer — overhead illustrated plan */
+.capitol-campus-section{padding:clamp(1.1rem,2.5vw,2.2rem)!important;overflow:hidden}
+.capitol-campus-section__header{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;margin-bottom:1.1rem}
+.capitol-campus-section__header>div:first-child{min-width:0;max-width:46rem}
+.capitol-campus-section__header h2{font-size:clamp(2rem,3.4vw,3.2rem);line-height:1.08;letter-spacing:-.05em;margin:.35rem 0 .7rem}
+.capitol-campus-section__header p:last-child{line-height:1.55;color:#52504d;max-width:62ch;margin:0}
+.capitol-campus-section__total{display:flex;align-items:center;gap:.75rem;flex:0 0 auto}
+.capitol-campus-section__total strong{font-size:clamp(3.5rem,5vw,5.6rem);line-height:1;letter-spacing:-.075em;color:#b51224}
+.capitol-campus-section__total span{font-size:.69rem;font-weight:800;letter-spacing:.075em;line-height:1.4;color:#55504c}
+.capitol-campus-section__note{font-size:.77rem;line-height:1.5;color:#6a6662;margin:1rem 0 0}
+.capitol-explore{border:1px solid #dbded8;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 10px 35px rgba(31,37,34,.055)}
+.capitol-explore__map{position:relative;isolation:isolate;width:100%;aspect-ratio:1000/560;min-height:380px;overflow:hidden;background:#e2e8dd}
+.capitol-explore__drawing{position:absolute;inset:0;width:100%;height:100%;display:block}
+.capitol-explore__pin{position:absolute;z-index:2;transform:translate(-50%,-50%);display:flex;align-items:center;gap:.52rem;padding:.42rem .7rem .42rem .44rem;min-height:46px;border:1px solid rgba(63,72,68,.24);border-radius:6px;background:rgba(255,255,255,.96);box-shadow:0 5px 17px rgba(24,38,31,.15);color:#242624;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;text-align:left}
+.capitol-explore__pin:hover,.capitol-explore__pin:focus-visible{transform:translate(-50%,-53%);box-shadow:0 9px 22px rgba(31,34,32,.2);outline:none;border-color:#9b4b51}
+.capitol-explore__pin:focus-visible{outline:3px solid #a21d30;outline-offset:2px}
+.capitol-explore__pin--active{background:#25282d;color:#fff;border-color:#25282d;box-shadow:0 7px 20px rgba(21,27,24,.28)}
+.capitol-explore__pin-count{display:grid;place-items:center;flex:0 0 auto;width:28px;height:28px;border-radius:4px;background:#e9d9d6;color:#972537;font-weight:850;font-size:.91rem;font-variant-numeric:tabular-nums}
+.capitol-explore__pin--senate .capitol-explore__pin-count{background:#dce7ed;color:#25536a}
+.capitol-explore__pin--active .capitol-explore__pin-count{background:#fff;color:#a82031}
+.capitol-explore__pin-label{font-size:clamp(.85rem,1.1vw,1rem);line-height:1.15;font-weight:800;white-space:nowrap}
+.capitol-explore__pin-label small{display:block;font-size:.62rem;font-weight:650;letter-spacing:.05em;text-transform:uppercase;opacity:.65;margin-top:.15rem}
+.capitol-explore__map-caption{position:absolute;bottom:12px;left:14px;right:14px;display:flex;justify-content:space-between;gap:.8rem;pointer-events:none;color:#475146;font-size:.6rem;letter-spacing:.075em;font-weight:850;text-shadow:0 1px 0 rgba(255,255,255,.8)}
+.capitol-explore__mobile-buildings{display:none}
+.capitol-explore__details{background:#1e2328;color:#fff;padding:1.4rem clamp(1.2rem,3vw,2rem) 1.6rem;min-height:177px}
+.capitol-explore__details-header{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem}
+.capitol-explore__eyebrow{color:#f1a2ac;font-size:.63rem;font-weight:850;letter-spacing:.13em;line-height:1.5}
+.capitol-explore__details-header h3{margin:.15rem 0 0;font-size:clamp(1.5rem,2.4vw,2.1rem);line-height:1.1;color:#fff;letter-spacing:-.045em}
+.capitol-explore__detail-count{font-size:.69rem;letter-spacing:.1em;color:#bfc5c7;font-weight:750;white-space:nowrap}
+.capitol-explore__contacts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem}
+.capitol-explore__person{min-width:0;display:flex;gap:.65rem;align-items:center;min-height:60px;padding:.55rem .7rem;background:#2c3136;border:1px solid #40474b;color:#fff!important;border-radius:7px;text-decoration:none!important;transition:background .18s,border-color .18s,transform .18s}
+.capitol-explore__person:hover,.capitol-explore__person:focus-visible{background:#3a3035;border-color:#d87a83;transform:translateY(-2px);outline:none}
+.capitol-explore__person:focus-visible{outline:2px solid #ec9ba4;outline-offset:2px}
+.capitol-explore__avatar{width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;border-radius:50%;background:#dbb8b8;color:#522127;font-size:.72rem;letter-spacing:-.02em;font-weight:850}
+.capitol-explore__person-name{min-width:0;display:flex;flex-direction:column;gap:.15rem}
+.capitol-explore__person-name strong{font-size:.79rem;line-height:1.22;font-weight:760;overflow-wrap:break-word;color:#fff}
+.capitol-explore__person-name small{font-size:.65rem;line-height:1.25;color:#c4c3c5}
+.capitol-explore__external{margin-left:auto;font-size:1rem;color:#ffb3bb;flex-shrink:0}
+@media(max-width:900px){
+ .capitol-explore__map{min-height:360px}
+ .capitol-explore__pin{min-height:42px;padding:.35rem .5rem .35rem .35rem;gap:.35rem}
+ .capitol-explore__pin-label{font-size:.75rem}
+ .capitol-explore__pin-count{width:24px;height:24px;font-size:.75rem}
+ .capitol-explore__contacts{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+ .capitol-campus-section__header{align-items:flex-start;gap:.7rem}
+ .capitol-campus-section__header h2{font-size:2rem}
+ .capitol-campus-section__total{gap:.35rem}
+ .capitol-campus-section__total strong{font-size:3.2rem}
+ .capitol-campus-section__total span{font-size:.53rem}
+ .capitol-explore__map{min-height:0;aspect-ratio:1000/560}
+ .capitol-explore__pin{display:none}
+ .capitol-explore__map-caption{font-size:.45rem;bottom:8px}
+ .capitol-explore__mobile-buildings{display:flex;gap:.45rem;overflow-x:auto;padding:.8rem;background:#f8f7f4;border-top:1px solid #d4d8d1;scrollbar-width:thin}
+ .capitol-explore__mobile-buildings button{display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap;flex:0 0 auto;min-height:43px;padding:.55rem .8rem;background:#fff;border:1px solid #d9d8d5;border-radius:6px;color:#25282a;font-size:.8rem;font-weight:750;cursor:pointer}
+ .capitol-explore__mobile-buildings button small{font-size:.69rem;border-radius:50%;padding:.1rem .36rem;background:#eee5e5}
+ .capitol-explore__mobile-buildings button.capitol-explore__mobile-active{background:#25282d;color:#fff;border-color:#25282d}
+ .capitol-explore__details{padding:1.1rem;min-height:0}
+ .capitol-explore__contacts{grid-template-columns:1fr}
+}
+@media(max-width:430px){
+ .capitol-campus-section__header{flex-direction:column}
+ .capitol-campus-section__total{align-self:flex-start}
+ .capitol-explore__map-caption span:last-child{display:none}
+}
+@media(prefers-reduced-motion:reduce){.capitol-explore__pin,.capitol-explore__person{transition:none}}
