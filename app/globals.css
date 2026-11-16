@@ -4600,3 +4600,13 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
   .attendee-app__nav {grid-template-columns:1fr;}
   .attendee-app #help .hero-actions {grid-template-columns:1fr;}
 }
+
+/* Four rotating civic voices: stable height, gentle motion, no extra buttons. */
+.attendee-app__quote-rotator {min-height:168px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;}
+.attendee-app__quote-rotator blockquote {padding:0;margin:0;width:100%;animation:attendee-quote-arrive .55s ease-out both;}
+.attendee-app__welcome .attendee-app__quote-rotator blockquote p {margin:0 0 .65rem!important;max-width:100%;line-height:1.5;font-family:Georgia,serif;}
+.attendee-app__quote-rotator blockquote footer {font-size:.81rem;line-height:1.5;color:rgba(255,255,255,.85);}
+.attendee-app__quote-rotator .attendee-app__quote-count {font-size:.72rem;letter-spacing:.06em;color:rgba(255,255,255,.64);margin:0;}
+@keyframes attendee-quote-arrive {from {opacity:0;transform:translateY(5px);} to {opacity:1;transform:translateY(0);}}
+@media(max-width:760px){.attendee-app__quote-rotator {min-height:195px;}}
+@media(prefers-reduced-motion:reduce){.attendee-app__quote-rotator blockquote {animation:none;}}
