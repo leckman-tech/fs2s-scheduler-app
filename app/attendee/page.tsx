@@ -12,6 +12,11 @@ export const metadata: Metadata = buildMetadata({
   noIndex: true
 });
 
+const delegationLeads: Record<string,string> = {
+ D01:"Chief Leah Lamb", D02:"Dr. Clarisse Mendoza-Davis", D03:"Chief Azalia Speight",
+ D04:"Principal Wright-Cunningham", D05:"Levi Eckman (additional afternoon advisor pending)",
+ D06:"Mekhi Love", D07:"Ciara Norfleet", D08:"De'Asyia Barner", D09:"Deputy Chief Nora Shetty"
+};
 const schedule = [
  { time: "9:45–10:00 a.m.", title: "Check in at Maya Angelou Public Charter High School", description: "5600 East Capitol Street NE, Washington, DC 20019. Meet your delegation leader and check in." },
  { time: "10:00–10:45 a.m.", title: "Advocacy training and group practice", description: "Please read your office briefing materials beforehand so we can spend this time practicing together." },
@@ -37,24 +42,33 @@ export default async function AttendeePortalPage({
   const verifiedEmail = user.email_confirmed_at && user.email ? user.email.trim().toLowerCase() : null;
   const { data: myDelegation } = verifiedEmail
     ? await supabase.from("delegation_assignments")
-        .select("delegation_id,status")
+        .select("delegation_id,status,drive_access_granted")
         .eq("email", verifiedEmail).maybeSingle()
     : { data: null };
   const { data: releasedBriefing } = myDelegation && myDelegation.status !== "held"
     ? await supabase.from("delegation_briefings")
-        .select("group_name")
+        .select("group_name,office_summary")
         .eq("delegation_id", myDelegation.delegation_id)
         .eq("released", true).maybeSingle()
     : { data: null };
   const hasArchive = profile.role === "admin" || Boolean(grant);
+  const offices = releasedBriefing && Array.isArray(releasedBriefing.office_summary)
+    ? releasedBriefing.office_summary.filter((value): value is string => typeof value === "string")
+    : [];
+  const groupLead = myDelegation ? delegationLeads[myDelegation.delegation_id] : null;
+  const groupReady = Boolean(releasedBriefing && myDelegation?.drive_access_granted && myDelegation.status !== "held");
   const firstName = profile.full_name?.trim().split(/\s+/)[0];
 
   return (
     <div className="container stack attendee-app">
       <section className="hero-card attendee-app__welcome">
         <p className="eyebrow">YOUR FS2S PORTAL • WEDNESDAY, NOVEMBER 18</p>
-        <h1>Welcome{firstName ? ", " + firstName : ""}.</h1>
-        <p>Everything you need for Wednesday, in one place. Start with your group briefing, then check the arrival plan and contact information.</p>
+        <h1>Welcome{firstName ? ", " + firstName : ""}!</h1>
+        <p>We're glad you're joining us for Advocacy Hill Day. Your voice and perspective matter. On Wednesday, you'll meet fellow Scholars and community partners, prepare together, and take part in conversations about the issues affecting young people. We're looking forward to seeing you!</p>
+        <blockquote className="attendee-app__quote">
+          <p>“The more that people are engaged with our institutions, I think, the better.”</p>
+          <cite>— Justice Ketanji Brown Jackson, 2025 ESSENCE Festival</cite>
+        </blockquote>
         <div className="hero-meta">
           <span className="hero-pill">Wednesday, November 18, 2026</span>
           <span className="hero-pill">Washington, D.C.</span>
@@ -72,14 +86,42 @@ export default async function AttendeePortalPage({
       <nav className="attendee-app__nav" aria-label="Attendee portal navigation">
         <Link href="/attendee/briefings" className="button button-link">My briefing</Link>
         <a href="#schedule" className="button-secondary button-link">Day-of schedule</a>
-        <a href="#reference-book" className="button-secondary button-link">Master briefing book</a>
         <a href="#help" className="button-secondary button-link">Get help</a>
       </nav>
 
+      <section className="panel attendee-app__mygroup" aria-label="Your personal delegation">
+        <p className="eyebrow">YOUR HILL DAY GROUP</p>
+        {myDelegation && releasedBriefing ? (
+          <>
+            <h2>{myDelegation.delegation_id} — {releasedBriefing.group_name}</h2>
+            {groupLead ? <p><strong>Your group leader:</strong> {groupLead}</p> : null}
+            <p><strong>Your current congressional appointments:</strong></p>
+            <ul className="attendee-app__meeting-list">
+              {offices.map(office => <li key={office}>{office}</li>)}
+            </ul>
+            <Link href="/attendee/briefings" className="button button-link attendee-app__big-cta">Open my group's briefing</Link>
+          </>
+        ) : (
+          <>
+            <h2>We are matching your delegation.</h2>
+            <p>If your assigned group has not appeared yet, please don't create a second account. Email LEckman@SeeForever.org with the address you registered.</p>
+            <Link href="/attendee/briefings" className="button button-link attendee-app__big-cta">Check my briefing</Link>
+          </>
+        )}
+      </section>
+      <section className="panel attendee-app__readiness" aria-label="Your account readiness">
+        <h2>Before Wednesday</h2>
+        <ul>
+          <li><span aria-hidden="true">{verifiedEmail ? "✓" : "○"}</span><span><strong>Email verified</strong><small>{verifiedEmail ? "You're signed in with a verified email." : "Please verify your email to access private materials."}</small></span></li>
+          <li><span aria-hidden="true">{myDelegation ? "✓" : "○"}</span><span><strong>Delegation assigned</strong><small>{myDelegation ? myDelegation.delegation_id + " — Your group is listed above." : "Your group is still being matched."}</small></span></li>
+          <li><span aria-hidden="true">{groupReady ? "✓" : "○"}</span><span><strong>Briefing available</strong><small>{groupReady ? "Open and read your PDF before Wednesday. Reading completion is not tracked." : "Contact us if you cannot see your documents."}</small></span></li>
+        </ul>
+        <p className="muted">Please reply to your invitation to confirm attendance by Tuesday at 4:30 PM. School permission slips and other approvals are handled separately.</p>
+      </section>
       <section className="context-grid attendee-app__actions" aria-label="Your attendee tools">
         <article className="panel story-panel" style={{borderTop:"4px solid #b51224"}}>
           <p className="eyebrow">YOUR CONGRESSIONAL MEETINGS</p>
-          <h2>Your delegation briefing</h2>
+          <h2>Get prepared</h2>
 
           {releasedBriefing && myDelegation ? (
             <p><strong>{myDelegation.delegation_id} · {releasedBriefing.group_name}</strong> — your delegation's assigned congressional briefings are ready. Please review them before November 18.</p>
@@ -94,7 +136,7 @@ export default async function AttendeePortalPage({
         </article>
         <article className="panel story-panel">
           <p className="eyebrow">WEDNESDAY, NOVEMBER 18</p>
-          <h2>Where to go on Wednesday</h2>
+          <h2>Arrival and transportation</h2>
           <p><strong>Check in 9:45–10:00 AM</strong> at MAPCS-HS, 5600 East Capitol Street NE, Washington, DC 20019. Lunch is at 10:45 AM; bus departures begin at 11:15 AM.</p>
           <a href="#schedule" className="button-secondary button-link">See the day-of schedule ↓</a>
         </article>
@@ -115,7 +157,7 @@ export default async function AttendeePortalPage({
         </div>
         <div className="hero-actions">
           <Link href="/lobby-day#schedule" className="button-secondary button-link">See the full Hill Day plan →</Link>
-          <Link href="/lobby-day#register" className="button-secondary button-link">Registration information</Link>
+          <a href="mailto:LEckman@SeeForever.org?subject=Hill%20Day%20Attendance%20Confirmation" className="button-secondary button-link">Confirm my attendance by email</a>
         </div>
         <p className="muted" style={{fontSize:"0.89rem"}}>Having an account does not mean a student has received school approval or that a congressional appointment has been assigned.</p>
       </section>
@@ -130,21 +172,12 @@ export default async function AttendeePortalPage({
         <p className="muted">The master copy opens in Google Drive and is viewable by anyone with its link. Do not treat another group's meeting as your own. If anything appears incorrect, email LEckman@SeeForever.org.</p>
       </section>
 
-      <section id="archive" className="panel callout-panel" style={{scrollMarginTop:"6.5rem"}}>
+      {hasArchive ? <section id="archive" className="panel callout-panel" style={{scrollMarginTop:"6.5rem"}}>
         <p className="eyebrow">HISTORICAL MATERIALS</p>
         <h2>2026 Convening Archive</h2>
-        {hasArchive ? (
-          <>
-            <p>Your archive permission is active. View the April 1–3, 2026 program and open attendee documents in the archive library.</p>
-            <Link href="/2026-archive#archive-documents" className="button button-link">Open my archive and documents →</Link>
-          </>
-        ) : (
-          <>
-            <p>The April 2026 convening archive is available to accounts approved by the organizing team. Creating an attendee account does not automatically grant archive access.</p>
-            <a className="button-secondary button-link" href="mailto:LEckman@SeeForever.org?subject=FS2S%202026%20Archive%20Access">Request archive access</a>
-          </>
-        )}
-      </section>
+        <p>Your archive permission is active. View the April 1–3, 2026 program and documents.</p>
+        <Link href="/2026-archive#archive-documents" className="button-secondary button-link">Open approved archive</Link>
+      </section> : null}
 
       <section id="help" className="panel story-panel" style={{scrollMarginTop:"6.5rem"}}>
         <p className="eyebrow">QUESTIONS &amp; HELP</p>
