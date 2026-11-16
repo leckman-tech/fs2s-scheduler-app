@@ -4695,3 +4695,60 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
  .hill-day-celebration__group-list span{font-size:.72rem;padding:.45rem .62rem}
  .hill-day-celebration__footer{font-size:.5rem}
 }
+
+
+/* November 16 QA: Safari numeral descenders and narrow-screen spacing */
+.hill-day-hero .hill-day-celebration__lead>div:first-child{min-width:0; gap:0}
+.hill-day-hero .hill-day-celebration__number{
+  display:block;
+  font-size:clamp(5.5rem,10.5vw,9.25rem);
+  line-height:1.16;
+  letter-spacing:-.075em;
+  padding:0 .14em .02em 0;
+  margin:0;
+  max-width:100%;
+  white-space:nowrap;
+}
+.hill-day-hero .hill-day-celebration__number-label{
+  display:block; position:relative; line-height:1.5;
+  margin:1.1rem 0 0; padding:0;
+  font-size:clamp(.73rem,1vw,.85rem);
+  letter-spacing:.13em;
+}
+.hill-day-hero .hill-day-celebration__lead{align-items:center}
+.hill-day-hero .hill-day-celebration__note{min-width:0}
+.hill-day-hero .hill-day-celebration__stats>div{min-width:0}
+.hill-day-hero .hill-day-celebration__stats span{overflow-wrap:break-word}
+.hill-day-hero .hill-day-celebration__group-list span{overflow-wrap:break-word}
+@media(max-width:900px){
+ .hill-day-hero .hill-day-celebration__lead{gap:1.8rem}
+ .hill-day-hero .hill-day-celebration__number{font-size:clamp(5.6rem,13vw,8.5rem)}
+}
+@media(max-width:760px){
+ .hill-day-hero .hill-day-celebration__lead{grid-template-columns:minmax(0,1fr);align-items:start;padding:1.7rem 0}
+ .hill-day-hero .hill-day-celebration__number{font-size:clamp(5.5rem,22vw,8.8rem);line-height:1.15}
+ .hill-day-hero .hill-day-celebration__number-label{margin-top:.65rem;font-size:.74rem}
+ .hill-day-hero .hill-day-celebration__note{padding-left:1.2rem}
+ .hill-day-hero .hill-day-celebration__stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .hill-day-hero .hill-day-celebration__stats>div{padding-block:1.1rem}
+}
+@media(max-width:520px){
+ .hill-day-hero .hill-day-celebration{padding:1.2rem}
+ .hill-day-hero .hill-day-celebration__intro{gap:.5rem}
+ .hill-day-hero .hill-day-celebration__date{font-size:.59rem}
+ .hill-day-hero .hill-day-celebration__number{font-size:clamp(5.25rem,24vw,7.75rem)}
+ .hill-day-hero .hill-day-celebration__note h2{font-size:clamp(2rem,10vw,2.8rem)!important}
+ .hill-day-hero .hill-day-celebration__stats{grid-template-columns:1fr;gap:0}
+ .hill-day-hero .hill-day-celebration__stats>div,
+ .hill-day-hero .hill-day-celebration__stats>div:first-child,
+ .hill-day-hero .hill-day-celebration__stats>div+div{
+   border-left:0;padding:.85rem 0;display:grid;grid-template-columns:4rem minmax(0,1fr);
+   align-items:center;gap:1rem
+ }
+ .hill-day-hero .hill-day-celebration__stats>div+div{border-top:1px solid rgba(255,255,255,.2)}
+ .hill-day-hero .hill-day-celebration__stats strong{font-size:3rem;line-height:1.12}
+ .hill-day-hero .hill-day-celebration__stats span{font-size:.87rem}
+ .hill-day-hero .hill-day-celebration__group-list{gap:.45rem}
+ .hill-day-hero .hill-day-celebration__group-list span{font-size:.75rem}
+ .hill-day-hero .hill-day-celebration__footer{gap:.45rem}
+}
