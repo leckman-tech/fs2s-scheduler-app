@@ -11,7 +11,7 @@ const groups = [{id:"D01",name:"Tutoring Café A",lead:"Chief Leah Lamb",size:7,
 {id:"D06",name:"Maya Scholars A",lead:"Mekhi Love",size:7,people:"6 Maya Scholars",visits:[["1:30 p.m.","House Education & Workforce staff","Rayburn 2257"]],gap:"Debrief after meeting; second supervised learning activity TBD. Additional office only if surplus time and approval."},
 {id:"D07",name:"Maya Scholars B",lead:"Ciara Norfleet",size:7,people:"6 Maya Scholars",visits:[["1:30 p.m.","Sen. Patty Murray staff","Russell 154"]],gap:"Office requires arrival by 1:15 p.m. Debrief after meeting; supervised activity TBD."},
 {id:"D08",name:"Maya Scholars C",lead:"De'Asyia Barner",size:6,people:"5 Maya Scholars",visits:[["2:30–3:00 p.m.","Rep. Gary Palmer staff — Hampton Neugent","170 Cannon (room TBD)"]],gap:"Second supervised activity before the office meeting TBD; be ready for office check-in around 2:15."},
-{id:"D09",name:"Maya Scholars D",lead:"STAFF LEAD NEEDED",size:5,people:"4 Maya Scholars",visits:[["3:00 p.m.","Sen. Chris Van Hollen staff","Hart 730"]],gap:"Adult lead required before travel. Second supervised activity TBD before 3:00; office cap is six."}];
+{id:"D09",name:"Maya Scholars D",lead:"Deputy Chief Nora Shetty",size:5,people:"4 Maya Scholars",visits:[["3:00 p.m.","Sen. Chris Van Hollen staff","Hart 730"]],gap:"Deputy Chief Shetty is assigned. Second supervised activity TBD before 3:00; office cap is six."}];
 const morning = [
 ["9:45–10:00 a.m.","Maya arrival, check-in and delegation introductions"],
 ["10:00–10:45 a.m.","Advocacy training, meeting briefs and group practice — pre-reading required"],
@@ -27,7 +27,7 @@ export default async function HillDayPlannerPage(){
  <section className="hero-card">
   <p className="eyebrow">INTERNAL / STAFF PLANNING DRAFT</p>
   <h1>Advocacy Hill Day — Delegations</h1>
-  <p>Wednesday, November 18, 2026. Nine groups, fourteen agreed congressional appointments, 31 Maya Scholars and 21 partner participants. One adult lead remains to be named.</p>
+  <p>Wednesday, November 18, 2026. Nine groups, fourteen agreed congressional appointments, 31 Maya Scholars and 21 partner participants. D09 now has an assigned adult lead. D05 still needs backup afternoon supervision.</p>
   <div className="hero-meta"><span className="hero-pill">14 appointments</span><span className="hero-pill">9 delegations</span><span className="hero-pill">Second activities TBD</span></div>
   <p className="muted">Individual delegation PDFs are stored in a private Drive folder. The attendee portal matches people by verified email; assignments are never inferred from a shared account or organization name. Black Swan Academy's remaining eight interested youth are provisionally grouped under Kierstin Oliver and Germaine Williams, subject to consent and new office assignments.</p>
   <div className="hero-actions">
