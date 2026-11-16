@@ -4849,3 +4849,30 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
  .capitol-explore__map-caption span:last-child{display:none}
 }
 @media(prefers-reduced-motion:reduce){.capitol-explore__pin,.capitol-explore__person{transition:none}}
+
+
+/* Campus refinement: connected selection panel, legible land use and calmer markers. */
+.capitol-explore{border-color:#c9d0c9;background:#f8f8f4;box-shadow:0 14px 32px rgba(30,40,33,.07)}
+.capitol-explore__map{border-bottom:1px solid #cdd2cb}
+.capitol-explore__pin{border-radius:8px;padding:.39rem .65rem .39rem .4rem;min-height:46px;border-color:#d5d9d3;background:rgba(255,255,255,.97);box-shadow:0 3px 12px rgba(35,45,38,.12)}
+.capitol-explore__pin--active{color:#fff;background:#292e32;border-color:#292e32;box-shadow:0 0 0 3px rgba(169,36,51,.24),0 5px 15px rgba(31,41,35,.17)}
+.capitol-explore__pin:hover,.capitol-explore__pin:focus-visible{box-shadow:0 0 0 3px rgba(169,36,51,.18),0 8px 20px rgba(35,45,38,.15)}
+.capitol-explore__pin-count{border-radius:5px}
+.capitol-explore__map-caption{color:#525b50;bottom:8px;left:12px;right:12px;font-size:.56rem;letter-spacing:.05em}
+.capitol-explore__details{background:#f8f8f5;color:#22282b;padding:1.15rem clamp(1.1rem,2.6vw,2rem) 1.3rem;min-height:144px;box-shadow:inset 0 4px 0 #b51a2d}
+.capitol-explore__details-header{margin-bottom:.7rem}
+.capitol-explore__eyebrow{color:#ad2538;font-size:.65rem}
+.capitol-explore__details-header h3{color:#23282a;font-size:clamp(1.4rem,2.2vw,1.9rem)}
+.capitol-explore__detail-count{color:#6d716e;font-size:.62rem}
+.capitol-explore__contacts{gap:.5rem}
+.capitol-explore__person{background:#fff;border-color:#e0e2de;color:#24272b!important;border-radius:6px;min-height:58px;box-shadow:0 1px 3px rgba(31,41,35,.045)}
+.capitol-explore__person:hover,.capitol-explore__person:focus-visible{background:#fff9f8;border-color:#be5261;box-shadow:0 3px 10px rgba(31,41,35,.08)}
+.capitol-explore__person-name strong{color:#20252a}
+.capitol-explore__person-name small{color:#737875}
+.capitol-explore__external{color:#b51224}
+.capitol-explore__avatar{background:#f0dddd;color:#8c2532}
+.capitol-explore__mobile-buildings button:focus-visible{outline:2px solid #ad2538;outline-offset:2px}
+@media(max-width:700px){
+ .capitol-explore__details{padding:1rem}
+ .capitol-explore__map-caption{font-size:.43rem;bottom:5px}
+}
