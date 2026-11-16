@@ -27,34 +27,25 @@ const civicQuotes = [
 
 export function CivicQuotes() {
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(true);
+  const [focusPaused, setFocusPaused] = useState(false);
 
+  // Rotate automatically on every device. Reduced-motion users see instant
+  // text changes rather than animated transitions (handled in CSS).
   useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updatePreference = () => setReducedMotion(media.matches);
-    updatePreference();
-    media.addEventListener("change", updatePreference);
-    return () => media.removeEventListener("change", updatePreference);
-  }, []);
-
-  useEffect(() => {
-    if (paused || reducedMotion) return;
+    if (focusPaused) return;
     const timer = window.setInterval(() => {
       setActive(previous => (previous + 1) % civicQuotes.length);
     }, 10000);
     return () => window.clearInterval(timer);
-  }, [paused, reducedMotion]);
+  }, [focusPaused]);
 
   const quote = civicQuotes[active];
 
   return (
     <figure className="attendee-app__quote attendee-app__quote-rotator"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
+      onFocusCapture={() => setFocusPaused(true)}
       onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);
+        if (!event.currentTarget.contains(event.relatedTarget)) setFocusPaused(false);
       }}
       aria-label="Civic participation inspiration">
       <blockquote key={active}>
