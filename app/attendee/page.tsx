@@ -50,11 +50,11 @@ export default async function AttendeePortalPage({
   const firstName = profile.full_name?.trim().split(/\s+/)[0];
 
   return (
-    <div className="container stack">
-      <section className="hero-card">
-        <p className="eyebrow">YOUR FS2S PORTAL</p>
+    <div className="container stack attendee-app">
+      <section className="hero-card attendee-app__welcome">
+        <p className="eyebrow">YOUR FS2S PORTAL • WEDNESDAY, NOVEMBER 18</p>
         <h1>Welcome{firstName ? ", " + firstName : ""}.</h1>
-        <p>Welcome to your November 18 Advocacy Hill Day home. Start with your private congressional briefing, then review the schedule and arrival details. If something is missing, we can help.</p>
+        <p>Everything you need for Wednesday, in one place. Start with your group briefing, then check the arrival plan and contact information.</p>
         <div className="hero-meta">
           <span className="hero-pill">Wednesday, November 18, 2026</span>
           <span className="hero-pill">Washington, D.C.</span>
@@ -69,34 +69,34 @@ export default async function AttendeePortalPage({
         </div>
       ) : null}
 
-      <nav className="hero-actions" aria-label="Attendee portal navigation" style={{margin:"0.35rem 0"}}>
+      <nav className="attendee-app__nav" aria-label="Attendee portal navigation">
+        <Link href="/attendee/briefings" className="button button-link">My briefing</Link>
         <a href="#schedule" className="button-secondary button-link">Day-of schedule</a>
-        <Link href="/attendee/briefings" className="button button-link">My congressional briefings</Link>
-        <a href="#archive" className="button-secondary button-link">2026 archive</a>
-        <a href="#help" className="button-secondary button-link">Help</a>
+        <a href="#reference-book" className="button-secondary button-link">Master briefing book</a>
+        <a href="#help" className="button-secondary button-link">Get help</a>
       </nav>
 
-      <section className="context-grid" aria-label="Your attendee tools">
+      <section className="context-grid attendee-app__actions" aria-label="Your attendee tools">
         <article className="panel story-panel" style={{borderTop:"4px solid #b51224"}}>
           <p className="eyebrow">YOUR CONGRESSIONAL MEETINGS</p>
-          <h2>My Congressional Briefings</h2>
+          <h2>Your delegation briefing</h2>
 
           {releasedBriefing && myDelegation ? (
             <p><strong>{myDelegation.delegation_id} · {releasedBriefing.group_name}</strong> — your delegation's assigned congressional briefings are ready. Please review them before November 18.</p>
           ) : (
-            <p>Your group briefing will appear here once your verified registration email is matched and the packet is released. You do not need another account.</p>
+            <p>Your group documents will appear here when your verified email is matched. You do not need to register again. Contact us if you need help.</p>
           )}
           <div className="hero-actions">
             <Link href="/attendee/briefings" className="button button-link">
-              {releasedBriefing ? "Open my assigned briefings →" : "Check my briefing assignment →"}
+              {releasedBriefing ? "Open my group briefing →" : "Check my briefing access →"}
             </Link>
           </div>
         </article>
         <article className="panel story-panel">
           <p className="eyebrow">WEDNESDAY, NOVEMBER 18</p>
-          <h2>Your Hill Day schedule</h2>
-          <p>See the working plan for the day, from morning arrival through afternoon congressional visits. Exact delegation assignments will follow.</p>
-          <a href="#schedule" className="button-secondary button-link">View the tentative schedule ↓</a>
+          <h2>Where to go on Wednesday</h2>
+          <p><strong>Check in 9:45–10:00 AM</strong> at MAPCS-HS, 5600 East Capitol Street NE, Washington, DC 20019. Lunch is at 10:45 AM; bus departures begin at 11:15 AM.</p>
+          <a href="#schedule" className="button-secondary button-link">See the day-of schedule ↓</a>
         </article>
       </section>
 
@@ -120,6 +120,16 @@ export default async function AttendeePortalPage({
         <p className="muted" style={{fontSize:"0.89rem"}}>Having an account does not mean a student has received school approval or that a congressional appointment has been assigned.</p>
       </section>
 
+      <section id="reference-book" className="panel attendee-app__reference" style={{scrollMarginTop:"6.5rem"}}>
+        <p className="eyebrow">OPTIONAL REFERENCE • ALL DELEGATIONS</p>
+        <h2>Master Congressional Briefing Book</h2>
+        <p>This is the <strong>full reference book</strong> covering all congressional meetings. It is separate from your assigned delegation briefing. Start with <strong>My Congressional Briefings</strong> above to find the meetings you are attending.</p>
+        <div className="hero-actions">
+          <a className="button-secondary button-link" href="https://drive.google.com/file/d/1X8cmoge4IrtnT0GMBTp1IkowiUsQjBX_/view" target="_blank" rel="noopener noreferrer">Open master briefing book ↗</a>
+        </div>
+        <p className="muted">Google Drive may require separate access for this master copy. If access is denied, email LEckman@SeeForever.org. Do not use the master book to assume you are assigned to another meeting.</p>
+      </section>
+
       <section id="archive" className="panel callout-panel" style={{scrollMarginTop:"6.5rem"}}>
         <p className="eyebrow">HISTORICAL MATERIALS</p>
         <h2>2026 Convening Archive</h2>
@@ -139,7 +149,8 @@ export default async function AttendeePortalPage({
       <section id="help" className="panel story-panel" style={{scrollMarginTop:"6.5rem"}}>
         <p className="eyebrow">QUESTIONS &amp; HELP</p>
         <h2>We're here to help.</h2>
-        <p>If you cannot sign in or open your briefing, email us the address you registered with and a description of the problem. Never share your password. For day-of questions, call or text <a href="tel:+13606002612">360-600-2612</a>.</p>
+        <p>If you cannot sign in or open your briefing, email the address you registered with and a description of the problem. Never share your password. For day-of questions, call or text <a href="tel:+13606002612">360-600-2612</a>.</p>
+        <div className="hero-actions"><a className="button-secondary button-link" href="tel:+13606002612">Call Hill Day contact</a><a className="button-secondary button-link" href="sms:+13606002612">Text Hill Day contact</a></div>
         <a href="mailto:LEckman@SeeForever.org?subject=FS2S%20Attendee%20Portal%20Question" className="button-secondary button-link">Contact the organizing team</a>
       </section>
     </div>
