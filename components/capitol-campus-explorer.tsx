@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 type Office = { name: string; short: string; url: string; initials: string };
-type Building = { id: string; name: string; chamber: "Senate" | "House"; x: number; y: number; offices: Office[] };
+type Building = { id: string; name: string; chamber: "Senate" | "House" | "Capitol"; x: number; y: number; offices: Office[] };
 
 const buildings: Building[] = [
   { id:"russell", name:"Russell", chamber:"Senate", x:27, y:23, offices:[
@@ -23,7 +23,8 @@ const buildings: Building[] = [
     { name:"Rep. Kevin Kiley",short:"Kiley",initials:"KK",url:"https://kiley.house.gov/contact" },
     { name:"Del. Eleanor Holmes Norton",short:"Norton",initials:"EN",url:"https://norton.house.gov/contact-congresswoman-norton" },
     { name:"Rep. Suzanne Bonamici",short:"Bonamici",initials:"SB",url:"https://bonamici.house.gov/contact" },
-    { name:"House Education & Workforce Committee",short:"Education & Workforce",initials:"EW",url:"https://edworkforce.house.gov/contact/" }
+    { name:"House Education & Workforce Committee",short:"Education & Workforce",initials:"EW",url:"https://edworkforce.house.gov/contact/" },
+    { name:"Rep. Lucy McBath",short:"McBath",initials:"LM",url:"https://mcbath.house.gov/contact" }
   ]},
   { id:"longworth", name:"Longworth", chamber:"House", x:56, y:85, offices:[
     { name:"Rep. Terri Sewell",short:"Sewell",initials:"TS",url:"https://sewell.house.gov/contact-me" },
@@ -31,6 +32,9 @@ const buildings: Building[] = [
   ]},
   { id:"cannon", name:"Cannon", chamber:"House", x:80, y:85, offices:[
     { name:"Rep. Gary Palmer",short:"Palmer",initials:"GP",url:"https://palmer.house.gov/contact/offices" }
+  ]},
+  { id:"capitol-steps", name:"House-side Capitol Steps", chamber:"Capitol", x:53, y:67, offices:[
+    { name:"Rep. Glenn Ivey — photo opportunity",short:"Ivey",initials:"GI",url:"https://ivey.house.gov/contact" }
   ]}
 ];
 
@@ -132,7 +136,7 @@ export function CapitolCampusExplorer() {
  return <div className="capitol-explore">
    <div className="capitol-explore__map">
     <CampusDrawing active={active}/>
-    {buildings.map(b=><button type="button" key={b.id} className={`capitol-explore__pin capitol-explore__pin--${b.chamber.toLowerCase()}${active===b.id?" capitol-explore__pin--active":""}`} style={{left:`${b.x}%`,top:`${b.y}%`}} onClick={()=>setActive(b.id)} aria-pressed={active===b.id} aria-label={`Show ${b.offices.length} participating offices in ${b.name} ${b.chamber} Office Building`}>
+    {buildings.map(b=><button type="button" key={b.id} className={`capitol-explore__pin capitol-explore__pin--${b.chamber === "Capitol" ? "house" : b.chamber.toLowerCase()}${active===b.id?" capitol-explore__pin--active":""}`} style={{left:`${b.x}%`,top:`${b.y}%`}} onClick={()=>setActive(b.id)} aria-pressed={active===b.id} aria-label={`Show ${b.offices.length} participating offices at ${b.name}`}>
       <span className="capitol-explore__pin-count">{b.offices.length}</span><span className="capitol-explore__pin-label">{b.name}<small>{b.chamber}</small></span>
      </button>)}
     <div className="capitol-explore__map-caption"><span>CAPITOL CAMPUS · STYLIZED OVERVIEW</span><span>SELECT A BUILDING TO EXPLORE</span></div>
@@ -142,7 +146,7 @@ export function CapitolCampusExplorer() {
     {buildings.map(b=><button key={b.id} type="button" aria-pressed={active===b.id} onClick={()=>setActive(b.id)} className={active===b.id?"capitol-explore__mobile-active":""}>{b.name}<small>{b.offices.length}</small></button>)}
    </div>
    <div className="capitol-explore__details" aria-live="polite">
-    <div className="capitol-explore__details-header"><div><span className="capitol-explore__eyebrow">{selected.chamber.toUpperCase()} OFFICE BUILDING · SELECTED</span><h3>{selected.name}</h3></div><span className="capitol-explore__detail-count">{selected.offices.length} {selected.offices.length===1?"PARTICIPATING OFFICE":"PARTICIPATING OFFICES"}</span></div>
+    <div className="capitol-explore__details-header"><div><span className="capitol-explore__eyebrow">{selected.chamber === "Capitol" ? "PHOTO OPPORTUNITY" : `${selected.chamber.toUpperCase()} OFFICE BUILDING`} · SELECTED</span><h3>{selected.name}</h3></div><span className="capitol-explore__detail-count">{selected.offices.length} {selected.offices.length===1?"PARTICIPATING OFFICE":"PARTICIPATING OFFICES"}</span></div>
     <div className="capitol-explore__contacts">
      {selected.offices.map(o=><a key={o.name} className="capitol-explore__person" href={o.url} target="_blank" rel="noopener noreferrer" aria-label={`Open official contact page for ${o.name} in a new tab`}><span className="capitol-explore__avatar">{o.initials}</span><span className="capitol-explore__person-name"><strong>{o.name}</strong><small>Official contact page</small></span><span className="capitol-explore__external" aria-hidden="true">↗</span></a>)}
     </div>

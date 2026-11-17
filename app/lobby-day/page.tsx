@@ -9,7 +9,6 @@ const meetingsInProgress = [
  "Senate HELP Republican staff — willing to meet; an afternoon time has been requested",
  "Rep. Jahana Hayes's office — 10:00 a.m. was offered but conflicts with the morning gathering; afternoon alternative requested",
  "Sen. Josh Hawley's office — policy staff follow-up sent",
- "Rep. Lucy McBath's office — policy staff referral",
  "Sen. Angela Alsobrooks's office — policy staff referral",
  "Rep. Adam Gray's office — additional scheduling follow-up"
 ];
@@ -19,7 +18,7 @@ const schedule = [
  {time:"10:45–11:05 a.m.",title:"Lunch at Maya",description:"Lunch is planned for participants before travel."},
  {time:"11:05–11:15 a.m.",title:"Bus loading and headcount",description:"Join your assigned bus and stay with your delegation leader."},
  {time:"11:15 a.m. (target)",title:"Buses depart for Capitol Hill",description:"Travel, unloading, building entry and security screening are being coordinated. Exact arrival times will be shared after transportation is confirmed."},
- {time:"12:30–3:30 p.m.",title:"Congressional visits and group reflection",description:"Sixteen congressional office and committee appointments are agreed across nine delegations. Follow your group lead for final room and arrival details."},
+ {time:"12:30–3:30 p.m.",title:"Congressional visits and group reflection",description:"Seventeen congressional policy meetings and one congressional photo opportunity are planned across nine delegations. Follow your group lead for final room and arrival details."},
  {time:"3:30–4:00 p.m. (target)",title:"Wrap-up and accountability",description:"Delegations report key takeaways, check in with staff and follow their supervised return instructions."}
 ];
 export default async function LobbyDayPage(){
@@ -42,7 +41,7 @@ export default async function LobbyDayPage(){
       <div className="hill-day-celebration__feature-heading"><span>THE DAY BY THE NUMBERS</span><span className="hill-day-celebration__feature-pips" aria-hidden="true"><i/><i/><i/></span></div>
       <div className="hill-day-celebration__feature-stage">
         <div className="hill-day-celebration__feature-slide"><strong>9</strong><span><b>Delegation groups</b><small>Nine groups, one shared purpose.</small></span></div>
-        <div className="hill-day-celebration__feature-slide"><strong>16</strong><span><b>Congressional appointments</b><small>Speaking directly with congressional offices.</small></span></div>
+        <div className="hill-day-celebration__feature-slide"><strong>18</strong><span><b>Congressional engagements</b><small>17 policy meetings and one photo opportunity.</small></span></div>
         <div className="hill-day-celebration__feature-slide"><strong>5</strong><span><b>Partner-led delegations</b><small>Community voices joining Maya Scholars.</small></span></div>
       </div>
     </div>
@@ -62,7 +61,7 @@ export default async function LobbyDayPage(){
  <section className="panel hill-day-closed-notice" aria-label="Registration status"><p className="eyebrow">REGISTRATION CLOSED</p><h2>We're grateful you're part of this.</h2><p>Registration for the November 18 Advocacy Hill Day has ended. If you're already participating, please use the <Link href="/attendee/briefings">attendee briefing portal</Link> and coordinate directly with your delegation lead. Questions? <a href="mailto:LEckman@SeeForever.org?subject=FS2S%20Advocacy%20Hill%20Day%20Question">Contact the organizing team</a>.</p></section>
  <section id="schedule" className="panel callout-panel"><p className="eyebrow">EVENT SCHEDULE</p><h2>Our plan for November 18</h2><p className="muted">Check in at Maya Angelou Public Charter High School, 5600 East Capitol Street NE, between 9:45 and 10:00 a.m. Training begins at 10:00 a.m., lunch is at 10:45 a.m., and Sprinter transportation is planned to depart beginning at 11:15 a.m. Congressional meetings start from 12:30 p.m. after security screening.</p><div className="timeline-grid">{schedule.map(item=><article className="timeline-card" key={item.title}><p className="timeline-card__label">{item.time}</p><h3>{item.title}</h3><p>{item.description}</p></article>)}</div></section>
  <section className="panel capitol-campus-section" id="congressional-offices" aria-labelledby="capitol-campus-title">
-   <div className="capitol-campus-section__header"><div><p className="eyebrow">OUR CONGRESSIONAL ENGAGEMENTS</p><h2 id="capitol-campus-title">Across Capitol Hill.</h2><p>Our nine delegations will engage 16 congressional offices and committees. Explore the campus, select a building, and connect directly with the participating offices.</p></div><div className="capitol-campus-section__total"><strong>16</strong><span>CONGRESSIONAL<br/>ENGAGEMENTS</span></div></div>
+   <div className="capitol-campus-section__header"><div><p className="eyebrow">OUR CONGRESSIONAL ENGAGEMENTS</p><h2 id="capitol-campus-title">Across Capitol Hill.</h2><p>Our nine delegations have 18 congressional engagements, including 17 policy meetings and one photo opportunity. Explore the campus, select a building, and connect directly with the participating offices.</p></div><div className="capitol-campus-section__total"><strong>18</strong><span>CONGRESSIONAL<br/>ENGAGEMENTS</span></div></div>
    <CapitolCampusExplorer/>
    <p className="capitol-campus-section__note">Building locations are approximate and illustrative, not walking directions. The public map does not display meeting rooms, student assignments, or private scheduling details.</p>
  </section>
