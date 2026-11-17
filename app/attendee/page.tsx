@@ -71,9 +71,17 @@ export default async function AttendeePortalPage({
             <h2>Hill Day De-Brief</h2>
             <p>Join Mr. Eckman and fellow participants for our end-of-day reflection on Zoom.</p>
           </div>
-          <a href={debriefUrl} target="_blank" rel="noopener noreferrer" className="hill-day-debrief__join">
-            <span aria-hidden="true">▶</span> Join Zoom — Log on at 3:30 PM! <span aria-hidden="true">↗</span>
-          </a>
+          <div className="hill-day-debrief__actions">
+            <a href={debriefUrl} target="_blank" rel="noopener noreferrer" className="hill-day-debrief__join">Join Zoom at 3:30 PM</a>
+            <details className="hill-day-calendar">
+              <summary>Add to calendar</summary>
+              <div className="hill-day-calendar__options">
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=FS2S%20Advocacy%20Hill%20Day%20De-Brief&amp;dates=20261118T203000Z%2F20261118T210000Z&amp;details=Join%20via%20your%20Attendee%20Portal%3A%20https%3A%2F%2Ffs2shub.com%2Fattendee%23debrief&amp;location=Online%20via%20Zoom&amp;ctz=America%2FNew_York" target="_blank" rel="noopener noreferrer">Google Calendar</a>
+                <a href="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&amp;rru=addevent&amp;subject=FS2S%20Advocacy%20Hill%20Day%20De-Brief&amp;startdt=2026-11-18T20%3A30%3A00Z&amp;enddt=2026-11-18T21%3A00%3A00Z&amp;body=Join%20via%20your%20Attendee%20Portal%3A%20https%3A%2F%2Ffs2shub.com%2Fattendee%23debrief&amp;location=Online%20via%20Zoom" target="_blank" rel="noopener noreferrer">Outlook.com</a>
+                <a href="/fs2s/hill-day-debrief.ics" download>Apple Calendar / other apps (.ics)</a>
+              </div>
+            </details>
+          </div>
         </section>
       ) : null}
       <section className="hero-card attendee-app__welcome">
@@ -99,14 +107,18 @@ export default async function AttendeePortalPage({
         </div>
       ) : null}
 
-      <nav className="attendee-app__nav" aria-label="Attendee portal navigation">
-        <a href="#mygroup" className="button-secondary button-link">My delegation</a>
-        <Link href="/attendee/briefings" className="button button-link">My congressional briefings</Link>
-        <a href="#schedule" className="button-secondary button-link">Day-of schedule</a>
-        {debriefUrl ? <a href="#debrief" className="button-secondary button-link">3:30 PM Zoom debrief</a> : null}
-        <a href="#reference-book" className="button-secondary button-link">Full reference book</a>
-        {hasArchive ? <a href="#archive" className="button-secondary button-link">2026 archive</a> : null}
-        <a href="#help" className="button-secondary button-link">Get help</a>
+      <nav className="attendee-app__nav attendee-app__nav--simple" aria-label="Attendee portal navigation">
+        <Link href="/attendee/briefings" className="button button-link">My briefing</Link>
+        <a href="#mygroup" className="button-secondary button-link">My group</a>
+        <a href="#schedule" className="button-secondary button-link">Schedule</a>
+        <details className="attendee-app__more">
+          <summary>More</summary>
+          <div className="attendee-app__more-links">
+            <a href="#reference-book">Master briefing book</a>
+            {hasArchive ? <a href="#archive">2026 archive</a> : null}
+            <a href="#help">Get help</a>
+          </div>
+        </details>
       </nav>
 
       <section id="mygroup" className="panel attendee-app__mygroup" aria-label="Your Hill Day role and delegation">

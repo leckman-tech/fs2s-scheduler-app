@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//FS2S//Advocacy Hill Day//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:fs2s-hill-day-debrief-20261118@fs2shub.com
+DTSTAMP:20261117T205100Z
+DTSTART:20261118T203000Z
+DTEND:20261118T210000Z
+SUMMARY:FS2S Advocacy Hill Day De-Brief
+DESCRIPTION:Join Mr. Eckman and fellow participants on Zoom.\n
+ Sign in to your Attendee Portal and click Join Zoom at 3:30 PM.
+LOCATION:Online via Zoom - Attendee Portal
+URL:https://fs2shub.com/attendee#debrief
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:FS2S Hill Day Debrief in 15 minutes
+END:VALARM
+END:VEVENT
+END:VCALENDAR

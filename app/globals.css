@@ -4984,3 +4984,23 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
   .hill-day-debrief__join { width: 100%; white-space: normal; flex: 0 1 auto; }
 }
 @media (prefers-reduced-motion: reduce) { .hill-day-debrief__join { animation: none; } }
+
+/* Compact, accessible Hill Day actions and navigation. */
+.hill-day-debrief__actions {display:grid;gap:.45rem;flex:0 0 auto;min-width:min(100%,260px);max-width:100%}
+.hill-day-debrief__actions .hill-day-debrief__join {min-height:48px;padding:.7rem 1rem}
+.hill-day-calendar,.attendee-app__more {position:relative;min-width:0}
+.hill-day-calendar summary,.attendee-app__more summary {cursor:pointer;list-style:none;display:flex;justify-content:center;align-items:center;gap:.5rem;font-weight:700;min-height:44px;border-radius:9px;padding:.55rem .9rem}
+.hill-day-calendar summary {color:#8f0d17;font-size:.88rem}
+.hill-day-calendar summary:hover {background:#fae4e7}
+.hill-day-calendar summary::after,.attendee-app__more summary::after {content:"";width:.42rem;height:.42rem;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);margin-top:-.2rem}
+.hill-day-calendar[open] summary::after,.attendee-app__more[open] summary::after {transform:rotate(225deg);margin-top:.2rem}
+.hill-day-calendar summary::-webkit-details-marker,.attendee-app__more summary::-webkit-details-marker {display:none}
+.hill-day-calendar__options,.attendee-app__more-links {display:grid;gap:.15rem;padding:.35rem;background:#fff;border:1px solid #ddd;border-radius:9px}
+.hill-day-calendar__options a,.attendee-app__more-links a {color:#222;font-size:.88rem;font-weight:650;text-decoration:none;padding:.65rem .75rem;border-radius:5px;min-height:44px;display:flex;align-items:center}
+.hill-day-calendar__options a:hover,.attendee-app__more-links a:hover {background:#f5f2f2;color:#8f0d17}
+.hill-day-calendar summary:focus-visible,.attendee-app__more summary:focus-visible,.hill-day-calendar__options a:focus-visible,.attendee-app__more-links a:focus-visible {outline:2px solid #8f0d17;outline-offset:2px}
+.attendee-app__nav--simple {display:flex;flex-wrap:wrap;align-items:flex-start;gap:.6rem}
+.attendee-app__nav--simple > a,.attendee-app__nav--simple > details {flex:1 1 125px;min-width:0}
+.attendee-app__more summary {border:1px solid #d4d4d4;background:#fff;color:#222;min-height:44px}
+.attendee-app__more-links {margin-top:.35rem}
+@media(max-width:760px){.hill-day-debrief__actions {width:100%;min-width:0}.attendee-app__nav--simple > a,.attendee-app__nav--simple > details {flex:1 1 calc(50% - .6rem)}}
