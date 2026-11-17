@@ -19,13 +19,41 @@ const delegationLeads: Record<string,string> = {
  D06:"Mekhi Love", D07:"Ciara Norfleet", D08:"De'Aysia Barner", D09:"Nora Shetty and Surya Srirangarajan"
 };
 const schedule = [
- { time: "9:45–10:00 a.m.", title: "Check in at Maya Angelou Public Charter High School", description: "5600 East Capitol Street NE, Washington, DC 20019. Meet your delegation leader and check in." },
- { time: "10:00–10:45 a.m.", title: "Advocacy training and group practice", description: "Please read your office briefing materials beforehand so we can spend this time practicing together." },
- { time: "10:45–11:05 a.m.", title: "Lunch at Maya", description: "Lunch is planned before bus loading." },
- { time: "11:05–11:15 a.m.", title: "Bus loading and headcount", description: "Stay with your assigned group and staff lead." },
- { time: "11:15 a.m. (target)", title: "Depart Maya by bus", description: "Transportation has been secured; follow staff instructions for drop-off and security screening." },
- { time: "12:30–3:30 p.m.", title: "Congressional meetings, movement and reflection", description: "All nine delegations have two scheduled policy meetings. D09 also has a brief photo opportunity with Representative Ivey. Follow your assigned itinerary and adult lead; some room details are pending." },
- { time: "3:30–4:00 p.m. (target)", title: "Virtual Hill Day debrief via Zoom", description: "Log on at 3:30 p.m. Eastern using the meeting button at the top of your Attendee Portal. Group leaders coordinate final headcounts and supervised return arrangements." }
+  {
+    "time": "9:45–10:00 AM",
+    "title": "Check-in at Maya",
+    "description": "Meet your delegation lead at 5600 East Capitol Street NE."
+  },
+  {
+    "time": "10:00–10:45 AM",
+    "title": "Advocacy training",
+    "description": "Review your briefings and rehearse with your group."
+  },
+  {
+    "time": "10:45–11:05 AM",
+    "title": "Lunch",
+    "description": "Lunch at Maya before departure."
+  },
+  {
+    "time": "11:05–11:15 AM",
+    "title": "Bus loading",
+    "description": "Headcount with your delegation lead."
+  },
+  {
+    "time": "11:15 AM",
+    "title": "Depart for Capitol Hill",
+    "description": "Target departure; allow time for travel and security."
+  },
+  {
+    "time": "12:30–3:30 PM",
+    "title": "Congressional meetings",
+    "description": "Follow your assigned itinerary and adult lead."
+  },
+  {
+    "time": "3:30–4:00 PM",
+    "title": "Zoom debrief",
+    "description": "Join at 3:30 PM through the Attendee Portal."
+  }
 ];
 export default async function AttendeePortalPage({
   searchParams
@@ -158,18 +186,20 @@ export default async function AttendeePortalPage({
       </section>
       <section id="schedule" className="panel callout-panel" style={{scrollMarginTop:"6.5rem"}}>
         <p className="eyebrow">PLAN YOUR DAY</p>
-        <h2>Your Wednesday schedule</h2>
-        <p>Here's what we currently have planned. Check this section for the broad timeline; individual congressional appointments and arrival details will be confirmed separately.</p>
-        <div className="timeline-grid">
-          {schedule.map((item) => (
-            <article key={item.title} className="timeline-card">
-              <p className="timeline-card__label">{item.time}</p>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-              {debriefUrl && item.title === "Virtual Hill Day debrief via Zoom" ? <a href={debriefUrl} target="_blank" rel="noopener noreferrer" className="button button-link">Join Zoom debrief ↗</a> : null}
-            </article>
+        <h2>Your day at a glance</h2>
+        <p className="hill-day-schedule__intro">November 18 · All times Eastern. Check your briefing for individual office appointments.</p>
+        <ol className="hill-day-schedule" aria-label="Hill Day schedule">
+          {schedule.map((item, index) => (
+            <li key={item.title} className={index === schedule.length - 1 ? "hill-day-schedule__row hill-day-schedule__row--debrief" : "hill-day-schedule__row"}>
+              <span className="hill-day-schedule__time">{item.time}</span>
+              <div className="hill-day-schedule__event">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+              {index === schedule.length - 1 && debriefUrl ? <a href={debriefUrl} target="_blank" rel="noopener noreferrer" className="hill-day-schedule__link">Join Zoom ↗</a> : null}
+            </li>
           ))}
-        </div>
+        </ol>
         <div className="hero-actions">
           <Link href="/lobby-day#schedule" className="button-secondary button-link">See the full Hill Day plan →</Link>
           <a href="mailto:LEckman@SeeForever.org?subject=Hill%20Day%20Attendance%20Confirmation" className="button-secondary button-link">Confirm my attendance by email</a>
