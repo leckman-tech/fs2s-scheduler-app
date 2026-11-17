@@ -5004,3 +5004,22 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
 .attendee-app__more summary {border:1px solid #d4d4d4;background:#fff;color:#222;min-height:44px}
 .attendee-app__more-links {margin-top:.35rem}
 @media(max-width:760px){.hill-day-debrief__actions {width:100%;min-width:0}.attendee-app__nav--simple > a,.attendee-app__nav--simple > details {flex:1 1 calc(50% - .6rem)}}
+
+/* Hill Day schedule: consistent compact reading flow on public and attendee pages. */
+#schedule .hill-day-schedule__intro{margin:.25rem 0 1rem;color:#595959;font-size:.92rem;line-height:1.5}
+#schedule .hill-day-schedule{list-style:none;padding:0;margin:0 0 .5rem;border-top:1px solid #dedad7}
+#schedule .hill-day-schedule__row{display:grid;grid-template-columns: minmax(0,145px) minmax(0,1fr) auto;align-items:center;gap:.4rem 1.1rem;padding:.8rem .65rem;border-bottom:1px solid #dedad7;margin:0}
+#schedule .hill-day-schedule__time{color:#8f0d17;font-size:.84rem;font-weight:750;white-space:nowrap;font-variant-numeric:tabular-nums;line-height:1.4}
+#schedule .hill-day-schedule__event{min-width:0}
+#schedule .hill-day-schedule__event h3{margin:0;font-size:1rem;line-height:1.35;letter-spacing:normal}
+#schedule .hill-day-schedule__event p{margin:.18rem 0 0;font-size:.83rem;line-height:1.4;color:#555}
+#schedule .hill-day-schedule__row--debrief{background:#fff4f5;border-bottom-color:#e5b5bc}
+#schedule .hill-day-schedule__link{font-size:.82rem;color:#8f0d17;font-weight:750;white-space:nowrap;display:inline-flex;align-items:center;min-height:44px;text-decoration:underline;text-underline-offset:3px}
+#schedule .hill-day-schedule__link:focus-visible{outline:2px solid #8f0d17;outline-offset:3px}
+@media(max-width:600px){
+ #schedule .hill-day-schedule__row{grid-template-columns:minmax(0,1fr);gap:.18rem;padding:.75rem .5rem}
+ #schedule .hill-day-schedule__time{white-space:normal;font-size:.77rem}
+ #schedule .hill-day-schedule__event h3{font-size:.98rem}
+ #schedule .hill-day-schedule__event p{font-size:.83rem}
+ #schedule .hill-day-schedule__link{min-height:44px;justify-self:start}
+}
