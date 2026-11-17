@@ -19,7 +19,7 @@ const schedule = [
  {time:"11:05–11:15 a.m.",title:"Bus loading and headcount",description:"Join your assigned bus and stay with your delegation leader."},
  {time:"11:15 a.m. (target)",title:"Buses depart for Capitol Hill",description:"Travel, unloading, building entry and security screening are being coordinated. Exact arrival times will be shared after transportation is confirmed."},
  {time:"12:30–3:30 p.m.",title:"Congressional visits and group reflection",description:"Eighteen congressional policy meetings and one congressional photo opportunity are planned across nine delegations. Follow your group lead for final room and arrival details."},
- {time:"3:30–4:00 p.m. (target)",title:"Wrap-up and accountability",description:"Delegations report key takeaways, check in with staff and follow their supervised return instructions."}
+ {time:"3:30–4:00 p.m. (target)",title:"Virtual debrief and accountability",description:"At 3:30 p.m. Eastern, attendees join the Zoom debrief using the meeting button in their private Attendee Portal. Follow your adult lead’s supervised return instructions."}
 ];
 export default async function LobbyDayPage(){
  const count=await getPublicLobbyDaySignupCount();

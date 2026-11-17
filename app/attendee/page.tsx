@@ -25,7 +25,7 @@ const schedule = [
  { time: "11:05–11:15 a.m.", title: "Bus loading and headcount", description: "Stay with your assigned group and staff lead." },
  { time: "11:15 a.m. (target)", title: "Depart Maya by bus", description: "Transportation has been secured; follow staff instructions for drop-off and security screening." },
  { time: "12:30–3:30 p.m.", title: "Congressional meetings, movement and reflection", description: "All nine delegations have two scheduled policy meetings. D09 also has a brief photo opportunity with Representative Ivey. Follow your assigned itinerary and adult lead; some room details are pending." },
- { time: "3:30–4:00 p.m. (target)", title: "Debrief and accountability", description: "Group leaders coordinate final headcounts and supervised return arrangements." }
+ { time: "3:30–4:00 p.m. (target)", title: "Virtual Hill Day debrief via Zoom", description: "Log on at 3:30 p.m. Eastern using the meeting button at the top of your Attendee Portal. Group leaders coordinate final headcounts and supervised return arrangements." }
 ];
 export default async function AttendeePortalPage({
   searchParams
@@ -35,6 +35,8 @@ export default async function AttendeePortalPage({
   const { profile, user } = await requireAttendeePortalUser();
   const params = await searchParams;
   const supabase = await createClient();
+  const { data: debrief } = await supabase.from("attendee_event_links").select("join_url").eq("event_key", "hill-day-debrief-2026").maybeSingle();
+  const debriefUrl = debrief?.join_url?.startsWith("https://sffmapcs.zoom.us/j/") ? debrief.join_url : null;
   const { data: grant } = await supabase
     .from("archive_access_grants")
     .select("user_id")
@@ -62,6 +64,18 @@ export default async function AttendeePortalPage({
 
   return (
     <div className="container stack attendee-app">
+      {debriefUrl ? (
+        <section id="debrief" className="hill-day-debrief" aria-label="Advocacy Hill Day Zoom debrief">
+          <div className="hill-day-debrief__copy">
+            <p className="eyebrow">WEDNESDAY, NOVEMBER 18 · 3:30 PM EASTERN</p>
+            <h2>Hill Day De-Brief</h2>
+            <p>Join Mr. Eckman and fellow participants for our end-of-day reflection on Zoom.</p>
+          </div>
+          <a href={debriefUrl} target="_blank" rel="noopener noreferrer" className="hill-day-debrief__join">
+            <span aria-hidden="true">▶</span> Join Zoom — Log on at 3:30 PM! <span aria-hidden="true">↗</span>
+          </a>
+        </section>
+      ) : null}
       <section className="hero-card attendee-app__welcome">
         <p className="eyebrow">YOUR FS2S PORTAL • WEDNESDAY, NOVEMBER 18</p>
         <h1>Welcome{firstName ? ", " + firstName : ""}!</h1>
@@ -89,6 +103,7 @@ export default async function AttendeePortalPage({
         <a href="#mygroup" className="button-secondary button-link">My delegation</a>
         <Link href="/attendee/briefings" className="button button-link">My congressional briefings</Link>
         <a href="#schedule" className="button-secondary button-link">Day-of schedule</a>
+        {debriefUrl ? <a href="#debrief" className="button-secondary button-link">3:30 PM Zoom debrief</a> : null}
         <a href="#reference-book" className="button-secondary button-link">Full reference book</a>
         {hasArchive ? <a href="#archive" className="button-secondary button-link">2026 archive</a> : null}
         <a href="#help" className="button-secondary button-link">Get help</a>
@@ -139,6 +154,7 @@ export default async function AttendeePortalPage({
               <p className="timeline-card__label">{item.time}</p>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
+              {debriefUrl && item.title === "Virtual Hill Day debrief via Zoom" ? <a href={debriefUrl} target="_blank" rel="noopener noreferrer" className="button button-link">Join Zoom debrief ↗</a> : null}
             </article>
           ))}
         </div>
