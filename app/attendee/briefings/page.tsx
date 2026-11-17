@@ -120,7 +120,7 @@ export default async function CongressionalBriefingsPage() {
           <section className="panel" style={{borderTop:"4px solid #a71930"}}>
             <p className="eyebrow">YOUR DELEGATION • {packet.delegation_id}</p>
             <h2>{packet.group_name}</h2>
-            <p>These are your group's currently assigned congressional offices. Your group leader will confirm room access, arrival instructions, and whether every participant can enter both meetings.</p>
+            <p>These are your group's currently assigned congressional offices. Your group leader will confirm room access, arrival instructions, and whether every participant can enter each meeting.</p>
             <div className="stack">
               {offices.map(office => <p key={office} style={{margin:0}}><strong>{office}</strong></p>)}
             </div>
@@ -157,7 +157,7 @@ export default async function CongressionalBriefingsPage() {
           <Link href="/attendee#schedule" className="button-secondary button-link">Day-of schedule →</Link>
           <a className="button-secondary button-link" href="mailto:LEckman@SeeForever.org?subject=FS2S%20My%20Delegation%20Briefing">Request help with my briefing</a>
         </div>
-        <p className="muted">Questions about a student's approval or missing consent must be resolved with the organizing team. Having portal access is not proof that a student is cleared to attend. For day-of questions, call or text <a href="tel:+13606002612">360-600-2612</a>.</p>
+        <p className="muted">Questions about a student's approval or missing consent must be resolved with the organizing team. Having portal access is not proof that a student is cleared to attend. For day-of questions, call or text <a href="tel:+12028387879">202-838-7879</a>.</p>
       </section>
       {profile.role === "admin" ? (
         <section className="panel">
