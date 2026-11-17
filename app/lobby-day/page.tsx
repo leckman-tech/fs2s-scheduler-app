@@ -13,13 +13,41 @@ const meetingsInProgress = [
  "Rep. Adam Gray's office — additional scheduling follow-up"
 ];
 const schedule = [
- {time:"9:45–10:00 a.m.",title:"Arrival at Maya",description:"Check in at MAPCS-HS, 5600 East Capitol Street NE, Washington, DC 20019, and meet your delegation leader."},
- {time:"10:00–10:45 a.m.",title:"Advocacy training and practice",description:"Review the congressional briefings distributed in advance, meet your delegation, rehearse openings and questions, and get ready for the afternoon."},
- {time:"10:45–11:05 a.m.",title:"Lunch at Maya",description:"Lunch is planned for participants before travel."},
- {time:"11:05–11:15 a.m.",title:"Bus loading and headcount",description:"Join your assigned bus and stay with your delegation leader."},
- {time:"11:15 a.m. (target)",title:"Buses depart for Capitol Hill",description:"Travel, unloading, building entry and security screening are being coordinated. Exact arrival times will be shared after transportation is confirmed."},
- {time:"12:30–3:30 p.m.",title:"Congressional visits and group reflection",description:"Eighteen congressional policy meetings and one congressional photo opportunity are planned across nine delegations. Follow your group lead for final room and arrival details."},
- {time:"3:30–4:00 p.m. (target)",title:"Virtual debrief and accountability",description:"At 3:30 p.m. Eastern, attendees join the Zoom debrief using the meeting button in their private Attendee Portal. Follow your adult lead’s supervised return instructions."}
+  {
+    "time": "9:45–10:00 AM",
+    "title": "Check-in at Maya",
+    "description": "Meet your delegation lead at 5600 East Capitol Street NE."
+  },
+  {
+    "time": "10:00–10:45 AM",
+    "title": "Advocacy training",
+    "description": "Review your briefings and rehearse with your group."
+  },
+  {
+    "time": "10:45–11:05 AM",
+    "title": "Lunch",
+    "description": "Lunch at Maya before departure."
+  },
+  {
+    "time": "11:05–11:15 AM",
+    "title": "Bus loading",
+    "description": "Headcount with your delegation lead."
+  },
+  {
+    "time": "11:15 AM",
+    "title": "Depart for Capitol Hill",
+    "description": "Target departure; allow time for travel and security."
+  },
+  {
+    "time": "12:30–3:30 PM",
+    "title": "Congressional meetings",
+    "description": "Follow your assigned itinerary and adult lead."
+  },
+  {
+    "time": "3:30–4:00 PM",
+    "title": "Zoom debrief",
+    "description": "Join at 3:30 PM through the Attendee Portal."
+  }
 ];
 export default async function LobbyDayPage(){
  const count=await getPublicLobbyDaySignupCount();
@@ -59,7 +87,20 @@ export default async function LobbyDayPage(){
  <section className="context-grid"><article className="panel story-panel story-panel--accent"><p className="eyebrow">WHY WE'RE GOING</p><h2>Every young person deserves a path through education</h2><p>Scholars will talk with congressional offices about education, justice-system involvement, and the support young people need to stay in school or return to learning.</p></article>
  <article className="panel story-panel"><p className="eyebrow">WHAT TO EXPECT</p><h2>Conversations led by student experience</h2><p>Nine delegations are preparing for their congressional conversations. Registered attendees should review their group materials and follow their designated adult lead; student permissions and final travel approval remain separate.</p></article></section>
  <section className="panel hill-day-closed-notice" aria-label="Registration status"><p className="eyebrow">REGISTRATION CLOSED</p><h2>We're grateful you're part of this.</h2><p>Registration for the November 18 Advocacy Hill Day has ended. If you're already participating, please use the <Link href="/attendee/briefings">attendee briefing portal</Link> and coordinate directly with your delegation lead. Questions? <a href="mailto:LEckman@SeeForever.org?subject=FS2S%20Advocacy%20Hill%20Day%20Question">Contact the organizing team</a>.</p></section>
- <section id="schedule" className="panel callout-panel"><p className="eyebrow">EVENT SCHEDULE</p><h2>Our plan for November 18</h2><p className="muted">Check in at Maya Angelou Public Charter High School, 5600 East Capitol Street NE, between 9:45 and 10:00 a.m. Training begins at 10:00 a.m., lunch is at 10:45 a.m., and Sprinter transportation is planned to depart beginning at 11:15 a.m. Congressional meetings start from 12:30 p.m. after security screening.</p><div className="timeline-grid">{schedule.map(item=><article className="timeline-card" key={item.title}><p className="timeline-card__label">{item.time}</p><h3>{item.title}</h3><p>{item.description}</p></article>)}</div></section>
+ <section id="schedule" className="panel callout-panel">
+   <p className="eyebrow">EVENT SCHEDULE</p>
+   <h2>November 18 at a glance</h2>
+   <p className="hill-day-schedule__intro">All times Eastern. Participants meet at Maya Angelou Public Charter High School.</p>
+   <ol className="hill-day-schedule" aria-label="Hill Day schedule">
+     {schedule.map((item,index) => (
+       <li key={item.title} className={index === schedule.length - 1 ? "hill-day-schedule__row hill-day-schedule__row--debrief" : "hill-day-schedule__row"}>
+         <span className="hill-day-schedule__time">{item.time}</span>
+         <div className="hill-day-schedule__event"><h3>{item.title}</h3><p>{item.description}</p></div>
+         {index === schedule.length - 1 ? <Link href="/attendee#debrief" className="hill-day-schedule__link">Attendee Portal ↗</Link> : null}
+       </li>
+     ))}
+   </ol>
+ </section>
  <section className="panel capitol-campus-section" id="congressional-offices" aria-labelledby="capitol-campus-title">
    <div className="capitol-campus-section__header"><div><p className="eyebrow">OUR CONGRESSIONAL ENGAGEMENTS</p><h2 id="capitol-campus-title">Across Capitol Hill.</h2><p>Our nine delegations have 19 congressional engagements, including 18 policy meetings and one photo opportunity. Explore the campus, select a building, and connect directly with the participating offices.</p></div><div className="capitol-campus-section__total"><strong>19</strong><span>CONGRESSIONAL<br/>ENGAGEMENTS</span></div></div>
    <CapitolCampusExplorer/>
