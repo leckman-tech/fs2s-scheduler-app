@@ -31,7 +31,8 @@ const buildings: Building[] = [
     { name:"Rep. Adelita Grijalva",short:"Grijalva",initials:"AG",url:"https://grijalva.house.gov/contact" }
   ]},
   { id:"cannon", name:"Cannon", chamber:"House", x:80, y:85, offices:[
-    { name:"Rep. Gary Palmer",short:"Palmer",initials:"GP",url:"https://palmer.house.gov/contact/offices" }
+    { name:"Rep. Gary Palmer",short:"Palmer",initials:"GP",url:"https://palmer.house.gov/contact/offices" },
+    { name:"Rep. Ayanna Pressley",short:"Pressley",initials:"AP",url:"https://pressley.house.gov/contact" }
   ]},
   { id:"capitol-steps", name:"House-side Capitol Steps", chamber:"Capitol", x:53, y:67, offices:[
     { name:"Rep. Glenn Ivey — photo opportunity",short:"Ivey",initials:"GI",url:"https://ivey.house.gov/contact" }

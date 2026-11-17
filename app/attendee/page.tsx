@@ -14,8 +14,8 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const delegationLeads: Record<string,string> = {
- D01:"Chief Leah Lamb", D02:"Dr. Cheryl Chun", D03:"Chief Azalia Speight",
- D04:"Principal Wright-Cunningham", D05:"Dr. Mendoza-Davis (1 PM); Chief Aaron Cannon (2 PM)",
+ D01:"Chief Leah Lamb", D02:"Dr. Cheryl Chun", D03:"Replacement adult lead pending — check with organizers",
+ D04:"Dr. Kamal Wright-Cunningham", D05:"Dr. Mendoza-Davis (1 PM); Chief Aaron Cannon (2 PM)",
  D06:"Mekhi Love", D07:"Ciara Norfleet", D08:"De'Asyia Barner", D09:"Nora Shetty and Surya Srirangarajan"
 };
 const schedule = [
@@ -23,8 +23,8 @@ const schedule = [
  { time: "10:00–10:45 a.m.", title: "Advocacy training and group practice", description: "Please read your office briefing materials beforehand so we can spend this time practicing together." },
  { time: "10:45–11:05 a.m.", title: "Lunch at Maya", description: "Lunch is planned before bus loading." },
  { time: "11:05–11:15 a.m.", title: "Bus loading and headcount", description: "Stay with your assigned group and staff lead." },
- { time: "11:15 a.m. (target)", title: "Depart Maya by bus", description: "Exact bus arrival, drop-off and security-screening time will be confirmed with transportation staff." },
- { time: "12:30–3:30 p.m.", title: "Congressional meetings, movement and reflection", description: "Group meeting times vary. Several groups have two agreed appointments, including Maya Scholars B (D07). D08 and D09 currently have one confirmed appointment each; additional requests remain pending. Do not treat an unconfirmed activity as booked." },
+ { time: "11:15 a.m. (target)", title: "Depart Maya by bus", description: "Transportation has been secured; follow staff instructions for drop-off and security screening." },
+ { time: "12:30–3:30 p.m.", title: "Congressional meetings, movement and reflection", description: "All nine delegations have two scheduled policy meetings. D09 also has a brief photo opportunity with Representative Ivey. Follow your assigned itinerary and adult lead; some room details are pending." },
  { time: "3:30–4:00 p.m. (target)", title: "Debrief and accountability", description: "Group leaders coordinate final headcounts and supervised return arrangements." }
 ];
 export default async function AttendeePortalPage({
@@ -152,7 +152,7 @@ export default async function AttendeePortalPage({
       <section id="reference-book" className="panel attendee-app__reference" style={{scrollMarginTop:"6.5rem"}}>
         <p className="eyebrow">OPTIONAL REFERENCE • ALL DELEGATIONS</p>
         <h2>Master Congressional Briefing Book</h2>
-        <p>This is the <strong>full reference book</strong> covering all congressional meetings. It is separate from your assigned delegation briefing. Start with <strong>My Congressional Briefings</strong> above to find the meetings you are attending.</p>
+        <p>This is the <strong>75-page full reference book</strong> covering all 18 policy meetings and the photo opportunity, with a clickable table of contents. It is separate from your assigned delegation briefing. Start with <strong>My Congressional Briefings</strong> above to find the meetings you are attending.</p>
         <div className="hero-actions">
           <a className="button-secondary button-link" href="https://drive.google.com/file/d/1X8cmoge4IrtnT0GMBTp1IkowiUsQjBX_/view" target="_blank" rel="noopener noreferrer">Open master briefing book ↗</a>
         </div>
@@ -169,8 +169,8 @@ export default async function AttendeePortalPage({
       <section id="help" className="panel story-panel" style={{scrollMarginTop:"6.5rem"}}>
         <p className="eyebrow">QUESTIONS &amp; HELP</p>
         <h2>We're here to help.</h2>
-        <p>If you cannot sign in or open your briefing, email the address you registered with and a description of the problem. Never share your password. For day-of questions, call or text <a href="tel:+13606002612">360-600-2612</a>.</p>
-        <div className="hero-actions"><a className="button-secondary button-link" href="tel:+13606002612">Call Hill Day contact</a><a className="button-secondary button-link" href="sms:+13606002612">Text Hill Day contact</a></div>
+        <p>If you cannot sign in or open your briefing, email the address you registered with and a description of the problem. Never share your password. For day-of questions, call or text <a href="tel:+12028387879">202-838-7879</a>.</p>
+        <div className="hero-actions"><a className="button-secondary button-link" href="tel:+12028387879">Call Hill Day contact</a><a className="button-secondary button-link" href="sms:+12028387879">Text Hill Day contact</a></div>
         <a href="mailto:LEckman@SeeForever.org?subject=FS2S%20Attendee%20Portal%20Question" className="button-secondary button-link">Contact the organizing team</a>
       </section>
     </div>
