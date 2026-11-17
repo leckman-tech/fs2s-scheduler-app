@@ -4940,3 +4940,47 @@ body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
   .hill-day-celebration__feature-slide b { font-size: .87rem; }
   .hill-day-celebration__feature-slide small { font-size: .72rem; }
 }
+
+/* Hill Day debrief — prominent attendee-only link; subtle finite pulse. */
+.hill-day-debrief {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: clamp(1rem, 2.5vw, 1.75rem);
+  background: #fff7f7;
+  border: 1px solid #e8b8bf;
+  border-left: 5px solid #b51224;
+  border-radius: var(--radius-md);
+  scroll-margin-top: 7rem;
+}
+.hill-day-debrief__copy { min-width: 0; }
+.hill-day-debrief__copy .eyebrow { color: #8f0d17; margin: 0 0 .35rem; }
+.hill-day-debrief__copy h2 { margin: 0 0 .35rem; color: #111; font-size: clamp(1.25rem, 2vw, 1.65rem); }
+.hill-day-debrief__copy p:last-child { margin: 0; color: #494949; line-height: 1.5; }
+.hill-day-debrief__join {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .65rem;
+  min-height: 54px;
+  padding: .95rem 1.2rem;
+  background: #b51224;
+  color: #fff !important;
+  font-weight: 800;
+  line-height: 1.35;
+  text-align: center;
+  text-decoration: none !important;
+  border-radius: 10px;
+  box-shadow: 0 0 0 0 rgba(181,18,36,.2);
+  animation: hill-day-debrief-pulse 2.4s ease-out 2;
+}
+.hill-day-debrief__join:hover { background: #8f0d17; }
+.hill-day-debrief__join:focus-visible { outline: 3px solid #111; outline-offset: 4px; }
+@keyframes hill-day-debrief-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(181,18,36,.15); } 55% { box-shadow: 0 0 0 7px rgba(181,18,36,.14); } }
+@media (max-width: 760px) {
+  .hill-day-debrief { flex-direction: column; align-items: stretch; gap: .95rem; }
+  .hill-day-debrief__join { width: 100%; white-space: normal; flex: 0 1 auto; }
+}
+@media (prefers-reduced-motion: reduce) { .hill-day-debrief__join { animation: none; } }
