@@ -14,9 +14,9 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const delegationLeads: Record<string,string> = {
- D01:"Chief Leah Lamb", D02:"Dr. Cheryl Chun", D03:"Replacement adult lead pending — check with organizers",
+ D01:"Chief Leah Lamb", D02:"Dr. Cheryl Chun", D03:"Adult SFF Lead",
  D04:"Dr. Kamal Wright-Cunningham", D05:"Dr. Mendoza-Davis (1 PM); Chief Aaron Cannon (2 PM)",
- D06:"Mekhi Love", D07:"Ciara Norfleet", D08:"De'Asyia Barner", D09:"Nora Shetty and Surya Srirangarajan"
+ D06:"Mekhi Love", D07:"Ciara Norfleet", D08:"De'Aysia Barner", D09:"Nora Shetty and Surya Srirangarajan"
 };
 const schedule = [
  { time: "9:45–10:00 a.m.", title: "Check in at Maya Angelou Public Charter High School", description: "5600 East Capitol Street NE, Washington, DC 20019. Meet your delegation leader and check in." },
